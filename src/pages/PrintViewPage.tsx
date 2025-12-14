@@ -402,6 +402,7 @@ const PrintViewPage = () => {
             border-bottom: 2px solid #8b5a3c;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
           }
           
           .document-table td {
@@ -525,6 +526,7 @@ const PrintViewPage = () => {
             border-bottom: 2px solid hsl(var(--primary));
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
           }
           
           .document-table td {
