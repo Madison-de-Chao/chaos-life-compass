@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, FileText, Download, Calendar, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { User } from "@supabase/supabase-js";
 
 const ViewPage = () => {
   const { shareLink } = useParams<{ shareLink: string }>();
@@ -16,6 +17,24 @@ const ViewPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [adminUser, setAdminUser] = useState<User | null>(null);
+
+  // Check if admin is logged in
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setAdminUser(session?.user ?? null);
+    };
+    checkAdmin();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setAdminUser(session?.user ?? null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -123,7 +142,7 @@ const ViewPage = () => {
       {isAuthenticated && (
         <>
           {content ? (
-            <PagedDocumentReader content={content} documentId={document.id} shareLink={shareLink} />
+            <PagedDocumentReader content={content} documentId={document.id} shareLink={shareLink} isAdmin={!!adminUser} />
           ) : (
             /* File Download Card when no parsed content */
             <main className="container mx-auto px-4 py-12 md:py-20">

@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send, LayoutDashboard } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
@@ -29,6 +29,7 @@ interface PagedDocumentReaderProps {
   className?: string;
   documentId?: string;
   shareLink?: string;
+  isAdmin?: boolean;
 }
 
 // Page break patterns
@@ -296,7 +297,7 @@ const patterns = [
   'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.05) 0%, transparent 70%)',
 ];
 
-export function PagedDocumentReader({ content, className, documentId, shareLink }: PagedDocumentReaderProps) {
+export function PagedDocumentReader({ content, className, documentId, shareLink, isAdmin }: PagedDocumentReaderProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -513,6 +514,23 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
           />
         </div>
       </div>
+
+      {/* Admin Dashboard Button - Top Right below logo */}
+      {isAdmin && (
+        <div className="fixed top-20 right-6 z-50">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="bg-card/80 backdrop-blur-sm shadow-soft hover:scale-105 transition-transform"
+          >
+            <Link to="/files">
+              <LayoutDashboard className="w-4 h-4 mr-2" />
+              返回主控台
+            </Link>
+          </Button>
+        </div>
+      )}
 
       {/* Bottom Left Controls - smaller on mobile */}
       <div className="fixed bottom-28 md:bottom-24 left-3 md:left-6 z-50 flex flex-col items-center gap-2 md:gap-4">
