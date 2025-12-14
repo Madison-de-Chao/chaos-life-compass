@@ -58,6 +58,7 @@ export type Database = {
           content: Json | null
           created_at: string
           customer_id: string | null
+          expires_at: string | null
           file_name: string
           file_path: string | null
           file_size: number | null
@@ -74,6 +75,7 @@ export type Database = {
           content?: Json | null
           created_at?: string
           customer_id?: string | null
+          expires_at?: string | null
           file_name: string
           file_path?: string | null
           file_size?: number | null
@@ -90,6 +92,7 @@ export type Database = {
           content?: Json | null
           created_at?: string
           customer_id?: string | null
+          expires_at?: string | null
           file_name?: string
           file_path?: string | null
           file_size?: number | null
