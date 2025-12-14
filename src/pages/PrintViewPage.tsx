@@ -296,6 +296,10 @@ const PrintViewPage = () => {
             display: none !important;
           }
           
+          @page {
+            margin: 15mm 15mm 25mm 15mm;
+          }
+          
           body {
             margin: 0;
             padding: 0;
@@ -307,16 +311,14 @@ const PrintViewPage = () => {
           }
           
           .print-page {
-            page-break-after: always;
-            page-break-inside: avoid;
-            min-height: 100vh;
-            padding: 50px;
+            padding: 0;
             box-sizing: border-box;
             position: relative;
+            margin-bottom: 30px;
           }
           
-          .print-page:last-child {
-            page-break-after: auto;
+          .print-page:not(:first-child) .print-header {
+            display: none;
           }
           
           .page-corner {
@@ -421,20 +423,24 @@ const PrintViewPage = () => {
           }
           
           .page-number {
-            position: absolute;
-            bottom: 30px;
-            right: 50px;
-            font-size: 11px;
-            color: #999;
+            display: none;
           }
           
           .print-footer {
+            display: none;
+          }
+          
+          .global-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             text-align: center;
-            font-size: 11px;
-            color: #666;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #d4a574;
+            font-size: 9px;
+            color: #888;
+            padding: 5px 0;
+            background: white;
+            border-top: 1px solid #d4a574;
           }
           
           .document-table {
@@ -724,6 +730,10 @@ const PrintViewPage = () => {
           .document-table tr:hover td {
             background-color: hsl(var(--muted) / 0.5);
           }
+          
+          .global-footer {
+            display: none;
+          }
         }
       `}</style>
 
@@ -802,12 +812,12 @@ const PrintViewPage = () => {
               dangerouslySetInnerHTML={{ __html: page.content }}
             />
             
-            {/* Page number */}
+            {/* Page number - screen only */}
             <div className="page-number">
               {index + 1} / {pages.length}
             </div>
             
-            {/* Footer on last page */}
+            {/* Footer on last page - screen only */}
             {index === pages.length - 1 && (
               <div className="print-footer">
                 © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
@@ -815,6 +825,11 @@ const PrintViewPage = () => {
             )}
           </div>
         ))}
+        
+        {/* Global footer for print - appears on every page */}
+        <div className="global-footer">
+          © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
+        </div>
       </div>
     </>
   );
