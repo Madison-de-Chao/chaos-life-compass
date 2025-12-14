@@ -534,6 +534,17 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
         container.appendChild(contentDiv);
       }
 
+      // Add copyright footer
+      const copyrightFooter = document.createElement('div');
+      copyrightFooter.style.marginTop = '60px';
+      copyrightFooter.style.paddingTop = '20px';
+      copyrightFooter.style.borderTop = '1px solid #d4a574';
+      copyrightFooter.style.textAlign = 'center';
+      copyrightFooter.style.fontSize = '10pt';
+      copyrightFooter.style.color = '#666666';
+      copyrightFooter.innerHTML = `© ${new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有`;
+      container.appendChild(copyrightFooter);
+
       // Append to body temporarily
       document.body.appendChild(container);
 
@@ -757,6 +768,11 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
             下一頁
             <ChevronRight className="w-5 h-5 ml-2" />
           </Button>
+        </div>
+        
+        {/* Copyright */}
+        <div className="text-center mt-4 text-xs text-muted-foreground/60">
+          © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
         </div>
       </div>
     </div>
