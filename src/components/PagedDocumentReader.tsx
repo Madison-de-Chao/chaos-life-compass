@@ -689,20 +689,11 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
-            <>
-              <div className="mb-8">
-                <img 
-                  src={reportLogo} 
-                  alt="報告標誌" 
-                  className="w-32 h-32 md:w-40 md:h-40 mx-auto object-contain drop-shadow-lg animate-fade-in"
-                />
-              </div>
-              <div className="inline-block mb-4">
-                <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
-                  命理報告
-                </span>
-              </div>
-            </>
+            <div className="inline-block mb-4">
+              <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
+                命理報告
+              </span>
+            </div>
           )}
           <h1 
             className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground font-serif leading-tight tracking-tight"
@@ -714,6 +705,17 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
             <div className="w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
           </div>
         </header>
+
+        {/* Title Page Logo - only on first page */}
+        {currentPage === 0 && (
+          <div className="flex justify-center mb-12 animate-fade-in">
+            <img 
+              src={reportLogo} 
+              alt="報告標誌" 
+              className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-lg"
+            />
+          </div>
+        )}
 
         {/* Page Content */}
         <div 
