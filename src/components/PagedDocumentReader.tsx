@@ -696,25 +696,31 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
               
               setIsSendingFeedback(true);
               try {
-                // Send feedback via mailto as fallback
-                const email = "service@momo-chao.com";
-                const subject = encodeURIComponent(`報告反饋：${content.title}`);
-                const body = encodeURIComponent(
-                  `姓名：${feedbackName || "匿名"}\n\n報告：${content.title}\n\n反饋內容：\n${feedbackMessage}`
-                );
-                window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
+                const { data, error } = await supabase.functions.invoke("submit-feedback", {
+                  body: {
+                    documentId: documentId,
+                    documentTitle: content.title,
+                    customerName: feedbackName.trim() || null,
+                    message: feedbackMessage.trim(),
+                  },
+                });
+
+                if (error) {
+                  throw error;
+                }
                 
                 toast({
                   title: "感謝您的反饋",
-                  description: "您的意見對我們非常寶貴",
+                  description: "您的意見已成功送出",
                 });
                 setShowFeedbackDialog(false);
                 setFeedbackName("");
                 setFeedbackMessage("");
-              } catch (error) {
+              } catch (error: any) {
+                console.error("Feedback submission error:", error);
                 toast({
                   title: "發送失敗",
-                  description: "請稍後再試",
+                  description: error.message || "請稍後再試",
                   variant: "destructive",
                 });
               } finally {
