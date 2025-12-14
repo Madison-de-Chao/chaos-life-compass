@@ -347,6 +347,8 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
           audioRef.current = null;
           setIsPlaying(false);
         }
+        // Scroll to top of page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         // Reset animation state after enter animation
         setTimeout(() => setIsAnimating(false), 400);
       }, 50);
