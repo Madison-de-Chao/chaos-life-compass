@@ -98,13 +98,13 @@ const FilesPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="container mx-auto px-4 py-10">
+      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-10">
         {/* Page Header */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3">
+        <div className="mb-6 sm:mb-8 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-foreground mb-2 sm:mb-3">
             檔案管理
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             管理所有文件，查看統計資料與分享設定
           </p>
         </div>
@@ -113,20 +113,20 @@ const FilesPage = () => {
         <StatsOverview documents={documents} totalSize={totalSize} />
 
         {/* Search Bar */}
-        <div className="relative max-w-md mb-8 animate-slide-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+        <div className="relative max-w-md mb-6 sm:mb-8 animate-slide-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
           <Input
             type="text"
             placeholder="搜尋檔案名稱..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-12"
+            className="pl-9 sm:pl-10 h-10 sm:h-12 text-sm sm:text-base"
           />
         </div>
 
         {/* File List */}
         {filteredRecords.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredRecords.map((document, index) => (
               <div
                 key={document.id}

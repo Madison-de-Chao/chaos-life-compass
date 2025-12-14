@@ -1,18 +1,58 @@
-import { FileText, Upload, List, LogOut, User, Users, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import { FileText, Upload, List, LogOut, User, Users, MessageSquare, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export function Header() {
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
   const handleSignOut = async () => {
     await signOut();
+    setMobileMenuOpen(false);
   };
+
+  const navItems = [
+    { path: "/", label: "上傳", icon: Upload },
+    { path: "/files", label: "檔案管理", icon: List },
+    { path: "/customers", label: "客戶管理", icon: Users },
+    { path: "/feedbacks", label: "反饋", icon: MessageSquare },
+  ];
+
+  const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
+    <>
+      {navItems.map((item) => (
+        <Button
+          key={item.path}
+          asChild
+          variant={isActive(item.path) ? "secondary" : "ghost"}
+          size={mobile ? "lg" : "sm"}
+          className={cn(
+            isActive(item.path) && "shadow-soft",
+            mobile && "w-full justify-start text-base"
+          )}
+          onClick={() => mobile && setMobileMenuOpen(false)}
+        >
+          <Link to={item.path}>
+            <item.icon className={cn("w-4 h-4", mobile ? "mr-3" : "mr-2")} />
+            {item.label}
+          </Link>
+        </Button>
+      ))}
+    </>
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
@@ -26,57 +66,15 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-2">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-2">
           {user ? (
             <>
-              <Button
-                asChild
-                variant={isActive("/") ? "secondary" : "ghost"}
-                size="sm"
-                className={cn(isActive("/") && "shadow-soft")}
-              >
-                <Link to="/">
-                  <Upload className="w-4 h-4 mr-2" />
-                  上傳
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant={isActive("/files") ? "secondary" : "ghost"}
-                size="sm"
-                className={cn(isActive("/files") && "shadow-soft")}
-              >
-                <Link to="/files">
-                  <List className="w-4 h-4 mr-2" />
-                  檔案管理
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant={isActive("/customers") ? "secondary" : "ghost"}
-                size="sm"
-                className={cn(isActive("/customers") && "shadow-soft")}
-              >
-                <Link to="/customers">
-                  <Users className="w-4 h-4 mr-2" />
-                  客戶管理
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant={isActive("/feedbacks") ? "secondary" : "ghost"}
-                size="sm"
-                className={cn(isActive("/feedbacks") && "shadow-soft")}
-              >
-                <Link to="/feedbacks">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  反饋
-                </Link>
-              </Button>
+              <NavLinks />
               <div className="h-6 w-px bg-border mx-2" />
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <User className="w-4 h-4" />
-                <span className="hidden sm:inline max-w-[120px] truncate">
+                <span className="max-w-[120px] truncate">
                   {user.email}
                 </span>
               </div>
@@ -95,6 +93,45 @@ export function Header() {
             </Button>
           )}
         </nav>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden">
+          {user ? (
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-10 w-10">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-72">
+                <SheetHeader className="text-left pb-6 border-b border-border mb-6">
+                  <SheetTitle className="font-serif">選單</SheetTitle>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                    <User className="w-4 h-4" />
+                    <span className="truncate">{user.email}</span>
+                  </div>
+                </SheetHeader>
+                <nav className="flex flex-col gap-2">
+                  <NavLinks mobile />
+                  <div className="h-px bg-border my-4" />
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    onClick={handleSignOut}
+                    className="w-full justify-start text-base text-muted-foreground hover:text-foreground"
+                  >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    登出
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          ) : (
+            <Button asChild variant="hero" size="sm">
+              <Link to="/auth">登入</Link>
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   );

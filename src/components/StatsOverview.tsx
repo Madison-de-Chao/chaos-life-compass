@@ -50,22 +50,22 @@ export function StatsOverview({ documents, totalSize }: StatsOverviewProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
       {stats.map((stat, index) => (
         <div
           key={stat.label}
-          className="p-5 bg-card rounded-xl border border-border shadow-soft animate-slide-up"
+          className="p-3 sm:p-5 bg-card rounded-xl border border-border shadow-soft animate-slide-up"
           style={{ animationDelay: `${index * 0.05}s`, opacity: 0 }}
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className={`w-10 h-10 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
-              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
+              <stat.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.color}`} />
             </div>
           </div>
-          <p className="text-2xl font-bold text-foreground font-serif">
+          <p className="text-xl sm:text-2xl font-bold text-foreground font-serif">
             {stat.value}
           </p>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">
             {stat.label}
           </p>
         </div>
