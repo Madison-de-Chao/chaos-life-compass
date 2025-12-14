@@ -25,14 +25,38 @@ interface PagedDocumentReaderProps {
   className?: string;
 }
 
-// Check if text starts with ## (markdown heading level 2) - the only page break indicator
-const markdownH2Pattern = /^##\s+/;
+// Page break patterns
+// Check if text contains ## (markdown heading level 2) - can be anywhere in short line
+const markdownH2Pattern = /##\s+/;
+
+// Check if text contains 第X章 pattern (chapter indicator)
+const chapterPattern = /第\s*\d+\s*章/;
+
+// Check if text contains 【...】 bracket pattern (section titles)
+const bracketTitlePattern = /【[^】]+】/;
 
 function isNewSectionStart(text: string): boolean {
   const trimmed = text.trim();
   
-  // Only check for markdown ## heading pattern
-  return markdownH2Pattern.test(trimmed);
+  // Skip if the line is too long (likely a regular paragraph)
+  if (trimmed.length > 100) return false;
+  
+  // Check for markdown ## heading pattern
+  if (markdownH2Pattern.test(trimmed)) {
+    return true;
+  }
+  
+  // Check for 第X章 chapter pattern
+  if (chapterPattern.test(trimmed)) {
+    return true;
+  }
+  
+  // Check for 【...】 bracket pattern
+  if (bracketTitlePattern.test(trimmed)) {
+    return true;
+  }
+  
+  return false;
 }
 
 // Style title with first word/character enlarged and colored
