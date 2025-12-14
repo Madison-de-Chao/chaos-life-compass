@@ -209,13 +209,13 @@ export function DocumentEditor({
             </Card>
             
             {/* Insert Page Break Button between sections */}
-            <div className="flex justify-center py-1 relative z-10">
+            <div className="flex justify-center py-2 relative z-10">
               <button
                 onClick={() => addSection("pagebreak", index)}
-                className="px-3 py-1 text-xs text-muted-foreground hover:text-foreground bg-background border border-dashed border-muted-foreground/30 hover:border-primary rounded-full transition-all opacity-0 hover:opacity-100 focus:opacity-100"
+                className="px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground bg-muted/50 hover:bg-muted border border-dashed border-muted-foreground/40 hover:border-primary rounded-full transition-all"
               >
-                <SeparatorHorizontal className="w-3 h-3 inline mr-1" />
-                插入分頁
+                <SeparatorHorizontal className="w-3 h-3 inline mr-1.5" />
+                在此插入分頁
               </button>
             </div>
           </div>
