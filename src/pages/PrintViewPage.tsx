@@ -380,25 +380,40 @@ const PrintViewPage = () => {
           .document-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1em 0;
+            margin: 1.5em 0;
             font-size: 12px;
+            border: 2px solid #8b5a3c;
+            border-radius: 4px;
+            overflow: hidden;
           }
           
           .document-table th,
           .document-table td {
             border: 1px solid #d4a574;
-            padding: 8px 12px;
+            padding: 10px 14px;
             text-align: left;
+            vertical-align: top;
           }
           
           .document-table th {
-            background-color: #f5e6d3;
+            background: linear-gradient(135deg, #f5e6d3 0%, #ede0cc 100%);
             font-weight: bold;
             color: #8b5a3c;
+            border-bottom: 2px solid #8b5a3c;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          .document-table td {
+            background-color: #fffcf7;
           }
           
           .document-table tr:nth-child(even) td {
-            background-color: #faf7f2;
+            background-color: #faf5ed;
+          }
+          
+          .document-table tr:hover td {
+            background-color: #f5ebe0;
           }
         }
         
@@ -488,24 +503,39 @@ const PrintViewPage = () => {
           .document-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1em 0;
+            margin: 1.5em 0;
             font-size: 14px;
+            border: 2px solid hsl(var(--primary));
+            border-radius: 8px;
+            overflow: hidden;
           }
           
           .document-table th,
           .document-table td {
-            border: 1px solid hsl(var(--border));
-            padding: 8px 12px;
+            border: 1px solid hsl(var(--primary) / 0.3);
+            padding: 12px 16px;
             text-align: left;
+            vertical-align: top;
           }
           
           .document-table th {
-            background-color: hsl(var(--muted));
+            background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--muted) / 0.8) 100%);
             font-weight: bold;
             color: hsl(var(--primary));
+            border-bottom: 2px solid hsl(var(--primary));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          
+          .document-table td {
+            background-color: hsl(var(--card));
           }
           
           .document-table tr:nth-child(even) td {
+            background-color: hsl(var(--muted) / 0.3);
+          }
+          
+          .document-table tr:hover td {
             background-color: hsl(var(--muted) / 0.5);
           }
         }
