@@ -204,6 +204,8 @@ function parseMarkdownInHtml(html: string): string {
   let result = parseMarkdownTables(html);
   
   return result
+    // Remove #### (4 consecutive hash marks) but keep the text
+    .replace(/####\s*/g, '')
     // Bold: **text** or __text__
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/__(.+?)__/g, '<strong>$1</strong>')
