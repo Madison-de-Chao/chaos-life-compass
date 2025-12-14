@@ -461,7 +461,7 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
   const exportToPdf = async () => {
     setIsExporting(true);
     try {
-      // Create a container for the full document - must be visible for html2canvas
+      // Create a container for the full document
       const container = document.createElement('div');
       container.id = 'pdf-export-container';
       container.style.width = '794px'; // A4 width at 96dpi
@@ -471,11 +471,10 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       container.style.lineHeight = '1.8';
       container.style.color = '#1a1a1a';
       container.style.backgroundColor = '#ffffff';
-      container.style.position = 'fixed';
+      container.style.position = 'absolute';
       container.style.top = '0';
       container.style.left = '0';
-      container.style.zIndex = '-1';
-      container.style.opacity = '0';
+      container.style.zIndex = '10000';
       container.style.pointerEvents = 'none';
 
       // Add dual logos header
@@ -562,12 +561,8 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       copyrightFooter.textContent = `© ${new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有`;
       container.appendChild(copyrightFooter);
 
-      // Append to body
+      // Append to body - container is already visible
       document.body.appendChild(container);
-
-      // Make container visible for html2canvas
-      container.style.opacity = '1';
-      container.style.zIndex = '9999';
 
       // Wait for images to load
       const allImages = container.querySelectorAll('img');
