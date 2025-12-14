@@ -80,6 +80,11 @@ function htmlToSections(html: string): DocumentSection[] {
 export function sectionsToHtml(sections: DocumentSection[]): string {
   return sections
     .map((section) => {
+      // Handle page break
+      if (section.type === 'pagebreak') {
+        return `<div class="page-break" data-page-break="true"></div>`;
+      }
+
       const content = section.content
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
