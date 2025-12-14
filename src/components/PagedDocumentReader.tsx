@@ -24,7 +24,8 @@ interface PagedDocumentReaderProps {
 
 // Chinese section keywords that indicate a new page
 const sectionKeywords = [
-  /^第[一二三四五六七八九十百千]+[章節篇部回]/,  // 第一章、第二節
+  /^第[一二三四五六七八九十百千]+[章節篇部回]/,  // 第一章、第二節 (Chinese numerals)
+  /^第\d+[章節篇部回]/,                          // 第1章、第2節 (Arabic numerals)
   /^[壹貳參肆伍陸柒捌玖拾][\s、．.]/,           // 壹、貳、
   /^[一二三四五六七八九十]+[\s、．.]/,           // 一、二、
   /^[（(][一二三四五六七八九十壹貳參肆伍陸柒捌玖拾]+[）)]/,  // (一)、（二）
