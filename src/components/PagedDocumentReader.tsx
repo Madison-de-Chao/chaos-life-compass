@@ -249,7 +249,6 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
       continue;
     }
     
-    // Start new page on H1, H2 only (NOT H3), or keyword match
     const isHeading = tagName === 'h1' || tagName === 'h2';
     // Check for keyword match in any element type (not just p, strong, b)
     const isKeywordMatch = isNewSectionStart(textContent);
@@ -258,10 +257,11 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
       if (currentPage.content.trim()) {
         pages.push(currentPage);
       }
+      // Don't include the title element in content (avoid duplication)
       currentPage = { 
         title: textContent || '章節',
         styledTitle: styleTitle(textContent || '章節'),
-        content: element.outerHTML 
+        content: '' 
       };
     } else {
       currentPage.content += element.outerHTML;
@@ -706,13 +706,13 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           </div>
         </header>
 
-        {/* Title Page Logo - only on first page */}
+        {/* Cover Logo - only on first page */}
         {currentPage === 0 && (
-          <div className="flex justify-center mb-12 animate-fade-in">
+          <div className="flex justify-center items-center my-16 md:my-24 animate-fade-in">
             <img 
               src={reportLogo} 
               alt="報告標誌" 
-              className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-lg"
+              className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"
             />
           </div>
         )}
