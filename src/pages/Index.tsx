@@ -102,20 +102,20 @@ const Index = () => {
     <div className="min-h-screen gradient-hero">
       <Header />
 
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-10 sm:py-16">
         {/* Hero Section */}
-        <section className="text-center max-w-3xl mx-auto mb-20 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-6">
-            <Sparkles className="w-4 h-4" />
+        <section className="text-center max-w-3xl mx-auto mb-12 sm:mb-20 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-accent text-accent-foreground text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>將文件轉化為精美展示</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-foreground mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-foreground mb-4 sm:mb-6 leading-tight">
             讓您的文件
-            <span className="text-primary block mt-2">優雅呈現</span>
+            <span className="text-primary block mt-1 sm:mt-2">優雅呈現</span>
           </h1>
           
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-12">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 sm:mb-12 px-2">
             上傳 Word 文件，自動轉換為圖文並茂的展示網站。
             支援密碼保護分享，追蹤檔案紀錄。
           </p>
@@ -124,20 +124,20 @@ const Index = () => {
         </section>
 
         {/* Features Section */}
-        <section className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <section className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="p-6 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elevated transition-all duration-300 animate-slide-up"
+              className="p-5 sm:p-6 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elevated transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
             >
-              <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4">
-                <feature.icon className="w-6 h-6 text-accent-foreground" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center mb-3 sm:mb-4">
+                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent-foreground" />
               </div>
-              <h3 className="text-lg font-semibold font-serif text-foreground mb-2">
+              <h3 className="text-base sm:text-lg font-semibold font-serif text-foreground mb-1.5 sm:mb-2">
                 {feature.title}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-xs sm:text-sm">
                 {feature.description}
               </p>
             </div>

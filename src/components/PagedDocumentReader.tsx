@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send, LayoutDashboard } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useDrag } from "@use-gesture/react";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
@@ -473,12 +474,33 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
   const pageAnimationClass = flipDirection === 'right' 
     ? 'animate-page-flip-in-right' 
     : 'animate-page-flip-in-left';
+  
+  // Swipe gesture for mobile navigation
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bind = useDrag(
+    ({ movement: [mx], direction: [xDir], velocity: [vx], last, cancel }) => {
+      // Only trigger on horizontal swipes with enough velocity
+      if (last && Math.abs(mx) > 50 && vx > 0.2) {
+        if (xDir < 0 && currentPage < pages.length - 1) {
+          // Swipe left = next page
+          goToPage(currentPage + 1, 'right');
+        } else if (xDir > 0 && currentPage > 0) {
+          // Swipe right = previous page
+          goToPage(currentPage - 1, 'left');
+        }
+      }
+    },
+    { axis: 'x', filterTaps: true, threshold: 10 }
+  );
 
   return (
     <div 
-      className={cn("min-h-screen relative", className)}
+      ref={containerRef}
+      {...bind()}
+      className={cn("min-h-screen relative touch-pan-y", className)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
+      style={{ touchAction: 'pan-y' }}
     >
       {/* Decorative Background */}
       <div 
@@ -487,20 +509,20 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
       />
       <div className="fixed inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz4KPC9zdmc+')] opacity-50" />
       
-      {/* Header with Logos */}
-      <div className="fixed top-6 left-6 right-6 z-50 flex items-center justify-between pointer-events-none">
+      {/* Header with Logos - optimized for mobile */}
+      <div className="fixed top-3 sm:top-6 left-3 sm:left-6 right-3 sm:right-6 z-50 flex items-center justify-between pointer-events-none">
         {/* Left Logo - 超烜創意 */}
         <div className="pointer-events-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <img 
             src={logoChaoxuan} 
             alt="超烜創意" 
-            className="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
           />
         </div>
         
         {/* Page Counter */}
-        <div className="pointer-events-auto bg-card/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-soft border border-border/50">
-          <span className="text-sm font-medium text-muted-foreground">
+        <div className="pointer-events-auto bg-card/80 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-soft border border-border/50">
+          <span className="text-xs sm:text-sm font-medium text-muted-foreground">
             {currentPage + 1} / {pages.length}
           </span>
         </div>
@@ -510,23 +532,24 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
           <img 
             src={logoHongling} 
             alt="虹靈御所" 
-            className="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
           />
         </div>
       </div>
 
       {/* Admin Dashboard Button - Top Right below logo */}
       {isAdmin && (
-        <div className="fixed top-20 right-6 z-50">
+        <div className="fixed top-14 sm:top-20 right-3 sm:right-6 z-50">
           <Button
             variant="outline"
             size="sm"
             asChild
-            className="bg-card/80 backdrop-blur-sm shadow-soft hover:scale-105 transition-transform"
+            className="bg-card/80 backdrop-blur-sm shadow-soft hover:scale-105 transition-transform text-xs sm:text-sm h-8 sm:h-9"
           >
             <Link to="/files">
-              <LayoutDashboard className="w-4 h-4 mr-2" />
-              返回主控台
+              <LayoutDashboard className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+              <span className="hidden sm:inline">返回主控台</span>
+              <span className="sm:hidden">主控台</span>
             </Link>
           </Button>
         </div>
@@ -575,12 +598,12 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
 
       {/* Main Content */}
       <div 
-        className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32"
+        className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-32 pb-36 sm:pb-40"
         style={{ perspective: '1200px' }}
       >
         {/* Page Title */}
         <header 
-          className={cn("text-center", currentPage === 0 ? "mb-8 md:mb-12" : "mb-16", pageAnimationClass)}
+          className={cn("text-center", currentPage === 0 ? "mb-6 sm:mb-8 md:mb-12" : "mb-10 sm:mb-16", pageAnimationClass)}
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
@@ -591,7 +614,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
             </div>
           )}
           <h1 
-            className="text-[28px] md:text-[30px] lg:text-[32px] font-bold text-primary font-serif leading-tight tracking-tight"
+            className="text-[24px] sm:text-[28px] md:text-[30px] lg:text-[32px] font-bold text-primary font-serif leading-tight tracking-tight px-2"
             dangerouslySetInnerHTML={{ __html: page.styledTitle }}
           />
           <div className="flex items-center justify-center gap-4 mt-6 md:mt-8">
@@ -635,7 +658,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
         <div 
           key={`content-${currentPage}`}
           className={cn(
-            "document-page-content font-serif text-foreground/85 leading-[2.1] tracking-wide text-[20px] md:text-[21px] lg:text-[22px]",
+            "document-page-content font-serif text-foreground/85 leading-[1.9] sm:leading-[2.1] tracking-wide text-[17px] sm:text-[20px] md:text-[21px] lg:text-[22px]",
             pageAnimationClass
           )}
           style={{ animationDelay: '0.08s' }}

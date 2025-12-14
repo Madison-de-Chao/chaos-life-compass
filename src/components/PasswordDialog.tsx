@@ -35,28 +35,28 @@ export function PasswordDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md mx-4 max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center">
           {/* Dual Logos with Animation */}
-          <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4 sm:mb-6">
             <img 
               src={logoChaoxuan} 
               alt="超烜創意" 
-              className="h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
+              className="h-12 sm:h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
               style={{ animationDelay: '0.1s' }}
             />
             <img 
               src={logoHongling} 
               alt="虹靈御所" 
-              className="h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
+              className="h-12 sm:h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
               style={{ animationDelay: '0.2s' }}
             />
           </div>
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent flex items-center justify-center animate-scale-in">
-            <Lock className="w-8 h-8 text-accent-foreground" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-2xl bg-accent flex items-center justify-center animate-scale-in">
+            <Lock className="w-7 h-7 sm:w-8 sm:h-8 text-accent-foreground" />
           </div>
-          <DialogTitle className="text-2xl font-serif animate-fade-in" style={{ animationDelay: '0.15s' }}>此文件需要密碼</DialogTitle>
-          <DialogDescription className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <DialogTitle className="text-xl sm:text-2xl font-serif animate-fade-in" style={{ animationDelay: '0.15s' }}>此文件需要密碼</DialogTitle>
+          <DialogDescription className="text-sm sm:text-base animate-fade-in" style={{ animationDelay: '0.2s' }}>
             請輸入分享密碼以繼續閱讀
           </DialogDescription>
         </DialogHeader>
@@ -68,13 +68,13 @@ export function PasswordDialog({
               placeholder="輸入密碼"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="pr-10 h-12 text-base"
+              className="pr-10 h-11 sm:h-12 text-base"
               autoFocus
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -88,7 +88,7 @@ export function PasswordDialog({
             <p className="text-sm text-destructive text-center">{error}</p>
           )}
 
-          <Button type="submit" variant="hero" size="lg" className="w-full hover:scale-[1.02] transition-transform">
+          <Button type="submit" variant="hero" size="lg" className="w-full h-11 sm:h-12 hover:scale-[1.02] transition-transform">
             確認
           </Button>
         </form>
