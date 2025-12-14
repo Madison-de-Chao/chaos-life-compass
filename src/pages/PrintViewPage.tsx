@@ -323,10 +323,6 @@ const PrintViewPage = () => {
             page-break-after: auto;
           }
           
-          .print-page:not(:first-child) .print-header {
-            display: none;
-          }
-          
           .page-corner {
             display: none;
           }
@@ -335,17 +331,20 @@ const PrintViewPage = () => {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #d4a574;
           }
           
           .header-divider {
-            display: none;
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #d4a574, transparent);
+            margin: 0 15px;
           }
           
           .print-header img {
-            height: 50px;
+            height: 40px;
             width: auto;
           }
           
@@ -353,24 +352,31 @@ const PrintViewPage = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 60px auto 50px;
-            padding: 30px 0;
+            margin: 50px auto 40px;
+            padding: 20px 0;
           }
           
           .cover-logo {
-            width: 220px;
+            width: 200px;
             height: auto;
             display: block;
             margin: 0 auto;
-            filter: drop-shadow(0 8px 16px rgba(139, 90, 60, 0.2));
+            filter: drop-shadow(0 8px 16px rgba(139, 90, 60, 0.25));
           }
           
           .print-title {
             text-align: center;
             font-weight: bold;
-            color: #8b5a3c;
-            margin: 30px 0 20px;
-            line-height: 1.4;
+            color: #6b3a1a;
+            margin: 25px 0 15px;
+            line-height: 1.35;
+          }
+          
+          .print-title.cover-title {
+            font-size: 32px !important;
+            color: #5a2d0a;
+            margin: 35px 0 25px;
+            text-shadow: 1px 1px 2px rgba(139, 90, 60, 0.15);
           }
           
           .title-divider {
@@ -379,6 +385,20 @@ const PrintViewPage = () => {
             justify-content: center;
             gap: 12px;
             margin-bottom: 15px;
+          }
+          
+          .title-divider.cover-divider {
+            gap: 16px;
+            margin-bottom: 10px;
+          }
+          
+          .cover-divider .divider-line {
+            width: 80px;
+          }
+          
+          .cover-divider .divider-dot {
+            width: 10px;
+            height: 10px;
           }
           
           .divider-line {
@@ -395,9 +415,14 @@ const PrintViewPage = () => {
           }
           
           .first-char {
-            font-size: 1.15em;
+            font-size: 1.2em;
             font-weight: 900;
-            color: #8b5a3c;
+            color: #5a2d0a;
+          }
+          
+          .cover-title .first-char {
+            font-size: 1.3em;
+            color: #4a1d00;
           }
           
           .title-rest {
@@ -618,12 +643,32 @@ const PrintViewPage = () => {
             line-height: 1.3;
           }
           
+          .print-title.cover-title {
+            font-size: 36px !important;
+            color: hsl(var(--primary));
+            margin: 30px 0 20px;
+          }
+          
           .title-divider {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
             margin-bottom: 30px;
+          }
+          
+          .title-divider.cover-divider {
+            gap: 16px;
+            margin-bottom: 20px;
+          }
+          
+          .cover-divider .divider-line {
+            width: 100px;
+          }
+          
+          .cover-divider .divider-dot {
+            width: 12px;
+            height: 12px;
           }
           
           .divider-line {
@@ -795,13 +840,13 @@ const PrintViewPage = () => {
             
             {/* Page title with dynamic font size */}
             <h1 
-              className="print-title"
-              style={{ fontSize: getTitleFontSize(page.title) }}
+              className={`print-title ${index === 0 ? 'cover-title' : ''}`}
+              style={{ fontSize: index === 0 ? undefined : getTitleFontSize(page.title) }}
               dangerouslySetInnerHTML={{ __html: page.styledTitle }}
             />
             
             {/* Decorative divider */}
-            <div className="title-divider">
+            <div className={`title-divider ${index === 0 ? 'cover-divider' : ''}`}>
               <span className="divider-line" />
               <span className="divider-dot" />
               <span className="divider-line" />
