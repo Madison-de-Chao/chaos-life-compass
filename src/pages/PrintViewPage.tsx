@@ -413,12 +413,65 @@ const PrintViewPage = () => {
             bottom: 50px;
             left: 50px;
             right: 50px;
-            font-size: 9px;
+            font-size: 8px;
             color: #999;
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.5;
             border-top: 1px solid #d4a574;
-            padding-top: 15px;
+            padding-top: 12px;
+          }
+          
+          .cover-disclaimer p {
+            margin: 2px 0;
+          }
+          
+          /* TOC Page Styles */
+          .toc-page {
+            page-break-after: always;
+            min-height: 100vh;
+            padding: 50px;
+            box-sizing: border-box;
+            position: relative;
+          }
+          
+          .toc-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #5a2d0a;
+            margin: 30px 0 40px;
+          }
+          
+          .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+          }
+          
+          .toc-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #333;
+          }
+          
+          .toc-item-title {
+            flex-shrink: 0;
+            max-width: 80%;
+          }
+          
+          .toc-item-dots {
+            flex: 1;
+            border-bottom: 1px dotted #d4a574;
+            margin: 0 8px;
+            min-width: 20px;
+          }
+          
+          .toc-item-page {
+            flex-shrink: 0;
+            color: #8b5a3c;
+            font-weight: bold;
           }
           
           .print-page {
@@ -724,13 +777,77 @@ const PrintViewPage = () => {
           }
           
           .cover-disclaimer {
-            font-size: 11px;
+            font-size: 10px;
             color: hsl(var(--muted-foreground));
             text-align: center;
-            line-height: 1.7;
+            line-height: 1.6;
             border-top: 1px solid hsl(var(--primary) / 0.3);
             padding-top: 20px;
             margin-top: auto;
+          }
+          
+          .cover-disclaimer p {
+            margin: 3px 0;
+          }
+          
+          /* TOC Page Styles - Screen */
+          .toc-page {
+            max-width: 850px;
+            margin: 0 auto 50px;
+            padding: 50px;
+            background: linear-gradient(to bottom, #fffdf9, #fff);
+            box-shadow: 
+              0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 20px 40px -10px rgba(139, 90, 60, 0.15),
+              0 0 0 1px rgba(212, 165, 116, 0.2);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .toc-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: hsl(var(--primary));
+            margin: 30px 0 40px;
+          }
+          
+          .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+          }
+          
+          .toc-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: hsl(var(--foreground));
+            transition: all 0.2s ease;
+          }
+          
+          .toc-item:hover {
+            color: hsl(var(--primary));
+          }
+          
+          .toc-item-title {
+            flex-shrink: 0;
+            max-width: 80%;
+          }
+          
+          .toc-item-dots {
+            flex: 1;
+            border-bottom: 1px dotted hsl(var(--primary) / 0.4);
+            margin: 0 12px;
+            min-width: 20px;
+          }
+          
+          .toc-item-page {
+            flex-shrink: 0;
+            color: hsl(var(--primary));
+            font-weight: bold;
           }
           
           .print-page {
@@ -1042,7 +1159,7 @@ const PrintViewPage = () => {
           </div>
         </div>
         <div className="text-center text-xs text-muted-foreground pb-2">
-          封面 + {pages.length} 頁內容
+          封面 + 目錄 + {pages.length} 頁內容
         </div>
       </div>
 
@@ -1085,10 +1202,34 @@ const PrintViewPage = () => {
           
           {/* Disclaimer */}
           <div className="cover-disclaimer">
-            <p>免責聲明：本報告內容僅供參考，不構成任何形式的專業建議。</p>
-            <p>報告中的分析與解讀基於命理學原理，實際情況可能因個人選擇與環境變化而有所不同。</p>
-            <p>本報告為付費內容，未經授權禁止轉載、複製或分享。</p>
+            <p><strong>免責聲明</strong></p>
+            <p>本報告內容僅供個人參考使用，不構成任何形式的專業建議（包括但不限於醫療、法律、財務或心理諮詢）。</p>
+            <p>報告中的分析與解讀基於命理學原理，旨在提供自我探索的參考方向，實際情況可能因個人選擇、環境變化及多重因素而有所不同。</p>
+            <p>本報告為付費授權內容，僅供購買者本人閱讀使用。未經書面授權，禁止以任何形式轉載、複製、傳播或用於商業用途。</p>
+            <p>© {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有</p>
           </div>
+        </div>
+        
+        {/* Table of Contents Page */}
+        <div className="toc-page">
+          {/* Header with logos */}
+          <div className="print-header">
+            <img src={logoChaoxuan} alt="超烜創意" />
+            <div className="header-divider" />
+            <img src={logoHongling} alt="虹靈御所" />
+          </div>
+          
+          <h2 className="toc-title">目 錄</h2>
+          
+          <ul className="toc-list">
+            {pages.map((page, index) => (
+              <li key={index} className="toc-item">
+                <span className="toc-item-title">{page.title}</span>
+                <span className="toc-item-dots" />
+                <span className="toc-item-page">{index + 1}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         
         {/* Content Pages */}
