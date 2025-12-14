@@ -353,30 +353,32 @@ const PrintViewPage = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 40px 0;
+            margin: 60px auto 50px;
+            padding: 30px 0;
           }
           
           .cover-logo {
-            width: 200px;
+            width: 220px;
             height: auto;
             display: block;
             margin: 0 auto;
+            filter: drop-shadow(0 8px 16px rgba(139, 90, 60, 0.2));
           }
           
           .print-title {
             text-align: center;
             font-weight: bold;
             color: #8b5a3c;
-            margin: 20px 0;
-            line-height: 1.3;
+            margin: 30px 0 20px;
+            line-height: 1.4;
           }
           
           .title-divider {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 15px;
           }
           
           .divider-line {
