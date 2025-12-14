@@ -6,6 +6,8 @@ import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Download } 
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import html2pdf from "html2pdf.js";
+import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoHongling from "@/assets/logo-hongling.png";
 
 interface DocumentSection {
   id: string;
@@ -367,6 +369,31 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
       container.style.color = '#1a1a1a';
       container.style.backgroundColor = '#ffffff';
 
+      // Add dual logos header
+      const logoHeader = document.createElement('div');
+      logoHeader.style.display = 'flex';
+      logoHeader.style.justifyContent = 'space-between';
+      logoHeader.style.alignItems = 'center';
+      logoHeader.style.marginBottom = '30px';
+      logoHeader.style.paddingBottom = '20px';
+      logoHeader.style.borderBottom = '1px solid #d4a574';
+
+      const leftLogo = document.createElement('img');
+      leftLogo.src = logoChaoxuan;
+      leftLogo.alt = '超烜創意';
+      leftLogo.style.height = '50px';
+      leftLogo.style.width = 'auto';
+      
+      const rightLogo = document.createElement('img');
+      rightLogo.src = logoHongling;
+      rightLogo.alt = '虹靈御所';
+      rightLogo.style.height = '50px';
+      rightLogo.style.width = 'auto';
+
+      logoHeader.appendChild(leftLogo);
+      logoHeader.appendChild(rightLogo);
+      container.appendChild(logoHeader);
+
       // Add title
       const titleEl = document.createElement('h1');
       titleEl.textContent = content.title;
@@ -486,20 +513,41 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
       />
       <div className="fixed inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz4KPC9zdmc+')] opacity-50" />
       
-      {/* Page Counter */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-card/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-soft border border-border/50">
-        <span className="text-sm font-medium text-muted-foreground">
-          {currentPage + 1} / {pages.length}
-        </span>
+      {/* Header with Logos */}
+      <div className="fixed top-6 left-6 right-6 z-50 flex items-center justify-between pointer-events-none">
+        {/* Left Logo - 超烜創意 */}
+        <div className="pointer-events-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <img 
+            src={logoChaoxuan} 
+            alt="超烜創意" 
+            className="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+          />
+        </div>
+        
+        {/* Page Counter */}
+        <div className="pointer-events-auto bg-card/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-soft border border-border/50">
+          <span className="text-sm font-medium text-muted-foreground">
+            {currentPage + 1} / {pages.length}
+          </span>
+        </div>
+        
+        {/* Right Logo - 虹靈御所 */}
+        <div className="pointer-events-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <img 
+            src={logoHongling} 
+            alt="虹靈御所" 
+            className="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+          />
+        </div>
       </div>
 
-      {/* Top Controls */}
-      <div className="fixed top-6 left-6 z-50 flex items-center gap-3">
+      {/* Bottom Left Controls */}
+      <div className="fixed bottom-24 left-6 z-50 flex flex-col items-center gap-3">
         <Button
           asChild
           variant="outline"
           size="icon"
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
+          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           <Link to="/">
             <Home className="w-5 h-5" />
@@ -510,7 +558,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           size="icon"
           onClick={toggleAudio}
           disabled={isLoading}
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
+          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           {isLoading ? (
             <Loader2 className="w-5 h-5 animate-spin" />
@@ -525,7 +573,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           size="icon"
           onClick={exportToPdf}
           disabled={isExporting}
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
+          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
           title="匯出 PDF"
         >
           {isExporting ? (
