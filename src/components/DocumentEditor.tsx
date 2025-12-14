@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown } from "lucide-react";
+import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 export interface DocumentSection {
   id: string;
-  type: "heading" | "paragraph" | "quote" | "pagebreak";
+  type: "heading" | "paragraph" | "quote" | "pagebreak" | "image";
   content: string;
   level?: number;
+  imageUrl?: string;
 }
 
 interface DocumentEditorProps {
@@ -31,12 +34,82 @@ export function DocumentEditor({
   const [title, setTitle] = useState(initialTitle);
   const [sections, setSections] = useState<DocumentSection[]>(initialSections);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingImageId, setUploadingImageId] = useState<string | null>(null);
+
   const addSection = (type: DocumentSection["type"], insertAfterIndex?: number) => {
     const newSection: DocumentSection = {
       id: `section-${Date.now()}`,
       type,
       content: "",
       level: type === "heading" ? 2 : undefined,
+    };
+    if (insertAfterIndex !== undefined) {
+      const newSections = [...sections];
+      newSections.splice(insertAfterIndex + 1, 0, newSection);
+      setSections(newSections);
+    } else {
+      setSections([...sections, newSection]);
+    }
+  };
+
+  const handleImageUpload = async (file: File, sectionId: string) => {
+    setUploadingImageId(sectionId);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `document-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('documents')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('documents')
+        .getPublicUrl(filePath);
+
+      setSections(
+        sections.map((s) => 
+          s.id === sectionId ? { ...s, imageUrl: publicUrl, content: file.name } : s
+        )
+      );
+
+      toast({
+        title: "圖片上傳成功",
+        description: "圖片已成功添加到文件中",
+      });
+    } catch (error) {
+      console.error('Image upload error:', error);
+      toast({
+        title: "上傳失敗",
+        description: "圖片上傳失敗，請重試",
+        variant: "destructive",
+      });
+    } finally {
+      setUploadingImageId(null);
+    }
+  };
+
+  const triggerImageUpload = (sectionId: string) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        handleImageUpload(file, sectionId);
+      }
+    };
+    input.click();
+  };
+
+  const addImageSection = (insertAfterIndex?: number) => {
+    const newSection: DocumentSection = {
+      id: `section-${Date.now()}`,
+      type: "image",
+      content: "",
     };
     if (insertAfterIndex !== undefined) {
       const newSections = [...sections];
@@ -129,6 +202,61 @@ export function DocumentEditor({
                   <button
                     onClick={() => removeSection(section.id)}
                     className="p-2 hover:bg-destructive/10 rounded text-destructive/60 hover:text-destructive transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : section.type === "image" ? (
+                <div className="flex items-center justify-between py-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex flex-col gap-0.5">
+                      <button
+                        onClick={() => moveSection(index, "up")}
+                        disabled={index === 0}
+                        className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                      >
+                        <ChevronUp className="w-3 h-3 text-muted-foreground" />
+                      </button>
+                      <button
+                        onClick={() => moveSection(index, "down")}
+                        disabled={index === sections.length - 1}
+                        className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                      >
+                        <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                      </button>
+                    </div>
+                    <div className="flex-1">
+                      {section.imageUrl ? (
+                        <div className="relative">
+                          <img 
+                            src={section.imageUrl} 
+                            alt={section.content || "上傳的圖片"}
+                            className="max-h-48 rounded-lg object-contain"
+                          />
+                          <button
+                            onClick={() => triggerImageUpload(section.id)}
+                            className="absolute bottom-2 right-2 px-3 py-1 bg-background/80 backdrop-blur-sm rounded text-xs hover:bg-background"
+                          >
+                            更換圖片
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => triggerImageUpload(section.id)}
+                          disabled={uploadingImageId === section.id}
+                          className="flex items-center gap-3 px-6 py-8 border-2 border-dashed border-muted-foreground/30 rounded-lg hover:border-primary/50 transition-colors w-full justify-center"
+                        >
+                          <ImageIcon className="w-6 h-6 text-muted-foreground" />
+                          <span className="text-muted-foreground">
+                            {uploadingImageId === section.id ? "上傳中..." : "點擊上傳圖片"}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => removeSection(section.id)}
+                    className="p-2 hover:bg-destructive/10 rounded text-destructive/60 hover:text-destructive transition-colors ml-2"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -262,6 +390,15 @@ export function DocumentEditor({
             >
               <SeparatorHorizontal className="w-4 h-4" />
               插入分頁
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addImageSection()}
+              className="gap-2"
+            >
+              <ImageIcon className="w-4 h-4" />
+              新增圖片
             </Button>
           </div>
 

@@ -56,14 +56,79 @@ function isNewSectionStart(text: string): boolean {
   return sectionKeywords.some(regex => regex.test(trimmed));
 }
 
-// Parse HTML content into pages (each major section = 1 page)
-function parseHtmlToPages(html: string, title: string): { title: string; content: string }[] {
+// Style title with first word/character enlarged and colored
+function styleTitle(title: string): string {
+  if (!title.trim()) return title;
+  
+  // Check if starts with Chinese character
+  const firstChar = title.trim()[0];
+  const isChinese = /[\u4e00-\u9fff]/.test(firstChar);
+  
+  if (isChinese) {
+    // For Chinese: first character enlarged
+    const rest = title.trim().slice(1);
+    return `<span class="text-primary text-[1.2em] font-black">${firstChar}</span>${rest}`;
+  } else {
+    // For English: first word enlarged
+    const words = title.trim().split(/\s+/);
+    if (words.length > 1) {
+      return `<span class="text-primary text-[1.2em] font-black">${words[0]}</span> ${words.slice(1).join(' ')}`;
+    }
+    return `<span class="text-primary text-[1.2em] font-black">${words[0]}</span>`;
+  }
+}
+
+// Apply bold styling to section keyword lines
+function styleSectionKeywords(html: string): string {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const elements = Array.from(doc.body.children);
   
-  const pages: { title: string; content: string }[] = [];
-  let currentPage = { title: title, content: '' };
+  for (const element of elements) {
+    const textContent = element.textContent?.trim() || '';
+    if (isNewSectionStart(textContent)) {
+      // Make the entire element bold
+      element.classList.add('font-bold');
+      if (element.tagName.toLowerCase() === 'p') {
+        const strong = doc.createElement('strong');
+        strong.innerHTML = element.innerHTML;
+        element.innerHTML = '';
+        element.appendChild(strong);
+      }
+    }
+  }
+  
+  return doc.body.innerHTML;
+}
+
+// Parse markdown in HTML content
+function parseMarkdownInHtml(html: string): string {
+  return html
+    // Bold: **text** or __text__
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    // Italic: *text* or _text_
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    // Headings: ### text (only at start of line)
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+}
+
+// Parse HTML content into pages (each major section = 1 page)
+function parseHtmlToPages(html: string, title: string): { title: string; styledTitle: string; content: string }[] {
+  // First apply markdown parsing
+  let processedHtml = parseMarkdownInHtml(html);
+  // Then apply section keyword styling
+  processedHtml = styleSectionKeywords(processedHtml);
+  
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(processedHtml, 'text/html');
+  const elements = Array.from(doc.body.children);
+  
+  const pages: { title: string; styledTitle: string; content: string }[] = [];
+  let currentPage = { title: title, styledTitle: styleTitle(title), content: '' };
   let isFirstPage = true;
 
   for (const element of elements) {
@@ -78,6 +143,7 @@ function parseHtmlToPages(html: string, title: string): { title: string; content
       }
       currentPage = { 
         title: textContent || '新頁面',
+        styledTitle: styleTitle(textContent || '新頁面'),
         content: element.outerHTML 
       };
       continue;
@@ -94,6 +160,7 @@ function parseHtmlToPages(html: string, title: string): { title: string; content
       }
       currentPage = { 
         title: textContent || '章節',
+        styledTitle: styleTitle(textContent || '章節'),
         content: element.outerHTML 
       };
     } else {
@@ -109,7 +176,7 @@ function parseHtmlToPages(html: string, title: string): { title: string; content
 
   // If no pages were created, return the whole content as one page
   if (pages.length === 0) {
-    pages.push({ title, content: html });
+    pages.push({ title, styledTitle: styleTitle(title), content: processedHtml });
   }
 
   return pages;
@@ -138,10 +205,11 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
     if (content.sections) {
       return content.sections.map((section, idx) => ({
         title: section.type === 'heading' ? section.content : `段落 ${idx + 1}`,
+        styledTitle: styleTitle(section.type === 'heading' ? section.content : `段落 ${idx + 1}`),
         content: `<p>${section.content}</p>`,
       }));
     }
-    return [{ title: content.title, content: '' }];
+    return [{ title: content.title, styledTitle: styleTitle(content.title), content: '' }];
   }, [content]);
 
   const goToPage = useCallback((page: number, direction?: 'left' | 'right') => {
@@ -330,9 +398,10 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
               </span>
             </div>
           )}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground font-serif leading-tight tracking-tight">
-            {page.title}
-          </h1>
+          <h1 
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground font-serif leading-tight tracking-tight"
+            dangerouslySetInnerHTML={{ __html: page.styledTitle }}
+          />
           <div className="flex items-center justify-center gap-4 mt-8">
             <div className="w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
             <div className="w-2.5 h-2.5 rounded-full bg-primary/30 animate-pulse" />
