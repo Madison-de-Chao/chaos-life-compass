@@ -292,8 +292,8 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
     
     // Start new page on H1, H2, H3, or keyword match
     const isHeading = tagName === 'h1' || tagName === 'h2' || tagName === 'h3';
-    const isKeywordMatch = (tagName === 'p' || tagName === 'strong' || tagName === 'b') && 
-                           isNewSectionStart(textContent);
+    // Check for keyword match in any element type (not just p, strong, b)
+    const isKeywordMatch = isNewSectionStart(textContent);
     
     if ((isHeading || isKeywordMatch) && !isFirstPage) {
       if (currentPage.content.trim()) {
