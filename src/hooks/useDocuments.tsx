@@ -162,7 +162,24 @@ export function useDocuments() {
 }
 
 // Fetch document by share link (for public viewing)
+// Returns document even if is_public=false so caller can show appropriate message
 export async function getDocumentByShareLink(shareLink: string): Promise<Document | null> {
+  const { data, error } = await supabase
+    .from("documents")
+    .select("*")
+    .eq("share_link", shareLink)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+
+  return data;
+}
+
+// Fetch public document only (for RLS-protected queries)
+export async function getPublicDocumentByShareLink(shareLink: string): Promise<Document | null> {
   const { data, error } = await supabase
     .from("documents")
     .select("*")

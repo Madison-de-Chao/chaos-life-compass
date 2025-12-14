@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { getDocumentByShareLink, Document } from "@/hooks/useDocuments";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Printer } from "lucide-react";
@@ -149,7 +150,12 @@ function isNewSectionStart(text: string): boolean {
 
 // Parse HTML content into pages
 function parseHtmlToPages(html: string, title: string): { title: string; styledTitle: string; content: string }[] {
-  let processedHtml = parseMarkdownInHtml(html);
+  // Sanitize HTML to prevent XSS
+  const sanitizedHtml = DOMPurify.sanitize(html, {
+    ADD_TAGS: ['table', 'tr', 'td', 'th', 'thead', 'tbody'],
+    ADD_ATTR: ['data-page-break', 'class'],
+  });
+  let processedHtml = parseMarkdownInHtml(sanitizedHtml);
   
   const parser = new DOMParser();
   const doc = parser.parseFromString(processedHtml, 'text/html');
@@ -217,13 +223,26 @@ const PrintViewPage = () => {
       if (shareLink) {
         const doc = await getDocumentByShareLink(shareLink);
         if (doc) {
+          // Check if document is public
+          if (doc.is_public === false) {
+            setNotFound(true);
+            setLoading(false);
+            return;
+          }
+          
           // Check if password protected - use server-side check
           const { data: hasPassword } = await supabase.rpc('document_has_password', { 
             doc_share_link: shareLink 
           });
           if (hasPassword) {
-            navigate(`/view/${shareLink}`);
-            return;
+            // Check if already authenticated via sessionStorage
+            const authKey = `doc_auth_${shareLink}`;
+            const isAlreadyAuth = sessionStorage.getItem(authKey) === 'true';
+            if (!isAlreadyAuth) {
+              // Redirect to view page for password entry
+              navigate(`/view/${shareLink}`);
+              return;
+            }
           }
           setDocData(doc);
         } else {

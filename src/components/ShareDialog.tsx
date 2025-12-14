@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Share2, Copy, Check, Link2, Lock } from "lucide-react";
+import { Share2, Copy, Check, Link2, Lock, Globe, GlobeLock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,6 +32,8 @@ export function ShareDialog({
   const [showPasswordToggle, setShowPasswordToggle] = useState(false);
   const [customPassword, setCustomPassword] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
+  const [isSavingPublic, setIsSavingPublic] = useState(false);
 
   useEffect(() => {
     if (document) {
@@ -39,6 +41,8 @@ export function ShareDialog({
       setShowPasswordToggle(!!document.password_hash);
       // Don't show the actual password - user must enter a new one if they want to change it
       setCustomPassword("");
+      // Set public status
+      setIsPublic(document.is_public ?? true);
     }
   }, [document]);
 
@@ -104,6 +108,36 @@ export function ShareDialog({
     setIsSaving(false);
   };
 
+  const handleTogglePublic = async () => {
+    setIsSavingPublic(true);
+    const newPublicState = !isPublic;
+    
+    const { data, error } = await supabase
+      .from("documents")
+      .update({ is_public: newPublicState })
+      .eq("id", document.id)
+      .select()
+      .single();
+
+    if (error) {
+      toast({
+        title: "更新失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      setIsPublic(newPublicState);
+      toast({
+        title: newPublicState ? "已公開" : "已停用公開",
+        description: newPublicState ? "文件現在可以透過連結訪問" : "文件已停用公開訪問",
+      });
+      if (onUpdate && data) {
+        onUpdate(data);
+      }
+    }
+    setIsSavingPublic(false);
+  };
+
   // Password changed if toggle is on and there's input, or toggle changed state
   const passwordChanged = showPasswordToggle
     ? customPassword.trim() !== ""
@@ -158,6 +192,24 @@ export function ShareDialog({
             )}
           </div>
 
+          {/* Public Access Toggle */}
+          <div className="space-y-4 p-4 rounded-xl bg-accent/50">
+            <div className="flex items-center justify-between">
+              <Label className="flex items-center gap-2 cursor-pointer">
+                {isPublic ? <Globe className="w-4 h-4 text-green-600" /> : <GlobeLock className="w-4 h-4 text-muted-foreground" />}
+                公開訪問
+              </Label>
+              <Switch
+                checked={isPublic}
+                onCheckedChange={handleTogglePublic}
+                disabled={isSavingPublic}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {isPublic ? "任何人都可以透過連結查看此文件" : "文件已停用，訪客將無法查看"}
+            </p>
+          </div>
+
           {/* Password Protection */}
           <div className="space-y-4 p-4 rounded-xl bg-accent/50">
             <div className="flex items-center justify-between">
@@ -198,9 +250,15 @@ export function ShareDialog({
             )}
           </div>
 
-          <Button variant="hero" size="lg" className="w-full" onClick={handleCopy}>
+          <Button variant="hero" size="lg" className="w-full" onClick={handleCopy} disabled={!isPublic}>
             {copied ? "已複製！" : "複製分享連結"}
           </Button>
+          
+          {!isPublic && (
+            <p className="text-xs text-center text-amber-600">
+              文件已停用公開，請先啟用公開訪問才能分享
+            </p>
+          )}
         </div>
       </DialogContent>
     </Dialog>
