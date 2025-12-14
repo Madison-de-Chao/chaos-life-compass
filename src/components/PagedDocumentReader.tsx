@@ -24,37 +24,64 @@ interface PagedDocumentReaderProps {
 }
 
 // Chinese section keywords that indicate a new page
-const sectionKeywords = [
-  /^第[一二三四五六七八九十百千]+[章節篇部回]/,  // 第一章、第二節 (Chinese numerals)
-  /^第\d+[章節篇部回]/,                          // 第1章、第2節 (Arabic numerals)
-  /^[壹貳參肆伍陸柒捌玖拾][\s、．.]/,           // 壹、貳、
-  /^[一二三四五六七八九十]+[\s、．.]/,           // 一、二、
-  /^[（(][一二三四五六七八九十壹貳參肆伍陸柒捌玖拾]+[）)]/,  // (一)、（二）
-  /^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ][\s、．.]/,                // Ⅰ、Ⅱ、
-  // Custom section titles for astrological reports
-  /^開場自序/,
-  /^使用說明/,
-  /^基本資料/,
-  /^人生羅盤/,
-  /^內在個性/,
-  /^外在性格/,
-  /^思考方式/,
-  /^行事風格/,
-  /^事業解析/,
-  /^愛情解析/,
-  /^金錢解析/,
-  /^特別注意/,
-  /^各系統特殊提醒/,
-  /^圓滿的你/,
-  /^你為什麼需要默默超思維/,
-  /^結語大總結/,
-  /^Bonus[：:]/,  // Matches Bonus: or Bonus：
-  /^完成註記/,
+// These keywords can appear with symbols/text before or after, but the line should be short
+const sectionKeywordPatterns = [
+  /第[一二三四五六七八九十百千]+[章節篇部回]/,  // 第一章、第二節 (Chinese numerals)
+  /第\d+[章節篇部回]/,                          // 第1章、第2節 (Arabic numerals)
+  /[壹貳參肆伍陸柒捌玖拾][\s、．.\s]/,           // 壹、貳、
+  /[一二三四五六七八九十]+[\s、．.]/,           // 一、二、
+  /[（(][一二三四五六七八九十壹貳參肆伍陸柒捌玖拾]+[）)]/,  // (一)、（二）
+  /[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ][\s、．.]/,                // Ⅰ、Ⅱ、
 ];
+
+// Exact section titles for astrological reports (can appear anywhere in a short line)
+const sectionTitleKeywords = [
+  '開場自序',
+  '使用說明',
+  '基本資料',
+  '人生羅盤',
+  '內在個性',
+  '外在性格',
+  '思考方式',
+  '行事風格',
+  '事業解析',
+  '愛情解析',
+  '金錢解析',
+  '特別注意',
+  '各系統特殊提醒',
+  '圓滿的你',
+  '你為什麼需要默默超思維',
+  '結語大總結',
+  '生活方式建議',
+  '四時八字軍團',
+  '完成註記',
+];
+
+// Check if text contains "Bonus" followed by colon
+const bonusPattern = /Bonus\s*[：:]/i;
 
 function isNewSectionStart(text: string): boolean {
   const trimmed = text.trim();
-  return sectionKeywords.some(regex => regex.test(trimmed));
+  
+  // Skip if the line is too long (likely a regular paragraph)
+  if (trimmed.length > 50) return false;
+  
+  // Check for section keyword patterns (regex)
+  if (sectionKeywordPatterns.some(regex => regex.test(trimmed))) {
+    return true;
+  }
+  
+  // Check for exact section title keywords (can be anywhere in the text)
+  if (sectionTitleKeywords.some(keyword => trimmed.includes(keyword))) {
+    return true;
+  }
+  
+  // Check for Bonus pattern
+  if (bonusPattern.test(trimmed)) {
+    return true;
+  }
+  
+  return false;
 }
 
 // Style title with first word/character enlarged and colored
