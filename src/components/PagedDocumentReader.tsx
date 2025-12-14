@@ -125,6 +125,8 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [flipDirection, setFlipDirection] = useState<'left' | 'right'>('right');
+  const [isAnimating, setIsAnimating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const pages = useMemo(() => {
@@ -141,25 +143,35 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
     return [{ title: content.title, content: '' }];
   }, [content]);
 
-  const goToPage = useCallback((page: number) => {
-    if (page >= 0 && page < pages.length) {
-      setCurrentPage(page);
-      // Stop audio when changing pages
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-        setIsPlaying(false);
-      }
+  const goToPage = useCallback((page: number, direction?: 'left' | 'right') => {
+    if (page >= 0 && page < pages.length && !isAnimating) {
+      // Determine direction based on page difference if not specified
+      const dir = direction || (page > currentPage ? 'right' : 'left');
+      setFlipDirection(dir);
+      setIsAnimating(true);
+      
+      // Small delay for exit animation
+      setTimeout(() => {
+        setCurrentPage(page);
+        // Stop audio when changing pages
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current = null;
+          setIsPlaying(false);
+        }
+        // Reset animation state after enter animation
+        setTimeout(() => setIsAnimating(false), 400);
+      }, 50);
     }
-  }, [pages.length]);
+  }, [pages.length, currentPage, isAnimating]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
-      goToPage(currentPage + 1);
+      goToPage(currentPage + 1, 'right');
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      goToPage(currentPage - 1);
+      goToPage(currentPage - 1, 'left');
     }
   }, [currentPage, goToPage]);
 
@@ -245,6 +257,11 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
 
   const page = pages[currentPage];
   const patternIndex = currentPage % patterns.length;
+  
+  // Animation class based on flip direction
+  const pageAnimationClass = flipDirection === 'right' 
+    ? 'animate-page-flip-in-right' 
+    : 'animate-page-flip-in-left';
 
   return (
     <div 
@@ -296,10 +313,13 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32">
+      <div 
+        className="relative z-10 max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32"
+        style={{ perspective: '1200px' }}
+      >
         {/* Page Title */}
         <header 
-          className="text-center mb-16 animate-fade-in"
+          className={cn("text-center mb-16", pageAnimationClass)}
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
@@ -322,7 +342,11 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
         {/* Page Content */}
         <div 
           key={`content-${currentPage}`}
-          className="document-page-content animate-fade-in font-serif text-foreground/85 leading-[2.4] tracking-wide text-lg md:text-xl lg:text-2xl"
+          className={cn(
+            "document-page-content font-serif text-foreground/85 leading-[2.4] tracking-wide text-lg md:text-xl lg:text-2xl",
+            pageAnimationClass
+          )}
+          style={{ animationDelay: '0.08s' }}
           dangerouslySetInnerHTML={{ __html: page.content }}
         />
       </div>
@@ -333,9 +357,9 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           <Button
             variant="outline"
             size="lg"
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage === 0}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105"
+            onClick={() => goToPage(currentPage - 1, 'left')}
+            disabled={currentPage === 0 || isAnimating}
+            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105 active:scale-95"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             上一頁
@@ -347,6 +371,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
               <button
                 key={idx}
                 onClick={() => goToPage(idx)}
+                disabled={isAnimating}
                 className={cn(
                   "w-2.5 h-2.5 rounded-full transition-all duration-300",
                   idx === currentPage 
@@ -360,9 +385,9 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           <Button
             variant="outline"
             size="lg"
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage === pages.length - 1}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105"
+            onClick={() => goToPage(currentPage + 1, 'right')}
+            disabled={currentPage === pages.length - 1 || isAnimating}
+            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105 active:scale-95"
           >
             下一頁
             <ChevronRight className="w-5 h-5 ml-2" />
