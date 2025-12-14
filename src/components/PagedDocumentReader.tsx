@@ -696,7 +696,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
             </div>
           )}
           <h1 
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground font-serif leading-tight tracking-tight"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary font-serif leading-tight tracking-tight"
             dangerouslySetInnerHTML={{ __html: page.styledTitle }}
           />
           <div className="flex items-center justify-center gap-4 mt-8">
