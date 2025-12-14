@@ -61,7 +61,7 @@ function isNewSectionStart(text: string): boolean {
   return false;
 }
 
-// Style title with first word/character enlarged and colored
+// Style title with first word/character enlarged, all text bold
 function styleTitle(title: string): string {
   if (!title.trim()) return title;
   
@@ -70,16 +70,16 @@ function styleTitle(title: string): string {
   const isChinese = /[\u4e00-\u9fff]/.test(firstChar);
   
   if (isChinese) {
-    // For Chinese: first character enlarged
+    // For Chinese: first character enlarged, rest bold
     const rest = title.trim().slice(1);
-    return `<span class="text-primary text-[1.2em] font-black">${firstChar}</span>${rest}`;
+    return `<span class="text-[1.2em] font-black">${firstChar}</span><span class="font-bold">${rest}</span>`;
   } else {
-    // For English: first word enlarged
+    // For English: first word enlarged, rest bold
     const words = title.trim().split(/\s+/);
     if (words.length > 1) {
-      return `<span class="text-primary text-[1.2em] font-black">${words[0]}</span> ${words.slice(1).join(' ')}`;
+      return `<span class="text-[1.2em] font-black">${words[0]}</span> <span class="font-bold">${words.slice(1).join(' ')}</span>`;
     }
-    return `<span class="text-primary text-[1.2em] font-black">${words[0]}</span>`;
+    return `<span class="text-[1.2em] font-black">${words[0]}</span>`;
   }
 }
 
