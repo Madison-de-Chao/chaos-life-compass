@@ -112,6 +112,44 @@ export type Database = {
           },
         ]
       }
+      feedbacks: {
+        Row: {
+          created_at: string
+          customer_name: string | null
+          document_id: string | null
+          document_title: string
+          id: string
+          is_read: boolean
+          message: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name?: string | null
+          document_id?: string | null
+          document_title: string
+          id?: string
+          is_read?: boolean
+          message: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string | null
+          document_id?: string | null
+          document_title?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedbacks_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
