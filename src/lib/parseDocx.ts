@@ -76,6 +76,21 @@ function htmlToSections(html: string): DocumentSection[] {
   return sections;
 }
 
+// Parse markdown-like syntax
+function parseMarkdown(text: string): string {
+  return text
+    // Bold: **text** or __text__
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    // Italic: *text* or _text_
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    // Headings: ### text
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+}
+
 // Convert sections back to HTML for display
 export function sectionsToHtml(sections: DocumentSection[]): string {
   return sections
@@ -85,10 +100,20 @@ export function sectionsToHtml(sections: DocumentSection[]): string {
         return `<div class="page-break" data-page-break="true"></div>`;
       }
 
-      const content = section.content
+      // Handle image
+      if (section.type === 'image' && section.imageUrl) {
+        return `<figure class="document-image"><img src="${section.imageUrl}" alt="${section.content || '圖片'}" />${section.content ? `<figcaption>${section.content}</figcaption>` : ''}</figure>`;
+      }
+
+      let content = section.content
         .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
+        .replace(/>/g, '&gt;');
+      
+      // Parse markdown syntax
+      content = parseMarkdown(content);
+      
+      // Convert newlines to br
+      content = content.replace(/\n/g, '<br>');
 
       switch (section.type) {
         case 'heading':

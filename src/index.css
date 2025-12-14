@@ -379,6 +379,28 @@
   .document-page-content td {
     @apply p-4 border-b border-border/30;
   }
+
+  /* Document images */
+  .document-page-content figure.document-image,
+  .document-content figure.document-image {
+    @apply my-10 text-center;
+  }
+
+  .document-page-content figure.document-image img,
+  .document-content figure.document-image img {
+    @apply mx-auto rounded-2xl max-w-full;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .document-page-content figure.document-image figcaption,
+  .document-content figure.document-image figcaption {
+    @apply mt-4 text-sm text-muted-foreground italic;
+  }
+
+  /* Section keyword bold styling */
+  .document-page-content .section-keyword-bold {
+    font-weight: 900;
+  }
 }
 
 @layer utilities {
