@@ -342,13 +342,17 @@ const PrintViewPage = () => {
           }
           
           .cover-section {
-            text-align: center;
-            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
           }
           
           .cover-logo {
-            width: 180px;
+            width: 200px;
             height: auto;
+            display: block;
+            margin: 0 auto;
           }
           
           .print-title {
@@ -439,6 +443,7 @@ const PrintViewPage = () => {
             margin: 1.5em 0;
             font-size: 11px;
             border: 2px solid #8b5a3c;
+            page-break-inside: avoid;
           }
           
           .document-table th,
@@ -463,6 +468,23 @@ const PrintViewPage = () => {
           
           .document-table tr:nth-child(even) td {
             background-color: #faf5ed;
+          }
+          
+          .document-table tr {
+            page-break-inside: avoid;
+          }
+          
+          .print-content p,
+          .print-content h1,
+          .print-content h2,
+          .print-content h3 {
+            page-break-inside: avoid;
+          }
+          
+          .print-content img {
+            page-break-inside: avoid;
+            page-break-before: auto;
+            page-break-after: auto;
           }
         }
         
@@ -548,14 +570,18 @@ const PrintViewPage = () => {
           }
           
           .cover-section {
-            text-align: center;
-            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 50px 0;
             animation: fadeIn 0.8s ease-out;
           }
           
           .cover-logo {
-            width: 200px;
+            width: 220px;
             height: auto;
+            display: block;
+            margin: 0 auto;
             filter: drop-shadow(0 10px 20px rgba(139, 90, 60, 0.2));
             animation: float 4s ease-in-out infinite;
           }
