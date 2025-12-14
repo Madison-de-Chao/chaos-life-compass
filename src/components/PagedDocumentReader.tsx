@@ -27,13 +27,14 @@ interface PagedDocumentReaderProps {
 
 // Page break patterns
 // Check if text contains ## (but NOT ###) - markdown heading level 2 only
-const markdownH2Pattern = /(?<![#])##(?![#])\s+/;
+// Check if text STARTS with ## (but NOT ###) - markdown heading level 2 only
+const markdownH2Pattern = /^(?<![#])##(?![#])\s+/;
 
-// Check if text contains 第X章 pattern (chapter indicator)
-const chapterPattern = /第\s*\d+\s*章/;
+// Check if text STARTS with 第X章 pattern (chapter indicator)
+const chapterPattern = /^第\s*\d+\s*章/;
 
-// Check if text contains 【...】 bracket pattern (section titles)
-const bracketTitlePattern = /【[^】]+】/;
+// Check if text STARTS with 【...】 bracket pattern (section titles)
+const bracketTitlePattern = /^【[^】]+】/;
 
 function isNewSectionStart(text: string): boolean {
   const trimmed = text.trim();
@@ -41,17 +42,17 @@ function isNewSectionStart(text: string): boolean {
   // Skip if the line is too long (likely a regular paragraph)
   if (trimmed.length > 100) return false;
   
-  // Check for markdown ## heading pattern
+  // Check for markdown ## heading pattern at start
   if (markdownH2Pattern.test(trimmed)) {
     return true;
   }
   
-  // Check for 第X章 chapter pattern
+  // Check for 第X章 chapter pattern at start
   if (chapterPattern.test(trimmed)) {
     return true;
   }
   
-  // Check for 【...】 bracket pattern
+  // Check for 【...】 bracket pattern at start
   if (bracketTitlePattern.test(trimmed)) {
     return true;
   }
@@ -247,8 +248,8 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
       continue;
     }
     
-    // Start new page on H1, H2, H3, or keyword match
-    const isHeading = tagName === 'h1' || tagName === 'h2' || tagName === 'h3';
+    // Start new page on H1, H2 only (NOT H3), or keyword match
+    const isHeading = tagName === 'h1' || tagName === 'h2';
     // Check for keyword match in any element type (not just p, strong, b)
     const isKeywordMatch = isNewSectionStart(textContent);
     
