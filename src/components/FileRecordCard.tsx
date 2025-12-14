@@ -68,7 +68,7 @@ export function FileRecordCard({ document, customer, onView, onEdit, onShare, on
               <span className="text-muted-foreground/60">
                 {formatBytes(document.file_size || 0)}
               </span>
-              {document.password && (
+              {document.password_hash && (
                 <div className="flex items-center gap-1.5 text-primary">
                   <Lock className="w-4 h-4" />
                   <span>已加密</span>

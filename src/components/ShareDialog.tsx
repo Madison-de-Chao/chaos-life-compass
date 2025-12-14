@@ -35,8 +35,10 @@ export function ShareDialog({
 
   useEffect(() => {
     if (document) {
-      setShowPasswordToggle(!!document.password);
-      setCustomPassword(document.password || "");
+      // Check if document has a password hash set
+      setShowPasswordToggle(!!document.password_hash);
+      // Don't show the actual password - user must enter a new one if they want to change it
+      setCustomPassword("");
     }
   }, [document]);
 
@@ -56,11 +58,28 @@ export function ShareDialog({
 
   const handleSavePassword = async () => {
     setIsSaving(true);
-    const newPassword = showPasswordToggle ? customPassword.trim() || null : null;
+    
+    // Use server-side function to hash the password
+    let passwordHash: string | null = null;
+    if (showPasswordToggle && customPassword.trim()) {
+      const { data: hashedPwd, error: hashError } = await supabase.rpc('hash_document_password', {
+        pwd: customPassword.trim()
+      });
+      if (hashError) {
+        toast({
+          title: "儲存失敗",
+          description: hashError.message,
+          variant: "destructive",
+        });
+        setIsSaving(false);
+        return;
+      }
+      passwordHash = hashedPwd;
+    }
     
     const { data, error } = await supabase
       .from("documents")
-      .update({ password: newPassword })
+      .update({ password_hash: passwordHash })
       .eq("id", document.id)
       .select()
       .single();
@@ -74,18 +93,21 @@ export function ShareDialog({
     } else {
       toast({
         title: "已更新",
-        description: newPassword ? "密碼已設定" : "密碼保護已關閉",
+        description: passwordHash ? "密碼已設定" : "密碼保護已關閉",
       });
       if (onUpdate && data) {
         onUpdate(data);
       }
+      // Clear the password field after saving
+      setCustomPassword("");
     }
     setIsSaving(false);
   };
 
+  // Password changed if toggle is on and there's input, or toggle changed state
   const passwordChanged = showPasswordToggle
-    ? customPassword !== (document.password || "")
-    : !!document.password;
+    ? customPassword.trim() !== ""
+    : !!document.password_hash;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

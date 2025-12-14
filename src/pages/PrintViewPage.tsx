@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getDocumentByShareLink, Document } from "@/hooks/useDocuments";
+import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
@@ -216,8 +217,11 @@ const PrintViewPage = () => {
       if (shareLink) {
         const doc = await getDocumentByShareLink(shareLink);
         if (doc) {
-          // Check if password protected - redirect back if so
-          if (doc.password) {
+          // Check if password protected - use server-side check
+          const { data: hasPassword } = await supabase.rpc('document_has_password', { 
+            doc_share_link: shareLink 
+          });
+          if (hasPassword) {
             navigate(`/view/${shareLink}`);
             return;
           }

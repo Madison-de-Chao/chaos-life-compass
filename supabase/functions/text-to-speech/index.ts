@@ -16,8 +16,17 @@ serve(async (req) => {
   try {
     const { text, voice = 'onyx', documentId, pageIndex } = await req.json();
 
+    // Validate required fields
     if (!text) {
       throw new Error('Text is required');
+    }
+    
+    if (!documentId) {
+      console.error('Document ID is required for TTS');
+      return new Response(
+        JSON.stringify({ error: 'Document ID is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -29,8 +38,31 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Security: Verify the document exists and is public before processing
+    const { data: doc, error: docError } = await supabase
+      .from('documents')
+      .select('id, is_public')
+      .eq('id', documentId)
+      .single();
+
+    if (docError || !doc) {
+      console.error('Document not found:', documentId);
+      return new Response(
+        JSON.stringify({ error: 'Document not found' }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!doc.is_public) {
+      console.error('Access denied: Document is not public:', documentId);
+      return new Response(
+        JSON.stringify({ error: 'Access denied' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Generate cache key based on document and page
-    const cacheKey = documentId && pageIndex !== undefined 
+    const cacheKey = pageIndex !== undefined 
       ? `${documentId}/page-${pageIndex}.mp3`
       : null;
 
@@ -63,7 +95,7 @@ serve(async (req) => {
       }
     }
 
-    console.log(`Generating speech for text: ${text.substring(0, 100)}...`);
+    console.log(`Generating speech for document ${documentId}, text: ${text.substring(0, 100)}...`);
 
     // Generate speech from text using OpenAI TTS
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
