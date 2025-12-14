@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Download } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Download, Printer } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import html2pdf from "html2pdf.js";
@@ -25,6 +25,7 @@ interface PagedDocumentReaderProps {
   };
   className?: string;
   documentId?: string;
+  shareLink?: string;
 }
 
 // Page break patterns
@@ -292,7 +293,7 @@ const patterns = [
   'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.05) 0%, transparent 70%)',
 ];
 
-export function PagedDocumentReader({ content, className, documentId }: PagedDocumentReaderProps) {
+export function PagedDocumentReader({ content, className, documentId, shareLink }: PagedDocumentReaderProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -711,7 +712,7 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
           onClick={exportToPdf}
           disabled={isExporting}
           className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
-          title="匯出 PDF"
+          title="匯出 PDF (舊)"
         >
           {isExporting ? (
             <Loader2 className="w-4 h-4 md:w-6 md:h-6 animate-spin" />
@@ -719,6 +720,19 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
             <Download className="w-4 h-4 md:w-6 md:h-6" />
           )}
         </Button>
+        {shareLink && (
+          <Button
+            variant="outline"
+            size="icon"
+            asChild
+            className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+            title="列印 / 下載 PDF"
+          >
+            <Link to={`/print/${shareLink}`}>
+              <Printer className="w-4 h-4 md:w-6 md:h-6" />
+            </Link>
+          </Button>
+        )}
       </div>
 
       {/* Main Content */}
