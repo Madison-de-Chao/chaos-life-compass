@@ -7,9 +7,90 @@ import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
 
+// Parse markdown tables in HTML content
+function parseMarkdownTables(html: string): string {
+  const lines = html.split('\n');
+  const result: string[] = [];
+  let tableLines: string[] = [];
+  let inTable = false;
+  let pendingEmptyLines: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+    const isTableRow = trimmed.includes('|') && (trimmed.match(/\|/g) || []).length >= 2;
+    const isEmptyLine = trimmed === '' || /^[\s ]*$/.test(trimmed);
+    
+    if (isTableRow) {
+      if (!inTable) {
+        inTable = true;
+        tableLines = [];
+        pendingEmptyLines = [];
+      }
+      pendingEmptyLines = [];
+      tableLines.push(trimmed);
+    } else if (inTable && isEmptyLine) {
+      pendingEmptyLines.push(line);
+    } else {
+      if (inTable && tableLines.length > 0) {
+        result.push(convertToHtmlTable(tableLines));
+        tableLines = [];
+        inTable = false;
+        result.push(...pendingEmptyLines);
+        pendingEmptyLines = [];
+      }
+      result.push(line);
+    }
+  }
+  
+  if (inTable && tableLines.length > 0) {
+    result.push(convertToHtmlTable(tableLines));
+  }
+
+  return result.join('\n');
+}
+
+// Convert markdown-style table rows to HTML table
+function convertToHtmlTable(rows: string[]): string {
+  if (rows.length === 0) return '';
+  
+  const dataRows = rows.filter(row => !row.match(/^\|?\s*[-:]+\s*(\|\s*[-:]+\s*)+\|?\s*$/));
+  
+  if (dataRows.length === 0) return '';
+
+  let tableHtml = '<table class="document-table">';
+  
+  dataRows.forEach((row, index) => {
+    const cells = row.split('|')
+      .map(cell => cell.trim())
+      .filter(cell => cell.length > 0);
+    
+    if (cells.length === 0) return;
+    
+    const isHeader = index === 0;
+    const cellTag = isHeader ? 'th' : 'td';
+    const rowClass = isHeader ? 'table-header' : '';
+    
+    tableHtml += `<tr class="${rowClass}">`;
+    cells.forEach(cell => {
+      const parsedCell = cell
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.+?)__/g, '<strong>$1</strong>');
+      tableHtml += `<${cellTag}>${parsedCell}</${cellTag}>`;
+    });
+    tableHtml += '</tr>';
+  });
+  
+  tableHtml += '</table>';
+  return tableHtml;
+}
+
 // Parse markdown in HTML content
 function parseMarkdownInHtml(html: string): string {
-  return html
+  // First parse tables
+  let result = parseMarkdownTables(html);
+  
+  return result
     .replace(/####\s*/g, '')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/__(.+?)__/g, '<strong>$1</strong>')
@@ -116,7 +197,7 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
 const PrintViewPage = () => {
   const { shareLink } = useParams<{ shareLink: string }>();
   const navigate = useNavigate();
-  const [document, setDocument] = useState<Document | null>(null);
+  const [docData, setDocData] = useState<Document | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -130,7 +211,7 @@ const PrintViewPage = () => {
             navigate(`/view/${shareLink}`);
             return;
           }
-          setDocument(doc);
+          setDocData(doc);
         } else {
           setNotFound(true);
         }
@@ -141,7 +222,17 @@ const PrintViewPage = () => {
     fetchDocument();
   }, [shareLink, navigate]);
 
-  const content = document?.content as { title: string; htmlContent?: string; sections?: any[] } | null;
+  const content = docData?.content as { title: string; htmlContent?: string; sections?: any[] } | null;
+
+  // Set document title for PDF filename
+  useEffect(() => {
+    if (content?.title) {
+      document.title = content.title;
+    }
+    return () => {
+      document.title = "命理報告平台";
+    };
+  }, [content?.title]);
 
   const pages = useMemo(() => {
     if (!content) return [];
@@ -170,7 +261,7 @@ const PrintViewPage = () => {
     );
   }
 
-  if (notFound || !document || !content) {
+  if (notFound || !docData || !content) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
@@ -285,6 +376,30 @@ const PrintViewPage = () => {
             height: auto;
             margin: 40px auto;
           }
+          
+          .document-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+            font-size: 12px;
+          }
+          
+          .document-table th,
+          .document-table td {
+            border: 1px solid #d4a574;
+            padding: 8px 12px;
+            text-align: left;
+          }
+          
+          .document-table th {
+            background-color: #f5e6d3;
+            font-weight: bold;
+            color: #8b5a3c;
+          }
+          
+          .document-table tr:nth-child(even) td {
+            background-color: #faf7f2;
+          }
         }
         
         @media screen {
@@ -368,6 +483,30 @@ const PrintViewPage = () => {
             width: 200px;
             height: auto;
             margin: 40px auto;
+          }
+          
+          .document-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+            font-size: 14px;
+          }
+          
+          .document-table th,
+          .document-table td {
+            border: 1px solid hsl(var(--border));
+            padding: 8px 12px;
+            text-align: left;
+          }
+          
+          .document-table th {
+            background-color: hsl(var(--muted));
+            font-weight: bold;
+            color: hsl(var(--primary));
+          }
+          
+          .document-table tr:nth-child(even) td {
+            background-color: hsl(var(--muted) / 0.5);
           }
         }
       `}</style>
