@@ -527,33 +527,43 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
           container.appendChild(sectionTitle);
         }
 
-        // Add content
-        const contentDiv = document.createElement('div');
-        contentDiv.innerHTML = page.content;
-        
-        // Style the content
-        const paragraphs = contentDiv.querySelectorAll('p');
-        paragraphs.forEach(p => {
-          (p as HTMLElement).style.marginBottom = '12px';
-          (p as HTMLElement).style.textIndent = '2em';
-        });
+        // Add content - handle empty content case
+        if (page.content && page.content.trim()) {
+          const contentDiv = document.createElement('div');
+          contentDiv.innerHTML = page.content;
+          
+          // Style the content
+          const paragraphs = contentDiv.querySelectorAll('p');
+          paragraphs.forEach(p => {
+            (p as HTMLElement).style.marginBottom = '12px';
+            (p as HTMLElement).style.textIndent = '2em';
+          });
 
-        const headings = contentDiv.querySelectorAll('h1, h2, h3');
-        headings.forEach(h => {
-          (h as HTMLElement).style.color = '#8b4513';
-          (h as HTMLElement).style.marginTop = '20px';
-          (h as HTMLElement).style.marginBottom = '10px';
-        });
+          const headings = contentDiv.querySelectorAll('h1, h2, h3');
+          headings.forEach(h => {
+            (h as HTMLElement).style.color = '#8b4513';
+            (h as HTMLElement).style.marginTop = '20px';
+            (h as HTMLElement).style.marginBottom = '10px';
+          });
 
-        const images = contentDiv.querySelectorAll('img');
-        images.forEach(img => {
-          (img as HTMLElement).style.maxWidth = '100%';
-          (img as HTMLElement).style.height = 'auto';
-          (img as HTMLElement).style.margin = '20px auto';
-          (img as HTMLElement).style.display = 'block';
-        });
+          const images = contentDiv.querySelectorAll('img');
+          images.forEach(img => {
+            (img as HTMLElement).style.maxWidth = '100%';
+            (img as HTMLElement).style.height = 'auto';
+            (img as HTMLElement).style.margin = '20px auto';
+            (img as HTMLElement).style.display = 'block';
+          });
 
-        container.appendChild(contentDiv);
+          container.appendChild(contentDiv);
+        } else if (i === 0) {
+          // First page - add a placeholder if no content
+          const placeholderDiv = document.createElement('div');
+          placeholderDiv.style.textAlign = 'center';
+          placeholderDiv.style.marginTop = '40px';
+          placeholderDiv.style.color = '#666666';
+          placeholderDiv.innerHTML = '<p>命理報告</p>';
+          container.appendChild(placeholderDiv);
+        }
       }
 
       // Add copyright footer
@@ -675,44 +685,44 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       </div>
 
       {/* Bottom Left Controls */}
-      <div className="fixed bottom-24 left-6 z-50 flex flex-col items-center gap-3">
+      <div className="fixed bottom-24 left-6 z-50 flex flex-col items-center gap-4">
         <Button
           asChild
           variant="outline"
-          size="icon"
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          size="lg"
+          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           <Link to="/">
-            <Home className="w-5 h-5" />
+            <Home className="w-6 h-6" />
           </Link>
         </Button>
         <Button
           variant="outline"
-          size="icon"
+          size="lg"
           onClick={toggleAudio}
           disabled={isLoading}
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           {isLoading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-6 h-6 animate-spin" />
           ) : isPlaying ? (
-            <VolumeX className="w-5 h-5" />
+            <VolumeX className="w-6 h-6" />
           ) : (
-            <Volume2 className="w-5 h-5" />
+            <Volume2 className="w-6 h-6" />
           )}
         </Button>
         <Button
           variant="outline"
-          size="icon"
+          size="lg"
           onClick={exportToPdf}
           disabled={isExporting}
-          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
           title="匯出 PDF"
         >
           {isExporting ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-6 h-6 animate-spin" />
           ) : (
-            <Download className="w-5 h-5" />
+            <Download className="w-6 h-6" />
           )}
         </Button>
       </div>
