@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, Image as ImageIcon, Merge } from "lucide-react";
+import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, Image as ImageIcon, Merge, Undo2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -14,6 +14,11 @@ export interface DocumentSection {
   content: string;
   level?: number;
   imageUrl?: string;
+}
+
+interface HistoryState {
+  title: string;
+  sections: DocumentSection[];
 }
 
 interface DocumentEditorProps {
@@ -33,11 +38,47 @@ export function DocumentEditor({
 }: DocumentEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [sections, setSections] = useState<DocumentSection[]>(initialSections);
+  const [history, setHistory] = useState<HistoryState[]>([]);
+  const maxHistoryLength = 50;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadingImageId, setUploadingImageId] = useState<string | null>(null);
 
+  // Save current state to history before making changes
+  const saveToHistory = useCallback(() => {
+    setHistory(prev => {
+      const newHistory = [...prev, { title, sections: JSON.parse(JSON.stringify(sections)) }];
+      // Keep only the last maxHistoryLength items
+      if (newHistory.length > maxHistoryLength) {
+        return newHistory.slice(-maxHistoryLength);
+      }
+      return newHistory;
+    });
+  }, [title, sections]);
+
+  // Undo function
+  const handleUndo = useCallback(() => {
+    if (history.length === 0) {
+      toast({
+        title: "無法復原",
+        description: "沒有可復原的操作",
+      });
+      return;
+    }
+    
+    const lastState = history[history.length - 1];
+    setTitle(lastState.title);
+    setSections(lastState.sections);
+    setHistory(prev => prev.slice(0, -1));
+    
+    toast({
+      title: "已復原",
+      description: "已回到上一個步驟",
+    });
+  }, [history]);
+
   const addSection = (type: DocumentSection["type"], insertAfterIndex?: number) => {
+    saveToHistory();
     const newSection: DocumentSection = {
       id: `section-${Date.now()}`,
       type,
@@ -106,6 +147,7 @@ export function DocumentEditor({
   };
 
   const addImageSection = (insertAfterIndex?: number) => {
+    saveToHistory();
     const newSection: DocumentSection = {
       id: `section-${Date.now()}`,
       type: "image",
@@ -127,12 +169,14 @@ export function DocumentEditor({
   };
 
   const updateHeadingLevel = (id: string, level: number) => {
+    saveToHistory();
     setSections(
       sections.map((s) => (s.id === id ? { ...s, level } : s))
     );
   };
 
   const removeSection = (id: string) => {
+    saveToHistory();
     setSections(sections.filter((s) => s.id !== id));
   };
 
@@ -140,6 +184,7 @@ export function DocumentEditor({
     const newIndex = direction === "up" ? index - 1 : index + 1;
     if (newIndex < 0 || newIndex >= sections.length) return;
     
+    saveToHistory();
     const newSections = [...sections];
     [newSections[index], newSections[newIndex]] = [newSections[newIndex], newSections[index]];
     setSections(newSections);
@@ -160,6 +205,8 @@ export function DocumentEditor({
       });
       return;
     }
+    
+    saveToHistory();
     
     if (currentSection.type === 'pagebreak' || currentSection.type === 'image') {
       // Just remove the current section if it's a page break or image
@@ -450,6 +497,18 @@ export function DocumentEditor({
 
           {/* Action Buttons */}
           <div className="flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={handleUndo}
+              disabled={history.length === 0}
+              className="gap-2"
+            >
+              <Undo2 className="w-4 h-4" />
+              復原
+              {history.length > 0 && (
+                <span className="text-xs text-muted-foreground">({history.length})</span>
+              )}
+            </Button>
             <Button
               variant="outline"
               onClick={() => onPreview(title, sections)}
