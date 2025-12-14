@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,7 +24,7 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY is not configured');
     }
 
-    console.log(`Generating speech for text: ${text.substring(0, 50)}...`);
+    console.log(`Generating speech for text: ${text.substring(0, 100)}...`);
 
     // Generate speech from text using OpenAI TTS
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
@@ -46,15 +47,21 @@ serve(async (req) => {
       throw new Error(`OpenAI TTS error: ${response.status}`);
     }
 
-    // Return the audio as a stream
+    // Get the audio as ArrayBuffer and convert to base64
     const audioBuffer = await response.arrayBuffer();
+    const base64Audio = base64Encode(audioBuffer);
 
-    return new Response(audioBuffer, {
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'audio/mpeg',
-      },
-    });
+    console.log(`Generated audio, size: ${audioBuffer.byteLength} bytes`);
+
+    return new Response(
+      JSON.stringify({ audioContent: base64Audio }),
+      {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   } catch (error: unknown) {
     console.error('Error in text-to-speech function:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
