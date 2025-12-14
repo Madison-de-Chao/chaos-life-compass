@@ -1,7 +1,8 @@
 import { useState, useMemo, useCallback, useRef } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -206,8 +207,18 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
         </span>
       </div>
 
-      {/* Audio Control */}
-      <div className="fixed top-6 left-6 z-50">
+      {/* Top Controls */}
+      <div className="fixed top-6 left-6 z-50 flex items-center gap-3">
+        <Button
+          asChild
+          variant="outline"
+          size="icon"
+          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
+        >
+          <Link to="/">
+            <Home className="w-5 h-5" />
+          </Link>
+        </Button>
         <Button
           variant="outline"
           size="icon"
