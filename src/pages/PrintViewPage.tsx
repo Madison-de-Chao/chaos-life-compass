@@ -311,10 +311,16 @@ const PrintViewPage = () => {
           }
           
           .print-page {
-            padding: 0;
+            page-break-after: always;
+            page-break-inside: avoid;
+            min-height: 100vh;
+            padding: 50px 50px 80px 50px;
             box-sizing: border-box;
             position: relative;
-            margin-bottom: 30px;
+          }
+          
+          .print-page:last-child {
+            page-break-after: auto;
           }
           
           .print-page:not(:first-child) .print-header {
