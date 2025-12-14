@@ -67,7 +67,7 @@ export function DocumentEditor({
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-6">
+    <div className="max-w-4xl mx-auto p-4 md:p-8 pb-40 space-y-6">
       {/* Title Section */}
       <Card className="p-6 shadow-soft">
         <label className="text-sm font-medium text-muted-foreground mb-2 block">
@@ -179,64 +179,69 @@ export function DocumentEditor({
         ))}
       </div>
 
-      {/* Add Section Buttons */}
-      <div className="flex flex-wrap gap-2 justify-center py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => addSection("heading")}
-          className="gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          新增標題
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => addSection("paragraph")}
-          className="gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          新增段落
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => addSection("quote")}
-          className="gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          新增引用
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => addSection("pagebreak")}
-          className="gap-2 border-dashed"
-        >
-          <SeparatorHorizontal className="w-4 h-4" />
-          插入分頁
-        </Button>
-      </div>
+      {/* Fixed Bottom Toolbar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border z-50">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          {/* Add Section Buttons */}
+          <div className="flex flex-wrap gap-2 justify-center mb-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addSection("heading")}
+              className="gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              新增標題
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addSection("paragraph")}
+              className="gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              新增段落
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addSection("quote")}
+              className="gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              新增引用
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addSection("pagebreak")}
+              className="gap-2 border-dashed"
+            >
+              <SeparatorHorizontal className="w-4 h-4" />
+              插入分頁
+            </Button>
+          </div>
 
-      {/* Action Buttons */}
-      <div className="flex justify-center gap-4 pt-6 border-t border-border">
-        <Button
-          variant="outline"
-          onClick={() => onPreview(title, sections)}
-          className="gap-2"
-        >
-          <Eye className="w-4 h-4" />
-          預覽
-        </Button>
-        <Button
-          onClick={() => onSave(title, sections)}
-          disabled={isLoading || !title.trim()}
-          className="gap-2"
-        >
-          <Save className="w-4 h-4" />
-          {isLoading ? "儲存中..." : "儲存並發布"}
-        </Button>
+          {/* Action Buttons */}
+          <div className="flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => onPreview(title, sections)}
+              className="gap-2"
+            >
+              <Eye className="w-4 h-4" />
+              預覽
+            </Button>
+            <Button
+              onClick={() => onSave(title, sections)}
+              disabled={isLoading || !title.trim()}
+              className="gap-2"
+            >
+              <Save className="w-4 h-4" />
+              {isLoading ? "儲存中..." : "儲存並發布"}
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
