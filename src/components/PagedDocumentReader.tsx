@@ -2,9 +2,10 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Download } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import html2pdf from "html2pdf.js";
 
 interface DocumentSection {
   id: string;
@@ -324,6 +325,119 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
     }
   };
 
+  const [isExporting, setIsExporting] = useState(false);
+
+  const exportToPdf = async () => {
+    setIsExporting(true);
+    try {
+      // Create a container for the full document
+      const container = document.createElement('div');
+      container.style.width = '210mm';
+      container.style.padding = '20mm';
+      container.style.fontFamily = "'Noto Serif TC', Georgia, serif";
+      container.style.fontSize = '12pt';
+      container.style.lineHeight = '1.8';
+      container.style.color = '#1a1a1a';
+      container.style.backgroundColor = '#ffffff';
+
+      // Add title
+      const titleEl = document.createElement('h1');
+      titleEl.textContent = content.title;
+      titleEl.style.fontSize = '24pt';
+      titleEl.style.fontWeight = 'bold';
+      titleEl.style.textAlign = 'center';
+      titleEl.style.marginBottom = '30px';
+      titleEl.style.color = '#8b4513';
+      container.appendChild(titleEl);
+
+      // Add each page content
+      for (let i = 0; i < pages.length; i++) {
+        const page = pages[i];
+        
+        // Add section title
+        if (i > 0) {
+          const sectionTitle = document.createElement('h2');
+          sectionTitle.textContent = page.title;
+          sectionTitle.style.fontSize = '18pt';
+          sectionTitle.style.fontWeight = 'bold';
+          sectionTitle.style.marginTop = '40px';
+          sectionTitle.style.marginBottom = '20px';
+          sectionTitle.style.color = '#8b4513';
+          sectionTitle.style.borderBottom = '2px solid #d4a574';
+          sectionTitle.style.paddingBottom = '10px';
+          container.appendChild(sectionTitle);
+        }
+
+        // Add content
+        const contentDiv = document.createElement('div');
+        contentDiv.innerHTML = page.content;
+        
+        // Style the content
+        const paragraphs = contentDiv.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          (p as HTMLElement).style.marginBottom = '12px';
+          (p as HTMLElement).style.textIndent = '2em';
+        });
+
+        const headings = contentDiv.querySelectorAll('h1, h2, h3');
+        headings.forEach(h => {
+          (h as HTMLElement).style.color = '#8b4513';
+          (h as HTMLElement).style.marginTop = '20px';
+          (h as HTMLElement).style.marginBottom = '10px';
+        });
+
+        const images = contentDiv.querySelectorAll('img');
+        images.forEach(img => {
+          (img as HTMLElement).style.maxWidth = '100%';
+          (img as HTMLElement).style.height = 'auto';
+          (img as HTMLElement).style.margin = '20px auto';
+          (img as HTMLElement).style.display = 'block';
+        });
+
+        container.appendChild(contentDiv);
+      }
+
+      // Append to body temporarily
+      document.body.appendChild(container);
+
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: `${content.title}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2, 
+          useCORS: true,
+          letterRendering: true 
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait' 
+        },
+        pagebreak: { mode: 'avoid-all' }
+      };
+
+      await html2pdf().set(opt).from(container).save();
+
+      // Remove the temporary container
+      document.body.removeChild(container);
+
+      toast({
+        title: "匯出成功",
+        description: "PDF 檔案已下載",
+      });
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast({
+        title: "匯出失敗",
+        description: "無法匯出 PDF，請重試",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const page = pages[currentPage];
   const patternIndex = currentPage % patterns.length;
   
@@ -377,6 +491,20 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
             <VolumeX className="w-5 h-5" />
           ) : (
             <Volume2 className="w-5 h-5" />
+          )}
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={exportToPdf}
+          disabled={isExporting}
+          className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
+          title="匯出 PDF"
+        >
+          {isExporting ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Download className="w-5 h-5" />
           )}
         </Button>
       </div>
