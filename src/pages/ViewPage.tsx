@@ -3,8 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { DocumentReader } from "@/components/DocumentReader";
 import { PasswordDialog } from "@/components/PasswordDialog";
 import { getDocumentByShareLink, incrementViewCount, Document } from "@/hooks/useDocuments";
-import { ArrowLeft } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowLeft, FileText, Download, Calendar, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const ViewPage = () => {
   const { shareLink } = useParams<{ shareLink: string }>();
@@ -51,6 +53,32 @@ const ViewPage = () => {
     } else {
       setPasswordError("密碼錯誤，請重試");
     }
+  };
+
+  const handleDownload = async () => {
+    if (!document?.file_path) return;
+    
+    const { data } = await supabase.storage
+      .from("documents")
+      .createSignedUrl(document.file_path, 60);
+    
+    if (data?.signedUrl) {
+      window.open(data.signedUrl, "_blank");
+    }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("zh-TW", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   if (loading) {
@@ -104,9 +132,51 @@ const ViewPage = () => {
       </header>
 
       {/* Document Content */}
-      {isAuthenticated && content && (
+      {isAuthenticated && (
         <main className="container mx-auto px-4 py-12 md:py-20">
-          <DocumentReader content={content} />
+          {content ? (
+            <DocumentReader content={content} />
+          ) : (
+            /* File Download Card when no parsed content */
+            <div className="max-w-2xl mx-auto animate-fade-in">
+              <Card className="overflow-hidden">
+                <CardContent className="p-8">
+                  <div className="flex flex-col items-center text-center space-y-6">
+                    <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
+                      <FileText className="w-10 h-10 text-primary" />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h1 className="text-2xl font-bold text-foreground font-serif">
+                        {document.original_name}
+                      </h1>
+                      <p className="text-muted-foreground">
+                        {formatFileSize(document.file_size)}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4" />
+                        <span>{formatDate(document.created_at)}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Eye className="w-4 h-4" />
+                        <span>{document.view_count} 次閱讀</span>
+                      </div>
+                    </div>
+
+                    {document.file_path && (
+                      <Button onClick={handleDownload} size="lg" className="mt-4">
+                        <Download className="w-4 h-4 mr-2" />
+                        下載文件
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
           
           {/* Footer */}
           <footer className="max-w-3xl mx-auto mt-20 pt-10 border-t border-border text-center">
