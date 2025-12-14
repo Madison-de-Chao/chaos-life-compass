@@ -123,7 +123,7 @@ const ViewPage = () => {
       {isAuthenticated && (
         <>
           {content ? (
-            <PagedDocumentReader content={content} documentId={document.id} />
+            <PagedDocumentReader content={content} documentId={document.id} shareLink={shareLink} />
           ) : (
             /* File Download Card when no parsed content */
             <main className="container mx-auto px-4 py-12 md:py-20">

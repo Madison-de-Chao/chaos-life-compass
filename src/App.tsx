@@ -8,6 +8,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
+import PrintViewPage from "./pages/PrintViewPage";
 import AuthPage from "./pages/AuthPage";
 import EditDocumentPage from "./pages/EditDocumentPage";
 import CustomersPage from "./pages/CustomersPage";
@@ -59,6 +60,7 @@ const App = () => (
             {/* Public routes */}
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/view/:shareLink" element={<ViewPage />} />
+            <Route path="/print/:shareLink" element={<PrintViewPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
