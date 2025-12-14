@@ -708,12 +708,31 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
 
         {/* Cover Logo - only on first page */}
         {currentPage === 0 && (
-          <div className="flex justify-center items-center my-16 md:my-24 animate-fade-in">
-            <img 
-              src={reportLogo} 
-              alt="報告標誌" 
-              className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"
-            />
+          <div className="flex justify-center items-center my-16 md:my-24 perspective-1000">
+            <div className="relative animate-cover-reveal">
+              {/* Glow effect behind image */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/30 to-primary/20 rounded-full blur-3xl animate-glow-pulse" />
+              
+              {/* Shimmer overlay */}
+              <div 
+                className="absolute inset-0 rounded-2xl opacity-40 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
+                  backgroundSize: '200% 100%',
+                  animation: 'shimmer 3s linear infinite',
+                }}
+              />
+              
+              {/* Main image with float animation */}
+              <img 
+                src={reportLogo} 
+                alt="報告標誌" 
+                className="relative z-10 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl animate-float"
+                style={{
+                  filter: 'drop-shadow(0 20px 40px hsl(var(--primary) / 0.25))',
+                }}
+              />
+            </div>
           </div>
         )}
 
