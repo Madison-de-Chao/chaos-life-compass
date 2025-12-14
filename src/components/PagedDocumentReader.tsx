@@ -470,6 +470,9 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       container.style.lineHeight = '1.8';
       container.style.color = '#1a1a1a';
       container.style.backgroundColor = '#ffffff';
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.style.top = '0';
 
       // Add dual logos header
       const logoHeader = document.createElement('div');
@@ -567,6 +570,21 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       // Append to body temporarily
       document.body.appendChild(container);
 
+      // Wait for all images to load before generating PDF
+      const allImages = container.querySelectorAll('img');
+      await Promise.all(
+        Array.from(allImages).map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve; // Continue even if image fails
+          });
+        })
+      );
+
+      // Small delay to ensure rendering is complete
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       const opt = {
         margin: [10, 10, 10, 10],
         filename: `${content.title}.pdf`,
@@ -574,14 +592,16 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
         html2canvas: { 
           scale: 2, 
           useCORS: true,
-          letterRendering: true 
+          letterRendering: true,
+          logging: false,
+          allowTaint: true
         },
         jsPDF: { 
           unit: 'mm', 
           format: 'a4', 
           orientation: 'portrait' 
         },
-        pagebreak: { mode: 'avoid-all' }
+        pagebreak: { mode: ['css', 'legacy'], avoid: ['img', 'h2'] }
       };
 
       await html2pdf().set(opt).from(container).save();
