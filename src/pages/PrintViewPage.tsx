@@ -749,13 +749,6 @@ const PrintViewPage = () => {
               <img src={logoHongling} alt="虹靈御所" />
             </div>
             
-            {/* Cover logo only on first page */}
-            {index === 0 && (
-              <div className="cover-section">
-                <img src={reportLogo} alt="報告標誌" className="cover-logo" />
-              </div>
-            )}
-            
             {/* Page title with dynamic font size */}
             <h1 
               className="print-title"
@@ -769,6 +762,13 @@ const PrintViewPage = () => {
               <span className="divider-dot" />
               <span className="divider-line" />
             </div>
+            
+            {/* Cover logo only on first page - after title */}
+            {index === 0 && (
+              <div className="cover-section">
+                <img src={reportLogo} alt="報告標誌" className="cover-logo" />
+              </div>
+            )}
             
             {/* Content */}
             <div 
