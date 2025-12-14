@@ -12,15 +12,19 @@ const Index = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  const generateShareLink = (fileName: string) => {
-    // Generate a URL-friendly share link from filename
-    const baseName = fileName.replace(/\.[^/.]+$/, ""); // Remove extension
-    const slug = baseName
-      .toLowerCase()
-      .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
-      .replace(/^-|-$/g, "");
-    const randomSuffix = Math.random().toString(36).substring(2, 8);
-    return `${slug}-${randomSuffix}`;
+  const generateShareLink = () => {
+    // Generate a random URL-friendly share link
+    const randomSuffix = Math.random().toString(36).substring(2, 10);
+    return `doc-${randomSuffix}`;
+  };
+
+  const sanitizeFileName = (fileName: string) => {
+    // Remove special characters and keep only safe characters for storage
+    const extension = fileName.split('.').pop() || '';
+    const baseName = fileName.replace(/\.[^/.]+$/, "");
+    // Replace any non-alphanumeric characters (except dash and underscore) with underscore
+    const safeName = baseName.replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 50);
+    return `${safeName}.${extension}`;
   };
 
   const handleFileSelect = async (file: File) => {
@@ -37,8 +41,11 @@ const Index = () => {
     setIsLoading(true);
     
     try {
-      // 1. Upload file to storage
-      const filePath = `${user.id}/${Date.now()}-${file.name}`;
+      // 1. Sanitize filename for storage
+      const safeFileName = sanitizeFileName(file.name);
+      const filePath = `${user.id}/${Date.now()}-${safeFileName}`;
+      
+      // 2. Upload file to storage
       const { error: uploadError } = await supabase.storage
         .from("documents")
         .upload(filePath, file);
@@ -47,8 +54,8 @@ const Index = () => {
         throw uploadError;
       }
 
-      // 2. Generate share link
-      const shareLink = generateShareLink(file.name);
+      // 3. Generate share link
+      const shareLink = generateShareLink();
 
       // 3. Create document record in database
       const { data: docData, error: dbError } = await supabase
