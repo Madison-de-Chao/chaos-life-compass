@@ -6,36 +6,18 @@ import { FileText, Sparkles, Lock, Share2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import mammoth from "mammoth";
+import { parseDocxFile } from "@/lib/parseDocx";
 
 const Index = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  const generateShareLink = () => {
-    const randomSuffix = Math.random().toString(36).substring(2, 10);
-    return `doc-${randomSuffix}`;
-  };
-
   const sanitizeFileName = (fileName: string) => {
     const extension = fileName.split('.').pop() || '';
     const baseName = fileName.replace(/\.[^/.]+$/, "");
     const safeName = baseName.replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 50);
     return `${safeName}.${extension}`;
-  };
-
-  const parseDocxFile = async (file: File): Promise<{ title: string; htmlContent: string }> => {
-    const arrayBuffer = await file.arrayBuffer();
-    const result = await mammoth.convertToHtml({ arrayBuffer });
-    
-    // Extract title from filename (remove extension)
-    const title = file.name.replace(/\.[^/.]+$/, "");
-    
-    return {
-      title,
-      htmlContent: result.value,
-    };
   };
 
   const handleFileSelect = async (file: File) => {
@@ -58,13 +40,12 @@ const Index = () => {
         description: "請稍候",
       });
       
-      const { title, htmlContent } = await parseDocxFile(file);
+      const { title, sections } = await parseDocxFile(file);
       
-      // 2. Sanitize filename for storage
+      // 2. Sanitize filename and upload to storage first
       const safeFileName = sanitizeFileName(file.name);
       const filePath = `${user.id}/${Date.now()}-${safeFileName}`;
       
-      // 3. Upload file to storage
       const { error: uploadError } = await supabase.storage
         .from("documents")
         .upload(filePath, file);
@@ -73,40 +54,25 @@ const Index = () => {
         throw uploadError;
       }
 
-      // 4. Generate share link
-      const shareLink = generateShareLink();
-
-      // 5. Create document record in database with parsed content
-      const { data: docData, error: dbError } = await supabase
-        .from("documents")
-        .insert({
-          file_name: file.name,
-          original_name: file.name,
-          file_path: filePath,
-          file_size: file.size,
-          share_link: shareLink,
-          is_public: true,
-          content: { title, htmlContent },
-        })
-        .select()
-        .single();
-
-      if (dbError) {
-        await supabase.storage.from("documents").remove([filePath]);
-        throw dbError;
-      }
-
       toast({
-        title: "文件已上傳",
-        description: `${file.name} 已成功解析並上傳`,
+        title: "解析完成",
+        description: "正在進入編輯頁面...",
       });
 
-      navigate("/files");
+      // 3. Navigate to edit page with parsed data
+      navigate("/edit", {
+        state: {
+          file,
+          title,
+          sections,
+          filePath,
+        },
+      });
     } catch (error: any) {
       console.error("Upload error:", error);
       toast({
-        title: "上傳失敗",
-        description: error.message || "無法上傳文件，請稍後再試",
+        title: "解析失敗",
+        description: error.message || "無法解析文件，請稍後再試",
         variant: "destructive",
       });
     } finally {

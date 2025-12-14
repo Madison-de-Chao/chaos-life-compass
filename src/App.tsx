@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
 import AuthPage from "./pages/AuthPage";
+import EditDocumentPage from "./pages/EditDocumentPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <FilesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit"
+              element={
+                <ProtectedRoute>
+                  <EditDocumentPage />
                 </ProtectedRoute>
               }
             />
