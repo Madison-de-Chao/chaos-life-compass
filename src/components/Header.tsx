@@ -1,4 +1,4 @@
-import { FileText, Upload, List, LogOut, User } from "lucide-react";
+import { FileText, Upload, List, LogOut, User, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -49,6 +49,17 @@ export function Header() {
                 <Link to="/files">
                   <List className="w-4 h-4 mr-2" />
                   檔案管理
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant={isActive("/customers") ? "secondary" : "ghost"}
+                size="sm"
+                className={cn(isActive("/customers") && "shadow-soft")}
+              >
+                <Link to="/customers">
+                  <Users className="w-4 h-4 mr-2" />
+                  客戶管理
                 </Link>
               </Button>
               <div className="h-6 w-px bg-border mx-2" />

@@ -12,10 +12,12 @@ import { sectionsToHtml } from "@/lib/parseDocx";
 import { ArrowLeft, X } from "lucide-react";
 
 interface LocationState {
-  file: File;
+  file: { name: string; size: number };
   title: string;
   sections: DocumentSection[];
   filePath: string;
+  documentId?: string;
+  isEditing?: boolean;
 }
 
 const EditDocumentPage = () => {
@@ -53,31 +55,52 @@ const EditDocumentPage = () => {
     setIsLoading(true);
     try {
       const htmlContent = sectionsToHtml(sections);
-      const shareLink = `doc-${Math.random().toString(36).substring(2, 10)}`;
 
-      // Create document record in database
-      const { error: dbError } = await supabase
-        .from("documents")
-        .insert([{
-          file_name: state.file.name,
-          original_name: state.file.name,
-          file_path: state.filePath,
-          file_size: state.file.size,
-          share_link: shareLink,
-          is_public: true,
-          content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
-        }]);
+      if (state.isEditing && state.documentId) {
+        // Update existing document
+        const { error: dbError } = await supabase
+          .from("documents")
+          .update({
+            content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", state.documentId);
 
-      if (dbError) {
-        // Clean up uploaded file if database insert fails
-        await supabase.storage.from("documents").remove([state.filePath]);
-        throw dbError;
+        if (dbError) throw dbError;
+
+        toast({
+          title: "文件已更新",
+          description: "您的報告已成功儲存",
+        });
+      } else {
+        // Create new document
+        const shareLink = `doc-${Math.random().toString(36).substring(2, 10)}`;
+
+        const { error: dbError } = await supabase
+          .from("documents")
+          .insert([{
+            file_name: state.file.name,
+            original_name: state.file.name,
+            file_path: state.filePath,
+            file_size: state.file.size,
+            share_link: shareLink,
+            is_public: true,
+            content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
+          }]);
+
+        if (dbError) {
+          // Clean up uploaded file if database insert fails
+          if (state.filePath) {
+            await supabase.storage.from("documents").remove([state.filePath]);
+          }
+          throw dbError;
+        }
+
+        toast({
+          title: "文件已發布",
+          description: "您的報告已成功儲存",
+        });
       }
-
-      toast({
-        title: "文件已發布",
-        description: "您的報告已成功儲存",
-      });
 
       navigate("/files");
     } catch (error: any) {
@@ -101,14 +124,14 @@ const EditDocumentPage = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(state.isEditing ? "/files" : "/")}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             返回
           </Button>
           <h1 className="text-2xl font-serif font-bold text-foreground">
-            編輯報告內容
+            {state.isEditing ? "編輯報告" : "編輯報告內容"}
           </h1>
         </div>
 

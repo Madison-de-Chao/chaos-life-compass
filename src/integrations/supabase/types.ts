@@ -14,10 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      customers: {
+        Row: {
+          birth_date: string | null
+          birth_time: string | null
+          created_at: string
+          email: string | null
+          gender: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          birth_date?: string | null
+          birth_time?: string | null
+          created_at?: string
+          email?: string | null
+          gender?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          birth_date?: string | null
+          birth_time?: string | null
+          created_at?: string
+          email?: string | null
+          gender?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           content: Json | null
           created_at: string
+          customer_id: string | null
           file_name: string
           file_path: string | null
           file_size: number | null
@@ -32,6 +72,7 @@ export type Database = {
         Insert: {
           content?: Json | null
           created_at?: string
+          customer_id?: string | null
           file_name: string
           file_path?: string | null
           file_size?: number | null
@@ -46,6 +87,7 @@ export type Database = {
         Update: {
           content?: Json | null
           created_at?: string
+          customer_id?: string | null
           file_name?: string
           file_path?: string | null
           file_size?: number | null
@@ -57,7 +99,15 @@ export type Database = {
           updated_at?: string
           view_count?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "documents_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
