@@ -461,39 +461,38 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
   const exportToPdf = async () => {
     setIsExporting(true);
     try {
-      // Create a container for the full document
+      // Create a container for the full document - must be visible for html2canvas
       const container = document.createElement('div');
-      container.style.width = '210mm';
-      container.style.padding = '20mm';
+      container.id = 'pdf-export-container';
+      container.style.width = '794px'; // A4 width at 96dpi
+      container.style.padding = '40px';
       container.style.fontFamily = "'Noto Serif TC', Georgia, serif";
-      container.style.fontSize = '12pt';
+      container.style.fontSize = '14px';
       container.style.lineHeight = '1.8';
       container.style.color = '#1a1a1a';
       container.style.backgroundColor = '#ffffff';
-      container.style.position = 'absolute';
-      container.style.left = '-9999px';
+      container.style.position = 'fixed';
       container.style.top = '0';
+      container.style.left = '0';
+      container.style.zIndex = '-1';
+      container.style.opacity = '0';
+      container.style.pointerEvents = 'none';
 
       // Add dual logos header
       const logoHeader = document.createElement('div');
-      logoHeader.style.display = 'flex';
-      logoHeader.style.justifyContent = 'space-between';
-      logoHeader.style.alignItems = 'center';
-      logoHeader.style.marginBottom = '30px';
-      logoHeader.style.paddingBottom = '20px';
-      logoHeader.style.borderBottom = '1px solid #d4a574';
+      logoHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #d4a574;';
 
       const leftLogo = document.createElement('img');
       leftLogo.src = logoChaoxuan;
       leftLogo.alt = '超烜創意';
-      leftLogo.style.height = '50px';
-      leftLogo.style.width = 'auto';
+      leftLogo.style.cssText = 'height: 50px; width: auto;';
+      leftLogo.crossOrigin = 'anonymous';
       
       const rightLogo = document.createElement('img');
       rightLogo.src = logoHongling;
       rightLogo.alt = '虹靈御所';
-      rightLogo.style.height = '50px';
-      rightLogo.style.width = 'auto';
+      rightLogo.style.cssText = 'height: 50px; width: auto;';
+      rightLogo.crossOrigin = 'anonymous';
 
       logoHeader.appendChild(leftLogo);
       logoHeader.appendChild(rightLogo);
@@ -502,121 +501,116 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       // Add title
       const titleEl = document.createElement('h1');
       titleEl.textContent = content.title;
-      titleEl.style.fontSize = '24pt';
-      titleEl.style.fontWeight = 'bold';
-      titleEl.style.textAlign = 'center';
-      titleEl.style.marginBottom = '30px';
-      titleEl.style.color = '#8b4513';
+      titleEl.style.cssText = 'font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 30px; color: #8b4513;';
       container.appendChild(titleEl);
 
-      // Add each page content
+      // Collect all content from pages
+      let hasContent = false;
       for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
         
-        // Add section title
-        if (i > 0) {
+        // Add section title for pages after the first
+        if (i > 0 && page.title) {
           const sectionTitle = document.createElement('h2');
           sectionTitle.textContent = page.title;
-          sectionTitle.style.fontSize = '18pt';
-          sectionTitle.style.fontWeight = 'bold';
-          sectionTitle.style.marginTop = '40px';
-          sectionTitle.style.marginBottom = '20px';
-          sectionTitle.style.color = '#8b4513';
-          sectionTitle.style.borderBottom = '2px solid #d4a574';
-          sectionTitle.style.paddingBottom = '10px';
+          sectionTitle.style.cssText = 'font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 15px; color: #8b4513; border-bottom: 2px solid #d4a574; padding-bottom: 8px;';
           container.appendChild(sectionTitle);
         }
 
-        // Add content - handle empty content case
+        // Add content
         if (page.content && page.content.trim()) {
+          hasContent = true;
           const contentDiv = document.createElement('div');
           contentDiv.innerHTML = page.content;
           
-          // Style the content
-          const paragraphs = contentDiv.querySelectorAll('p');
-          paragraphs.forEach(p => {
-            (p as HTMLElement).style.marginBottom = '12px';
-            (p as HTMLElement).style.textIndent = '2em';
+          // Style all paragraphs
+          contentDiv.querySelectorAll('p').forEach(p => {
+            (p as HTMLElement).style.cssText = 'margin-bottom: 10px; text-indent: 2em; color: #1a1a1a;';
           });
 
-          const headings = contentDiv.querySelectorAll('h1, h2, h3');
-          headings.forEach(h => {
-            (h as HTMLElement).style.color = '#8b4513';
-            (h as HTMLElement).style.marginTop = '20px';
-            (h as HTMLElement).style.marginBottom = '10px';
+          // Style headings
+          contentDiv.querySelectorAll('h1, h2, h3').forEach(h => {
+            (h as HTMLElement).style.cssText = 'color: #8b4513; margin-top: 15px; margin-bottom: 10px;';
           });
 
-          const images = contentDiv.querySelectorAll('img');
-          images.forEach(img => {
-            (img as HTMLElement).style.maxWidth = '100%';
-            (img as HTMLElement).style.height = 'auto';
-            (img as HTMLElement).style.margin = '20px auto';
-            (img as HTMLElement).style.display = 'block';
+          // Style strong/bold text
+          contentDiv.querySelectorAll('strong, b').forEach(el => {
+            (el as HTMLElement).style.cssText = 'color: #d35400; font-weight: bold;';
+          });
+
+          // Style images
+          contentDiv.querySelectorAll('img').forEach(img => {
+            (img as HTMLElement).style.cssText = 'max-width: 100%; height: auto; margin: 15px auto; display: block;';
+            (img as HTMLImageElement).crossOrigin = 'anonymous';
           });
 
           container.appendChild(contentDiv);
-        } else if (i === 0) {
-          // First page - add a placeholder if no content
-          const placeholderDiv = document.createElement('div');
-          placeholderDiv.style.textAlign = 'center';
-          placeholderDiv.style.marginTop = '40px';
-          placeholderDiv.style.color = '#666666';
-          placeholderDiv.innerHTML = '<p>命理報告</p>';
-          container.appendChild(placeholderDiv);
         }
+      }
+
+      // If no content, add placeholder
+      if (!hasContent) {
+        const placeholder = document.createElement('p');
+        placeholder.textContent = '此報告無內容';
+        placeholder.style.cssText = 'text-align: center; color: #666; margin-top: 50px;';
+        container.appendChild(placeholder);
       }
 
       // Add copyright footer
       const copyrightFooter = document.createElement('div');
-      copyrightFooter.style.marginTop = '60px';
-      copyrightFooter.style.paddingTop = '20px';
-      copyrightFooter.style.borderTop = '1px solid #d4a574';
-      copyrightFooter.style.textAlign = 'center';
-      copyrightFooter.style.fontSize = '10pt';
-      copyrightFooter.style.color = '#666666';
-      copyrightFooter.innerHTML = `© ${new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有`;
+      copyrightFooter.style.cssText = 'margin-top: 40px; padding-top: 15px; border-top: 1px solid #d4a574; text-align: center; font-size: 11px; color: #666666;';
+      copyrightFooter.textContent = `© ${new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有`;
       container.appendChild(copyrightFooter);
 
-      // Append to body temporarily
+      // Append to body
       document.body.appendChild(container);
 
-      // Wait for all images to load before generating PDF
-      const allImages = container.querySelectorAll('img');
-      await Promise.all(
-        Array.from(allImages).map(img => {
-          if (img.complete) return Promise.resolve();
-          return new Promise((resolve) => {
-            img.onload = resolve;
-            img.onerror = resolve; // Continue even if image fails
-          });
-        })
-      );
+      // Make container visible for html2canvas
+      container.style.opacity = '1';
+      container.style.zIndex = '9999';
 
-      // Small delay to ensure rendering is complete
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Wait for images to load
+      const allImages = container.querySelectorAll('img');
+      if (allImages.length > 0) {
+        await Promise.all(
+          Array.from(allImages).map(img => {
+            if ((img as HTMLImageElement).complete) return Promise.resolve();
+            return new Promise((resolve) => {
+              img.onload = resolve;
+              img.onerror = resolve;
+            });
+          })
+        );
+      }
+
+      // Give browser time to render
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: 10,
         filename: `${content.title}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 0.95 },
         html2canvas: { 
-          scale: 2, 
+          scale: 2,
           useCORS: true,
-          letterRendering: true,
-          logging: false,
-          allowTaint: true
+          logging: true, // Enable logging for debugging
+          backgroundColor: '#ffffff',
+          windowWidth: 794
         },
         jsPDF: { 
           unit: 'mm', 
           format: 'a4', 
           orientation: 'portrait' 
         },
-        pagebreak: { mode: ['css', 'legacy'], avoid: ['img', 'h2'] }
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
+
+      console.log('Starting PDF export with', pages.length, 'pages');
+      console.log('Container has content:', container.innerHTML.length, 'characters');
 
       await html2pdf().set(opt).from(container).save();
 
-      // Remove the temporary container
+      // Clean up
       document.body.removeChild(container);
 
       toast({
@@ -627,9 +621,14 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       console.error('PDF export error:', error);
       toast({
         title: "匯出失敗",
-        description: "無法匯出 PDF，請重試",
+        description: `無法匯出 PDF: ${error instanceof Error ? error.message : '未知錯誤'}`,
         variant: "destructive",
       });
+      // Try to clean up container if it exists
+      const existingContainer = document.getElementById('pdf-export-container');
+      if (existingContainer) {
+        document.body.removeChild(existingContainer);
+      }
     } finally {
       setIsExporting(false);
     }
@@ -684,45 +683,45 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
         </div>
       </div>
 
-      {/* Bottom Left Controls */}
-      <div className="fixed bottom-24 left-6 z-50 flex flex-col items-center gap-4">
+      {/* Bottom Left Controls - smaller on mobile */}
+      <div className="fixed bottom-28 md:bottom-24 left-3 md:left-6 z-50 flex flex-col items-center gap-2 md:gap-4">
         <Button
           asChild
           variant="outline"
-          size="lg"
-          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          size="icon"
+          className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           <Link to="/">
-            <Home className="w-6 h-6" />
+            <Home className="w-4 h-4 md:w-6 md:h-6" />
           </Link>
         </Button>
         <Button
           variant="outline"
-          size="lg"
+          size="icon"
           onClick={toggleAudio}
           disabled={isLoading}
-          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
         >
           {isLoading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <Loader2 className="w-4 h-4 md:w-6 md:h-6 animate-spin" />
           ) : isPlaying ? (
-            <VolumeX className="w-6 h-6" />
+            <VolumeX className="w-4 h-4 md:w-6 md:h-6" />
           ) : (
-            <Volume2 className="w-6 h-6" />
+            <Volume2 className="w-4 h-4 md:w-6 md:h-6" />
           )}
         </Button>
         <Button
           variant="outline"
-          size="lg"
+          size="icon"
           onClick={exportToPdf}
           disabled={isExporting}
-          className="rounded-full w-14 h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
           title="匯出 PDF"
         >
           {isExporting ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <Loader2 className="w-4 h-4 md:w-6 md:h-6 animate-spin" />
           ) : (
-            <Download className="w-6 h-6" />
+            <Download className="w-4 h-4 md:w-6 md:h-6" />
           )}
         </Button>
       </div>
@@ -798,28 +797,28 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
       </div>
 
       {/* Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 pb-8">
-        <div className="flex items-center justify-center gap-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 pb-6 md:pb-8 px-4">
+        <div className="flex items-center justify-center gap-2 md:gap-4">
           <Button
             variant="outline"
-            size="lg"
+            size="default"
             onClick={() => goToPage(currentPage - 1, 'left')}
             disabled={currentPage === 0 || isAnimating}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105 active:scale-95"
+            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-3 md:px-6 transition-all hover:scale-105 active:scale-95 text-sm md:text-base"
           >
-            <ChevronLeft className="w-5 h-5 mr-2" />
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
             上一頁
           </Button>
           
-          {/* Page Dots */}
-          <div className="flex items-center gap-2 px-4">
+          {/* Page Dots - hide on mobile when too many pages */}
+          <div className="hidden md:flex items-center gap-2 px-4 max-w-xs overflow-x-auto">
             {pages.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => goToPage(idx)}
                 disabled={isAnimating}
                 className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                  "w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 flex-shrink-0",
                   idx === currentPage 
                     ? "bg-primary scale-125" 
                     : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
@@ -830,13 +829,13 @@ export function PagedDocumentReader({ content, className, documentId }: PagedDoc
 
           <Button
             variant="outline"
-            size="lg"
+            size="default"
             onClick={() => goToPage(currentPage + 1, 'right')}
             disabled={currentPage === pages.length - 1 || isAnimating}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-6 transition-all hover:scale-105 active:scale-95"
+            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-3 md:px-6 transition-all hover:scale-105 active:scale-95 text-sm md:text-base"
           >
             下一頁
-            <ChevronRight className="w-5 h-5 ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-1 md:ml-2" />
           </Button>
         </div>
         
