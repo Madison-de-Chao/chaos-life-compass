@@ -555,11 +555,11 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
       >
         {/* Page Title */}
         <header 
-          className={cn("text-center mb-16", pageAnimationClass)}
+          className={cn("text-center", currentPage === 0 ? "mb-8 md:mb-12" : "mb-16", pageAnimationClass)}
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
-            <div className="inline-block mb-4">
+            <div className="inline-block mb-6">
               <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
                 命理報告
               </span>
@@ -569,16 +569,16 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
             className="text-[28px] md:text-[30px] lg:text-[32px] font-bold text-primary font-serif leading-tight tracking-tight"
             dangerouslySetInnerHTML={{ __html: page.styledTitle }}
           />
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <div className="w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-            <div className="w-2.5 h-2.5 rounded-full bg-primary/30 animate-pulse" />
-            <div className="w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+          <div className="flex items-center justify-center gap-4 mt-6 md:mt-8">
+            <div className="w-16 md:w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+            <div className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-primary/30 animate-pulse" />
+            <div className="w-16 md:w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
           </div>
         </header>
 
         {/* Cover Logo - only on first page */}
         {currentPage === 0 && (
-          <div className="flex justify-center items-center my-16 md:my-24 perspective-1000">
+          <div className="flex justify-center items-center my-10 md:my-16 lg:my-20 perspective-1000">
             <div className="relative animate-cover-reveal">
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/30 to-primary/20 rounded-full blur-3xl animate-glow-pulse" />
@@ -597,7 +597,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
               <img 
                 src={reportLogo} 
                 alt="報告標誌" 
-                className="relative z-10 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl animate-float"
+                className="relative z-10 w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain drop-shadow-2xl animate-float"
                 style={{
                   filter: 'drop-shadow(0 20px 40px hsl(var(--primary) / 0.25))',
                 }}
