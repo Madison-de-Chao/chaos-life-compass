@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { DocumentReader } from "@/components/DocumentReader";
+import { PagedDocumentReader } from "@/components/PagedDocumentReader";
 import { PasswordDialog } from "@/components/PasswordDialog";
 import { getDocumentByShareLink, incrementViewCount, Document } from "@/hooks/useDocuments";
 import { supabase } from "@/integrations/supabase/client";
@@ -115,76 +115,59 @@ const ViewPage = () => {
   }
 
   // Parse content from JSON
-  const content = document.content as { title: string; sections: any[] } | null;
+  const content = document.content as { title: string; htmlContent?: string; sections?: any[] } | null;
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              返回
-            </Link>
-          </Button>
-        </div>
-      </header>
-
       {/* Document Content */}
       {isAuthenticated && (
-        <main className="container mx-auto px-4 py-12 md:py-20">
+        <>
           {content ? (
-            <DocumentReader content={content} />
+            <PagedDocumentReader content={content} />
           ) : (
             /* File Download Card when no parsed content */
-            <div className="max-w-2xl mx-auto animate-fade-in">
-              <Card className="overflow-hidden">
-                <CardContent className="p-8">
-                  <div className="flex flex-col items-center text-center space-y-6">
-                    <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
-                      <FileText className="w-10 h-10 text-primary" />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <h1 className="text-2xl font-bold text-foreground font-serif">
-                        {document.original_name}
-                      </h1>
-                      <p className="text-muted-foreground">
-                        {formatFileSize(document.file_size)}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4" />
-                        <span>{formatDate(document.created_at)}</span>
+            <main className="container mx-auto px-4 py-12 md:py-20">
+              <div className="max-w-2xl mx-auto animate-fade-in">
+                <Card className="overflow-hidden">
+                  <CardContent className="p-8">
+                    <div className="flex flex-col items-center text-center space-y-6">
+                      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
+                        <FileText className="w-10 h-10 text-primary" />
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Eye className="w-4 h-4" />
-                        <span>{document.view_count} 次閱讀</span>
+                      
+                      <div className="space-y-2">
+                        <h1 className="text-2xl font-bold text-foreground font-serif">
+                          {document.original_name}
+                        </h1>
+                        <p className="text-muted-foreground">
+                          {formatFileSize(document.file_size)}
+                        </p>
                       </div>
-                    </div>
 
-                    {document.file_path && (
-                      <Button onClick={handleDownload} size="lg" className="mt-4">
-                        <Download className="w-4 h-4 mr-2" />
-                        下載文件
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                      <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="w-4 h-4" />
+                          <span>{formatDate(document.created_at)}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Eye className="w-4 h-4" />
+                          <span>{document.view_count} 次閱讀</span>
+                        </div>
+                      </div>
+
+                      {document.file_path && (
+                        <Button onClick={handleDownload} size="lg" className="mt-4">
+                          <Download className="w-4 h-4 mr-2" />
+                          下載文件
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </main>
           )}
-          
-          {/* Footer */}
-          <footer className="max-w-3xl mx-auto mt-20 pt-10 border-t border-border text-center">
-            <p className="text-sm text-muted-foreground">
-              由 <span className="font-medium text-foreground">DocShow</span> 提供服務
-            </p>
-          </footer>
-        </main>
+        </>
       )}
 
       {/* Password Dialog */}
