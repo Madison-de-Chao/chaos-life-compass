@@ -696,7 +696,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
             </div>
           )}
           <h1 
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary font-serif leading-tight tracking-tight"
+            className="text-[28px] md:text-[30px] lg:text-[32px] font-bold text-primary font-serif leading-tight tracking-tight"
             dangerouslySetInnerHTML={{ __html: page.styledTitle }}
           />
           <div className="flex items-center justify-center gap-4 mt-8">
@@ -740,7 +740,7 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
         <div 
           key={`content-${currentPage}`}
           className={cn(
-            "document-page-content font-serif text-foreground/85 leading-[2.4] tracking-wide text-lg md:text-xl lg:text-2xl",
+            "document-page-content font-serif text-foreground/85 leading-[2.1] tracking-wide text-[20px] md:text-[21px] lg:text-[22px]",
             pageAnimationClass
           )}
           style={{ animationDelay: '0.08s' }}
