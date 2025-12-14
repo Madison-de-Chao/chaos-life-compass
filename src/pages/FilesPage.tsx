@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { FileRecordCard } from "@/components/FileRecordCard";
 import { ShareDialog } from "@/components/ShareDialog";
 import { StatsOverview } from "@/components/StatsOverview";
-import { useDocuments, Document } from "@/hooks/useDocuments";
+import { useDocuments, Document, Customer } from "@/hooks/useDocuments";
 import { FileText, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const FilesPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,23 @@ const FilesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
+  const [customers, setCustomers] = useState<Record<string, Customer>>({});
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      const { data } = await supabase
+        .from("customers")
+        .select("id, name, gender, birth_date, birth_time, phone, email, notes");
+      if (data) {
+        const map: Record<string, Customer> = {};
+        data.forEach((c) => {
+          map[c.id] = c;
+        });
+        setCustomers(map);
+      }
+    };
+    fetchCustomers();
+  }, []);
 
   const filteredRecords = documents.filter(
     (doc) =>
@@ -43,6 +61,7 @@ const FilesPage = () => {
           filePath: document.file_path,
           documentId: document.id,
           isEditing: true,
+          customerId: document.customer_id,
         },
       });
     } else {
@@ -116,6 +135,7 @@ const FilesPage = () => {
               >
                 <FileRecordCard
                   document={document}
+                  customer={document.customer_id ? customers[document.customer_id] : null}
                   onView={handleView}
                   onEdit={handleEdit}
                   onShare={handleShare}

@@ -1,8 +1,8 @@
-import { FileText, Eye, Lock, Share2, Calendar, Trash2, Pencil } from "lucide-react";
+import { FileText, Eye, Lock, Share2, Calendar, Trash2, Pencil, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
-import { Document } from "@/hooks/useDocuments";
+import { Document, Customer } from "@/hooks/useDocuments";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,13 +17,14 @@ import {
 
 interface FileRecordCardProps {
   document: Document;
+  customer?: Customer | null;
   onView: (shareLink: string) => void;
   onEdit: (document: Document) => void;
   onShare: (document: Document) => void;
   onDelete: (id: string, filePath?: string | null) => void;
 }
 
-export function FileRecordCard({ document, onView, onEdit, onShare, onDelete }: FileRecordCardProps) {
+export function FileRecordCard({ document, customer, onView, onEdit, onShare, onDelete }: FileRecordCardProps) {
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return "0 B";
     const k = 1024;
@@ -45,6 +46,12 @@ export function FileRecordCard({ document, onView, onEdit, onShare, onDelete }: 
           </h3>
 
           <div className="space-y-1.5 text-sm text-muted-foreground">
+            {customer && (
+              <div className="flex items-center gap-2 text-primary">
+                <User className="w-4 h-4" />
+                <span className="font-medium">{customer.name}</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               <span>

@@ -15,6 +15,18 @@ export interface Document {
   view_count: number;
   created_at: string;
   updated_at: string;
+  customer_id: string | null;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  gender: string | null;
+  birth_date: string | null;
+  birth_time: string | null;
+  phone: string | null;
+  email: string | null;
+  notes: string | null;
 }
 
 export function useDocuments() {
