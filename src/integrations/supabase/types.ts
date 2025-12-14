@@ -64,7 +64,7 @@ export type Database = {
           id: string
           is_public: boolean | null
           original_name: string
-          password: string | null
+          password_hash: string | null
           share_link: string
           tts_audio_urls: Json | null
           updated_at: string
@@ -80,7 +80,7 @@ export type Database = {
           id?: string
           is_public?: boolean | null
           original_name: string
-          password?: string | null
+          password_hash?: string | null
           share_link: string
           tts_audio_urls?: Json | null
           updated_at?: string
@@ -96,7 +96,7 @@ export type Database = {
           id?: string
           is_public?: boolean | null
           original_name?: string
-          password?: string | null
+          password_hash?: string | null
           share_link?: string
           tts_audio_urls?: Json | null
           updated_at?: string
@@ -150,18 +150,55 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      document_has_password: {
+        Args: { doc_share_link: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      hash_document_password: { Args: { pwd: string }; Returns: string }
       increment_view_count: {
         Args: { doc_share_link: string }
         Returns: undefined
       }
+      verify_document_password: {
+        Args: { doc_share_link: string; pwd: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -288,6 +325,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
