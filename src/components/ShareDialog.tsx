@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Share2, Copy, Check, Link2, Lock, Globe, GlobeLock } from "lucide-react";
+import { Share2, Copy, Check, Link2, Lock, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -29,20 +28,16 @@ export function ShareDialog({
   onUpdate,
 }: ShareDialogProps) {
   const [copied, setCopied] = useState(false);
-  const [showPasswordToggle, setShowPasswordToggle] = useState(false);
   const [customPassword, setCustomPassword] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [isPublic, setIsPublic] = useState(true);
-  const [isSavingPublic, setIsSavingPublic] = useState(false);
+  const [hasExistingPassword, setHasExistingPassword] = useState(false);
 
   useEffect(() => {
     if (document) {
       // Check if document has a password hash set
-      setShowPasswordToggle(!!document.password_hash);
+      setHasExistingPassword(!!document.password_hash);
       // Don't show the actual password - user must enter a new one if they want to change it
       setCustomPassword("");
-      // Set public status
-      setIsPublic(document.is_public ?? true);
     }
   }, [document]);
 
@@ -51,6 +46,14 @@ export function ShareDialog({
   const fullUrl = `${window.location.origin}/view/${document.share_link}`;
 
   const handleCopy = async () => {
+    if (!hasExistingPassword) {
+      toast({
+        title: "請先設定密碼",
+        description: "文件必須設定密碼才能分享",
+        variant: "destructive",
+      });
+      return;
+    }
     await navigator.clipboard.writeText(fullUrl);
     setCopied(true);
     toast({
@@ -61,29 +64,34 @@ export function ShareDialog({
   };
 
   const handleSavePassword = async () => {
+    if (!customPassword.trim()) {
+      toast({
+        title: "請輸入密碼",
+        description: "文件必須設定密碼才能分享",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSaving(true);
     
     // Use server-side function to hash the password
-    let passwordHash: string | null = null;
-    if (showPasswordToggle && customPassword.trim()) {
-      const { data: hashedPwd, error: hashError } = await supabase.rpc('hash_document_password', {
-        pwd: customPassword.trim()
+    const { data: hashedPwd, error: hashError } = await supabase.rpc('hash_document_password', {
+      pwd: customPassword.trim()
+    });
+    if (hashError) {
+      toast({
+        title: "儲存失敗",
+        description: hashError.message,
+        variant: "destructive",
       });
-      if (hashError) {
-        toast({
-          title: "儲存失敗",
-          description: hashError.message,
-          variant: "destructive",
-        });
-        setIsSaving(false);
-        return;
-      }
-      passwordHash = hashedPwd;
+      setIsSaving(false);
+      return;
     }
     
     const { data, error } = await supabase
       .from("documents")
-      .update({ password_hash: passwordHash })
+      .update({ password_hash: hashedPwd, is_public: true })
       .eq("id", document.id)
       .select()
       .single();
@@ -96,9 +104,10 @@ export function ShareDialog({
       });
     } else {
       toast({
-        title: "已更新",
-        description: passwordHash ? "密碼已設定" : "密碼保護已關閉",
+        title: "密碼已設定",
+        description: "文件現在可以透過連結 + 密碼訪問",
       });
+      setHasExistingPassword(true);
       if (onUpdate && data) {
         onUpdate(data);
       }
@@ -108,13 +117,12 @@ export function ShareDialog({
     setIsSaving(false);
   };
 
-  const handleTogglePublic = async () => {
-    setIsSavingPublic(true);
-    const newPublicState = !isPublic;
+  const handleDisableAccess = async () => {
+    setIsSaving(true);
     
     const { data, error } = await supabase
       .from("documents")
-      .update({ is_public: newPublicState })
+      .update({ is_public: false })
       .eq("id", document.id)
       .select()
       .single();
@@ -126,22 +134,56 @@ export function ShareDialog({
         variant: "destructive",
       });
     } else {
-      setIsPublic(newPublicState);
       toast({
-        title: newPublicState ? "已公開" : "已停用公開",
-        description: newPublicState ? "文件現在可以透過連結訪問" : "文件已停用公開訪問",
+        title: "已停用分享",
+        description: "文件連結已失效，訪客將無法查看",
+      });
+      if (onUpdate && data) {
+        onUpdate(data);
+      }
+      onOpenChange(false);
+    }
+    setIsSaving(false);
+  };
+
+  const handleEnableAccess = async () => {
+    if (!hasExistingPassword) {
+      toast({
+        title: "請先設定密碼",
+        description: "文件必須設定密碼才能啟用分享",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    
+    const { data, error } = await supabase
+      .from("documents")
+      .update({ is_public: true })
+      .eq("id", document.id)
+      .select()
+      .single();
+
+    if (error) {
+      toast({
+        title: "更新失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "已啟用分享",
+        description: "文件現在可以透過連結 + 密碼訪問",
       });
       if (onUpdate && data) {
         onUpdate(data);
       }
     }
-    setIsSavingPublic(false);
+    setIsSaving(false);
   };
 
-  // Password changed if toggle is on and there's input, or toggle changed state
-  const passwordChanged = showPasswordToggle
-    ? customPassword.trim() !== ""
-    : !!document.password_hash;
+  const isAccessEnabled = document.is_public !== false;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -154,11 +196,20 @@ export function ShareDialog({
             分享文件
           </DialogTitle>
           <DialogDescription className="text-center">
-            複製連結分享給客人閱讀
+            設定密碼後複製連結分享給客人
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
+          {/* Security Notice */}
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-primary/5 border border-primary/20">
+            <ShieldCheck className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+            <div className="text-sm text-muted-foreground">
+              <p className="font-medium text-foreground mb-1">安全分享模式</p>
+              <p>所有文件都需要密碼才能訪問，確保報告內容只有授權客人可以閱讀。</p>
+            </div>
+          </div>
+
           {/* Share Link */}
           <div className="space-y-2">
             <Label className="text-sm font-medium flex items-center gap-2">
@@ -176,6 +227,7 @@ export function ShareDialog({
                 size="icon"
                 onClick={handleCopy}
                 className="shrink-0"
+                disabled={!hasExistingPassword || !isAccessEnabled}
               >
                 {copied ? (
                   <Check className="w-4 h-4 text-green-600" />
@@ -192,52 +244,33 @@ export function ShareDialog({
             )}
           </div>
 
-          {/* Public Access Toggle */}
+          {/* Password Protection - Always Required */}
           <div className="space-y-4 p-4 rounded-xl bg-accent/50">
-            <div className="flex items-center justify-between">
-              <Label className="flex items-center gap-2 cursor-pointer">
-                {isPublic ? <Globe className="w-4 h-4 text-green-600" /> : <GlobeLock className="w-4 h-4 text-muted-foreground" />}
-                公開訪問
+            <div className="flex items-center gap-2">
+              <Lock className="w-4 h-4 text-primary" />
+              <Label className="font-medium">
+                存取密碼 <span className="text-destructive">*</span>
               </Label>
-              <Switch
-                checked={isPublic}
-                onCheckedChange={handleTogglePublic}
-                disabled={isSavingPublic}
-              />
-            </div>
-            <p className="text-xs text-muted-foreground">
-              {isPublic ? "任何人都可以透過連結查看此文件" : "文件已停用，訪客將無法查看"}
-            </p>
-          </div>
-
-          {/* Password Protection */}
-          <div className="space-y-4 p-4 rounded-xl bg-accent/50">
-            <div className="flex items-center justify-between">
-              <Label className="flex items-center gap-2 cursor-pointer">
-                <Lock className="w-4 h-4" />
-                密碼保護
-              </Label>
-              <Switch
-                checked={showPasswordToggle}
-                onCheckedChange={setShowPasswordToggle}
-              />
+              {hasExistingPassword && (
+                <span className="ml-auto text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">
+                  已設定
+                </span>
+              )}
             </div>
 
-            {showPasswordToggle && (
-              <div className="space-y-2 animate-fade-in">
-                <Input
-                  type="text"
-                  placeholder="設定分享密碼"
-                  value={customPassword}
-                  onChange={(e) => setCustomPassword(e.target.value)}
-                />
-                <p className="text-xs text-muted-foreground">
-                  客人需要輸入此密碼才能閱讀文件
-                </p>
-              </div>
-            )}
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder={hasExistingPassword ? "輸入新密碼以更新" : "設定分享密碼（必填）"}
+                value={customPassword}
+                onChange={(e) => setCustomPassword(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                客人需要輸入此密碼才能閱讀文件
+              </p>
+            </div>
 
-            {passwordChanged && (
+            {customPassword.trim() && (
               <Button
                 variant="secondary"
                 size="sm"
@@ -245,19 +278,61 @@ export function ShareDialog({
                 disabled={isSaving}
                 className="w-full"
               >
-                {isSaving ? "儲存中..." : "儲存密碼設定"}
+                {isSaving ? "儲存中..." : hasExistingPassword ? "更新密碼" : "設定密碼"}
               </Button>
             )}
           </div>
 
-          <Button variant="hero" size="lg" className="w-full" onClick={handleCopy} disabled={!isPublic}>
-            {copied ? "已複製！" : "複製分享連結"}
-          </Button>
-          
-          {!isPublic && (
-            <p className="text-xs text-center text-amber-600">
-              文件已停用公開，請先啟用公開訪問才能分享
-            </p>
+          {/* Access Status */}
+          {isAccessEnabled ? (
+            <>
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="w-full" 
+                onClick={handleCopy} 
+                disabled={!hasExistingPassword}
+              >
+                {copied ? "已複製！" : "複製分享連結"}
+              </Button>
+              
+              {!hasExistingPassword && (
+                <p className="text-xs text-center text-amber-600">
+                  請先設定密碼才能分享文件
+                </p>
+              )}
+
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full text-destructive hover:text-destructive" 
+                onClick={handleDisableAccess}
+                disabled={isSaving}
+              >
+                停用分享連結
+              </Button>
+            </>
+          ) : (
+            <div className="space-y-3">
+              <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-center">
+                <p className="text-sm text-amber-700">分享連結已停用</p>
+                <p className="text-xs text-amber-600 mt-1">訪客目前無法透過連結訪問此文件</p>
+              </div>
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="w-full" 
+                onClick={handleEnableAccess}
+                disabled={isSaving || !hasExistingPassword}
+              >
+                啟用分享連結
+              </Button>
+              {!hasExistingPassword && (
+                <p className="text-xs text-center text-amber-600">
+                  請先設定密碼才能啟用分享
+                </p>
+              )}
+            </div>
           )}
         </div>
       </DialogContent>
