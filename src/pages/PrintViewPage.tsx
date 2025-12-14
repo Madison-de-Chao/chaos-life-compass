@@ -120,6 +120,16 @@ function styleTitle(title: string): string {
   }
 }
 
+// Calculate font size based on title length
+function getTitleFontSize(title: string): string {
+  const len = title.length;
+  if (len <= 10) return '28px';
+  if (len <= 15) return '24px';
+  if (len <= 20) return '20px';
+  if (len <= 30) return '18px';
+  return '16px';
+}
+
 // Page break patterns
 const markdownH2Pattern = /^(?<![#])##(?![#])\s+/;
 const chapterPattern = /^第\s*\d+\s*章/;
@@ -291,16 +301,26 @@ const PrintViewPage = () => {
             padding: 0;
           }
           
+          .print-container {
+            padding: 0;
+            background: white;
+          }
+          
           .print-page {
             page-break-after: always;
             page-break-inside: avoid;
             min-height: 100vh;
-            padding: 40px;
+            padding: 50px;
             box-sizing: border-box;
+            position: relative;
           }
           
           .print-page:last-child {
             page-break-after: auto;
+          }
+          
+          .page-corner {
+            display: none;
           }
           
           .print-header {
@@ -309,7 +329,11 @@ const PrintViewPage = () => {
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #d4a574;
+            border-bottom: 2px solid #d4a574;
+          }
+          
+          .header-divider {
+            display: none;
           }
           
           .print-header img {
@@ -317,20 +341,47 @@ const PrintViewPage = () => {
             width: auto;
           }
           
+          .cover-section {
+            text-align: center;
+            margin: 30px 0;
+          }
+          
+          .cover-logo {
+            width: 180px;
+            height: auto;
+          }
+          
           .print-title {
             text-align: center;
-            font-size: 24px;
             font-weight: bold;
             color: #8b5a3c;
-            margin-bottom: 30px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
+            margin: 20px 0;
+            line-height: 1.3;
+          }
+          
+          .title-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+          }
+          
+          .divider-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #d4a574, transparent);
+          }
+          
+          .divider-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4a574;
           }
           
           .first-char {
-            font-size: 1.2em;
+            font-size: 1.15em;
             font-weight: 900;
             color: #8b5a3c;
           }
@@ -341,7 +392,7 @@ const PrintViewPage = () => {
           
           .print-content {
             font-size: 14px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: #1a1a1a;
           }
           
@@ -365,47 +416,44 @@ const PrintViewPage = () => {
             display: block;
           }
           
+          .page-number {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            font-size: 11px;
+            color: #999;
+          }
+          
           .print-footer {
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #d4a574;
-          }
-          
-          .cover-logo {
-            display: block;
-            width: 200px;
-            height: auto;
-            margin: 40px auto;
+            border-top: 2px solid #d4a574;
           }
           
           .document-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5em 0;
-            font-size: 12px;
+            font-size: 11px;
             border: 2px solid #8b5a3c;
-            border-radius: 4px;
-            overflow: hidden;
           }
           
           .document-table th,
           .document-table td {
             border: 1px solid #d4a574;
-            padding: 10px 14px;
+            padding: 8px 12px;
             text-align: left;
             vertical-align: top;
           }
           
           .document-table th {
-            background: linear-gradient(135deg, #f5e6d3 0%, #ede0cc 100%);
+            background: #f5e6d3;
             font-weight: bold;
             color: #8b5a3c;
             border-bottom: 2px solid #8b5a3c;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             white-space: nowrap;
           }
           
@@ -416,20 +464,61 @@ const PrintViewPage = () => {
           .document-table tr:nth-child(even) td {
             background-color: #faf5ed;
           }
-          
-          .document-table tr:hover td {
-            background-color: #f5ebe0;
-          }
         }
         
         @media screen {
+          .print-container {
+            background: linear-gradient(135deg, hsl(var(--muted) / 0.3) 0%, hsl(var(--background)) 50%, hsl(var(--muted) / 0.3) 100%);
+          }
+          
           .print-page {
-            max-width: 800px;
-            margin: 0 auto 40px;
-            padding: 40px;
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            max-width: 850px;
+            margin: 0 auto 50px;
+            padding: 50px;
+            background: linear-gradient(to bottom, #fffdf9, #fff);
+            box-shadow: 
+              0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 20px 40px -10px rgba(139, 90, 60, 0.15),
+              0 0 0 1px rgba(212, 165, 116, 0.2);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .page-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-color: hsl(var(--primary) / 0.3);
+            border-style: solid;
+          }
+          
+          .page-corner.top-left {
+            top: 15px;
+            left: 15px;
+            border-width: 2px 0 0 2px;
+            border-radius: 8px 0 0 0;
+          }
+          
+          .page-corner.top-right {
+            top: 15px;
+            right: 15px;
+            border-width: 2px 2px 0 0;
+            border-radius: 0 8px 0 0;
+          }
+          
+          .page-corner.bottom-left {
+            bottom: 15px;
+            left: 15px;
+            border-width: 0 0 2px 2px;
+            border-radius: 0 0 0 8px;
+          }
+          
+          .page-corner.bottom-right {
+            bottom: 15px;
+            right: 15px;
+            border-width: 0 2px 2px 0;
+            border-radius: 0 0 8px 0;
           }
           
           .print-header {
@@ -438,28 +527,86 @@ const PrintViewPage = () => {
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #d4a574;
+            border-bottom: 2px solid hsl(var(--primary) / 0.3);
+          }
+          
+          .header-divider {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.2), transparent);
+            margin: 0 20px;
           }
           
           .print-header img {
-            height: 50px;
+            height: 55px;
             width: auto;
+            transition: transform 0.3s ease;
+          }
+          
+          .print-header img:hover {
+            transform: scale(1.05);
+          }
+          
+          .cover-section {
+            text-align: center;
+            margin: 40px 0;
+            animation: fadeIn 0.8s ease-out;
+          }
+          
+          .cover-logo {
+            width: 200px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(139, 90, 60, 0.2));
+            animation: float 4s ease-in-out infinite;
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+          }
+          
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
           }
           
           .print-title {
             text-align: center;
-            font-size: 24px;
             font-weight: bold;
             color: hsl(var(--primary));
+            margin: 25px 0 15px;
+            line-height: 1.3;
+          }
+          
+          .title-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             margin-bottom: 30px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
+          }
+          
+          .divider-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.4), transparent);
+          }
+          
+          .divider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: hsl(var(--primary) / 0.4);
+            animation: pulse 2s ease-in-out infinite;
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
           }
           
           .first-char {
-            font-size: 1.2em;
+            font-size: 1.15em;
             font-weight: 900;
             color: hsl(var(--primary));
           }
@@ -470,12 +617,13 @@ const PrintViewPage = () => {
           
           .print-content {
             font-size: 16px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: hsl(var(--foreground));
           }
           
           .print-content p {
             margin-bottom: 1em;
+            text-indent: 2em;
           }
           
           .print-content h1,
@@ -489,8 +637,19 @@ const PrintViewPage = () => {
           .print-content img {
             max-width: 100%;
             height: auto;
-            margin: 1em auto;
+            margin: 1.5em auto;
             display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          }
+          
+          .page-number {
+            text-align: center;
+            font-size: 12px;
+            color: hsl(var(--muted-foreground));
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid hsl(var(--border) / 0.5);
           }
           
           .print-footer {
@@ -499,14 +658,7 @@ const PrintViewPage = () => {
             color: hsl(var(--muted-foreground));
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid hsl(var(--border));
-          }
-          
-          .cover-logo {
-            display: block;
-            width: 200px;
-            height: auto;
-            margin: 40px auto;
+            border-top: 2px solid hsl(var(--primary) / 0.3);
           }
           
           .document-table {
@@ -532,8 +684,6 @@ const PrintViewPage = () => {
             font-weight: bold;
             color: hsl(var(--primary));
             border-bottom: 2px solid hsl(var(--primary));
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             white-space: nowrap;
           }
           
@@ -552,54 +702,84 @@ const PrintViewPage = () => {
       `}</style>
 
       {/* Toolbar - hidden when printing */}
-      <div className="no-print fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border p-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <div className="no-print fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-card via-card/98 to-card backdrop-blur-md border-b border-primary/20 shadow-lg">
+        <div className="max-w-4xl mx-auto flex items-center justify-between px-4 py-3">
           <Button 
             variant="ghost" 
             onClick={() => navigate(`/view/${shareLink}`)}
-            className="gap-2"
+            className="gap-2 hover:bg-primary/10 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            返回閱讀
+            <span className="hidden sm:inline">返回閱讀</span>
           </Button>
           
-          <div className="text-sm text-muted-foreground">
-            列印預覽 - 共 {pages.length} 頁
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:block w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
+            <span className="text-sm font-medium text-foreground">
+              {content?.title}
+            </span>
+            <div className="hidden sm:block w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
           </div>
           
-          <Button onClick={handlePrint} className="gap-2">
+          <Button onClick={handlePrint} className="gap-2 shadow-md hover:shadow-lg transition-all">
             <Printer className="w-4 h-4" />
-            列印 / 下載 PDF
+            <span className="hidden sm:inline">列印 / 下載 PDF</span>
+            <span className="sm:hidden">列印</span>
           </Button>
+        </div>
+        <div className="text-center text-xs text-muted-foreground pb-2">
+          共 {pages.length} 頁
         </div>
       </div>
 
       {/* Print Content */}
-      <div className="pt-20 pb-10 px-4 bg-muted/30 min-h-screen no-print-bg">
+      <div className="pt-24 pb-10 px-4 min-h-screen print-container">
         {pages.map((page, index) => (
           <div key={index} className="print-page">
+            {/* Decorative corner accents */}
+            <div className="page-corner top-left" />
+            <div className="page-corner top-right" />
+            <div className="page-corner bottom-left" />
+            <div className="page-corner bottom-right" />
+            
             {/* Header with logos */}
             <div className="print-header">
               <img src={logoChaoxuan} alt="超烜創意" />
+              <div className="header-divider" />
               <img src={logoHongling} alt="虹靈御所" />
             </div>
             
             {/* Cover logo only on first page */}
             {index === 0 && (
-              <img src={reportLogo} alt="報告標誌" className="cover-logo" />
+              <div className="cover-section">
+                <img src={reportLogo} alt="報告標誌" className="cover-logo" />
+              </div>
             )}
             
-            {/* Page title */}
+            {/* Page title with dynamic font size */}
             <h1 
               className="print-title"
+              style={{ fontSize: getTitleFontSize(page.title) }}
               dangerouslySetInnerHTML={{ __html: page.styledTitle }}
             />
+            
+            {/* Decorative divider */}
+            <div className="title-divider">
+              <span className="divider-line" />
+              <span className="divider-dot" />
+              <span className="divider-line" />
+            </div>
             
             {/* Content */}
             <div 
               className="print-content"
               dangerouslySetInnerHTML={{ __html: page.content }}
             />
+            
+            {/* Page number */}
+            <div className="page-number">
+              {index + 1} / {pages.length}
+            </div>
             
             {/* Footer on last page */}
             {index === pages.length - 1 && (
