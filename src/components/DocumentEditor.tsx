@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, Image as ImageIcon } from "lucide-react";
+import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, Image as ImageIcon, Merge } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -145,6 +145,42 @@ export function DocumentEditor({
     setSections(newSections);
   };
 
+  const mergeWithPrevious = (index: number) => {
+    if (index === 0) return;
+    
+    const prevSection = sections[index - 1];
+    const currentSection = sections[index];
+    
+    // Only merge if previous section is a text-based section
+    if (prevSection.type === 'pagebreak' || prevSection.type === 'image') {
+      toast({
+        title: "無法融合",
+        description: "無法與分頁符或圖片融合",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (currentSection.type === 'pagebreak' || currentSection.type === 'image') {
+      // Just remove the current section if it's a page break or image
+      setSections(sections.filter((_, i) => i !== index));
+      return;
+    }
+    
+    // Merge content
+    const mergedContent = prevSection.content + (prevSection.content && currentSection.content ? '\n' : '') + currentSection.content;
+    
+    const newSections = sections.filter((_, i) => i !== index);
+    newSections[index - 1] = { ...prevSection, content: mergedContent };
+    
+    setSections(newSections);
+    
+    toast({
+      title: "已融合",
+      description: "內容已與上一個區塊合併",
+    });
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8 pb-40 space-y-6">
       {/* Title Section */}
@@ -262,13 +298,14 @@ export function DocumentEditor({
                   </button>
                 </div>
               ) : (
-                <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3">
                   {/* Move Controls */}
                   <div className="flex flex-col gap-0.5 pt-2">
                     <button
                       onClick={() => moveSection(index, "up")}
                       disabled={index === 0}
                       className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                      title="向上移動"
                     >
                       <ChevronUp className="w-4 h-4 text-muted-foreground" />
                     </button>
@@ -276,8 +313,17 @@ export function DocumentEditor({
                       onClick={() => moveSection(index, "down")}
                       disabled={index === sections.length - 1}
                       className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                      title="向下移動"
                     >
                       <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                    </button>
+                    <button
+                      onClick={() => mergeWithPrevious(index)}
+                      disabled={index === 0}
+                      className="p-1 hover:bg-primary/10 rounded disabled:opacity-30"
+                      title="向上融合"
+                    >
+                      <Merge className="w-4 h-4 text-primary rotate-180" />
                     </button>
                   </div>
 

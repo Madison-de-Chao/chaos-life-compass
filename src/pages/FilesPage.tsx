@@ -7,6 +7,7 @@ import { StatsOverview } from "@/components/StatsOverview";
 import { useDocuments, Document } from "@/hooks/useDocuments";
 import { FileText, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 
 const FilesPage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,29 @@ const FilesPage = () => {
   const handleShare = (document: Document) => {
     setSelectedDocument(document);
     setShareDialogOpen(true);
+  };
+
+  const handleEdit = (document: Document) => {
+    // Get stored sections from document content
+    const content = document.content as { title?: string; sections?: any[] } | null;
+    if (content?.sections) {
+      navigate("/edit", {
+        state: {
+          file: { name: document.file_name, size: document.file_size },
+          title: content.title || document.original_name,
+          sections: content.sections,
+          filePath: document.file_path,
+          documentId: document.id,
+          isEditing: true,
+        },
+      });
+    } else {
+      toast({
+        title: "無法編輯",
+        description: "此文件沒有可編輯的內容",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleDelete = async (id: string, filePath?: string | null) => {
@@ -93,6 +117,7 @@ const FilesPage = () => {
                 <FileRecordCard
                   document={document}
                   onView={handleView}
+                  onEdit={handleEdit}
                   onShare={handleShare}
                   onDelete={handleDelete}
                 />

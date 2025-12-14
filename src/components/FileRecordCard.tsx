@@ -1,4 +1,4 @@
-import { FileText, Eye, Lock, Share2, Calendar, Trash2 } from "lucide-react";
+import { FileText, Eye, Lock, Share2, Calendar, Trash2, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
@@ -18,11 +18,12 @@ import {
 interface FileRecordCardProps {
   document: Document;
   onView: (shareLink: string) => void;
+  onEdit: (document: Document) => void;
   onShare: (document: Document) => void;
   onDelete: (id: string, filePath?: string | null) => void;
 }
 
-export function FileRecordCard({ document, onView, onShare, onDelete }: FileRecordCardProps) {
+export function FileRecordCard({ document, onView, onEdit, onShare, onDelete }: FileRecordCardProps) {
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return "0 B";
     const k = 1024;
@@ -84,11 +85,16 @@ export function FileRecordCard({ document, onView, onShare, onDelete }: FileReco
         <Button
           variant="outline"
           size="sm"
-          className="flex-1"
+          onClick={() => onEdit(document)}
+        >
+          <Pencil className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => onShare(document)}
         >
-          <Share2 className="w-4 h-4 mr-2" />
-          分享
+          <Share2 className="w-4 h-4" />
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>

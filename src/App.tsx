@@ -10,6 +10,7 @@ import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
 import AuthPage from "./pages/AuthPage";
 import EditDocumentPage from "./pages/EditDocumentPage";
+import CustomersPage from "./pages/CustomersPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <EditDocumentPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/customers"
+              element={
+                <ProtectedRoute>
+                  <CustomersPage />
                 </ProtectedRoute>
               }
             />
