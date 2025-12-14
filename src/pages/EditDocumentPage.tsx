@@ -149,11 +149,11 @@ const EditDocumentPage = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(state.isEditing ? "/files" : "/")}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
-            回上一步
+            返回
           </Button>
           <h1 className="text-2xl font-serif font-bold text-foreground">
             {state.isEditing ? "編輯報告" : "編輯報告內容"}
