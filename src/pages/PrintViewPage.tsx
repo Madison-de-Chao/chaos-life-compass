@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { getDocumentByShareLink, Document } from "@/hooks/useDocuments";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Printer } from "lucide-react";
+import { ArrowLeft, Printer, Droplets } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
@@ -213,10 +215,13 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
 
 const PrintViewPage = () => {
   const { shareLink } = useParams<{ shareLink: string }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [docData, setDocData] = useState<Document | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [showWatermark, setShowWatermark] = useState(searchParams.get('watermark') === 'true');
+  const [customerName, setCustomerName] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -244,6 +249,19 @@ const PrintViewPage = () => {
               return;
             }
           }
+          
+          // Fetch customer name if customer_id exists
+          if (doc.customer_id) {
+            const { data: customer } = await supabase
+              .from('customers')
+              .select('name')
+              .eq('id', doc.customer_id)
+              .single();
+            if (customer) {
+              setCustomerName(customer.name);
+            }
+          }
+          
           setDocData(doc);
         } else {
           setNotFound(true);
@@ -321,16 +339,86 @@ const PrintViewPage = () => {
           
           @page {
             margin: 15mm 15mm 25mm 15mm;
+            counter-increment: page;
           }
           
           body {
             margin: 0;
             padding: 0;
+            counter-reset: page;
           }
           
           .print-container {
             padding: 0;
             background: white;
+          }
+          
+          .cover-page {
+            page-break-after: always;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            box-sizing: border-box;
+            position: relative;
+          }
+          
+          .cover-page .print-header {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            right: 50px;
+          }
+          
+          .cover-main {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          
+          .cover-main .cover-logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 8px 16px rgba(139, 90, 60, 0.25));
+          }
+          
+          .cover-main .cover-title-main {
+            font-size: 32px;
+            font-weight: bold;
+            color: #5a2d0a;
+            margin-bottom: 20px;
+            line-height: 1.3;
+          }
+          
+          .cover-main .cover-customer {
+            font-size: 20px;
+            color: #8b5a3c;
+            margin-bottom: 30px;
+          }
+          
+          .cover-main .cover-date {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 60px;
+          }
+          
+          .cover-disclaimer {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            right: 50px;
+            font-size: 9px;
+            color: #999;
+            text-align: center;
+            line-height: 1.6;
+            border-top: 1px solid #d4a574;
+            padding-top: 15px;
           }
           
           .print-page {
@@ -499,6 +587,31 @@ const PrintViewPage = () => {
             border-top: 1px solid #d4a574;
           }
           
+          .page-number-footer {
+            position: fixed;
+            bottom: 5mm;
+            right: 15mm;
+            font-size: 10px;
+            color: #666;
+          }
+          
+          .page-number-footer::after {
+            content: counter(page);
+          }
+          
+          .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 60px;
+            color: rgba(212, 165, 116, 0.15);
+            font-weight: bold;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1000;
+          }
+          
           .document-table {
             width: 100%;
             border-collapse: collapse;
@@ -553,6 +666,71 @@ const PrintViewPage = () => {
         @media screen {
           .print-container {
             background: linear-gradient(135deg, hsl(var(--muted) / 0.3) 0%, hsl(var(--background)) 50%, hsl(var(--muted) / 0.3) 100%);
+          }
+          
+          .cover-page {
+            max-width: 850px;
+            margin: 0 auto 50px;
+            padding: 50px;
+            background: linear-gradient(to bottom, #fffdf9, #fff);
+            box-shadow: 
+              0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 20px 40px -10px rgba(139, 90, 60, 0.15),
+              0 0 0 1px rgba(212, 165, 116, 0.2);
+            border-radius: 12px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .cover-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+          }
+          
+          .cover-main .cover-logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 10px 20px rgba(139, 90, 60, 0.2));
+            animation: float 4s ease-in-out infinite;
+          }
+          
+          .cover-main .cover-title-main {
+            font-size: 36px;
+            font-weight: bold;
+            color: hsl(var(--primary));
+            margin-bottom: 20px;
+            line-height: 1.3;
+          }
+          
+          .cover-main .cover-customer {
+            font-size: 22px;
+            color: hsl(var(--primary) / 0.8);
+            margin-bottom: 30px;
+          }
+          
+          .cover-main .cover-date {
+            font-size: 14px;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 40px;
+          }
+          
+          .cover-disclaimer {
+            font-size: 11px;
+            color: hsl(var(--muted-foreground));
+            text-align: center;
+            line-height: 1.7;
+            border-top: 1px solid hsl(var(--primary) / 0.3);
+            padding-top: 20px;
+            margin-top: auto;
           }
           
           .print-page {
@@ -810,6 +988,23 @@ const PrintViewPage = () => {
           .global-footer {
             display: none;
           }
+          
+          .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 48px;
+            color: hsl(var(--primary) / 0.08);
+            font-weight: bold;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1000;
+          }
+          
+          .page-number-footer {
+            display: none;
+          }
         }
       `}</style>
 
@@ -825,27 +1020,78 @@ const PrintViewPage = () => {
             <span className="hidden sm:inline">返回閱讀</span>
           </Button>
           
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:block w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
-            <span className="text-sm font-medium text-foreground">
-              {content?.title}
-            </span>
-            <div className="hidden sm:block w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
+          <div className="flex items-center gap-4">
+            {/* Watermark toggle */}
+            <div className="flex items-center gap-2">
+              <Droplets className="w-4 h-4 text-muted-foreground" />
+              <Label htmlFor="watermark-toggle" className="text-sm text-muted-foreground hidden sm:inline">
+                浮水印
+              </Label>
+              <Switch
+                id="watermark-toggle"
+                checked={showWatermark}
+                onCheckedChange={setShowWatermark}
+              />
+            </div>
+            
+            <Button onClick={handlePrint} className="gap-2 shadow-md hover:shadow-lg transition-all">
+              <Printer className="w-4 h-4" />
+              <span className="hidden sm:inline">列印 / 下載 PDF</span>
+              <span className="sm:hidden">列印</span>
+            </Button>
           </div>
-          
-          <Button onClick={handlePrint} className="gap-2 shadow-md hover:shadow-lg transition-all">
-            <Printer className="w-4 h-4" />
-            <span className="hidden sm:inline">列印 / 下載 PDF</span>
-            <span className="sm:hidden">列印</span>
-          </Button>
         </div>
         <div className="text-center text-xs text-muted-foreground pb-2">
-          共 {pages.length} 頁
+          封面 + {pages.length} 頁內容
         </div>
       </div>
 
       {/* Print Content */}
       <div className="pt-24 pb-10 px-4 min-h-screen print-container">
+        {/* Watermark */}
+        {showWatermark && (
+          <div className="watermark">
+            {customerName || content?.title || '機密文件'}
+          </div>
+        )}
+        
+        {/* Page number footer for print */}
+        <div className="page-number-footer" />
+        
+        {/* Cover Page */}
+        <div className="cover-page">
+          {/* Header with logos */}
+          <div className="print-header">
+            <img src={logoChaoxuan} alt="超烜創意" />
+            <div className="header-divider" />
+            <img src={logoHongling} alt="虹靈御所" />
+          </div>
+          
+          {/* Cover main content */}
+          <div className="cover-main">
+            <img src={reportLogo} alt="報告標誌" className="cover-logo" />
+            <h1 className="cover-title-main">{content?.title}</h1>
+            {customerName && (
+              <p className="cover-customer">—— {customerName} 專屬報告 ——</p>
+            )}
+            <p className="cover-date">
+              完成日期：{new Date(docData?.created_at || '').toLocaleDateString('zh-TW', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+          </div>
+          
+          {/* Disclaimer */}
+          <div className="cover-disclaimer">
+            <p>免責聲明：本報告內容僅供參考，不構成任何形式的專業建議。</p>
+            <p>報告中的分析與解讀基於命理學原理，實際情況可能因個人選擇與環境變化而有所不同。</p>
+            <p>本報告為付費內容，未經授權禁止轉載、複製或分享。</p>
+          </div>
+        </div>
+        
+        {/* Content Pages */}
         {pages.map((page, index) => (
           <div key={index} className="print-page">
             {/* Decorative corner accents */}
@@ -874,13 +1120,6 @@ const PrintViewPage = () => {
               <span className="divider-dot" />
               <span className="divider-line" />
             </div>
-            
-            {/* Cover logo only on first page - after title */}
-            {index === 0 && (
-              <div className="cover-section">
-                <img src={reportLogo} alt="報告標誌" className="cover-logo" />
-              </div>
-            )}
             
             {/* Content */}
             <div 
