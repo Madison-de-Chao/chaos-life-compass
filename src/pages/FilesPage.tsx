@@ -3,35 +3,53 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { FileRecordCard } from "@/components/FileRecordCard";
 import { ShareDialog } from "@/components/ShareDialog";
-import { mockFileRecords, mockDocuments } from "@/lib/mockData";
+import { StatsOverview } from "@/components/StatsOverview";
+import { useDocuments, Document } from "@/hooks/useDocuments";
 import { FileText, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const FilesPage = () => {
   const navigate = useNavigate();
+  const { documents, loading, totalSize, deleteDocument } = useDocuments();
   const [searchQuery, setSearchQuery] = useState("");
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
 
-  const filteredRecords = mockFileRecords.filter(
-    (record) =>
-      record.fileName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      record.uploadedBy.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredRecords = documents.filter(
+    (doc) =>
+      doc.original_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.file_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleView = (id: string) => {
-    const doc = mockDocuments.find((d) => d.id === id);
-    if (doc?.shareSettings.shareLink) {
-      navigate(`/view/${doc.shareSettings.shareLink}`);
-    }
+  const handleView = (shareLink: string) => {
+    navigate(`/view/${shareLink}`);
   };
 
-  const handleShare = (id: string) => {
-    setSelectedFileId(id);
+  const handleShare = (document: Document) => {
+    setSelectedDocument(document);
     setShareDialogOpen(true);
   };
 
-  const selectedDoc = mockDocuments.find((d) => d.id === selectedFileId);
+  const handleDelete = async (id: string, filePath?: string | null) => {
+    await deleteDocument(id, filePath);
+  };
+
+  const handleDocumentUpdate = (updatedDoc: Document) => {
+    setSelectedDocument(updatedDoc);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-10">
+          <div className="text-center py-20">
+            <div className="animate-pulse text-muted-foreground">載入中...</div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -39,21 +57,24 @@ const FilesPage = () => {
 
       <main className="container mx-auto px-4 py-10">
         {/* Page Header */}
-        <div className="mb-10 animate-fade-in">
+        <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3">
-            檔案列表
+            檔案管理
           </h1>
           <p className="text-muted-foreground">
-            管理您上傳的所有文件，查看閱讀次數與分享狀態
+            管理所有文件，查看統計資料與分享設定
           </p>
         </div>
 
+        {/* Stats Overview */}
+        <StatsOverview documents={documents} totalSize={totalSize} />
+
         {/* Search Bar */}
-        <div className="relative max-w-md mb-8 animate-slide-up" style={{ animationDelay: "0.1s", opacity: 0 }}>
+        <div className="relative max-w-md mb-8 animate-slide-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="搜尋檔案名稱或上傳者..."
+            placeholder="搜尋檔案名稱..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 h-12"
@@ -63,16 +84,17 @@ const FilesPage = () => {
         {/* File List */}
         {filteredRecords.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRecords.map((record, index) => (
+            {filteredRecords.map((document, index) => (
               <div
-                key={record.id}
+                key={document.id}
                 className="animate-slide-up"
-                style={{ animationDelay: `${(index + 2) * 0.1}s`, opacity: 0 }}
+                style={{ animationDelay: `${(index + 4) * 0.05}s`, opacity: 0 }}
               >
                 <FileRecordCard
-                  record={record}
+                  document={document}
                   onView={handleView}
                   onShare={handleShare}
+                  onDelete={handleDelete}
                 />
               </div>
             ))}
@@ -93,14 +115,12 @@ const FilesPage = () => {
       </main>
 
       {/* Share Dialog */}
-      {selectedDoc && (
-        <ShareDialog
-          open={shareDialogOpen}
-          onOpenChange={setShareDialogOpen}
-          shareLink={selectedDoc.shareSettings.shareLink || ""}
-          password={selectedDoc.shareSettings.password}
-        />
-      )}
+      <ShareDialog
+        open={shareDialogOpen}
+        onOpenChange={setShareDialogOpen}
+        document={selectedDocument}
+        onUpdate={handleDocumentUpdate}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Share2, Copy, Check, Link2, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,25 +12,37 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
+import { Document } from "@/hooks/useDocuments";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ShareDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  shareLink: string;
-  password?: string;
+  document: Document | null;
+  onUpdate?: (doc: Document) => void;
 }
 
 export function ShareDialog({
   open,
   onOpenChange,
-  shareLink,
-  password,
+  document,
+  onUpdate,
 }: ShareDialogProps) {
   const [copied, setCopied] = useState(false);
-  const [showPasswordToggle, setShowPasswordToggle] = useState(!!password);
-  const [customPassword, setCustomPassword] = useState(password || "");
+  const [showPasswordToggle, setShowPasswordToggle] = useState(false);
+  const [customPassword, setCustomPassword] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
-  const fullUrl = `${window.location.origin}/view/${shareLink}`;
+  useEffect(() => {
+    if (document) {
+      setShowPasswordToggle(!!document.password);
+      setCustomPassword(document.password || "");
+    }
+  }, [document]);
+
+  if (!document) return null;
+
+  const fullUrl = `${window.location.origin}/view/${document.share_link}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(fullUrl);
@@ -41,6 +53,39 @@ export function ShareDialog({
     });
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleSavePassword = async () => {
+    setIsSaving(true);
+    const newPassword = showPasswordToggle ? customPassword.trim() || null : null;
+    
+    const { data, error } = await supabase
+      .from("documents")
+      .update({ password: newPassword })
+      .eq("id", document.id)
+      .select()
+      .single();
+
+    if (error) {
+      toast({
+        title: "儲存失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "已更新",
+        description: newPassword ? "密碼已設定" : "密碼保護已關閉",
+      });
+      if (onUpdate && data) {
+        onUpdate(data);
+      }
+    }
+    setIsSaving(false);
+  };
+
+  const passwordChanged = showPasswordToggle
+    ? customPassword !== (document.password || "")
+    : !!document.password;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -53,7 +98,7 @@ export function ShareDialog({
             分享文件
           </DialogTitle>
           <DialogDescription className="text-center">
-            複製連結分享給其他人閱讀
+            複製連結分享給客人閱讀
           </DialogDescription>
         </DialogHeader>
 
@@ -107,9 +152,21 @@ export function ShareDialog({
                   onChange={(e) => setCustomPassword(e.target.value)}
                 />
                 <p className="text-xs text-muted-foreground">
-                  分享對象需要輸入此密碼才能閱讀文件
+                  客人需要輸入此密碼才能閱讀文件
                 </p>
               </div>
+            )}
+
+            {passwordChanged && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleSavePassword}
+                disabled={isSaving}
+                className="w-full"
+              >
+                {isSaving ? "儲存中..." : "儲存密碼設定"}
+              </Button>
             )}
           </div>
 
