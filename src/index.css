@@ -401,6 +401,47 @@
   .document-page-content .section-keyword-bold {
     font-weight: 900;
   }
+
+  /* Document table styling */
+  .document-page-content .document-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9em;
+    line-height: 1.6;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .document-page-content .document-table th,
+  .document-page-content .document-table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid hsl(var(--border));
+    vertical-align: top;
+  }
+
+  .document-page-content .document-table th {
+    background-color: hsl(var(--primary) / 0.1);
+    font-weight: 700;
+    color: hsl(var(--primary));
+  }
+
+  .document-page-content .document-table tr:nth-child(even) {
+    background-color: hsl(var(--muted) / 0.3);
+  }
+
+  .document-page-content .document-table tr:hover {
+    background-color: hsl(var(--accent) / 0.5);
+    transition: background-color 0.2s ease;
+  }
+
+  .document-page-content .document-table strong {
+    color: hsl(var(--primary));
+    font-weight: 700;
+  }
 }
 
 @layer utilities {
