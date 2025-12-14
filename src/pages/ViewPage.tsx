@@ -42,8 +42,11 @@ const ViewPage = () => {
         const doc = await getDocumentByShareLink(shareLink);
         if (doc) {
           setDocument(doc);
-          // Check if password is required
-          if (doc.password) {
+          // Check if password is required using secure server-side function
+          const { data: hasPassword } = await supabase.rpc('document_has_password', { 
+            doc_share_link: shareLink 
+          });
+          if (hasPassword) {
             setShowPasswordDialog(true);
           } else {
             setIsAuthenticated(true);
@@ -61,14 +64,26 @@ const ViewPage = () => {
   }, [shareLink]);
 
   const handlePasswordSubmit = async (password: string) => {
-    if (document && password === document.password) {
+    if (!shareLink) return;
+    
+    // Use secure server-side password verification
+    const { data: isValid, error } = await supabase.rpc('verify_document_password', {
+      doc_share_link: shareLink,
+      pwd: password
+    });
+    
+    if (error) {
+      console.error('Password verification error:', error);
+      setPasswordError("驗證失敗，請重試");
+      return;
+    }
+    
+    if (isValid) {
       setIsAuthenticated(true);
       setShowPasswordDialog(false);
       setPasswordError("");
       // Increment view count after successful authentication
-      if (shareLink) {
-        await incrementViewCount(shareLink);
-      }
+      await incrementViewCount(shareLink);
     } else {
       setPasswordError("密碼錯誤，請重試");
     }

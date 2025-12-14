@@ -8,7 +8,7 @@ interface StatsOverviewProps {
 
 export function StatsOverview({ documents, totalSize }: StatsOverviewProps) {
   const totalViews = documents.reduce((acc, doc) => acc + (doc.view_count || 0), 0);
-  const protectedCount = documents.filter((doc) => doc.password).length;
+  const protectedCount = documents.filter((doc) => doc.password_hash).length;
 
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return "0 B";

@@ -10,7 +10,7 @@ export interface Document {
   file_size: number;
   content: any;
   share_link: string;
-  password: string | null;
+  password_hash: string | null;
   is_public: boolean;
   view_count: number;
   created_at: string;
