@@ -24,6 +24,7 @@ interface PagedDocumentReaderProps {
     sections?: DocumentSection[];
   };
   className?: string;
+  documentId?: string;
 }
 
 // Page break patterns
@@ -291,7 +292,7 @@ const patterns = [
   'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.05) 0%, transparent 70%)',
 ];
 
-export function PagedDocumentReader({ content, className }: PagedDocumentReaderProps) {
+export function PagedDocumentReader({ content, className, documentId }: PagedDocumentReaderProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -376,7 +377,12 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
     setIsLoading(true);
     try {
       const response = await supabase.functions.invoke('text-to-speech', {
-        body: { text: textToSpeak.substring(0, 4000), voice: 'onyx' },
+        body: { 
+          text: textToSpeak.substring(0, 4000), 
+          voice: 'onyx',
+          documentId,
+          pageIndex: currentPage,
+        },
       });
 
       if (response.error) {
@@ -391,27 +397,38 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
         throw new Error(errorMessage);
       }
 
-      // Handle base64 audio response
-      const { audioContent } = response.data;
-      if (!audioContent) {
+      let audioUrl: string;
+      const { audioContent, audioUrl: cachedUrl, cached } = response.data;
+      
+      if (cachedUrl) {
+        // Use cached audio URL directly
+        audioUrl = cachedUrl;
+        if (cached) {
+          console.log('Using cached audio from storage');
+        } else {
+          console.log('Audio generated and cached');
+        }
+      } else if (audioContent) {
+        // Fallback: decode base64 audio
+        const binaryString = atob(audioContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+        audioUrl = URL.createObjectURL(audioBlob);
+      } else {
         throw new Error('No audio content received');
       }
-
-      // Decode base64 to binary
-      const binaryString = atob(audioContent);
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-      
-      const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
-      const audioUrl = URL.createObjectURL(audioBlob);
       
       const audio = new Audio(audioUrl);
       audio.onended = () => {
         setIsPlaying(false);
         audioRef.current = null;
-        URL.revokeObjectURL(audioUrl);
+        // Only revoke if it's a blob URL (not a cached URL)
+        if (audioUrl.startsWith('blob:')) {
+          URL.revokeObjectURL(audioUrl);
+        }
       };
       audio.onerror = () => {
         setIsPlaying(false);
