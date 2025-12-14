@@ -66,6 +66,7 @@ export type Database = {
           original_name: string
           password: string | null
           share_link: string
+          tts_audio_urls: Json | null
           updated_at: string
           view_count: number | null
         }
@@ -81,6 +82,7 @@ export type Database = {
           original_name: string
           password?: string | null
           share_link: string
+          tts_audio_urls?: Json | null
           updated_at?: string
           view_count?: number | null
         }
@@ -96,6 +98,7 @@ export type Database = {
           original_name?: string
           password?: string | null
           share_link?: string
+          tts_audio_urls?: Json | null
           updated_at?: string
           view_count?: number | null
         }
