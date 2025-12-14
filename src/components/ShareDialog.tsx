@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Share2, Copy, Check, Link2, Lock, ShieldCheck } from "lucide-react";
+import { Share2, Copy, Check, Link2, Lock, ShieldCheck, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,9 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { Document } from "@/hooks/useDocuments";
 import { supabase } from "@/integrations/supabase/client";
+import { addDays, format, isAfter, isBefore, parseISO } from "date-fns";
+import { zhTW } from "date-fns/locale";
 
 interface ShareDialogProps {
   open: boolean;
@@ -31,6 +40,8 @@ export function ShareDialog({
   const [customPassword, setCustomPassword] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [hasExistingPassword, setHasExistingPassword] = useState(false);
+  const [expirationDays, setExpirationDays] = useState<string>("30");
+  const [currentExpiration, setCurrentExpiration] = useState<Date | null>(null);
 
   useEffect(() => {
     if (document) {
@@ -38,18 +49,33 @@ export function ShareDialog({
       setHasExistingPassword(!!document.password_hash);
       // Don't show the actual password - user must enter a new one if they want to change it
       setCustomPassword("");
+      // Set expiration state
+      if (document.expires_at) {
+        setCurrentExpiration(parseISO(document.expires_at));
+      } else {
+        setCurrentExpiration(null);
+      }
     }
   }, [document]);
 
   if (!document) return null;
 
   const fullUrl = `${window.location.origin}/view/${document.share_link}`;
+  const isExpired = currentExpiration && isBefore(currentExpiration, new Date());
 
   const handleCopy = async () => {
     if (!hasExistingPassword) {
       toast({
         title: "請先設定密碼",
         description: "文件必須設定密碼才能分享",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (isExpired) {
+      toast({
+        title: "連結已過期",
+        description: "請延長有效期限後再分享",
         variant: "destructive",
       });
       return;
@@ -88,10 +114,18 @@ export function ShareDialog({
       setIsSaving(false);
       return;
     }
+
+    // Calculate expiration date
+    const days = parseInt(expirationDays);
+    const expiresAt = addDays(new Date(), days);
     
     const { data, error } = await supabase
       .from("documents")
-      .update({ password_hash: hashedPwd, is_public: true })
+      .update({ 
+        password_hash: hashedPwd, 
+        is_public: true,
+        expires_at: expiresAt.toISOString()
+      })
       .eq("id", document.id)
       .select()
       .single();
@@ -105,14 +139,47 @@ export function ShareDialog({
     } else {
       toast({
         title: "密碼已設定",
-        description: "文件現在可以透過連結 + 密碼訪問",
+        description: `文件可於 ${days} 天內透過連結 + 密碼訪問`,
       });
       setHasExistingPassword(true);
+      setCurrentExpiration(expiresAt);
       if (onUpdate && data) {
         onUpdate(data);
       }
       // Clear the password field after saving
       setCustomPassword("");
+    }
+    setIsSaving(false);
+  };
+
+  const handleExtendExpiration = async () => {
+    setIsSaving(true);
+    
+    const days = parseInt(expirationDays);
+    const expiresAt = addDays(new Date(), days);
+    
+    const { data, error } = await supabase
+      .from("documents")
+      .update({ expires_at: expiresAt.toISOString(), is_public: true })
+      .eq("id", document.id)
+      .select()
+      .single();
+
+    if (error) {
+      toast({
+        title: "更新失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "已延長有效期限",
+        description: `連結將於 ${format(expiresAt, 'yyyy/MM/dd', { locale: zhTW })} 到期`,
+      });
+      setCurrentExpiration(expiresAt);
+      if (onUpdate && data) {
+        onUpdate(data);
+      }
     }
     setIsSaving(false);
   };
@@ -158,9 +225,13 @@ export function ShareDialog({
 
     setIsSaving(true);
     
+    // Reset expiration when re-enabling
+    const days = parseInt(expirationDays);
+    const expiresAt = addDays(new Date(), days);
+    
     const { data, error } = await supabase
       .from("documents")
-      .update({ is_public: true })
+      .update({ is_public: true, expires_at: expiresAt.toISOString() })
       .eq("id", document.id)
       .select()
       .single();
@@ -174,8 +245,9 @@ export function ShareDialog({
     } else {
       toast({
         title: "已啟用分享",
-        description: "文件現在可以透過連結 + 密碼訪問",
+        description: `文件可於 ${days} 天內透過連結 + 密碼訪問`,
       });
+      setCurrentExpiration(expiresAt);
       if (onUpdate && data) {
         onUpdate(data);
       }
@@ -185,9 +257,20 @@ export function ShareDialog({
 
   const isAccessEnabled = document.is_public !== false;
 
+  // Calculate remaining days
+  const getRemainingDays = () => {
+    if (!currentExpiration) return null;
+    const now = new Date();
+    const diff = currentExpiration.getTime() - now.getTime();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return days;
+  };
+
+  const remainingDays = getRemainingDays();
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-primary/10 flex items-center justify-center">
             <Share2 className="w-7 h-7 text-primary" />
@@ -200,15 +283,41 @@ export function ShareDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 mt-4">
+        <div className="space-y-5 mt-4">
           {/* Security Notice */}
           <div className="flex items-start gap-3 p-4 rounded-xl bg-primary/5 border border-primary/20">
             <ShieldCheck className="w-5 h-5 text-primary mt-0.5 shrink-0" />
             <div className="text-sm text-muted-foreground">
               <p className="font-medium text-foreground mb-1">安全分享模式</p>
-              <p>所有文件都需要密碼才能訪問，確保報告內容只有授權客人可以閱讀。</p>
+              <p>所有文件都需要密碼才能訪問，且連結有效期限預設 30 天。</p>
             </div>
           </div>
+
+          {/* Expiration Status */}
+          {currentExpiration && isAccessEnabled && (
+            <div className={`flex items-center gap-3 p-3 rounded-xl ${isExpired ? 'bg-red-50 border border-red-200' : remainingDays && remainingDays <= 7 ? 'bg-amber-50 border border-amber-200' : 'bg-green-50 border border-green-200'}`}>
+              <Clock className={`w-4 h-4 ${isExpired ? 'text-red-600' : remainingDays && remainingDays <= 7 ? 'text-amber-600' : 'text-green-600'}`} />
+              <div className="flex-1">
+                {isExpired ? (
+                  <p className="text-sm text-red-700">連結已於 {format(currentExpiration, 'yyyy/MM/dd', { locale: zhTW })} 過期</p>
+                ) : (
+                  <p className={`text-sm ${remainingDays && remainingDays <= 7 ? 'text-amber-700' : 'text-green-700'}`}>
+                    有效期限至 {format(currentExpiration, 'yyyy/MM/dd', { locale: zhTW })}
+                    {remainingDays && <span className="ml-1">（剩餘 {remainingDays} 天）</span>}
+                  </p>
+                )}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleExtendExpiration}
+                disabled={isSaving}
+                className="shrink-0 text-xs"
+              >
+                延長
+              </Button>
+            </div>
+          )}
 
           {/* Share Link */}
           <div className="space-y-2">
@@ -227,7 +336,7 @@ export function ShareDialog({
                 size="icon"
                 onClick={handleCopy}
                 className="shrink-0"
-                disabled={!hasExistingPassword || !isAccessEnabled}
+                disabled={!hasExistingPassword || !isAccessEnabled || isExpired}
               >
                 {copied ? (
                   <Check className="w-4 h-4 text-green-600" />
@@ -270,6 +379,30 @@ export function ShareDialog({
               </p>
             </div>
 
+            {/* Expiration Days Selection */}
+            {customPassword.trim() && (
+              <div className="space-y-2">
+                <Label className="text-sm flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  有效期限
+                </Label>
+                <Select value={expirationDays} onValueChange={setExpirationDays}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="7">7 天</SelectItem>
+                    <SelectItem value="14">14 天</SelectItem>
+                    <SelectItem value="30">30 天</SelectItem>
+                    <SelectItem value="60">60 天</SelectItem>
+                    <SelectItem value="90">90 天</SelectItem>
+                    <SelectItem value="180">180 天</SelectItem>
+                    <SelectItem value="365">365 天</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             {customPassword.trim() && (
               <Button
                 variant="secondary"
@@ -291,7 +424,7 @@ export function ShareDialog({
                 size="lg" 
                 className="w-full" 
                 onClick={handleCopy} 
-                disabled={!hasExistingPassword}
+                disabled={!hasExistingPassword || isExpired}
               >
                 {copied ? "已複製！" : "複製分享連結"}
               </Button>
@@ -299,6 +432,12 @@ export function ShareDialog({
               {!hasExistingPassword && (
                 <p className="text-xs text-center text-amber-600">
                   請先設定密碼才能分享文件
+                </p>
+              )}
+
+              {isExpired && hasExistingPassword && (
+                <p className="text-xs text-center text-red-600">
+                  連結已過期，請延長有效期限後再分享
                 </p>
               )}
 
@@ -318,6 +457,29 @@ export function ShareDialog({
                 <p className="text-sm text-amber-700">分享連結已停用</p>
                 <p className="text-xs text-amber-600 mt-1">訪客目前無法透過連結訪問此文件</p>
               </div>
+              
+              {/* Expiration Days Selection for re-enable */}
+              <div className="space-y-2">
+                <Label className="text-sm flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  重新啟用後的有效期限
+                </Label>
+                <Select value={expirationDays} onValueChange={setExpirationDays}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="7">7 天</SelectItem>
+                    <SelectItem value="14">14 天</SelectItem>
+                    <SelectItem value="30">30 天</SelectItem>
+                    <SelectItem value="60">60 天</SelectItem>
+                    <SelectItem value="90">90 天</SelectItem>
+                    <SelectItem value="180">180 天</SelectItem>
+                    <SelectItem value="365">365 天</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <Button 
                 variant="hero" 
                 size="lg" 

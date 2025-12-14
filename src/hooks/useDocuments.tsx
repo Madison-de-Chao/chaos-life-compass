@@ -16,6 +16,7 @@ export interface Document {
   created_at: string;
   updated_at: string;
   customer_id: string | null;
+  expires_at: string | null;
 }
 
 export interface Customer {

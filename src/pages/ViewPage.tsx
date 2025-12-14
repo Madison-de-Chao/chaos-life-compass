@@ -4,10 +4,11 @@ import { PagedDocumentReader } from "@/components/PagedDocumentReader";
 import { PasswordDialog } from "@/components/PasswordDialog";
 import { getDocumentByShareLink, incrementViewCount, Document } from "@/hooks/useDocuments";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, FileText, Download, Calendar, Eye } from "lucide-react";
+import { ArrowLeft, FileText, Download, Calendar, Eye, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { User } from "@supabase/supabase-js";
+import { isBefore, parseISO } from "date-fns";
 
 const ViewPage = () => {
   const { shareLink } = useParams<{ shareLink: string }>();
@@ -18,6 +19,7 @@ const ViewPage = () => {
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const [adminUser, setAdminUser] = useState<User | null>(null);
+  const [isExpired, setIsExpired] = useState(false);
 
   // Check if admin is logged in
   useEffect(() => {
@@ -46,6 +48,16 @@ const ViewPage = () => {
             setNotFound(true);
             setLoading(false);
             return;
+          }
+          
+          // Check if link has expired
+          if (doc.expires_at) {
+            const expirationDate = parseISO(doc.expires_at);
+            if (isBefore(expirationDate, new Date())) {
+              setIsExpired(true);
+              setLoading(false);
+              return;
+            }
           }
           
           setDocument(doc);
@@ -140,6 +152,26 @@ const ViewPage = () => {
     return (
       <div className="min-h-screen gradient-hero flex items-center justify-center">
         <div className="animate-pulse text-muted-foreground">載入中...</div>
+      </div>
+    );
+  }
+
+  if (isExpired) {
+    return (
+      <div className="min-h-screen gradient-hero flex items-center justify-center">
+        <div className="text-center animate-fade-in">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-amber-100 flex items-center justify-center">
+            <Clock className="w-10 h-10 text-amber-600" />
+          </div>
+          <h1 className="text-3xl font-bold text-foreground mb-4 font-serif">連結已過期</h1>
+          <p className="text-lg text-muted-foreground mb-8">此分享連結已超過有效期限，請聯繫報告提供者獲取新連結。</p>
+          <Button asChild variant="hero">
+            <Link to="/">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              返回首頁
+            </Link>
+          </Button>
+        </div>
       </div>
     );
   }
