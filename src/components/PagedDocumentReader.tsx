@@ -154,25 +154,40 @@ function parseMarkdownTables(html: string): string {
   const result: string[] = [];
   let tableLines: string[] = [];
   let inTable = false;
+  let pendingEmptyLines: string[] = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     // Check if line contains pipe-separated content (table row)
-    const trimmed = line.replace(/<[^>]*>/g, '').trim();
+    // Remove HTML tags and &nbsp; for checking
+    const trimmed = line.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
     const isTableRow = trimmed.includes('|') && (trimmed.match(/\|/g) || []).length >= 2;
+    
+    // Check if line is empty or just whitespace/nbsp
+    const isEmptyLine = trimmed === '' || /^[\s ]*$/.test(trimmed);
     
     if (isTableRow) {
       if (!inTable) {
         inTable = true;
         tableLines = [];
+        pendingEmptyLines = [];
       }
+      // Discard pending empty lines within table
+      pendingEmptyLines = [];
       tableLines.push(trimmed);
+    } else if (inTable && isEmptyLine) {
+      // If we're in a table and hit an empty line, keep it pending
+      // (don't break the table yet, might be spacing between rows)
+      pendingEmptyLines.push(line);
     } else {
       if (inTable && tableLines.length > 0) {
         // Convert collected table lines to HTML table
         result.push(convertToHtmlTable(tableLines));
         tableLines = [];
         inTable = false;
+        // Add any pending empty lines after the table
+        result.push(...pendingEmptyLines);
+        pendingEmptyLines = [];
       }
       result.push(line);
     }
