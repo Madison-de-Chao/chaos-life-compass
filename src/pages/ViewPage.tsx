@@ -41,13 +41,28 @@ const ViewPage = () => {
       if (shareLink) {
         const doc = await getDocumentByShareLink(shareLink);
         if (doc) {
+          // Check if document is public
+          if (doc.is_public === false) {
+            setNotFound(true);
+            setLoading(false);
+            return;
+          }
+          
           setDocument(doc);
           // Check if password is required using secure server-side function
           const { data: hasPassword } = await supabase.rpc('document_has_password', { 
             doc_share_link: shareLink 
           });
           if (hasPassword) {
-            setShowPasswordDialog(true);
+            // Check if already authenticated via sessionStorage
+            const authKey = `doc_auth_${shareLink}`;
+            const isAlreadyAuth = sessionStorage.getItem(authKey) === 'true';
+            if (isAlreadyAuth) {
+              setIsAuthenticated(true);
+              await incrementViewCount(shareLink);
+            } else {
+              setShowPasswordDialog(true);
+            }
           } else {
             setIsAuthenticated(true);
             // Increment view count
@@ -82,6 +97,9 @@ const ViewPage = () => {
       setIsAuthenticated(true);
       setShowPasswordDialog(false);
       setPasswordError("");
+      // Store authentication in sessionStorage for print access
+      const authKey = `doc_auth_${shareLink}`;
+      sessionStorage.setItem(authKey, 'true');
       // Increment view count after successful authentication
       await incrementViewCount(shareLink);
     } else {

@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -227,8 +228,13 @@ function parseMarkdownInHtml(html: string): string {
 
 // Parse HTML content into pages (each major section = 1 page)
 function parseHtmlToPages(html: string, title: string): { title: string; styledTitle: string; content: string }[] {
-  // First apply markdown parsing
-  let processedHtml = parseMarkdownInHtml(html);
+  // First sanitize the HTML to prevent XSS
+  const sanitizedHtml = DOMPurify.sanitize(html, {
+    ADD_TAGS: ['table', 'tr', 'td', 'th', 'thead', 'tbody'],
+    ADD_ATTR: ['data-page-break', 'class'],
+  });
+  // Apply markdown parsing
+  let processedHtml = parseMarkdownInHtml(sanitizedHtml);
   // Then apply section keyword styling
   processedHtml = styleSectionKeywords(processedHtml);
   
