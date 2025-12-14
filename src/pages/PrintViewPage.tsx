@@ -319,11 +319,14 @@ const PrintViewPage = () => {
           
           .print-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: #8b5a3c;
             margin-bottom: 30px;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
           }
           
           .first-char {
@@ -445,11 +448,14 @@ const PrintViewPage = () => {
           
           .print-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: hsl(var(--primary));
             margin-bottom: 30px;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
           }
           
           .first-char {
