@@ -26,8 +26,8 @@ interface PagedDocumentReaderProps {
 }
 
 // Page break patterns
-// Check if text contains ## (markdown heading level 2) - can be anywhere in short line
-const markdownH2Pattern = /##\s+/;
+// Check if text contains ## (but NOT ###) - markdown heading level 2 only
+const markdownH2Pattern = /(?<![#])##(?![#])\s+/;
 
 // Check if text contains 第X章 pattern (chapter indicator)
 const chapterPattern = /第\s*\d+\s*章/;
