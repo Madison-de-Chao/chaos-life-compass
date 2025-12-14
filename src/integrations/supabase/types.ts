@@ -14,13 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      documents: {
+        Row: {
+          content: Json | null
+          created_at: string
+          file_name: string
+          file_path: string | null
+          file_size: number | null
+          id: string
+          is_public: boolean | null
+          original_name: string
+          password: string | null
+          share_link: string
+          updated_at: string
+          view_count: number | null
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string
+          file_name: string
+          file_path?: string | null
+          file_size?: number | null
+          id?: string
+          is_public?: boolean | null
+          original_name: string
+          password?: string | null
+          share_link: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string
+          file_name?: string
+          file_path?: string | null
+          file_size?: number | null
+          id?: string
+          is_public?: boolean | null
+          original_name?: string
+          password?: string | null
+          share_link?: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_view_count: {
+        Args: { doc_share_link: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
