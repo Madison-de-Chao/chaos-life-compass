@@ -227,11 +227,6 @@
     text-indent: 2em;
   }
 
-  .document-content p:first-of-type::first-letter {
-    @apply text-4xl font-bold float-left mr-3 mt-1;
-    color: hsl(var(--primary));
-    line-height: 1;
-  }
 
   .document-content strong,
   .document-content b {
@@ -330,15 +325,6 @@
     text-indent: 2.5em;
   }
 
-  .document-page-content p:first-of-type {
-    @apply text-xl md:text-2xl;
-  }
-
-  .document-page-content p:first-of-type::first-letter {
-    @apply text-5xl md:text-6xl font-bold float-left mr-4 mt-2;
-    color: hsl(var(--primary));
-    line-height: 0.8;
-  }
 
   .document-page-content strong,
   .document-page-content b {
