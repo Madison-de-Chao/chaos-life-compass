@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Printer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
@@ -509,14 +509,18 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
       {/* Bottom Left Controls - smaller on mobile */}
       <div className="fixed bottom-28 md:bottom-24 left-3 md:left-6 z-50 flex flex-col items-center gap-2 md:gap-4">
         <Button
-          asChild
           variant="outline"
           size="icon"
+          onClick={() => {
+            const email = "service@momo-chao.com";
+            const subject = encodeURIComponent("報告反饋");
+            const body = encodeURIComponent(`您好，\n\n我對報告「${content.title}」有以下反饋：\n\n`);
+            window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
+          }}
           className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          title="反饋意見"
         >
-          <Link to="/">
-            <Home className="w-4 h-4 md:w-6 md:h-6" />
-          </Link>
+          <MessageSquare className="w-4 h-4 md:w-6 md:h-6" />
         </Button>
         <Button
           variant="outline"
