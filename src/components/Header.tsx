@@ -1,4 +1,4 @@
-import { FileText, Upload, List, LogOut, User, Users } from "lucide-react";
+import { FileText, Upload, List, LogOut, User, Users, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -60,6 +60,17 @@ export function Header() {
                 <Link to="/customers">
                   <Users className="w-4 h-4 mr-2" />
                   客戶管理
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant={isActive("/feedbacks") ? "secondary" : "ghost"}
+                size="sm"
+                className={cn(isActive("/feedbacks") && "shadow-soft")}
+              >
+                <Link to="/feedbacks">
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  反饋
                 </Link>
               </Button>
               <div className="h-6 w-px bg-border mx-2" />
