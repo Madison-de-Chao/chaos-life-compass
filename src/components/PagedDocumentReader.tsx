@@ -372,23 +372,36 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+      const response = await supabase.functions.invoke('text-to-speech', {
         body: { text: textToSpeak.substring(0, 4000), voice: 'onyx' },
       });
 
-      if (error) {
+      if (response.error) {
         let errorMessage = '語音合成失敗';
-        if (error instanceof FunctionsHttpError) {
-          const errorData = await error.context.json();
+        if (response.error instanceof FunctionsHttpError) {
+          const errorData = await response.error.context.json();
           console.error('Function returned an error', errorData);
           errorMessage = errorData?.error || errorMessage;
         } else {
-          errorMessage = error.message;
+          errorMessage = response.error.message;
         }
         throw new Error(errorMessage);
       }
 
-      const audioBlob = new Blob([data], { type: 'audio/mpeg' });
+      // Handle base64 audio response
+      const { audioContent } = response.data;
+      if (!audioContent) {
+        throw new Error('No audio content received');
+      }
+
+      // Decode base64 to binary
+      const binaryString = atob(audioContent);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      
+      const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       
       const audio = new Audio(audioUrl);
