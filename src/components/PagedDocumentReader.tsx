@@ -65,14 +65,22 @@ const bonusPattern = /Bonus\s*[：:]/i;
 // Check if text starts with ## (markdown heading level 2)
 const markdownH2Pattern = /^##\s+/;
 
+// Check if text contains 【...】 bracket pattern (chapter/section titles)
+const bracketTitlePattern = /【[^】]+】/;
+
 function isNewSectionStart(text: string): boolean {
   const trimmed = text.trim();
   
   // Skip if the line is too long (likely a regular paragraph)
-  if (trimmed.length > 50) return false;
+  if (trimmed.length > 80) return false;
   
   // Check for markdown ## heading pattern
   if (markdownH2Pattern.test(trimmed)) {
+    return true;
+  }
+  
+  // Check for 【...】 bracket pattern titles
+  if (bracketTitlePattern.test(trimmed)) {
     return true;
   }
   
