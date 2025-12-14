@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 interface DocumentSection {
@@ -173,15 +173,23 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
 
     setIsLoading(true);
     try {
-      const response = await supabase.functions.invoke('text-to-speech', {
-        body: { text: textToSpeak.substring(0, 4000), voice: 'nova' },
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { text: textToSpeak.substring(0, 4000), voice: 'onyx' },
       });
 
-      if (response.error) {
-        throw new Error(response.error.message);
+      if (error) {
+        let errorMessage = '語音合成失敗';
+        if (error instanceof FunctionsHttpError) {
+          const errorData = await error.context.json();
+          console.error('Function returned an error', errorData);
+          errorMessage = errorData?.error || errorMessage;
+        } else {
+          errorMessage = error.message;
+        }
+        throw new Error(errorMessage);
       }
 
-      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
+      const audioBlob = new Blob([data], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       
       const audio = new Audio(audioUrl);
