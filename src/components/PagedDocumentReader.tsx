@@ -2,10 +2,9 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Download, Printer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, Home, Printer } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import html2pdf from "html2pdf.js";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
@@ -457,178 +456,6 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
     }
   };
 
-  const [isExporting, setIsExporting] = useState(false);
-
-  const exportToPdf = async () => {
-    setIsExporting(true);
-    try {
-      // Create a container for the full document
-      const container = document.createElement('div');
-      container.id = 'pdf-export-container';
-      container.style.width = '794px'; // A4 width at 96dpi
-      container.style.padding = '40px';
-      container.style.fontFamily = "'Noto Serif TC', Georgia, serif";
-      container.style.fontSize = '14px';
-      container.style.lineHeight = '1.8';
-      container.style.color = '#1a1a1a';
-      container.style.backgroundColor = '#ffffff';
-      container.style.position = 'absolute';
-      container.style.top = '0';
-      container.style.left = '0';
-      container.style.zIndex = '10000';
-      container.style.pointerEvents = 'none';
-
-      // Add dual logos header
-      const logoHeader = document.createElement('div');
-      logoHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #d4a574;';
-
-      const leftLogo = document.createElement('img');
-      leftLogo.src = logoChaoxuan;
-      leftLogo.alt = '超烜創意';
-      leftLogo.style.cssText = 'height: 50px; width: auto;';
-      leftLogo.crossOrigin = 'anonymous';
-      
-      const rightLogo = document.createElement('img');
-      rightLogo.src = logoHongling;
-      rightLogo.alt = '虹靈御所';
-      rightLogo.style.cssText = 'height: 50px; width: auto;';
-      rightLogo.crossOrigin = 'anonymous';
-
-      logoHeader.appendChild(leftLogo);
-      logoHeader.appendChild(rightLogo);
-      container.appendChild(logoHeader);
-
-      // Add title
-      const titleEl = document.createElement('h1');
-      titleEl.textContent = content.title;
-      titleEl.style.cssText = 'font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 30px; color: #8b4513;';
-      container.appendChild(titleEl);
-
-      // Collect all content from pages
-      let hasContent = false;
-      for (let i = 0; i < pages.length; i++) {
-        const page = pages[i];
-        
-        // Add section title for pages after the first
-        if (i > 0 && page.title) {
-          const sectionTitle = document.createElement('h2');
-          sectionTitle.textContent = page.title;
-          sectionTitle.style.cssText = 'font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 15px; color: #8b4513; border-bottom: 2px solid #d4a574; padding-bottom: 8px;';
-          container.appendChild(sectionTitle);
-        }
-
-        // Add content
-        if (page.content && page.content.trim()) {
-          hasContent = true;
-          const contentDiv = document.createElement('div');
-          contentDiv.innerHTML = page.content;
-          
-          // Style all paragraphs
-          contentDiv.querySelectorAll('p').forEach(p => {
-            (p as HTMLElement).style.cssText = 'margin-bottom: 10px; text-indent: 2em; color: #1a1a1a;';
-          });
-
-          // Style headings
-          contentDiv.querySelectorAll('h1, h2, h3').forEach(h => {
-            (h as HTMLElement).style.cssText = 'color: #8b4513; margin-top: 15px; margin-bottom: 10px;';
-          });
-
-          // Style strong/bold text
-          contentDiv.querySelectorAll('strong, b').forEach(el => {
-            (el as HTMLElement).style.cssText = 'color: #d35400; font-weight: bold;';
-          });
-
-          // Style images
-          contentDiv.querySelectorAll('img').forEach(img => {
-            (img as HTMLElement).style.cssText = 'max-width: 100%; height: auto; margin: 15px auto; display: block;';
-            (img as HTMLImageElement).crossOrigin = 'anonymous';
-          });
-
-          container.appendChild(contentDiv);
-        }
-      }
-
-      // If no content, add placeholder
-      if (!hasContent) {
-        const placeholder = document.createElement('p');
-        placeholder.textContent = '此報告無內容';
-        placeholder.style.cssText = 'text-align: center; color: #666; margin-top: 50px;';
-        container.appendChild(placeholder);
-      }
-
-      // Add copyright footer
-      const copyrightFooter = document.createElement('div');
-      copyrightFooter.style.cssText = 'margin-top: 40px; padding-top: 15px; border-top: 1px solid #d4a574; text-align: center; font-size: 11px; color: #666666;';
-      copyrightFooter.textContent = `© ${new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有`;
-      container.appendChild(copyrightFooter);
-
-      // Append to body - container is already visible
-      document.body.appendChild(container);
-
-      // Wait for images to load
-      const allImages = container.querySelectorAll('img');
-      if (allImages.length > 0) {
-        await Promise.all(
-          Array.from(allImages).map(img => {
-            if ((img as HTMLImageElement).complete) return Promise.resolve();
-            return new Promise((resolve) => {
-              img.onload = resolve;
-              img.onerror = resolve;
-            });
-          })
-        );
-      }
-
-      // Give browser time to render
-      await new Promise(resolve => setTimeout(resolve, 300));
-
-      const opt = {
-        margin: 10,
-        filename: `${content.title}.pdf`,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          logging: true, // Enable logging for debugging
-          backgroundColor: '#ffffff',
-          windowWidth: 794
-        },
-        jsPDF: { 
-          unit: 'mm', 
-          format: 'a4', 
-          orientation: 'portrait' 
-        },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      };
-
-      console.log('Starting PDF export with', pages.length, 'pages');
-      console.log('Container has content:', container.innerHTML.length, 'characters');
-
-      await html2pdf().set(opt).from(container).save();
-
-      // Clean up
-      document.body.removeChild(container);
-
-      toast({
-        title: "匯出成功",
-        description: "PDF 檔案已下載",
-      });
-    } catch (error) {
-      console.error('PDF export error:', error);
-      toast({
-        title: "匯出失敗",
-        description: `無法匯出 PDF: ${error instanceof Error ? error.message : '未知錯誤'}`,
-        variant: "destructive",
-      });
-      // Try to clean up container if it exists
-      const existingContainer = document.getElementById('pdf-export-container');
-      if (existingContainer) {
-        document.body.removeChild(existingContainer);
-      }
-    } finally {
-      setIsExporting(false);
-    }
-  };
 
   const page = pages[currentPage];
   const patternIndex = currentPage % patterns.length;
@@ -704,20 +531,6 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
             <VolumeX className="w-4 h-4 md:w-6 md:h-6" />
           ) : (
             <Volume2 className="w-4 h-4 md:w-6 md:h-6" />
-          )}
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={exportToPdf}
-          disabled={isExporting}
-          className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
-          title="匯出 PDF (舊)"
-        >
-          {isExporting ? (
-            <Loader2 className="w-4 h-4 md:w-6 md:h-6 animate-spin" />
-          ) : (
-            <Download className="w-4 h-4 md:w-6 md:h-6" />
           )}
         </Button>
         {shareLink && (
