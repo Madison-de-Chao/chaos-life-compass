@@ -1,8 +1,7 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface DocumentSection {
@@ -72,8 +71,7 @@ const patterns = [
 export function PagedDocumentReader({ content, className }: PagedDocumentReaderProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const pages = useMemo(() => {
     if (content.htmlContent) {
@@ -92,10 +90,9 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
   const goToPage = useCallback((page: number) => {
     if (page >= 0 && page < pages.length) {
       setCurrentPage(page);
-      // Stop audio when changing pages
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
+      // Stop speech when changing pages
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
         setIsPlaying(false);
       }
     }
@@ -118,10 +115,9 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
     return doc.body.textContent || '';
   }, []);
 
-  const toggleAudio = async () => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
+  const toggleAudio = () => {
+    if (isPlaying) {
+      speechSynthesis.cancel();
       setIsPlaying(false);
       return;
     }
@@ -138,49 +134,34 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
       return;
     }
 
-    setIsLoading(true);
-    try {
-      const response = await supabase.functions.invoke('text-to-speech', {
-        body: { text: textToSpeak.substring(0, 4000), voice: 'nova' },
-      });
+    // Use browser's built-in speech synthesis (free)
+    const utterance = new SpeechSynthesisUtterance(textToSpeak.substring(0, 5000));
+    utterance.lang = 'zh-TW';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    
+    // Find a Chinese voice if available
+    const voices = speechSynthesis.getVoices();
+    const chineseVoice = voices.find(v => v.lang.includes('zh')) || voices[0];
+    if (chineseVoice) {
+      utterance.voice = chineseVoice;
+    }
 
-      if (response.error) {
-        throw new Error(response.error.message);
-      }
-
-      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
-      const audioUrl = URL.createObjectURL(audioBlob);
-      
-      const audio = new Audio(audioUrl);
-      audio.onended = () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-        URL.revokeObjectURL(audioUrl);
-      };
-      audio.onerror = () => {
-        setIsPlaying(false);
-        audioRef.current = null;
-        toast({
-          title: "播放失敗",
-          description: "無法播放語音",
-          variant: "destructive",
-        });
-      };
-      
-      audioRef.current = audio;
-      await audio.play();
-      setIsPlaying(true);
-    } catch (error: unknown) {
-      console.error('TTS error:', error);
-      const errorMessage = error instanceof Error ? error.message : '語音合成失敗';
+    utterance.onend = () => {
+      setIsPlaying(false);
+    };
+    utterance.onerror = () => {
+      setIsPlaying(false);
       toast({
-        title: "語音錯誤",
-        description: errorMessage,
+        title: "朗讀失敗",
+        description: "瀏覽器語音功能不可用",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    utteranceRef.current = utterance;
+    speechSynthesis.speak(utterance);
+    setIsPlaying(true);
   };
 
   const page = pages[currentPage];
@@ -212,12 +193,9 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           variant="outline"
           size="icon"
           onClick={toggleAudio}
-          disabled={isLoading}
           className="rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
         >
-          {isLoading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
-          ) : isPlaying ? (
+          {isPlaying ? (
             <VolumeX className="w-5 h-5" />
           ) : (
             <Volume2 className="w-5 h-5" />
