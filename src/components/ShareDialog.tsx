@@ -128,6 +128,12 @@ export function ShareDialog({
                 )}
               </Button>
             </div>
+            {/* Custom domain preview */}
+            {!window.location.origin.includes('momo-chao.com') && (
+              <p className="text-xs text-muted-foreground mt-2 p-2 rounded-lg bg-primary/5 border border-primary/10">
+                💡 連接自訂網域後：<span className="font-medium text-primary">https://momo-chao.com/view/{document.share_link}</span>
+              </p>
+            )}
           </div>
 
           {/* Password Protection */}
