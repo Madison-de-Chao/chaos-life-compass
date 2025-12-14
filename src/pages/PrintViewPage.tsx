@@ -323,6 +323,7 @@ const PrintViewPage = () => {
             font-weight: bold;
             color: #8b5a3c;
             margin-bottom: 30px;
+            white-space: nowrap;
           }
           
           .first-char {
@@ -448,6 +449,7 @@ const PrintViewPage = () => {
             font-weight: bold;
             color: hsl(var(--primary));
             margin-bottom: 30px;
+            white-space: nowrap;
           }
           
           .first-char {
