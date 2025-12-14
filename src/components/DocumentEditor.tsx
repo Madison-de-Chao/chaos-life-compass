@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, GripVertical, Save, Eye } from "lucide-react";
+import { Plus, Trash2, GripVertical, Save, Eye, SeparatorHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface DocumentSection {
   id: string;
-  type: "heading" | "paragraph" | "quote";
+  type: "heading" | "paragraph" | "quote" | "pagebreak";
   content: string;
   level?: number;
 }
@@ -91,73 +91,90 @@ export function DocumentEditor({
               "border-l-4",
               section.type === "heading" && "border-l-primary",
               section.type === "paragraph" && "border-l-muted-foreground/30",
-              section.type === "quote" && "border-l-accent-foreground/50"
+              section.type === "quote" && "border-l-accent-foreground/50",
+              section.type === "pagebreak" && "border-l-destructive/50"
             )}
           >
-            <div className="flex items-start gap-3">
-              {/* Drag Handle & Controls */}
-              <div className="flex flex-col gap-1 pt-2">
+            {section.type === "pagebreak" ? (
+              <div className="flex items-center justify-between py-2">
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <SeparatorHorizontal className="w-5 h-5" />
+                  <span className="text-sm font-medium">── 分頁符 ──</span>
+                  <span className="text-xs text-muted-foreground/60">此處將自動換頁</span>
+                </div>
                 <button
-                  onClick={() => moveSection(index, "up")}
-                  disabled={index === 0}
-                  className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                  onClick={() => removeSection(section.id)}
+                  className="p-2 hover:bg-destructive/10 rounded text-destructive/60 hover:text-destructive transition-colors"
                 >
-                  <GripVertical className="w-4 h-4 text-muted-foreground" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
+            ) : (
+              <div className="flex items-start gap-3">
+                {/* Drag Handle & Controls */}
+                <div className="flex flex-col gap-1 pt-2">
+                  <button
+                    onClick={() => moveSection(index, "up")}
+                    disabled={index === 0}
+                    className="p-1 hover:bg-muted rounded disabled:opacity-30"
+                  >
+                    <GripVertical className="w-4 h-4 text-muted-foreground" />
+                  </button>
+                </div>
 
-              {/* Content */}
-              <div className="flex-1 space-y-2">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    {section.type === "heading" && "標題"}
-                    {section.type === "paragraph" && "段落"}
-                    {section.type === "quote" && "引用"}
-                  </span>
-                  
-                  {section.type === "heading" && (
-                    <select
-                      value={section.level || 2}
-                      onChange={(e) => updateHeadingLevel(section.id, Number(e.target.value))}
-                      className="text-xs bg-muted rounded px-2 py-1 border-none"
-                    >
-                      <option value={1}>H1 大標題</option>
-                      <option value={2}>H2 中標題</option>
-                      <option value={3}>H3 小標題</option>
-                    </select>
+                {/* Content */}
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                      {section.type === "heading" && "標題"}
+                      {section.type === "paragraph" && "段落"}
+                      {section.type === "quote" && "引用"}
+                    </span>
+                    
+                    {section.type === "heading" && (
+                      <select
+                        value={section.level || 2}
+                        onChange={(e) => updateHeadingLevel(section.id, Number(e.target.value))}
+                        className="text-xs bg-muted rounded px-2 py-1 border-none"
+                      >
+                        <option value={1}>H1 大標題</option>
+                        <option value={2}>H2 中標題</option>
+                        <option value={3}>H3 小標題</option>
+                      </select>
+                    )}
+                  </div>
+
+                  {section.type === "paragraph" || section.type === "quote" ? (
+                    <Textarea
+                      value={section.content}
+                      onChange={(e) => updateSection(section.id, e.target.value)}
+                      placeholder={section.type === "quote" ? "輸入引用內容..." : "輸入段落內容..."}
+                      className="min-h-[120px] font-serif leading-relaxed resize-y"
+                    />
+                  ) : (
+                    <Input
+                      value={section.content}
+                      onChange={(e) => updateSection(section.id, e.target.value)}
+                      placeholder="輸入標題..."
+                      className={cn(
+                        "font-serif font-semibold border-none shadow-none px-0 focus-visible:ring-0",
+                        section.level === 1 && "text-2xl",
+                        section.level === 2 && "text-xl",
+                        section.level === 3 && "text-lg"
+                      )}
+                    />
                   )}
                 </div>
 
-                {section.type === "paragraph" || section.type === "quote" ? (
-                  <Textarea
-                    value={section.content}
-                    onChange={(e) => updateSection(section.id, e.target.value)}
-                    placeholder={section.type === "quote" ? "輸入引用內容..." : "輸入段落內容..."}
-                    className="min-h-[120px] font-serif leading-relaxed resize-y"
-                  />
-                ) : (
-                  <Input
-                    value={section.content}
-                    onChange={(e) => updateSection(section.id, e.target.value)}
-                    placeholder="輸入標題..."
-                    className={cn(
-                      "font-serif font-semibold border-none shadow-none px-0 focus-visible:ring-0",
-                      section.level === 1 && "text-2xl",
-                      section.level === 2 && "text-xl",
-                      section.level === 3 && "text-lg"
-                    )}
-                  />
-                )}
+                {/* Delete */}
+                <button
+                  onClick={() => removeSection(section.id)}
+                  className="p-2 hover:bg-destructive/10 rounded text-destructive/60 hover:text-destructive transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
-
-              {/* Delete */}
-              <button
-                onClick={() => removeSection(section.id)}
-                className="p-2 hover:bg-destructive/10 rounded text-destructive/60 hover:text-destructive transition-colors"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
+            )}
           </Card>
         ))}
       </div>
@@ -190,6 +207,15 @@ export function DocumentEditor({
         >
           <Plus className="w-4 h-4" />
           新增引用
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => addSection("pagebreak")}
+          className="gap-2 border-dashed"
+        >
+          <SeparatorHorizontal className="w-4 h-4" />
+          插入分頁
         </Button>
       </div>
 

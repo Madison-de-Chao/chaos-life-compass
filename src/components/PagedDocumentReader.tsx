@@ -22,6 +22,20 @@ interface PagedDocumentReaderProps {
   className?: string;
 }
 
+// Chinese section keywords that indicate a new page
+const sectionKeywords = [
+  /^第[一二三四五六七八九十百千]+[章節篇部回]/,  // 第一章、第二節
+  /^[壹貳參肆伍陸柒捌玖拾][\s、．.]/,           // 壹、貳、
+  /^[一二三四五六七八九十]+[\s、．.]/,           // 一、二、
+  /^[（(][一二三四五六七八九十壹貳參肆伍陸柒捌玖拾]+[）)]/,  // (一)、（二）
+  /^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ][\s、．.]/,                // Ⅰ、Ⅱ、
+];
+
+function isNewSectionStart(text: string): boolean {
+  const trimmed = text.trim();
+  return sectionKeywords.some(regex => regex.test(trimmed));
+}
+
 // Parse HTML content into pages (each major section = 1 page)
 function parseHtmlToPages(html: string, title: string): { title: string; content: string }[] {
   const parser = new DOMParser();
@@ -34,14 +48,32 @@ function parseHtmlToPages(html: string, title: string): { title: string; content
 
   for (const element of elements) {
     const tagName = element.tagName.toLowerCase();
+    const textContent = element.textContent?.trim() || '';
     
-    // Start new page on H1 or H2
-    if ((tagName === 'h1' || tagName === 'h2') && !isFirstPage) {
+    // Check for page break marker
+    if (element.getAttribute('data-page-break') === 'true' || 
+        element.classList.contains('page-break')) {
       if (currentPage.content.trim()) {
         pages.push(currentPage);
       }
       currentPage = { 
-        title: element.textContent?.trim() || '章節',
+        title: textContent || '新頁面',
+        content: element.outerHTML 
+      };
+      continue;
+    }
+    
+    // Start new page on H1, H2, H3, or keyword match
+    const isHeading = tagName === 'h1' || tagName === 'h2' || tagName === 'h3';
+    const isKeywordMatch = (tagName === 'p' || tagName === 'strong' || tagName === 'b') && 
+                           isNewSectionStart(textContent);
+    
+    if ((isHeading || isKeywordMatch) && !isFirstPage) {
+      if (currentPage.content.trim()) {
+        pages.push(currentPage);
+      }
+      currentPage = { 
+        title: textContent || '章節',
         content: element.outerHTML 
       };
     } else {
