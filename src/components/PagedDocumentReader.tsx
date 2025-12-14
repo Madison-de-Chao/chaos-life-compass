@@ -2,7 +2,11 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
@@ -298,6 +302,10 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
   const [isLoading, setIsLoading] = useState(false);
   const [flipDirection, setFlipDirection] = useState<'left' | 'right'>('right');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [feedbackName, setFeedbackName] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const pages = useMemo(() => {
@@ -511,12 +519,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
         <Button
           variant="outline"
           size="icon"
-          onClick={() => {
-            const email = "service@momo-chao.com";
-            const subject = encodeURIComponent("報告反饋");
-            const body = encodeURIComponent(`您好，\n\n我對報告「${content.title}」有以下反饋：\n\n`);
-            window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
-          }}
+          onClick={() => setShowFeedbackDialog(true)}
           className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
           title="反饋意見"
         >
@@ -670,6 +673,101 @@ export function PagedDocumentReader({ content, className, documentId, shareLink 
           © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
         </div>
       </div>
+
+      {/* Feedback Dialog */}
+      <Dialog open={showFeedbackDialog} onOpenChange={setShowFeedbackDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-xl">反饋意見</DialogTitle>
+            <DialogDescription>
+              您對「{content.title}」有任何意見或建議嗎？
+            </DialogDescription>
+          </DialogHeader>
+          <form 
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!feedbackMessage.trim()) {
+                toast({
+                  title: "請輸入反饋內容",
+                  variant: "destructive",
+                });
+                return;
+              }
+              
+              setIsSendingFeedback(true);
+              try {
+                // Send feedback via mailto as fallback
+                const email = "service@momo-chao.com";
+                const subject = encodeURIComponent(`報告反饋：${content.title}`);
+                const body = encodeURIComponent(
+                  `姓名：${feedbackName || "匿名"}\n\n報告：${content.title}\n\n反饋內容：\n${feedbackMessage}`
+                );
+                window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
+                
+                toast({
+                  title: "感謝您的反饋",
+                  description: "您的意見對我們非常寶貴",
+                });
+                setShowFeedbackDialog(false);
+                setFeedbackName("");
+                setFeedbackMessage("");
+              } catch (error) {
+                toast({
+                  title: "發送失敗",
+                  description: "請稍後再試",
+                  variant: "destructive",
+                });
+              } finally {
+                setIsSendingFeedback(false);
+              }
+            }}
+            className="space-y-4"
+          >
+            <div className="space-y-2">
+              <Label htmlFor="feedback-name">您的姓名（選填）</Label>
+              <Input
+                id="feedback-name"
+                value={feedbackName}
+                onChange={(e) => setFeedbackName(e.target.value)}
+                placeholder="請輸入姓名"
+                maxLength={50}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="feedback-message">反饋內容 *</Label>
+              <Textarea
+                id="feedback-message"
+                value={feedbackMessage}
+                onChange={(e) => setFeedbackMessage(e.target.value)}
+                placeholder="請輸入您的意見或建議..."
+                className="min-h-[120px] resize-none"
+                maxLength={1000}
+                required
+              />
+              <p className="text-xs text-muted-foreground text-right">
+                {feedbackMessage.length}/1000
+              </p>
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowFeedbackDialog(false)}
+              >
+                取消
+              </Button>
+              <Button type="submit" disabled={isSendingFeedback} className="gap-2">
+                {isSendingFeedback ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+                發送反饋
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
