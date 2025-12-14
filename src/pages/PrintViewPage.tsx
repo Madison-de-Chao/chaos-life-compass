@@ -123,11 +123,11 @@ function styleTitle(title: string): string {
 // Calculate font size based on title length
 function getTitleFontSize(title: string): string {
   const len = title.length;
-  if (len <= 10) return '28px';
-  if (len <= 15) return '24px';
-  if (len <= 20) return '20px';
-  if (len <= 30) return '18px';
-  return '16px';
+  if (len <= 10) return '22px';
+  if (len <= 15) return '18px';
+  if (len <= 20) return '16px';
+  if (len <= 30) return '14px';
+  return '12px';
 }
 
 // Page break patterns
@@ -373,9 +373,9 @@ const PrintViewPage = () => {
           }
           
           .print-title.cover-title {
-            font-size: 32px !important;
+            font-size: 26px !important;
             color: #5a2d0a;
-            margin: 35px 0 25px;
+            margin: 30px 0 20px;
             text-shadow: 1px 1px 2px rgba(139, 90, 60, 0.15);
           }
           
@@ -430,8 +430,8 @@ const PrintViewPage = () => {
           }
           
           .print-content {
-            font-size: 14px;
-            line-height: 1.9;
+            font-size: 12px;
+            line-height: 1.8;
             color: #1a1a1a;
           }
           
@@ -479,8 +479,8 @@ const PrintViewPage = () => {
           .document-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.5em 0;
-            font-size: 11px;
+            margin: 1.2em 0;
+            font-size: 10px;
             border: 2px solid #8b5a3c;
             page-break-inside: avoid;
           }
@@ -488,7 +488,7 @@ const PrintViewPage = () => {
           .document-table th,
           .document-table td {
             border: 1px solid #d4a574;
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: left;
             vertical-align: top;
           }
