@@ -4,25 +4,90 @@ import { Header } from "@/components/Header";
 import { FileUploadZone } from "@/components/FileUploadZone";
 import { FileText, Sparkles, Lock, Share2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
+  const generateShareLink = (fileName: string) => {
+    // Generate a URL-friendly share link from filename
+    const baseName = fileName.replace(/\.[^/.]+$/, ""); // Remove extension
+    const slug = baseName
+      .toLowerCase()
+      .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+      .replace(/^-|-$/g, "");
+    const randomSuffix = Math.random().toString(36).substring(2, 8);
+    return `${slug}-${randomSuffix}`;
+  };
+
   const handleFileSelect = async (file: File) => {
+    if (!user) {
+      toast({
+        title: "請先登入",
+        description: "您需要登入才能上傳文件",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+
     setIsLoading(true);
     
-    // Simulate processing
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "文件已上傳",
-      description: `${file.name} 已成功轉換為展示頁面`,
-    });
-    
-    setIsLoading(false);
-    // Navigate to the demo document for now
-    navigate("/view/jasper-report");
+    try {
+      // 1. Upload file to storage
+      const filePath = `${user.id}/${Date.now()}-${file.name}`;
+      const { error: uploadError } = await supabase.storage
+        .from("documents")
+        .upload(filePath, file);
+      
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // 2. Generate share link
+      const shareLink = generateShareLink(file.name);
+
+      // 3. Create document record in database
+      const { data: docData, error: dbError } = await supabase
+        .from("documents")
+        .insert({
+          file_name: file.name,
+          original_name: file.name,
+          file_path: filePath,
+          file_size: file.size,
+          share_link: shareLink,
+          is_public: true,
+          content: null, // Will be populated after parsing
+        })
+        .select()
+        .single();
+
+      if (dbError) {
+        // Clean up uploaded file if db insert fails
+        await supabase.storage.from("documents").remove([filePath]);
+        throw dbError;
+      }
+
+      toast({
+        title: "文件已上傳",
+        description: `${file.name} 已成功上傳`,
+      });
+
+      // Navigate to the files management page
+      navigate("/files");
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast({
+        title: "上傳失敗",
+        description: error.message || "無法上傳文件，請稍後再試",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const features = [
