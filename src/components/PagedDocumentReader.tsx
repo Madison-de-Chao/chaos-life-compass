@@ -62,11 +62,19 @@ const sectionTitleKeywords = [
 // Check if text contains "Bonus" followed by colon
 const bonusPattern = /Bonus\s*[：:]/i;
 
+// Check if text starts with ## (markdown heading level 2)
+const markdownH2Pattern = /^##\s+/;
+
 function isNewSectionStart(text: string): boolean {
   const trimmed = text.trim();
   
   // Skip if the line is too long (likely a regular paragraph)
   if (trimmed.length > 50) return false;
+  
+  // Check for markdown ## heading pattern
+  if (markdownH2Pattern.test(trimmed)) {
+    return true;
+  }
   
   // Check for section keyword patterns (regex)
   if (sectionKeywordPatterns.some(regex => regex.test(trimmed))) {
@@ -131,9 +139,89 @@ function styleSectionKeywords(html: string): string {
   return doc.body.innerHTML;
 }
 
+// Parse markdown tables in HTML content
+function parseMarkdownTables(html: string): string {
+  // Split content by line to find table patterns
+  const lines = html.split('\n');
+  const result: string[] = [];
+  let tableLines: string[] = [];
+  let inTable = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    // Check if line contains pipe-separated content (table row)
+    const trimmed = line.replace(/<[^>]*>/g, '').trim();
+    const isTableRow = trimmed.includes('|') && (trimmed.match(/\|/g) || []).length >= 2;
+    
+    if (isTableRow) {
+      if (!inTable) {
+        inTable = true;
+        tableLines = [];
+      }
+      tableLines.push(trimmed);
+    } else {
+      if (inTable && tableLines.length > 0) {
+        // Convert collected table lines to HTML table
+        result.push(convertToHtmlTable(tableLines));
+        tableLines = [];
+        inTable = false;
+      }
+      result.push(line);
+    }
+  }
+  
+  // Handle table at end of content
+  if (inTable && tableLines.length > 0) {
+    result.push(convertToHtmlTable(tableLines));
+  }
+
+  return result.join('\n');
+}
+
+// Convert markdown-style table rows to HTML table
+function convertToHtmlTable(rows: string[]): string {
+  if (rows.length === 0) return '';
+  
+  // Filter out separator rows (like |---|---|)
+  const dataRows = rows.filter(row => !row.match(/^\|?\s*[-:]+\s*(\|\s*[-:]+\s*)+\|?\s*$/));
+  
+  if (dataRows.length === 0) return '';
+
+  let tableHtml = '<table class="document-table">';
+  
+  dataRows.forEach((row, index) => {
+    // Split by | and clean up
+    const cells = row.split('|')
+      .map(cell => cell.trim())
+      .filter(cell => cell.length > 0);
+    
+    if (cells.length === 0) return;
+    
+    const isHeader = index === 0;
+    const cellTag = isHeader ? 'th' : 'td';
+    const rowClass = isHeader ? 'table-header' : '';
+    
+    tableHtml += `<tr class="${rowClass}">`;
+    cells.forEach(cell => {
+      // Parse bold text in cells
+      const parsedCell = cell
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.+?)__/g, '<strong>$1</strong>');
+      tableHtml += `<${cellTag}>${parsedCell}</${cellTag}>`;
+    });
+    tableHtml += '</tr>';
+  });
+  
+  tableHtml += '</table>';
+  return tableHtml;
+}
+
 // Parse markdown in HTML content
 function parseMarkdownInHtml(html: string): string {
-  return html
+  // First parse tables
+  let result = parseMarkdownTables(html);
+  
+  return result
     // Bold: **text** or __text__
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/__(.+?)__/g, '<strong>$1</strong>')
