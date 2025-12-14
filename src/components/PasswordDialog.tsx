@@ -9,6 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoHongling from "@/assets/logo-hongling.png";
 
 interface PasswordDialogProps {
   open: boolean;
@@ -35,16 +37,31 @@ export function PasswordDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent flex items-center justify-center">
+          {/* Dual Logos with Animation */}
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <img 
+              src={logoChaoxuan} 
+              alt="超烜創意" 
+              className="h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
+              style={{ animationDelay: '0.1s' }}
+            />
+            <img 
+              src={logoHongling} 
+              alt="虹靈御所" 
+              className="h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
+              style={{ animationDelay: '0.2s' }}
+            />
+          </div>
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent flex items-center justify-center animate-scale-in">
             <Lock className="w-8 h-8 text-accent-foreground" />
           </div>
-          <DialogTitle className="text-2xl font-serif">此文件需要密碼</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-2xl font-serif animate-fade-in" style={{ animationDelay: '0.15s' }}>此文件需要密碼</DialogTitle>
+          <DialogDescription className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
             請輸入分享密碼以繼續閱讀
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4 animate-fade-in" style={{ animationDelay: '0.25s' }}>
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
@@ -71,7 +88,7 @@ export function PasswordDialog({
             <p className="text-sm text-destructive text-center">{error}</p>
           )}
 
-          <Button type="submit" variant="hero" size="lg" className="w-full">
+          <Button type="submit" variant="hero" size="lg" className="w-full hover:scale-[1.02] transition-transform">
             確認
           </Button>
         </form>
