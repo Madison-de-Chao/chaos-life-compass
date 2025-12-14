@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useMemo } from "react";
 
 interface DocumentReaderProps {
   content: {
@@ -15,39 +16,54 @@ interface DocumentReaderProps {
   className?: string;
 }
 
+// Clean up extra punctuation and formatting issues
+function cleanHtmlContent(html: string): string {
+  return html
+    // Remove multiple consecutive punctuation
+    .replace(/([。，、；：！？])\1+/g, '$1')
+    // Remove spaces before punctuation
+    .replace(/\s+([。，、；：！？）」』】])/g, '$1')
+    // Remove spaces after opening brackets
+    .replace(/([（「『【])\s+/g, '$1')
+    // Clean up multiple line breaks
+    .replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>')
+    // Remove empty paragraphs
+    .replace(/<p>\s*<\/p>/gi, '')
+    // Clean up multiple spaces
+    .replace(/\s{2,}/g, ' ')
+    // Remove lonely punctuation paragraphs
+    .replace(/<p>\s*[。，、；：！？]\s*<\/p>/gi, '');
+}
+
 export function DocumentReader({ content, className }: DocumentReaderProps) {
+  const cleanedHtml = useMemo(() => {
+    if (content.htmlContent) {
+      return cleanHtmlContent(content.htmlContent);
+    }
+    return '';
+  }, [content.htmlContent]);
+
   // If we have HTML content (from mammoth), render it directly
   if (content.htmlContent) {
     return (
-      <article className={cn("max-w-3xl mx-auto", className)}>
-        <header className="text-center mb-16 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 font-serif leading-tight">
+      <article className={cn("max-w-4xl mx-auto px-4 md:px-8", className)}>
+        <header className="text-center mb-20 animate-fade-in pt-8">
+          <div className="inline-block mb-6">
+            <span className="text-primary/60 text-sm tracking-[0.3em] uppercase font-sans">命理報告</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8 font-serif leading-tight tracking-tight">
             {content.title}
           </h1>
-          <div className="w-24 h-1 bg-primary/60 mx-auto rounded-full" />
+          <div className="flex items-center justify-center gap-4">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+            <div className="w-2 h-2 rounded-full bg-primary/40" />
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+          </div>
         </header>
 
         <div 
-          className="prose prose-lg max-w-none animate-fade-in
-            prose-headings:font-serif prose-headings:text-foreground prose-headings:tracking-tight
-            prose-h1:text-3xl prose-h1:md:text-4xl prose-h1:lg:text-5xl prose-h1:font-bold prose-h1:mt-16 prose-h1:mb-8 prose-h1:border-b-2 prose-h1:border-primary/30 prose-h1:pb-6 prose-h1:text-primary
-            prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:font-semibold prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-foreground prose-h2:relative prose-h2:pl-4 prose-h2:border-l-4 prose-h2:border-primary/50
-            prose-h3:text-xl prose-h3:md:text-2xl prose-h3:font-medium prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-foreground/90
-            prose-h4:text-lg prose-h4:md:text-xl prose-h4:font-medium prose-h4:mt-8 prose-h4:mb-3 prose-h4:text-primary/80
-            prose-p:text-base prose-p:md:text-lg prose-p:lg:text-xl prose-p:leading-loose prose-p:text-foreground/80 prose-p:mb-6 prose-p:font-serif prose-p:tracking-wide
-            prose-strong:text-primary prose-strong:font-bold
-            prose-em:text-foreground/90 prose-em:font-serif prose-em:not-italic prose-em:border-b prose-em:border-primary/30
-            prose-ul:my-8 prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-3
-            prose-ol:my-8 prose-ol:list-decimal prose-ol:pl-8 prose-ol:space-y-3
-            prose-li:text-base prose-li:md:text-lg prose-li:text-foreground/80 prose-li:pl-6 prose-li:relative prose-li:before:content-['◆'] prose-li:before:absolute prose-li:before:left-0 prose-li:before:text-primary/60 prose-li:before:text-sm
-            prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 prose-blockquote:py-6 prose-blockquote:my-10 prose-blockquote:bg-gradient-to-r prose-blockquote:from-accent/40 prose-blockquote:to-transparent prose-blockquote:rounded-r-xl prose-blockquote:italic prose-blockquote:text-foreground/70 prose-blockquote:font-serif prose-blockquote:text-lg
-            prose-table:my-10 prose-table:w-full prose-table:border-collapse prose-table:rounded-xl prose-table:overflow-hidden prose-table:shadow-soft
-            prose-th:bg-primary/10 prose-th:p-4 prose-th:text-left prose-th:border prose-th:border-border/50 prose-th:font-semibold prose-th:text-foreground
-            prose-td:p-4 prose-td:border prose-td:border-border/30 prose-td:text-foreground/80
-            prose-img:rounded-2xl prose-img:shadow-soft prose-img:my-10
-            prose-a:text-primary prose-a:font-medium prose-a:underline prose-a:underline-offset-4 prose-a:decoration-primary/50 hover:prose-a:decoration-primary
-            prose-hr:my-12 prose-hr:border-t-2 prose-hr:border-primary/20"
-          dangerouslySetInnerHTML={{ __html: content.htmlContent }}
+          className="document-content animate-fade-in font-serif text-foreground/85 leading-[2.2] tracking-wide text-base md:text-lg"
+          dangerouslySetInnerHTML={{ __html: cleanedHtml }}
         />
       </article>
     );
