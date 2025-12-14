@@ -5,11 +5,14 @@ import { DocumentEditor, DocumentSection } from "@/components/DocumentEditor";
 import { DocumentReader } from "@/components/DocumentReader";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { sectionsToHtml } from "@/lib/parseDocx";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, X, User } from "lucide-react";
+import { Customer } from "@/hooks/useDocuments";
 
 interface LocationState {
   file: { name: string; size: number };
@@ -18,6 +21,7 @@ interface LocationState {
   filePath: string;
   documentId?: string;
   isEditing?: boolean;
+  customerId?: string | null;
 }
 
 const EditDocumentPage = () => {
@@ -30,8 +34,27 @@ const EditDocumentPage = () => {
     title: string;
     htmlContent: string;
   } | null>(null);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
 
   const state = location.state as LocationState | null;
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      const { data } = await supabase
+        .from("customers")
+        .select("id, name, gender, birth_date, birth_time, phone, email, notes")
+        .order("name");
+      setCustomers(data || []);
+    };
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    if (state?.customerId) {
+      setSelectedCustomerId(state.customerId);
+    }
+  }, [state?.customerId]);
 
   useEffect(() => {
     if (!state || !user) {
@@ -63,6 +86,7 @@ const EditDocumentPage = () => {
           .update({
             content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
             updated_at: new Date().toISOString(),
+            customer_id: selectedCustomerId,
           })
           .eq("id", state.documentId);
 
@@ -86,6 +110,7 @@ const EditDocumentPage = () => {
             share_link: shareLink,
             is_public: true,
             content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
+            customer_id: selectedCustomerId,
           }]);
 
         if (dbError) {
@@ -133,6 +158,32 @@ const EditDocumentPage = () => {
           <h1 className="text-2xl font-serif font-bold text-foreground">
             {state.isEditing ? "編輯報告" : "編輯報告內容"}
           </h1>
+        </div>
+
+        {/* Customer Selection */}
+        <div className="px-4 mb-6">
+          <div className="max-w-md">
+            <Label className="flex items-center gap-2 mb-2">
+              <User className="w-4 h-4" />
+              關聯客戶
+            </Label>
+            <Select
+              value={selectedCustomerId || "none"}
+              onValueChange={(v) => setSelectedCustomerId(v === "none" ? null : v)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="選擇客戶（可選）" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">不關聯客戶</SelectItem>
+                {customers.map((c) => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <DocumentEditor
