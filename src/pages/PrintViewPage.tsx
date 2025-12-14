@@ -431,12 +431,12 @@ const PrintViewPage = () => {
           
           .print-content {
             font-size: 12px;
-            line-height: 1.8;
+            line-height: 1.6;
             color: #1a1a1a;
           }
           
           .print-content p {
-            margin-bottom: 1em;
+            margin-bottom: 0.6em;
             text-indent: 2em;
           }
           
@@ -444,14 +444,14 @@ const PrintViewPage = () => {
           .print-content h2,
           .print-content h3 {
             font-weight: bold;
-            margin: 1.5em 0 0.5em;
+            margin: 1em 0 0.3em;
             color: #8b5a3c;
           }
           
           .print-content img {
             max-width: 100%;
             height: auto;
-            margin: 1em auto;
+            margin: 0.8em auto;
             display: block;
           }
           
