@@ -1,0 +1,150 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Header } from "@/components/Header";
+import { DocumentEditor, DocumentSection } from "@/components/DocumentEditor";
+import { DocumentReader } from "@/components/DocumentReader";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { sectionsToHtml } from "@/lib/parseDocx";
+import { ArrowLeft, X } from "lucide-react";
+
+interface LocationState {
+  file: File;
+  title: string;
+  sections: DocumentSection[];
+  filePath: string;
+}
+
+const EditDocumentPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewContent, setPreviewContent] = useState<{
+    title: string;
+    htmlContent: string;
+  } | null>(null);
+
+  const state = location.state as LocationState | null;
+
+  useEffect(() => {
+    if (!state || !user) {
+      navigate("/");
+    }
+  }, [state, user, navigate]);
+
+  if (!state) {
+    return null;
+  }
+
+  const handlePreview = (title: string, sections: DocumentSection[]) => {
+    const htmlContent = sectionsToHtml(sections);
+    setPreviewContent({ title, htmlContent });
+    setShowPreview(true);
+  };
+
+  const handleSave = async (title: string, sections: DocumentSection[]) => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const htmlContent = sectionsToHtml(sections);
+      const shareLink = `doc-${Math.random().toString(36).substring(2, 10)}`;
+
+      // Create document record in database
+      const { error: dbError } = await supabase
+        .from("documents")
+        .insert([{
+          file_name: state.file.name,
+          original_name: state.file.name,
+          file_path: state.filePath,
+          file_size: state.file.size,
+          share_link: shareLink,
+          is_public: true,
+          content: { title, htmlContent, sections: JSON.parse(JSON.stringify(sections)) },
+        }]);
+
+      if (dbError) {
+        // Clean up uploaded file if database insert fails
+        await supabase.storage.from("documents").remove([state.filePath]);
+        throw dbError;
+      }
+
+      toast({
+        title: "文件已發布",
+        description: "您的報告已成功儲存",
+      });
+
+      navigate("/files");
+    } catch (error: any) {
+      console.error("Save error:", error);
+      toast({
+        title: "儲存失敗",
+        description: error.message || "無法儲存文件，請稍後再試",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      <div className="container mx-auto py-8">
+        <div className="flex items-center gap-4 mb-8 px-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/")}
+            className="gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            返回
+          </Button>
+          <h1 className="text-2xl font-serif font-bold text-foreground">
+            編輯報告內容
+          </h1>
+        </div>
+
+        <DocumentEditor
+          initialTitle={state.title}
+          initialSections={state.sections}
+          onSave={handleSave}
+          onPreview={handlePreview}
+          isLoading={isLoading}
+        />
+      </div>
+
+      {/* Preview Dialog */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>預覽</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowPreview(false)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </DialogTitle>
+          </DialogHeader>
+          {previewContent && (
+            <div className="py-8">
+              <DocumentReader content={previewContent} />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default EditDocumentPage;
