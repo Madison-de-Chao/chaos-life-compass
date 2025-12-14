@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import html2pdf from "html2pdf.js";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
+import reportLogo from "@/assets/report-logo.png";
 
 interface DocumentSection {
   id: string;
@@ -677,11 +678,20 @@ export function PagedDocumentReader({ content, className }: PagedDocumentReaderP
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
-            <div className="inline-block mb-4">
-              <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
-                命理報告
-              </span>
-            </div>
+            <>
+              <div className="mb-8">
+                <img 
+                  src={reportLogo} 
+                  alt="報告標誌" 
+                  className="w-32 h-32 md:w-40 md:h-40 mx-auto object-contain drop-shadow-lg animate-fade-in"
+                />
+              </div>
+              <div className="inline-block mb-4">
+                <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
+                  命理報告
+                </span>
+              </div>
+            </>
           )}
           <h1 
             className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground font-serif leading-tight tracking-tight"
