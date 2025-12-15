@@ -606,12 +606,16 @@ const ReportPage = () => {
 
           {/* Service Detail Dialog */}
           <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
-            <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-md">
+            <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-md overflow-hidden data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit">
+              {/* Glow effect background */}
+              <div className="absolute -inset-px bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 rounded-lg blur-xl opacity-60 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-lg" />
+              
               {selectedService && (
-                <>
-                  <DialogHeader>
+                <div className="relative z-10">
+                  <DialogHeader className="animate-slide-down" style={{ animationDuration: '0.4s' }}>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 animate-scale-in shadow-[0_0_20px_rgba(251,191,36,0.3)]" style={{ animationDelay: '0.1s' }}>
                         <selectedService.icon className="w-6 h-6 text-amber-400" />
                       </div>
                       <DialogTitle className="text-xl font-bold text-white">{selectedService.fullTitle}</DialogTitle>
@@ -620,16 +624,26 @@ const ReportPage = () => {
                   </DialogHeader>
                   <div className="mt-4 space-y-3">
                     {selectedService.details.map((detail, i) => (
-                      <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/30 transition-colors">
+                      <div 
+                        key={i} 
+                        className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/10 transition-all duration-300 animate-slide-up opacity-0"
+                        style={{ 
+                          animationDelay: `${0.15 + i * 0.1}s`,
+                          animationFillMode: 'forwards'
+                        }}
+                      >
                         <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                         <p className="text-white/80 text-sm leading-relaxed">{detail}</p>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 pt-4 border-t border-white/10">
+                  <div 
+                    className="mt-6 pt-4 border-t border-white/10 animate-fade-in opacity-0"
+                    style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}
+                  >
                     <p className="text-white/50 text-xs text-center">此服務依方案等級提供，詳情請參閱下方價格表</p>
                   </div>
-                </>
+                </div>
               )}
             </DialogContent>
           </Dialog>
