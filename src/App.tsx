@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+
+// Admin Pages
 import Index from "./pages/Index";
 import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
@@ -16,6 +18,11 @@ import FeedbacksPage from "./pages/FeedbacksPage";
 import GuidePage from "./pages/GuidePage";
 import NotFound from "./pages/NotFound";
 
+// Public Pages
+import HomePage from "./pages/public/HomePage";
+import AboutPage from "./pages/public/AboutPage";
+import MomoPage from "./pages/public/MomoPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -26,7 +33,12 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Protected routes - require login */}
+            {/* Public routes - 虹靈御所前台 */}
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/momo" element={<MomoPage />} />
+            
+            {/* Protected routes - Admin dashboard */}
             <Route
               path="/"
               element={
@@ -75,10 +87,12 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
-            {/* Public routes */}
+            
+            {/* Auth & Public document routes */}
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/view/:shareLink" element={<ViewPage />} />
             <Route path="/print/:shareLink" element={<PrintViewPage />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
