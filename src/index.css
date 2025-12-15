@@ -128,40 +128,118 @@
 }
 
 @layer components {
-  /* Parchment/Paper texture background for 虹靈御所 */
+  /* Parchment/Paper texture background for 虹靈御所 - Ancient scroll style */
   .bg-parchment {
-    background: 
-      /* Subtle noise texture */
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
-      /* Warm parchment gradient */
-      linear-gradient(
-        180deg,
-        hsl(38, 35%, 92%) 0%,
-        hsl(36, 40%, 88%) 25%,
-        hsl(34, 38%, 85%) 50%,
-        hsl(36, 40%, 88%) 75%,
-        hsl(38, 35%, 92%) 100%
+    background-color: hsl(38, 35%, 88%);
+    background-image: 
+      /* Burnt edges - top */
+      radial-gradient(ellipse 80% 15% at 50% 0%, hsl(25, 40%, 25% / 0.4) 0%, hsl(30, 35%, 35% / 0.2) 30%, transparent 70%),
+      /* Burnt edges - bottom */
+      radial-gradient(ellipse 80% 15% at 50% 100%, hsl(25, 40%, 25% / 0.5) 0%, hsl(30, 35%, 35% / 0.25) 30%, transparent 70%),
+      /* Burnt edges - left */
+      radial-gradient(ellipse 8% 60% at 0% 50%, hsl(25, 40%, 25% / 0.5) 0%, hsl(30, 35%, 35% / 0.2) 40%, transparent 80%),
+      /* Burnt edges - right */
+      radial-gradient(ellipse 8% 60% at 100% 50%, hsl(25, 40%, 25% / 0.5) 0%, hsl(30, 35%, 35% / 0.2) 40%, transparent 80%),
+      /* Corner burns - more intense */
+      radial-gradient(ellipse 25% 25% at 0% 0%, hsl(20, 45%, 18% / 0.6) 0%, hsl(25, 40%, 25% / 0.3) 30%, transparent 60%),
+      radial-gradient(ellipse 25% 25% at 100% 0%, hsl(20, 45%, 18% / 0.5) 0%, hsl(25, 40%, 25% / 0.25) 30%, transparent 60%),
+      radial-gradient(ellipse 25% 25% at 0% 100%, hsl(20, 45%, 18% / 0.55) 0%, hsl(25, 40%, 25% / 0.3) 30%, transparent 60%),
+      radial-gradient(ellipse 25% 25% at 100% 100%, hsl(20, 45%, 18% / 0.6) 0%, hsl(25, 40%, 25% / 0.3) 30%, transparent 60%),
+      /* Age spots and stains */
+      radial-gradient(ellipse 40% 30% at 20% 30%, hsl(35, 40%, 60% / 0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 35% 40% at 75% 60%, hsl(32, 38%, 55% / 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 25% at 50% 80%, hsl(34, 42%, 58% / 0.1) 0%, transparent 70%),
+      /* Paper texture grain */
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+      /* Base parchment gradient */
+      linear-gradient(180deg, 
+        hsl(40, 38%, 92%) 0%, 
+        hsl(38, 40%, 88%) 15%,
+        hsl(36, 42%, 85%) 40%,
+        hsl(34, 44%, 82%) 60%,
+        hsl(32, 42%, 80%) 80%,
+        hsl(30, 40%, 78%) 100%
       );
-    background-blend-mode: soft-light, normal;
+    background-blend-mode: multiply, multiply, multiply, multiply, multiply, multiply, multiply, multiply, overlay, overlay, overlay, overlay, normal;
+    position: relative;
+  }
+
+  /* Burnt edge vignette overlay */
+  .bg-parchment::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    box-shadow: 
+      inset 0 0 100px hsl(25, 40%, 25% / 0.3),
+      inset 0 0 200px hsl(20, 45%, 18% / 0.15),
+      inset 0 0 300px hsl(15, 50%, 12% / 0.1);
+  }
+
+  /* Irregular burnt edge details */
+  .bg-parchment::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    background: 
+      /* Top edge irregularity */
+      radial-gradient(ellipse 15% 8% at 10% 0%, hsl(15, 50%, 12% / 0.4) 0%, transparent 100%),
+      radial-gradient(ellipse 12% 6% at 30% 0%, hsl(18, 45%, 15% / 0.3) 0%, transparent 100%),
+      radial-gradient(ellipse 18% 10% at 70% 0%, hsl(15, 50%, 12% / 0.35) 0%, transparent 100%),
+      radial-gradient(ellipse 10% 5% at 90% 0%, hsl(18, 45%, 15% / 0.25) 0%, transparent 100%),
+      /* Bottom edge irregularity */
+      radial-gradient(ellipse 20% 12% at 15% 100%, hsl(15, 50%, 12% / 0.45) 0%, transparent 100%),
+      radial-gradient(ellipse 15% 8% at 45% 100%, hsl(18, 45%, 15% / 0.35) 0%, transparent 100%),
+      radial-gradient(ellipse 12% 6% at 80% 100%, hsl(15, 50%, 12% / 0.4) 0%, transparent 100%),
+      /* Left edge irregularity */
+      radial-gradient(ellipse 6% 15% at 0% 25%, hsl(15, 50%, 12% / 0.35) 0%, transparent 100%),
+      radial-gradient(ellipse 4% 10% at 0% 60%, hsl(18, 45%, 15% / 0.3) 0%, transparent 100%),
+      radial-gradient(ellipse 5% 12% at 0% 85%, hsl(15, 50%, 12% / 0.4) 0%, transparent 100%),
+      /* Right edge irregularity */
+      radial-gradient(ellipse 5% 12% at 100% 20%, hsl(15, 50%, 12% / 0.3) 0%, transparent 100%),
+      radial-gradient(ellipse 6% 15% at 100% 55%, hsl(18, 45%, 15% / 0.35) 0%, transparent 100%),
+      radial-gradient(ellipse 4% 8% at 100% 90%, hsl(15, 50%, 12% / 0.4) 0%, transparent 100%);
   }
 
   .bg-parchment-hero {
-    background: 
-      /* Radial glow in center */
-      radial-gradient(ellipse at center, hsl(35, 45%, 90%) 0%, transparent 70%),
-      /* Edge vignette */
-      radial-gradient(ellipse at center, transparent 50%, hsl(30, 30%, 75% / 0.3) 100%),
-      /* Subtle noise texture */
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
-      /* Base parchment color */
-      linear-gradient(
-        170deg,
-        hsl(40, 40%, 94%) 0%,
-        hsl(36, 45%, 88%) 30%,
-        hsl(32, 42%, 82%) 60%,
-        hsl(36, 45%, 88%) 100%
+    background-color: hsl(38, 35%, 90%);
+    background-image: 
+      /* Burnt edges - top */
+      radial-gradient(ellipse 80% 12% at 50% 0%, hsl(25, 40%, 25% / 0.35) 0%, hsl(30, 35%, 35% / 0.15) 30%, transparent 70%),
+      /* Burnt edges - bottom */
+      radial-gradient(ellipse 80% 12% at 50% 100%, hsl(25, 40%, 25% / 0.4) 0%, hsl(30, 35%, 35% / 0.2) 30%, transparent 70%),
+      /* Burnt edges - left */
+      radial-gradient(ellipse 6% 50% at 0% 50%, hsl(25, 40%, 25% / 0.4) 0%, hsl(30, 35%, 35% / 0.15) 40%, transparent 80%),
+      /* Burnt edges - right */
+      radial-gradient(ellipse 6% 50% at 100% 50%, hsl(25, 40%, 25% / 0.4) 0%, hsl(30, 35%, 35% / 0.15) 40%, transparent 80%),
+      /* Corner burns */
+      radial-gradient(ellipse 20% 20% at 0% 0%, hsl(20, 45%, 18% / 0.5) 0%, hsl(25, 40%, 25% / 0.25) 30%, transparent 60%),
+      radial-gradient(ellipse 20% 20% at 100% 0%, hsl(20, 45%, 18% / 0.45) 0%, hsl(25, 40%, 25% / 0.2) 30%, transparent 60%),
+      radial-gradient(ellipse 20% 20% at 0% 100%, hsl(20, 45%, 18% / 0.5) 0%, hsl(25, 40%, 25% / 0.25) 30%, transparent 60%),
+      radial-gradient(ellipse 20% 20% at 100% 100%, hsl(20, 45%, 18% / 0.5) 0%, hsl(25, 40%, 25% / 0.25) 30%, transparent 60%),
+      /* Age spots */
+      radial-gradient(ellipse 35% 25% at 25% 40%, hsl(35, 40%, 60% / 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 35% at 70% 70%, hsl(32, 38%, 55% / 0.1) 0%, transparent 70%),
+      /* Paper texture grain */
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+      /* Base parchment - slightly lighter for hero */
+      radial-gradient(ellipse 120% 80% at 50% 30%, 
+        hsl(42, 45%, 95%) 0%, 
+        hsl(40, 42%, 92%) 30%,
+        hsl(38, 40%, 88%) 60%,
+        hsl(36, 42%, 85%) 100%
       );
-    background-blend-mode: normal, multiply, soft-light, normal;
+    background-blend-mode: multiply, multiply, multiply, multiply, multiply, multiply, multiply, multiply, overlay, overlay, overlay, normal;
+    background-size: 100% 100%;
   }
 
   .gradient-warm {
