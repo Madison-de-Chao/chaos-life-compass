@@ -4,6 +4,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { 
   CheckCircle2, 
   FileText, 
@@ -38,7 +45,8 @@ import {
   Quote,
   Settings,
   ChevronDown,
-  Scale
+  Scale,
+  X
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -47,6 +55,116 @@ import Autoplay from "embla-carousel-autoplay";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
+
+// CountUp animation hook
+const useCountUp = (end: number, duration: number = 2000, start: number = 0, isVisible: boolean = true) => {
+  const [count, setCount] = useState(start);
+  const countRef = useRef(start);
+  const startTimeRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!isVisible) {
+      setCount(start);
+      countRef.current = start;
+      startTimeRef.current = null;
+      return;
+    }
+
+    const animate = (currentTime: number) => {
+      if (startTimeRef.current === null) {
+        startTimeRef.current = currentTime;
+      }
+      const elapsed = currentTime - startTimeRef.current;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(start + (end - start) * easeOutQuart);
+      
+      if (currentCount !== countRef.current) {
+        countRef.current = currentCount;
+        setCount(currentCount);
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [end, duration, start, isVisible]);
+
+  return count;
+};
+
+// Value-added service details
+const valueAddedServices = [
+  { 
+    icon: Headphones, 
+    label: '語音導讀', 
+    desc: '專業配音，隨時聆聽',
+    fullTitle: '專業語音導讀服務',
+    details: [
+      '由專業配音員錄製，聲音溫暖有磁性',
+      '可隨時在手機、平板聆聽您的報告',
+      '適合通勤、休息時間輕鬆吸收',
+      '讓您的靈魂說明書，變成有聲書'
+    ],
+    color: 'amber'
+  },
+  { 
+    icon: Mic, 
+    label: '語音摘要', 
+    desc: '精華重點，快速回顧',
+    fullTitle: '重點語音摘要',
+    details: [
+      '將80,000字精華濃縮成15-20分鐘音頻',
+      '快速回顧核心觀點與建議',
+      '適合忙碌時快速校準狀態',
+      '可重複聆聽，加深印象'
+    ],
+    color: 'purple'
+  },
+  { 
+    icon: Video, 
+    label: '影片總結', 
+    desc: '視覺化解說',
+    fullTitle: '視覺化影片總結',
+    details: [
+      '動態圖表呈現您的命盤架構',
+      '視覺化展示四系統交叉分析結果',
+      '專業後製，電影級質感',
+      '可分享給信任的人，讓他們更懂您'
+    ],
+    color: 'cyan'
+  },
+  { 
+    icon: Users, 
+    label: '一對一諮詢', 
+    desc: '60分鐘深度對談',
+    fullTitle: '60分鐘深度諮詢',
+    details: [
+      '與命理師面對面（線上/實體）深度對談',
+      '針對您最困惑的問題進行解答',
+      '即時回應您的疑問與反饋',
+      '報告內容的活用指導與校準'
+    ],
+    color: 'rose'
+  },
+  { 
+    icon: BarChart3, 
+    label: '整合儀表板', 
+    desc: '人生羅盤視覺化',
+    fullTitle: '個人整合儀表板',
+    details: [
+      '將四大命理系統整合成一張視覺化羅盤',
+      '清晰呈現您的天賦、挑戰、機會點',
+      '可作為桌面/手機桌布隨時提醒',
+      '您專屬的人生GPS導航圖'
+    ],
+    color: 'emerald'
+  },
+];
 
 const targetAudience = [
   "你很努力，但常覺得「力氣用錯地方」",
@@ -308,9 +426,32 @@ const TestimonialsCarousel = ({ testimonials, isVisible }: { testimonials: Testi
 
 const ReportPage = () => {
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState<typeof valueAddedServices[0] | null>(null);
   const observerRefs = useRef<{ [key: string]: Element | null }>({});
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Count animations with visibility trigger
+  const wordCount = useCountUp(80000, 2500, 0, heroVisible);
+  const chapterCount = useCountUp(19, 1500, 0, heroVisible);
+  const systemCount = useCountUp(4, 1000, 0, heroVisible);
 
   useEffect(() => {
+    // Hero visibility observer
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHeroVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (heroRef.current) {
+      heroObserver.observe(heroRef.current);
+    }
+
+    // General section observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -326,7 +467,10 @@ const ReportPage = () => {
       if (ref) observer.observe(ref);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      heroObserver.disconnect();
+      observer.disconnect();
+    };
   }, []);
 
   const scrollToPlans = () => {
@@ -389,15 +533,17 @@ const ReportPage = () => {
             </h2>
           </div>
           
-          {/* Word Count & Value Highlights - Interactive Cards */}
-          <div className="flex flex-wrap justify-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+          {/* Word Count & Value Highlights - Interactive Cards with Count Animation */}
+          <div ref={heroRef} className="flex flex-wrap justify-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: '0.5s' }}>
             <div className="group relative cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 rounded-2xl px-6 py-4 hover:border-amber-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
                 <div className="flex items-center gap-3">
                   <FileText className="w-6 h-6 text-amber-400" />
                   <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-amber-400">80,000<span className="text-xl">+</span></p>
+                    <p className="text-3xl md:text-4xl font-black text-amber-400 tabular-nums">
+                      {wordCount.toLocaleString()}<span className="text-xl">+</span>
+                    </p>
                     <p className="text-white/60 text-sm">字精密解析</p>
                   </div>
                 </div>
@@ -410,7 +556,9 @@ const ReportPage = () => {
                 <div className="flex items-center gap-3">
                   <Layers className="w-6 h-6 text-purple-400" />
                   <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-purple-400">19<span className="text-xl">+</span></p>
+                    <p className="text-3xl md:text-4xl font-black text-purple-400 tabular-nums">
+                      {chapterCount}<span className="text-xl">+</span>
+                    </p>
                     <p className="text-white/60 text-sm">深度章節</p>
                   </div>
                 </div>
@@ -423,7 +571,7 @@ const ReportPage = () => {
                 <div className="flex items-center gap-3">
                   <Globe className="w-6 h-6 text-cyan-400" />
                   <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-cyan-400">4</p>
+                    <p className="text-3xl md:text-4xl font-black text-cyan-400 tabular-nums">{systemCount}</p>
                     <p className="text-white/60 text-sm">命理系統交叉</p>
                   </div>
                 </div>
@@ -431,31 +579,60 @@ const ReportPage = () => {
             </div>
           </div>
 
-          {/* Value-Added Examples - Interactive Hover Preview */}
+          {/* Value-Added Examples - Interactive Click to Open Dialog */}
           <div className="mb-10 animate-slide-up" style={{ animationDelay: '0.7s' }}>
-            <p className="text-amber-300/70 text-sm mb-4 tracking-wider uppercase">附加價值示意</p>
+            <p className="text-amber-300/70 text-sm mb-4 tracking-wider uppercase">點擊查看附加價值詳情</p>
             <div className="flex flex-wrap justify-center gap-3">
-              {[
-                { icon: Headphones, label: '語音導讀', desc: '專業配音，隨時聆聽' },
-                { icon: Mic, label: '語音摘要', desc: '精華重點，快速回顧' },
-                { icon: Video, label: '影片總結', desc: '視覺化解說' },
-                { icon: Users, label: '一對一諮詢', desc: '60分鐘深度對談' },
-                { icon: BarChart3, label: '整合儀表板', desc: '人生羅盤視覺化' },
-              ].map((item, idx) => (
-                <div key={idx} className="group relative">
-                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105">
+              {valueAddedServices.map((item, idx) => (
+                <button 
+                  key={idx} 
+                  className="group relative"
+                  onClick={() => setSelectedService(item)}
+                >
+                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95">
                     <item.icon className="w-4 h-4 text-amber-400/70 group-hover:text-amber-400 transition-colors" />
                     <span className="text-white/70 text-sm group-hover:text-white transition-colors">{item.label}</span>
+                    <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                   </div>
                   {/* Tooltip on hover */}
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-amber-500/30 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-20">
                     <p className="text-amber-300 text-xs">{item.desc}</p>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-amber-500/30" />
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
+
+          {/* Service Detail Dialog */}
+          <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
+            <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-md">
+              {selectedService && (
+                <>
+                  <DialogHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30">
+                        <selectedService.icon className="w-6 h-6 text-amber-400" />
+                      </div>
+                      <DialogTitle className="text-xl font-bold text-white">{selectedService.fullTitle}</DialogTitle>
+                    </div>
+                    <DialogDescription className="text-amber-300/80">{selectedService.desc}</DialogDescription>
+                  </DialogHeader>
+                  <div className="mt-4 space-y-3">
+                    {selectedService.details.map((detail, i) => (
+                      <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/30 transition-colors">
+                        <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <p className="text-white/80 text-sm leading-relaxed">{detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="text-white/50 text-xs text-center">此服務依方案等級提供，詳情請參閱下方價格表</p>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
           
           {/* Decorative divider */}
           <div className="flex items-center justify-center gap-4 mb-8">
