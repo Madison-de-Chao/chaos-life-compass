@@ -16,7 +16,14 @@ import {
   AlertTriangle,
   Crown,
   Gem,
-  Star
+  Star,
+  Clock,
+  Headphones,
+  Video,
+  Users,
+  Lock,
+  BarChart3,
+  Mic
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -55,17 +62,27 @@ const processSteps = [
   {
     step: "1",
     title: "提供資料",
-    description: "你提供四系統命盤資料（紫微、八字、占星、人類圖）",
+    description: "客戶提供命盤必要資料（出生年月日、時間、地點；或已排盤檔）",
   },
   {
     step: "2",
     title: "動態評估",
-    description: "先做「療癒 / 效率」動態比例評估，不直接寫正文",
+    description: "先做「療癒 / 效率」比例評估（確認本次解讀的用力方向）",
   },
   {
     step: "3",
-    title: "版本分流",
-    description: "確認版本後分流：標準版走標準規格，旗艦版開啟思維系統與四時軍團模組",
+    title: "撰寫報告",
+    description: "撰寫報告＋產出整合圖",
+  },
+  {
+    step: "4",
+    title: "製作加值",
+    description: "製作語音導讀（與語音摘要／簡報／影片依方案）",
+  },
+  {
+    step: "5",
+    title: "品質交付",
+    description: "品質檢查後交付（網頁版＋PDF）",
   },
 ];
 
@@ -84,7 +101,40 @@ const faqs = [
   },
 ];
 
+// Pricing data
+const standardPricing = [
+  { plan: "核心包", price: "4,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 7 },
+  { plan: "深度吸收包", price: "7,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 9 },
+  { plan: "完整校準包", price: "12,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 12 },
+];
+
+const flagshipPricing = [
+  { plan: "核心包", price: "12,800", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 12 },
+  { plan: "深度吸收包", price: "16,800", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 14 },
+  { plan: "完整校準包", price: "24,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 18 },
+];
+
+const planIncludes = [
+  { icon: FileText, title: "命理報告", desc: "網頁版＋PDF" },
+  { icon: Mic, title: "語音導讀", desc: "帶你怎麼讀、怎麼用" },
+  { icon: BarChart3, title: "整合圖", desc: "一張人格儀表板" },
+];
+
+const plan2Extras = [
+  { icon: Headphones, title: "語音摘要", desc: "通勤可聽、快速複習" },
+  { icon: FileText, title: "個人簡報", desc: "可保存的操作手冊版" },
+];
+
+const plan3Extras = [
+  { icon: Video, title: "摘要影片", desc: "直覺看懂全局" },
+  { icon: Users, title: "一對一對談", desc: "60 分鐘線上校準" },
+];
+
 const ReportPage = () => {
+  const scrollToPlans = () => {
+    document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
@@ -124,8 +174,8 @@ const ReportPage = () => {
             </p>
           </div>
           
-          <p className="text-lg md:text-xl text-amber-300/80 mb-14 animate-fade-in font-light tracking-wide" style={{ animationDelay: '0.4s' }}>
-            看懂自己，才有能力使用自己。
+          <p className="text-lg md:text-xl text-amber-300/80 mb-14 animate-fade-in font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.4s' }}>
+            把紫微、八字、占星、人類圖四系統交叉整合後，翻譯成「可驗證、可落地、可反覆回頭校準」的人生使用說明書。
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
@@ -133,7 +183,12 @@ const ReportPage = () => {
               <BookOpen className="mr-2 h-5 w-5" />
               先看試閱
             </Button>
-            <Button variant="outline" size="xl" className="text-lg px-10 py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300">
+            <Button 
+              variant="outline" 
+              size="xl" 
+              className="text-lg px-10 py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300"
+              onClick={scrollToPlans}
+            >
               查看方案
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -245,60 +300,22 @@ const ReportPage = () => {
           </div>
         </div>
       </section>
-      
-      {/* Process Section */}
+
+      {/* Two Versions Section */}
       <section className="py-24 px-4 relative">
-        <div className="container mx-auto max-w-4xl relative z-10">
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-16">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              你的報告怎麼產生
+              兩個版本
             </h2>
             <p className="text-white/50 text-lg md:text-xl">
-              流程固定，目的只有一個：<span className="text-amber-400">品質穩</span>。
+              同樣三階方案，不同內容深度
             </p>
           </div>
           
-          <div className="space-y-8">
-            {processSteps.map((step, index) => (
-              <div 
-                key={step.step}
-                className="group flex items-start gap-8 bg-gradient-to-r from-[#1a1a1a] to-transparent rounded-3xl p-8 md:p-10 border border-white/5 hover:border-amber-500/20 transition-all duration-500 animate-fade-in"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center font-serif font-bold text-2xl text-black shadow-[0_0_30px_rgba(251,191,36,0.3)]">
-                  {step.step}
-                </div>
-                <div>
-                  <h3 className="font-serif text-2xl font-bold text-white mb-3">
-                    Step {step.step}｜{step.title}
-                  </h3>
-                  <p className="text-white/60 text-lg leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Plans Section - Premium Cards */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-              <Crown className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">Choose Your Experience</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-              方案選擇
-            </h2>
-          </div>
-          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Standard Plan */}
-            <div className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[40px] p-10 md:p-12 border border-white/10 hover:border-white/20 transition-all duration-500">
+            {/* Standard Version */}
+            <div className="group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[40px] p-10 md:p-12 border border-white/10 hover:border-white/20 transition-all duration-500">
               <div className="mb-8">
                 <span className="inline-block px-5 py-2 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-6 tracking-wide">
                   標準版
@@ -306,40 +323,36 @@ const ReportPage = () => {
                 <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
                   看懂自己
                 </h3>
-                <p className="text-white/50 text-lg">
-                  像一面高畫質的鏡子，讓你看清原廠設定。
+                <p className="text-white/50 text-lg mb-6">
+                  快速建立自我理解地圖，把方向與節奏校準好
                 </p>
               </div>
               
-              <div className="space-y-5 mb-10">
-                <p className="font-medium text-white/70 text-sm uppercase tracking-wider">適合你如果：</p>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-4 text-white/60">
-                    <CheckCircle2 className="h-6 w-6 text-white/40 flex-shrink-0 mt-0.5" />
-                    <span className="text-lg">第一次接觸、想先建立清晰的自我理解</span>
-                  </li>
-                  <li className="flex items-start gap-4 text-white/60">
-                    <CheckCircle2 className="h-6 w-6 text-white/40 flex-shrink-0 mt-0.5" />
-                    <span className="text-lg">想要「可落地建議」，但不需要進入思維系統與軍團敘事</span>
-                  </li>
-                </ul>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3 text-white/60">
+                  <CheckCircle2 className="h-5 w-5 text-white/40" />
+                  <span>清晰、好讀、重點落地</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/60">
+                  <CheckCircle2 className="h-5 w-5 text-white/40" />
+                  <span>以「日常可用」為主</span>
+                </div>
               </div>
               
-              <Button variant="outline" className="w-full rounded-2xl py-7 text-lg border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all">
-                了解更多
-              </Button>
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                <p className="text-white/70 italic">
+                  「我想先看懂自己，找到更省力的運作方式。」
+                </p>
+              </div>
             </div>
             
-            {/* Flagship Plan - Premium */}
+            {/* Flagship Version */}
             <div className="group relative">
-              {/* Glow Effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[44px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[40px] p-10 md:p-12 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden">
-                {/* Luxury Pattern Overlay */}
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[40px] p-10 md:p-12 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full">
                 <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
                 
-                {/* Recommended Badge */}
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider">
                     <Star className="w-4 h-4" />
@@ -347,56 +360,254 @@ const ReportPage = () => {
                   </span>
                 </div>
                 
-                <div className="mb-8 pt-4">
+                <div className="mb-8 pt-4 relative z-10">
                   <span className="inline-block px-5 py-2 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-6 tracking-wide">
                     旗艦版
                   </span>
                   <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
                     使用自己
                   </h3>
-                  <p className="text-white/60 text-lg">
-                    像一套人生操作系統（OS）的重灌光碟。
+                  <p className="text-white/60 text-lg mb-6">
+                    把洞察升級成操作系統，適合長期回頭校準
                   </p>
                 </div>
                 
-                <div className="space-y-5 mb-10">
-                  <p className="font-medium text-amber-400/80 text-sm uppercase tracking-wider">你會多得到：</p>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-4 text-white/80">
-                      <Sparkles className="h-6 w-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-lg">全篇植入「默默超思維系統」的運作邏輯（情緒/行動/心智/價值）</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-white/80">
-                      <Sparkles className="h-6 w-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-lg">每章「思維啟動器」金句＋文字版流程圖</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-white/80">
-                      <Sparkles className="h-6 w-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-lg">獨家章節：你為什麼需要默默超思維（含客製化思維工具箱）</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-white/80">
-                      <Sparkles className="h-6 w-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-lg">獨家章節：四時八字軍團（家族/成長/本我/未來）RPG 敘事</span>
-                    </li>
-                  </ul>
+                <div className="space-y-4 mb-8 relative z-10">
+                  <div className="flex items-center gap-3 text-white/80">
+                    <Sparkles className="h-5 w-5 text-amber-400" />
+                    <span>更深的整合</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/80">
+                    <Sparkles className="h-5 w-5 text-amber-400" />
+                    <span>更多決策流程與能量管理工具</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/80">
+                    <Sparkles className="h-5 w-5 text-amber-400" />
+                    <span>更完整的系統化呈現</span>
+                  </div>
                 </div>
                 
-                <Button className="w-full rounded-2xl py-7 text-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500">
+                <div className="p-6 bg-amber-500/10 rounded-2xl border border-amber-500/20 relative z-10">
+                  <p className="text-amber-300/90 italic">
+                    「我想開始使用自己，把人生校準成可長期複利的系統。」
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Plans & Pricing Section */}
+      <section id="plans-section" className="py-32 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <Crown className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">Pricing</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              交付內容階梯
+            </h2>
+            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
+              三階方案，遞進式體驗升級
+            </p>
+          </div>
+
+          {/* Plan Tiers Explanation */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {/* Plan 1 */}
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <h3 className="font-serif text-xl font-bold text-white mb-4">方案 1｜核心包</h3>
+              <p className="text-white/50 text-sm mb-6">報告＋語音導讀＋整合圖</p>
+              <div className="space-y-3">
+                {planIncludes.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <item.icon className="h-5 w-5 text-amber-400/70" />
+                    <div>
+                      <span className="text-white/80 text-sm">{item.title}</span>
+                      <span className="text-white/40 text-xs ml-2">{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Plan 2 */}
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <h3 className="font-serif text-xl font-bold text-white mb-4">方案 2｜深度吸收包</h3>
+              <p className="text-white/50 text-sm mb-6">方案1＋語音摘要＋個人簡報</p>
+              <div className="space-y-3">
+                <div className="text-white/40 text-sm mb-2">包含方案1全部 +</div>
+                {plan2Extras.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <item.icon className="h-5 w-5 text-amber-400/70" />
+                    <div>
+                      <span className="text-white/80 text-sm">{item.title}</span>
+                      <span className="text-white/40 text-xs ml-2">{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Plan 3 */}
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-amber-500/20">
+              <h3 className="font-serif text-xl font-bold text-amber-400 mb-4">方案 3｜完整校準包</h3>
+              <p className="text-white/50 text-sm mb-6">方案2＋摘要影片＋一對一對談</p>
+              <div className="space-y-3">
+                <div className="text-white/40 text-sm mb-2">包含方案2全部 +</div>
+                {plan3Extras.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <item.icon className="h-5 w-5 text-amber-400" />
+                    <div>
+                      <span className="text-white/80 text-sm">{item.title}</span>
+                      <span className="text-white/40 text-xs ml-2">{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing Tables */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Standard Pricing */}
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[40px] p-8 md:p-10 border border-white/10">
+              <div className="text-center mb-8">
+                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-4">
+                  標準版
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">看懂自己</h3>
+              </div>
+              
+              <div className="space-y-4">
+                {standardPricing.map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className={`p-6 rounded-2xl border transition-all ${
+                      idx === 2 
+                        ? 'bg-white/5 border-white/20' 
+                        : 'bg-transparent border-white/5 hover:border-white/10'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h4 className="font-medium text-white">{item.plan}</h4>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Clock className="h-3.5 w-3.5 text-white/40" />
+                          <span className="text-white/40 text-xs">{item.days} 個工作天</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-bold text-white">NT$ {item.price}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <Button variant="outline" className="w-full mt-8 rounded-2xl py-6 text-lg border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all">
+                選擇標準版
+              </Button>
+            </div>
+
+            {/* Flagship Pricing */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[44px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[40px] p-8 md:p-10 border-2 border-amber-500/40 overflow-hidden">
+                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
+                
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+                  <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider">
+                    <Star className="w-4 h-4" />
+                    推薦
+                  </span>
+                </div>
+                
+                <div className="text-center mb-8 pt-4 relative z-10">
+                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4">
+                    旗艦版
+                  </span>
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">使用自己</h3>
+                </div>
+                
+                <div className="space-y-4 relative z-10">
+                  {flagshipPricing.map((item, idx) => (
+                    <div 
+                      key={idx}
+                      className={`p-6 rounded-2xl border transition-all ${
+                        idx === 2 
+                          ? 'bg-amber-500/10 border-amber-500/30' 
+                          : 'bg-transparent border-amber-500/10 hover:border-amber-500/20'
+                      }`}
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h4 className="font-medium text-white">{item.plan}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <Clock className="h-3.5 w-3.5 text-amber-400/60" />
+                            <span className="text-amber-400/60 text-xs">{item.days} 個工作天</span>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-2xl font-bold text-amber-400">NT$ {item.price}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <Button className="w-full mt-8 rounded-2xl py-6 text-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 relative z-10">
                   選擇旗艦版
                 </Button>
               </div>
             </div>
           </div>
+
+          {/* Pricing Note */}
+          <div className="mt-12 text-center">
+            <p className="text-white/40 text-sm">
+              ＊交付天數以「資料齊全」為起算點（含對談排程時間）
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Process Section */}
+      <section className="py-24 px-4 relative">
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              製作流程
+            </h2>
+            <p className="text-white/50 text-lg md:text-xl">
+              讓客人安心、也符合內部品質控
+            </p>
+          </div>
           
-          {/* Plan Comparison */}
-          <div className="mt-16 text-center bg-gradient-to-r from-transparent via-[#1a1a1a] to-transparent rounded-3xl p-10 border border-white/5">
-            <p className="font-serif text-xl text-white mb-4">
-              <strong className="text-amber-400">用一句話分辨</strong>
-            </p>
-            <p className="text-white/60 text-lg">
-              標準版：看懂自己。是命盤的<span className="text-white/80">鏡子</span>。<br />
-              旗艦版：使用自己。是人生的<span className="text-amber-400">導航系統與操作手冊</span>。
-            </p>
+          <div className="space-y-6">
+            {processSteps.map((step, index) => (
+              <div 
+                key={step.step}
+                className="group flex items-start gap-6 bg-gradient-to-r from-[#1a1a1a] to-transparent rounded-2xl p-6 md:p-8 border border-white/5 hover:border-amber-500/20 transition-all duration-500 animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center font-serif font-bold text-xl text-black shadow-[0_0_20px_rgba(251,191,36,0.3)]">
+                  {step.step}
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-white mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-white/60 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -408,6 +619,7 @@ const ReportPage = () => {
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
               交付形式
             </h2>
+            <p className="text-white/50 text-lg">全方案一致</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -419,7 +631,7 @@ const ReportPage = () => {
                 網頁閱讀版
               </h3>
               <p className="text-white/50 text-lg">
-                方便你隨時回來查
+                方便回查
               </p>
             </div>
             
@@ -431,7 +643,7 @@ const ReportPage = () => {
                 PDF 下載列印版
               </h3>
               <p className="text-white/50 text-lg">
-                保留成你的人生秘笈
+                可保存成個人秘笈
               </p>
             </div>
           </div>
@@ -469,15 +681,28 @@ const ReportPage = () => {
         </div>
       </section>
       
-      {/* Disclaimer Section */}
+      {/* Privacy & Disclaimer Section */}
       <section className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-4xl space-y-6">
+          {/* Privacy */}
+          <div className="flex items-start gap-4 p-8 rounded-2xl bg-white/5 border border-white/10">
+            <Lock className="h-6 w-6 text-amber-400/60 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-medium text-white/80 mb-3">隱私原則</h3>
+              <ul className="text-white/50 leading-relaxed space-y-2">
+                <li>• 個人資料與命盤內容僅用於本次報告製作，不對外分享</li>
+                <li>• 若需作為試閱示例，必須取得當事人明確同意並完成匿名化處理</li>
+              </ul>
+            </div>
+          </div>
+          
+          {/* Disclaimer */}
           <div className="flex items-start gap-4 p-8 rounded-2xl bg-white/5 border border-white/10">
             <AlertTriangle className="h-6 w-6 text-amber-400/60 flex-shrink-0 mt-1" />
             <div>
               <h3 className="font-medium text-white/80 mb-2">免責聲明</h3>
               <p className="text-white/50 leading-relaxed">
-                本報告屬命理分析與自我探索工具，提供生活與決策參考，不取代醫療、心理、法律、投資等專業意見。
+                本報告屬命理分析與自我探索工具，提供生活與決策參考，不取代醫療、心理、法律或投資等專業意見。
               </p>
             </div>
           </div>
@@ -503,7 +728,12 @@ const ReportPage = () => {
               <BookOpen className="mr-2 h-5 w-5" />
               先看試閱
             </Button>
-            <Button variant="outline" size="xl" className="text-lg px-10 py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300">
+            <Button 
+              variant="outline" 
+              size="xl" 
+              className="text-lg px-10 py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300"
+              onClick={scrollToPlans}
+            >
               查看方案
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
