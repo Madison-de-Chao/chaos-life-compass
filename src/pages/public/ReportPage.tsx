@@ -34,7 +34,9 @@ import {
   Menu
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
@@ -215,6 +217,96 @@ const Particle = ({ className, delay = 0 }: { className?: string; delay?: number
     style={{ animationDelay: `${delay}s` }}
   />
 );
+
+// Testimonials Carousel Component
+interface TestimonialData {
+  quote: string;
+  name: string;
+  title: string;
+  content: string;
+}
+
+const TestimonialsCarousel = ({ testimonials, isVisible }: { testimonials: TestimonialData[]; isVisible: boolean }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start', skipSnaps: false },
+    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on('select', onSelect);
+    onSelect();
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
+
+  // Duplicate testimonials for infinite scroll effect
+  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
+  return (
+    <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      {/* Carousel Container */}
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-6">
+          {extendedTestimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)] pl-0"
+            >
+              <div className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 h-full">
+                <Quote className="w-10 h-10 text-amber-400/30 mb-4" />
+                <p className="font-serif text-xl text-amber-300 mb-4 font-medium">
+                  「{testimonial.quote}」
+                </p>
+                <p className="text-white/60 text-sm leading-relaxed mb-6">
+                  {testimonial.content}
+                </p>
+                <div className="pt-4 border-t border-white/10">
+                  <p className="font-bold text-white">{testimonial.name}</p>
+                  <p className="text-white/50 text-sm">{testimonial.title}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Pagination Dots */}
+      <div className="flex justify-center gap-2 mt-8">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              selectedIndex % testimonials.length === index 
+                ? 'bg-amber-400 w-8 shadow-[0_0_10px_rgba(251,191,36,0.5)]' 
+                : 'bg-white/20 hover:bg-white/40'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+      
+      {/* Auto-scroll indicator */}
+      <div className="flex justify-center mt-4">
+        <span className="text-white/30 text-xs flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/50 animate-pulse" />
+          自動輪播中
+        </span>
+      </div>
+    </div>
+  );
+};
 
 // Dark Header Component
 const DarkHeader = () => {
@@ -930,7 +1022,7 @@ const ReportPage = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials Section with Carousel */}
       <section 
         id="testimonials"
         ref={(el) => (observerRefs.current['testimonials'] = el)}
@@ -948,27 +1040,7 @@ const ReportPage = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index}
-                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 ${isVisible['testimonials'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${index * 0.15}s` }}
-              >
-                <Quote className="w-10 h-10 text-amber-400/30 mb-4" />
-                <p className="font-serif text-xl text-amber-300 mb-4 font-medium">
-                  「{testimonial.quote}」
-                </p>
-                <p className="text-white/60 text-sm leading-relaxed mb-6">
-                  {testimonial.content}
-                </p>
-                <div className="pt-4 border-t border-white/10">
-                  <p className="font-bold text-white">{testimonial.name}</p>
-                  <p className="text-white/50 text-sm">{testimonial.title}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <TestimonialsCarousel testimonials={testimonials} isVisible={isVisible['testimonials']} />
         </div>
       </section>
 
