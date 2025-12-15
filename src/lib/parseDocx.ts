@@ -23,6 +23,7 @@ function cleanText(text: string): string {
 }
 
 // Parse HTML content into structured sections
+// Merge consecutive paragraphs until encountering a sentence-ending punctuation (。)
 function htmlToSections(html: string): DocumentSection[] {
   const sections: DocumentSection[] = [];
   const parser = new DOMParser();
@@ -30,6 +31,19 @@ function htmlToSections(html: string): DocumentSection[] {
   const elements = doc.body.children;
 
   let sectionId = 0;
+  let pendingParagraph = ''; // Buffer for merging paragraphs
+
+  // Helper to flush pending paragraph content
+  const flushParagraph = () => {
+    if (pendingParagraph.trim()) {
+      sections.push({
+        id: `section-${sectionId++}`,
+        type: 'paragraph',
+        content: pendingParagraph.trim(),
+      });
+      pendingParagraph = '';
+    }
+  };
 
   for (const element of Array.from(elements)) {
     const tagName = element.tagName.toLowerCase();
@@ -38,6 +52,9 @@ function htmlToSections(html: string): DocumentSection[] {
     if (!content) continue;
 
     if (tagName.match(/^h[1-6]$/)) {
+      // Flush any pending paragraph before heading
+      flushParagraph();
+      
       const level = parseInt(tagName.charAt(1));
       sections.push({
         id: `section-${sectionId++}`,
@@ -46,19 +63,30 @@ function htmlToSections(html: string): DocumentSection[] {
         content,
       });
     } else if (tagName === 'blockquote') {
+      // Flush any pending paragraph before blockquote
+      flushParagraph();
+      
       sections.push({
         id: `section-${sectionId++}`,
         type: 'quote',
         content,
       });
     } else if (tagName === 'p' || tagName === 'div') {
-      // Merge short paragraphs or treat as separate
-      sections.push({
-        id: `section-${sectionId++}`,
-        type: 'paragraph',
-        content,
-      });
+      // Accumulate paragraph content
+      if (pendingParagraph) {
+        pendingParagraph += '\n' + content;
+      } else {
+        pendingParagraph = content;
+      }
+      
+      // Only flush when content ends with sentence-ending punctuation (。！？)
+      if (/[。！？]$/.test(content)) {
+        flushParagraph();
+      }
     } else if (tagName === 'ul' || tagName === 'ol') {
+      // Flush any pending paragraph before list
+      flushParagraph();
+      
       // Convert list to paragraph with bullet points
       const items = Array.from(element.querySelectorAll('li'))
         .map(li => `• ${cleanText(li.textContent || '')}`)
@@ -72,6 +100,9 @@ function htmlToSections(html: string): DocumentSection[] {
       }
     }
   }
+
+  // Flush any remaining content
+  flushParagraph();
 
   return sections;
 }
