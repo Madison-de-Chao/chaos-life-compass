@@ -226,6 +226,30 @@ function parseMarkdownInHtml(html: string): string {
     .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
 }
 
+// Check if element contains a heading as first child (nested heading)
+function getNestedHeading(element: Element): Element | null {
+  const firstChild = element.firstElementChild;
+  if (!firstChild) return null;
+  
+  const tagName = firstChild.tagName.toLowerCase();
+  if (tagName === 'h1' || tagName === 'h2' || tagName === 'h3') {
+    return firstChild;
+  }
+  // Check if first child contains a heading (e.g., <strong><h2>...</h2></strong>)
+  const nestedHeading = firstChild.querySelector('h1, h2, h3');
+  return nestedHeading;
+}
+
+// Extract title text from element, cleaning up nested tags
+function extractTitleText(element: Element): string {
+  // Try to get text from nested heading first
+  const nestedHeading = getNestedHeading(element);
+  if (nestedHeading) {
+    return nestedHeading.textContent?.trim() || '';
+  }
+  return element.textContent?.trim() || '';
+}
+
 // Parse HTML content into pages (each major section = 1 page)
 function parseHtmlToPages(html: string, title: string): { title: string; styledTitle: string; content: string }[] {
   // First sanitize the HTML to prevent XSS
@@ -264,18 +288,31 @@ function parseHtmlToPages(html: string, title: string): { title: string; styledT
       continue;
     }
     
-    const isHeading = tagName === 'h1' || tagName === 'h2';
-    // Check for keyword match in any element type (not just p, strong, b)
+    // Check if it's a direct heading tag
+    const isDirectHeading = tagName === 'h1' || tagName === 'h2';
+    
+    // Check for nested heading inside paragraph or other elements
+    const nestedHeading = getNestedHeading(element);
+    const hasNestedHeading = nestedHeading !== null;
+    
+    // Check for keyword match in any element type
     const isKeywordMatch = isNewSectionStart(textContent);
     
-    if ((isHeading || isKeywordMatch) && !isFirstPage) {
+    // Determine if this is a section break
+    const isSectionBreak = isDirectHeading || hasNestedHeading || isKeywordMatch;
+    
+    if (isSectionBreak && !isFirstPage) {
       if (currentPage.content.trim()) {
         pages.push(currentPage);
       }
+      
+      // Extract the section title
+      const sectionTitle = extractTitleText(element) || '章節';
+      
       // Don't include the title element in content (avoid duplication)
       currentPage = { 
-        title: textContent || '章節',
-        styledTitle: styleTitle(textContent || '章節'),
+        title: sectionTitle,
+        styledTitle: styleTitle(sectionTitle),
         content: '' 
       };
     } else {
