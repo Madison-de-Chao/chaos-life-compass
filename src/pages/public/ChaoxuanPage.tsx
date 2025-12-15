@@ -192,32 +192,41 @@ const ChaoxuanPage = () => {
         </div>
       </header>
 
-      {/* Hero Section with Parallax */}
+      {/* Hero Section with Video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Parallax Background */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a]"
-          style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#c9a962]/8 via-transparent to-transparent" />
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/videos/chaoxuan-logo.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-[#0a0a0a]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/80" />
+        </div>
         
-        {/* Animated gold particles */}
+        {/* Animated gold particles overlay */}
         <div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#c9a962]/5 rounded-full blur-[120px]"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#c9a962]/5 rounded-full blur-[120px] z-[1]"
           style={{ transform: `translate(${scrollY * 0.1}px, ${scrollY * 0.05}px)` }}
         />
         <div 
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#c9a962]/3 rounded-full blur-[100px]"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#c9a962]/3 rounded-full blur-[100px] z-[1]"
           style={{ transform: `translate(-${scrollY * 0.08}px, ${scrollY * 0.04}px)` }}
         />
         
         {/* Decorative animated lines */}
         <div 
-          className="absolute top-20 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent"
+          className="absolute top-20 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent z-[1]"
           style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
         />
         <div 
-          className="absolute bottom-20 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent"
+          className="absolute bottom-20 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent z-[1]"
           style={{ opacity: Math.max(0, 1 - scrollY / 400) }}
         />
 
@@ -225,7 +234,7 @@ const ChaoxuanPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             {/* Luxury Badge */}
             <div 
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#c9a962]/40 rounded-full mb-10 animate-fade-in"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#c9a962]/40 rounded-full mb-10 animate-fade-in bg-[#0a0a0a]/30 backdrop-blur-sm"
               style={{ 
                 opacity: Math.max(0.3, 1 - scrollY / 500),
                 transform: `translateY(${scrollY * 0.2}px)` 
@@ -235,21 +244,7 @@ const ChaoxuanPage = () => {
               <span className="text-xs uppercase tracking-[0.35em] text-[#c9a962] font-light">Maison de Chao</span>
             </div>
 
-            {/* Logo with glow effect */}
-            <div 
-              className="mb-12 animate-fade-in" 
-              style={{ 
-                animationDelay: "0.2s",
-                transform: `scale(${Math.max(0.9, 1 - scrollY / 2000)}) translateY(${scrollY * 0.15}px)`,
-              }}
-            >
-              <img 
-                src={logoChaoxuan} 
-                alt="超烜創意" 
-                className="h-36 md:h-48 w-auto mx-auto drop-shadow-[0_0_50px_rgba(201,169,98,0.4)] hover:drop-shadow-[0_0_70px_rgba(201,169,98,0.5)] transition-all duration-700"
-              />
-            </div>
-
+            {/* Main title without logo - video serves as visual */}
             <h1 
               className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 animate-fade-in tracking-tight"
               style={{ 
@@ -262,7 +257,7 @@ const ChaoxuanPage = () => {
             </h1>
 
             <p 
-              className="text-xl md:text-2xl text-[#f5f5f0]/40 mb-8 font-light tracking-[0.2em] animate-fade-in uppercase"
+              className="text-xl md:text-2xl text-[#f5f5f0]/60 mb-8 font-light tracking-[0.2em] animate-fade-in uppercase"
               style={{ 
                 animationDelay: "0.4s",
                 transform: `translateY(${scrollY * 0.08}px)`,
@@ -277,7 +272,7 @@ const ChaoxuanPage = () => {
             />
 
             <p 
-              className="text-lg md:text-xl text-[#f5f5f0]/60 mb-6 max-w-3xl mx-auto leading-relaxed animate-fade-in"
+              className="text-lg md:text-xl text-[#f5f5f0]/70 mb-6 max-w-3xl mx-auto leading-relaxed animate-fade-in"
               style={{ 
                 animationDelay: "0.5s",
                 transform: `translateY(${scrollY * 0.05}px)`,
@@ -288,7 +283,7 @@ const ChaoxuanPage = () => {
             </p>
 
             <p 
-              className="text-base text-[#f5f5f0]/35 mb-14 max-w-2xl mx-auto animate-fade-in"
+              className="text-base text-[#f5f5f0]/45 mb-14 max-w-2xl mx-auto animate-fade-in"
               style={{ animationDelay: "0.55s" }}
             >
               不僅是您靈感的孵化器，更是您個人品牌和事業夢想從構思到實現的全方位啟程之所
@@ -304,7 +299,7 @@ const ChaoxuanPage = () => {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-[#c9a962]/30 text-[#c9a962] hover:bg-[#c9a962]/10 hover:border-[#c9a962]/50 px-10 h-14 text-base transition-all duration-300">
+              <Button asChild variant="outline" size="lg" className="border-[#c9a962]/30 text-[#c9a962] hover:bg-[#c9a962]/10 hover:border-[#c9a962]/50 px-10 h-14 text-base transition-all duration-300 bg-[#0a0a0a]/30 backdrop-blur-sm">
                 <a href="#contact">
                   聯絡我們
                 </a>
@@ -316,7 +311,7 @@ const ChaoxuanPage = () => {
               className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
               style={{ opacity: Math.max(0, 1 - scrollY / 200) }}
             >
-              <div className="w-6 h-10 border-2 border-[#c9a962]/30 rounded-full flex justify-center pt-2">
+              <div className="w-6 h-10 border-2 border-[#c9a962]/30 rounded-full flex justify-center pt-2 bg-[#0a0a0a]/30 backdrop-blur-sm">
                 <div className="w-1 h-2 bg-[#c9a962] rounded-full animate-pulse" />
               </div>
             </div>
