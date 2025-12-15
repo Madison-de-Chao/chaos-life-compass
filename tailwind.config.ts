@@ -171,6 +171,18 @@ export default {
           "0%": { transform: "translateY(0) scale(1)" },
           "100%": { transform: "translateY(-8px) scale(1.02)" },
         },
+        "dialog-enter": {
+          "0%": { opacity: "0", transform: "translate(-50%, -48%) scale(0.9)", filter: "blur(4px)" },
+          "100%": { opacity: "1", transform: "translate(-50%, -50%) scale(1)", filter: "blur(0)" },
+        },
+        "dialog-exit": {
+          "0%": { opacity: "1", transform: "translate(-50%, -50%) scale(1)", filter: "blur(0)" },
+          "100%": { opacity: "0", transform: "translate(-50%, -48%) scale(0.95)", filter: "blur(4px)" },
+        },
+        "slide-down": {
+          "0%": { opacity: "0", transform: "translateY(-10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -197,6 +209,9 @@ export default {
         "bounce-soft": "bounce-soft 2s ease-in-out infinite",
         "text-glow": "text-glow 3s ease-in-out infinite",
         "card-hover": "card-hover 0.3s ease-out forwards",
+        "dialog-enter": "dialog-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "dialog-exit": "dialog-exit 0.25s ease-in forwards",
+        "slide-down": "slide-down 0.4s ease-out forwards",
       },
     },
   },
