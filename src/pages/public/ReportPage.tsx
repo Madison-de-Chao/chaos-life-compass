@@ -30,16 +30,14 @@ import {
   Lightbulb,
   TrendingUp,
   Eye,
-  Quote,
-  Menu
+  Quote
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import logoChaoxuan from "@/assets/logo-chaoxuan.png";
-import logoHongling from "@/assets/logo-hongling.png";
+import PublicHeader from "@/components/public/PublicHeader";
+import PublicFooter from "@/components/public/PublicFooter";
 
 const targetAudience = [
   "你很努力，但常覺得「力氣用錯地方」",
@@ -188,16 +186,6 @@ const plan3Extras = [
   { icon: Users, title: "一對一對談", desc: "60 分鐘線上校準" },
 ];
 
-const navLinks = [
-  { label: "超烜創意", href: "/chaoxuan" },
-  { label: "虹靈御所", href: "/home" },
-  { label: "命理報告", href: "/reports" },
-  { label: "命理遊戲", href: "/games" },
-  { label: "元壹筆記", href: "/notes" },
-  { label: "元壹宇宙", href: "/universe" },
-  { label: "關於我們", href: "/about" },
-  { label: "默默超", href: "/momo" },
-];
 
 // Animated floating orb component
 const FloatingOrb = ({ className, delay = 0, duration = 4 }: { className?: string; delay?: number; duration?: number }) => (
@@ -308,157 +296,6 @@ const TestimonialsCarousel = ({ testimonials, isVisible }: { testimonials: Testi
   );
 };
 
-// Dark Header Component
-const DarkHeader = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const isActive = (href: string) => location.pathname === href;
-
-  return (
-    <header className="sticky top-0 z-50 w-full bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/10">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/chaoxuan" className="flex items-center gap-4 group">
-            <img src={logoChaoxuan} alt="超烜創意" className="h-10 md:h-12 w-auto hover:scale-110 transition-transform duration-300" />
-            <div className="h-8 w-px bg-white/20" />
-            <img src={logoHongling} alt="虹靈御所" className="h-10 md:h-12 w-auto hover:scale-110 transition-transform duration-300" />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive(link.href)
-                    ? "text-amber-400 bg-amber-500/10"
-                    : "text-white/60 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-4">
-            <Button asChild variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/10 hover:text-white">
-              <Link to="/auth">登入</Link>
-            </Button>
-          </div>
-
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-white/80 hover:bg-white/10">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] bg-[#0a0a0a] border-white/10">
-              <div className="flex flex-col h-full">
-                <div className="flex items-center gap-3 py-4 border-b border-white/10">
-                  <img src={logoChaoxuan} alt="超烜創意" className="h-8 w-auto" />
-                  <div className="h-6 w-px bg-white/20" />
-                  <img src={logoHongling} alt="虹靈御所" className="h-8 w-auto" />
-                </div>
-                <nav className="flex-1 py-8">
-                  <div className="space-y-2">
-                    {navLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        to={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                          isActive(link.href)
-                            ? "text-amber-400 bg-amber-500/10"
-                            : "text-white/60 hover:text-white hover:bg-white/5"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                </nav>
-                <div className="py-4 border-t border-white/10">
-                  <Button asChild className="w-full" variant="outline">
-                    <Link to="/auth" onClick={() => setIsOpen(false)}>登入</Link>
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </header>
-  );
-};
-
-// Dark Footer Component
-const DarkFooter = () => {
-  const currentYear = new Date().getFullYear();
-  
-  return (
-    <footer className="bg-[#050505] border-t border-white/10">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-4 mb-6">
-              <Link to="/chaoxuan"><img src={logoChaoxuan} alt="超烜創意" className="h-12 w-auto hover:scale-110 transition-transform duration-300" /></Link>
-              <div className="h-8 w-px bg-white/20" />
-              <Link to="/home"><img src={logoHongling} alt="虹靈御所" className="h-12 w-auto hover:scale-110 transition-transform duration-300" /></Link>
-            </div>
-            <p className="text-white/50 mb-6 max-w-sm leading-relaxed font-serif text-lg">
-              鏡子非劇本，真實即命運。<br />
-              我們不預測未來，只幫你看清現在。
-            </p>
-            <div className="flex items-center gap-4 text-sm text-white/40">
-              <span>超烜創意</span>
-              <span>×</span>
-              <span>虹靈御所</span>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-serif font-bold text-white/90 mb-4">探索</h4>
-            <ul className="space-y-3">
-              {[
-                { label: "命理報告", href: "/reports" },
-                { label: "命理遊戲", href: "/games" },
-                { label: "元壹筆記", href: "/notes" },
-                { label: "元壹宇宙", href: "/universe" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link to={link.href} className="text-white/50 hover:text-amber-400 transition-colors">{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-serif font-bold text-white/90 mb-4">關於</h4>
-            <ul className="space-y-3">
-              {[
-                { label: "關於虹靈御所", href: "/about" },
-                { label: "誰是默默超", href: "/momo" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link to={link.href} className="text-white/50 hover:text-amber-400 transition-colors">{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-white/40 text-center md:text-left">
-              © {currentYear} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
-            </p>
-            <p className="text-sm text-white/40">Based on MomoChao Thinking</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
 
 const ReportPage = () => {
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
@@ -489,7 +326,7 @@ const ReportPage = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden">
-      <DarkHeader />
+      <PublicHeader />
       
       {/* Hero Section */}
       <section className="relative py-32 md:py-40 lg:py-52 overflow-hidden">
@@ -1342,7 +1179,7 @@ const ReportPage = () => {
         </div>
       </section>
       
-      <DarkFooter />
+      <PublicFooter />
     </div>
   );
 };
