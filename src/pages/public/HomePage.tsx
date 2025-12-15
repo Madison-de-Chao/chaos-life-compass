@@ -85,7 +85,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-background">
       <PublicHeader />
       
-      {/* Hero Section */}
+      {/* Hero Section with Embedded Video */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0 gradient-hero" />
@@ -93,33 +93,49 @@ const HomePage = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '4s' }} />
         
-        <div className="relative z-10 container mx-auto px-4 text-center">
+        <div className="relative z-10 container mx-auto px-4 text-center pt-20">
           {/* Brand Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
-            <span className="text-sm font-medium text-primary">Rainbow Sanctuary</span>
+            <span className="text-sm font-medium text-primary">Hongling Yusuo</span>
             <span className="text-muted-foreground">×</span>
             <span className="text-sm text-muted-foreground">知行如一的密法</span>
           </div>
+
+          {/* Embedded Video with warm glow frame */}
+          <div className="mb-8 animate-fade-in relative mx-auto max-w-xl" style={{ animationDelay: '0.15s' }}>
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 rounded-2xl blur-md opacity-60" />
+            <div className="relative bg-background rounded-xl overflow-hidden border border-primary/30 shadow-[0_0_40px_rgba(var(--primary),0.15)]">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-auto"
+              >
+                <source src="/videos/hongling-logo.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
           
           {/* Main Title */}
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <span className="text-primary text-5xl md:text-7xl lg:text-8xl">虹</span>靈御所
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <span className="text-primary text-5xl md:text-6xl lg:text-7xl">虹</span>靈御所
           </h1>
           
           {/* Tagline */}
-          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             鏡子非劇本，真實即命運
           </p>
           
           {/* Description */}
-          <p className="max-w-2xl mx-auto text-base md:text-lg text-muted-foreground/80 mb-12 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
+          <p className="max-w-2xl mx-auto text-sm md:text-base text-muted-foreground/80 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
             我們不預測未來，只幫你看清現在。<br />
             命盤是一種語言，不是判決。<br />
             你只需要學會聽懂它在對你說什麼。
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <Button asChild size="lg" className="px-8 shadow-glow">
               <Link to="/reports">
                 探索命理報告
