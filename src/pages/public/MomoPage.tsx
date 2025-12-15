@@ -27,14 +27,14 @@ const philosophies = [
 
 const MomoPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-parchment">
       <PublicHeader />
       
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute top-10 left-10 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl animate-breathe" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
+        <div className="absolute inset-0 bg-parchment-hero" />
+        <div className="absolute top-10 left-10 w-64 h-64 bg-amber-500/8 rounded-full blur-3xl animate-breathe" />
+        <div className="absolute bottom-10 right-10 w-80 h-80 bg-orange-500/8 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-fade-in">
@@ -76,7 +76,8 @@ const MomoPage = () => {
       </section>
       
       {/* Philosophy Cards */}
-      <section className="py-20 px-4 bg-gradient-to-b from-background via-accent/10 to-background">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-800/5 to-transparent" />
         <div className="container mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">
             默默超思維
@@ -161,7 +162,8 @@ const MomoPage = () => {
       </section>
       
       {/* Closing Quote */}
-      <section className="py-24 px-4 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-700/5 to-transparent" />
         <div className="container mx-auto max-w-3xl text-center">
           <blockquote className="font-serif text-2xl md:text-3xl text-foreground leading-relaxed mb-8">
             「看見自己，是最深的修行。<br />
