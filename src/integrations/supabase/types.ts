@@ -115,33 +115,80 @@ export type Database = {
           },
         ]
       }
+      feedback_tracking: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          feedback_id: string | null
+          id: string
+          note: string
+          status_change: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          feedback_id?: string | null
+          id?: string
+          note: string
+          status_change?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          feedback_id?: string | null
+          id?: string
+          note?: string
+          status_change?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_tracking_feedback_id_fkey"
+            columns: ["feedback_id"]
+            isOneToOne: false
+            referencedRelation: "feedbacks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feedbacks: {
         Row: {
+          admin_notes: string | null
           created_at: string
           customer_name: string | null
           document_id: string | null
           document_title: string
+          follow_up_date: string | null
+          follow_up_status: string | null
           id: string
           is_read: boolean
           message: string
+          resolved_at: string | null
         }
         Insert: {
+          admin_notes?: string | null
           created_at?: string
           customer_name?: string | null
           document_id?: string | null
           document_title: string
+          follow_up_date?: string | null
+          follow_up_status?: string | null
           id?: string
           is_read?: boolean
           message: string
+          resolved_at?: string | null
         }
         Update: {
+          admin_notes?: string | null
           created_at?: string
           customer_name?: string | null
           document_id?: string | null
           document_title?: string
+          follow_up_date?: string | null
+          follow_up_status?: string | null
           id?: string
           is_read?: boolean
           message?: string
+          resolved_at?: string | null
         }
         Relationships: [
           {
