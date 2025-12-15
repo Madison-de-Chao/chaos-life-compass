@@ -402,6 +402,29 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
     -webkit-overflow-scrolling: touch;
+    /* Mobile scroll indicator */
+    position: relative;
+  }
+
+  /* Mobile scroll hint */
+  @media (max-width: 768px) {
+    .document-page-content .table-wrapper {
+      margin: 1rem -1rem;
+      padding: 0 1rem;
+      border-radius: 0;
+    }
+    
+    .document-page-content .table-wrapper::after {
+      content: '← 左右滑動查看 →';
+      display: block;
+      text-align: center;
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+      padding: 0.5rem 0;
+      background: linear-gradient(to right, hsl(var(--primary) / 0.1), transparent, hsl(var(--primary) / 0.1));
+      border-radius: var(--radius);
+      margin-top: 0.5rem;
+    }
   }
 
   /* Generic table styling - applies to all tables */
@@ -409,12 +432,29 @@
   .document-page-content .document-table {
     display: table !important;
     width: 100%;
-    min-width: 800px;
+    min-width: 600px;
     border-collapse: collapse;
     font-size: 0.85em;
     line-height: 1.6;
     background-color: hsl(var(--card));
     table-layout: auto;
+  }
+
+  /* Mobile table adjustments */
+  @media (max-width: 768px) {
+    .document-page-content table,
+    .document-page-content .document-table {
+      font-size: 0.75em;
+      min-width: 500px;
+    }
+
+    .document-page-content table th,
+    .document-page-content table td,
+    .document-page-content .document-table th,
+    .document-page-content .document-table td {
+      padding: 0.6rem 0.8rem;
+      min-width: 80px;
+    }
   }
 
   .document-page-content table thead,
@@ -545,7 +585,66 @@
 
   /* Document table styling - for markdown parsed tables */
   .document-page-content .document-table {
-    min-width: 600px;
+    min-width: 500px;
+  }
+
+  /* ========== PRINT STYLES FOR TABLES ========== */
+  @media print {
+    .document-page-content .table-wrapper {
+      overflow: visible !important;
+      margin: 1rem 0;
+      box-shadow: none;
+    }
+    
+    .document-page-content .table-wrapper::after {
+      display: none !important;
+    }
+
+    .document-page-content table,
+    .document-page-content .document-table {
+      min-width: 100% !important;
+      width: 100% !important;
+      font-size: 9pt !important;
+      page-break-inside: avoid;
+      border: 1px solid #333;
+    }
+
+    .document-page-content table th,
+    .document-page-content table td,
+    .document-page-content .document-table th,
+    .document-page-content .document-table td {
+      padding: 4pt 6pt !important;
+      border: 1px solid #666 !important;
+      min-width: auto !important;
+      background-color: transparent !important;
+      color: #000 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .document-page-content table th,
+    .document-page-content .document-table th {
+      background-color: #e0e0e0 !important;
+      font-weight: bold !important;
+      position: static !important;
+    }
+
+    .document-page-content table tbody tr:nth-child(odd) td {
+      background-color: #fff !important;
+    }
+
+    .document-page-content table tbody tr:nth-child(even) td {
+      background-color: #f5f5f5 !important;
+    }
+
+    .document-page-content table tbody tr:hover td {
+      background-color: inherit !important;
+    }
+
+    .document-page-content table strong,
+    .document-page-content .document-table strong {
+      color: #000 !important;
+    }
   }
 }
 
