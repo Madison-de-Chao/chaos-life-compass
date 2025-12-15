@@ -30,7 +30,8 @@ import {
   Lightbulb,
   TrendingUp,
   Eye,
-  Quote
+  Quote,
+  Settings
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -38,6 +39,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
+import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 
 const targetAudience = [
   "你很努力，但常覺得「力氣用錯地方」",
@@ -792,16 +794,43 @@ const ReportPage = () => {
             
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center animate-glow-pulse">
-                  <Eye className="w-12 h-12 text-black" />
-                </div>
+                <img 
+                  src={yuanYiLogo} 
+                  alt="元壹宇宙" 
+                  className="w-28 h-28 object-contain rounded-2xl animate-glow-pulse"
+                />
               </div>
               <div className="text-center md:text-left">
                 <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-                  旗艦版不只給答案，更給「工具」。
+                  獨家整合<span className="text-amber-400">元壹宇宙 X 默默超思維系統</span>
                 </h3>
                 <p className="text-white/60 text-lg leading-relaxed">
-                  我們引入獨家的「思維啟動器」與「高風險點偵測」，讓這份報告成為您面對混亂世界時，最堅實的底層代碼。
+                  在人機協作的末法時代，我們為您建構堅實穩固的思維能力。旗艦版不只給答案，更給您一套可運作的「生命操作系統」——讓您在資訊洪流中，依然能清醒決策、精準行動。
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* SOP Quality Assurance */}
+          <div className={`mt-8 relative bg-gradient-to-br from-[#14161a] via-[#101214] to-[#0a0c0e] rounded-[40px] p-10 md:p-14 border border-cyan-500/20 transition-all duration-1000 ${isVisible['thinking-system'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.8s' }}>
+            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-cyan-500/30 rounded-tl-[40px]" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-cyan-500/30 rounded-br-[40px]" />
+            
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
+                  <Settings className="w-12 h-12 text-cyan-400" />
+                </div>
+              </div>
+              <div className="text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+                  <span className="text-cyan-300 text-xs font-medium tracking-wider uppercase">人機協作 SOP</span>
+                </div>
+                <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">
+                  嚴格的寫作規範，確保每一份品質一致
+                </h3>
+                <p className="text-white/60 text-base leading-relaxed">
+                  本報告採用<span className="text-cyan-400 font-medium">人機協作</span>模式產出——結合專業命理師的深度解讀與 AI 的精準運算。我們建立了嚴格的 SOP 寫作規範與語氣設定，從「鏡子非劇本」的核心原則，到每一段落的邏輯架構，都經過標準化流程把關。無論是哪一份報告，都能為您呈現相同水準的精密與深度。
                 </p>
               </div>
             </div>
