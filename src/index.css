@@ -1,4 +1,128 @@
 @tailwind base;
+
+/* 3D Card Flip Effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* 3D Hover Card Effect */
+.card-3d {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  transform: rotateY(8deg) rotateX(5deg) translateZ(30px);
+}
+
+/* Glow border animation */
+@keyframes glow-border {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(251, 191, 36, 0.3),
+      0 0 10px rgba(251, 191, 36, 0.2),
+      0 0 20px rgba(251, 191, 36, 0.1),
+      inset 0 0 5px rgba(251, 191, 36, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(251, 191, 36, 0.5),
+      0 0 20px rgba(251, 191, 36, 0.4),
+      0 0 40px rgba(251, 191, 36, 0.2),
+      inset 0 0 10px rgba(251, 191, 36, 0.1);
+  }
+}
+
+.glow-border-amber {
+  animation: glow-border 2s ease-in-out infinite;
+}
+
+/* Shine sweep effect */
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.shine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.shine-effect:hover::before {
+  animation: shine-sweep 0.8s ease-out;
+}
+
+/* Pulsing glow effect */
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.7));
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Neon flicker effect */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #fbbf24,
+      0 0 80px #fbbf24;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* Floating card tilt on mouse move */
+.tilt-card {
+  transition: transform 0.3s ease-out;
+}
+
+/* Rainbow border animation */
+@keyframes rainbow-border {
+  0% { border-color: rgba(251, 191, 36, 0.5); }
+  25% { border-color: rgba(168, 85, 247, 0.5); }
+  50% { border-color: rgba(59, 130, 246, 0.5); }
+  75% { border-color: rgba(16, 185, 129, 0.5); }
+  100% { border-color: rgba(251, 191, 36, 0.5); }
+}
 @tailwind components;
 @tailwind utilities;
 
