@@ -302,10 +302,120 @@ const ReportPage = () => {
           
           {/* Central brain with orbiting systems */}
           <div className="relative h-[400px] md:h-[500px] flex items-center justify-center mb-16">
+            {/* SVG Connection Lines with Animations */}
+            <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+              <defs>
+                {/* Gradient definitions for each system */}
+                <linearGradient id="grad-violet" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#a855f7" stopOpacity="0.3" />
+                </linearGradient>
+                <linearGradient id="grad-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#ea580c" stopOpacity="0.3" />
+                </linearGradient>
+                <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
+                </linearGradient>
+                <linearGradient id="grad-emerald" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#14b8a6" stopOpacity="0.3" />
+                </linearGradient>
+                
+                {/* Glowing filter */}
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              {/* Animated connection lines */}
+              {fourSystems.map((system, index) => {
+                const centerX = 50;
+                const centerY = 50;
+                const angle = (index * 90 - 45) * (Math.PI / 180);
+                const radiusPercent = 18;
+                const endX = centerX + Math.cos(angle) * radiusPercent;
+                const endY = centerY + Math.sin(angle) * radiusPercent;
+                const gradientId = ['grad-violet', 'grad-amber', 'grad-blue', 'grad-emerald'][index];
+                const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#10b981'][index];
+                
+                return (
+                  <g key={`connection-${index}`} className={`transition-opacity duration-1000 ${isVisible['four-systems'] ? 'opacity-100' : 'opacity-0'}`}>
+                    {/* Base line */}
+                    <line
+                      x1={`${centerX}%`}
+                      y1={`${centerY}%`}
+                      x2={`${endX}%`}
+                      y2={`${endY}%`}
+                      stroke={`url(#${gradientId})`}
+                      strokeWidth="2"
+                      filter="url(#glow)"
+                      className="opacity-40"
+                    />
+                    
+                    {/* Animated pulse line */}
+                    <line
+                      x1={`${centerX}%`}
+                      y1={`${centerY}%`}
+                      x2={`${endX}%`}
+                      y2={`${endY}%`}
+                      stroke={colors}
+                      strokeWidth="3"
+                      strokeDasharray="8 12"
+                      filter="url(#glow)"
+                      className="opacity-60"
+                      style={{
+                        animation: `dash-flow 2s linear infinite`,
+                        animationDelay: `${index * 0.5}s`
+                      }}
+                    />
+                    
+                    {/* Traveling particle */}
+                    <circle r="4" fill={colors} filter="url(#glow)">
+                      <animateMotion
+                        dur={`${2 + index * 0.3}s`}
+                        repeatCount="indefinite"
+                        path={`M${centerX * 5},${centerY * 2.5} L${endX * 5},${endY * 2.5}`}
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0;1;1;0"
+                        dur={`${2 + index * 0.3}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                    
+                    {/* Reverse traveling particle */}
+                    <circle r="3" fill={colors} filter="url(#glow)" opacity="0.7">
+                      <animateMotion
+                        dur={`${2.5 + index * 0.2}s`}
+                        repeatCount="indefinite"
+                        path={`M${endX * 5},${endY * 2.5} L${centerX * 5},${centerY * 2.5}`}
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0;0.7;0.7;0"
+                        dur={`${2.5 + index * 0.2}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </g>
+                );
+              })}
+            </svg>
+            
             {/* Central element */}
             <div className={`relative z-10 w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-amber-500/30 to-amber-600/20 border-2 border-amber-500/50 flex items-center justify-center backdrop-blur-sm transition-all duration-1000 ${isVisible['four-systems'] ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}>
               <Brain className="w-16 h-16 md:w-20 md:h-20 text-amber-400 animate-pulse" />
               <div className="absolute inset-0 rounded-full animate-pulse-ring border-2 border-amber-400/30" />
+              {/* Inner glow rings */}
+              <div className="absolute inset-[-4px] rounded-full border border-amber-400/20 animate-ping" style={{ animationDuration: '3s' }} />
+              <div className="absolute inset-[-8px] rounded-full border border-amber-400/10 animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
             </div>
             
             {/* Orbiting systems */}
@@ -329,8 +439,8 @@ const ReportPage = () => {
                       <system.icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
                       <span className="text-xs md:text-sm font-medium text-white/80">{system.name}</span>
                     </div>
-                    {/* Connection line */}
-                    <div className={`absolute top-1/2 left-1/2 w-20 md:w-32 h-0.5 bg-gradient-to-r ${system.color} opacity-30 origin-left`} style={{ transform: `rotate(${180 + index * 90 - 45}deg) translateY(-50%)` }} />
+                    {/* Glow effect on hover */}
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${system.color} opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300`} />
                   </div>
                 </div>
               );
