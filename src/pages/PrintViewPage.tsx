@@ -370,14 +370,19 @@ const PrintViewPage = () => {
           }
           
           @page {
-            margin: 15mm 15mm 25mm 15mm;
-            counter-increment: page;
+            margin: 15mm 15mm 30mm 15mm;
+            size: A4;
+          }
+          
+          @page :first {
+            margin-bottom: 15mm;
           }
           
           body {
             margin: 0;
             padding: 0;
-            counter-reset: page;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
           
           .print-container {
@@ -661,27 +666,28 @@ const PrintViewPage = () => {
           
           .global-footer {
             position: fixed;
-            bottom: 0;
+            bottom: 10mm;
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 9px;
+            font-size: 8px;
             color: #888;
-            padding: 5px 0;
             background: white;
-            border-top: 1px solid #d4a574;
           }
           
-          .page-number-footer {
+          .print-page-counter {
             position: fixed;
-            bottom: 5mm;
+            bottom: 10mm;
             right: 15mm;
             font-size: 10px;
             color: #666;
+            background: white;
+            padding: 2px 6px;
           }
           
-          .page-number-footer::after {
-            content: counter(page);
+          .cover-page .print-page-counter,
+          .toc-page .print-page-counter {
+            display: none;
           }
           
           .watermark {
@@ -1154,6 +1160,10 @@ const PrintViewPage = () => {
           .page-number-footer {
             display: none;
           }
+          
+          .print-page-counter {
+            display: none;
+          }
         }
       `}</style>
 
@@ -1203,9 +1213,6 @@ const PrintViewPage = () => {
             {customerName || content?.title || '機密文件'}
           </div>
         )}
-        
-        {/* Page number footer for print */}
-        <div className="page-number-footer" />
         
         {/* Cover Page */}
         <div className="cover-page">
@@ -1299,6 +1306,11 @@ const PrintViewPage = () => {
               className="print-content"
               dangerouslySetInnerHTML={{ __html: page.content }}
             />
+            
+            {/* Page counter for print */}
+            <div className="print-page-counter">
+              第 {index + 1} / {pages.length} 頁
+            </div>
             
             {/* Page number - screen only */}
             <div className="page-number">
