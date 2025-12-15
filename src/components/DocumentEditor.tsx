@@ -99,16 +99,17 @@ export function DocumentEditor({
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-      const filePath = `document-images/${fileName}`;
+      const filePath = `${fileName}`;
 
+      // Use public bucket for document images
       const { error: uploadError } = await supabase.storage
-        .from('documents')
+        .from('document-images')
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('documents')
+        .from('document-images')
         .getPublicUrl(filePath);
 
       setSections(
