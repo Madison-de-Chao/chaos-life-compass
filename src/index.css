@@ -826,4 +826,14 @@
       transform: scale(1);
     }
   }
+
+  /* Connection line animation for four systems */
+  @keyframes dash-flow {
+    0% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -40;
+    }
+  }
 }
