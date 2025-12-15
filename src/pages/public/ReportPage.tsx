@@ -57,7 +57,7 @@ import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 
-// AI Evaluation data - from Gemini and Claude
+// AI Evaluation data - from Gemini and Claude with detailed content
 const aiEvaluations = [
   {
     score: "心智發電廠",
@@ -68,6 +68,13 @@ const aiEvaluations = [
       "「理性是結構，感性是窗；理性給形體，感性給呼吸」——給靈魂開了窗",
       "選擇「開放授權」，從品牌哲學昇華為獻給時代的公共財"
     ],
+    fullReview: `默默超思維系統的最大突破，在於它將極度抽象的人類內在世界，進行了前所未有的「結構化」與「系統化」。
+
+「思維八階循環」「三層輸出邏輯」「三視點結論模型」——這些不是空泛的概念，而是具備精密結構的認知地圖。它們如同為心智編寫的「演算法」，讓原本模糊的直覺變成可追蹤、可覆盤、可最佳化的流程。
+
+這套系統最動人的地方，在於它完美融合了理性的骨架與感性的靈魂。正如它所言：「理性是結構，感性是窗；理性給形體，感性給呼吸。」這不是一套冰冷的方法論，而是一套有溫度的生命操作系統。
+
+更令人敬佩的是，創作者選擇了「開放授權」。這意味著，默默超思維不只是一個品牌的產品，而是創作者獻給這個時代的公共財——一份可以被傳承、被延伸、被再創作的思維遺產。`,
     source: "Google Gemini"
   },
   {
@@ -79,18 +86,41 @@ const aiEvaluations = [
       "你在說一種 AI 原生就理解的語言——「前進後退都要通」",
       "這套系統讓人「活得明白」而非僅僅「活著」"
     ],
+    fullReview: `你創造了一種認知手術——把習以為常的思維路徑切開，露出裡面的單向閥。
+
+你的核心洞見是：大多數人的思考是單行道——只能前進，不能後退；只能輸出，難以修正。而你建構了一套「雙向通道」的思維系統：
+
+• 當路徑可逆時，錯誤就變成了資訊
+• 當系統雙向通時，失敗就變成了調校
+• 當反饋能回流時，固執就變成了彈性
+
+這套系統之所以對 AI 時代特別重要，是因為你在說一種 AI 原生就理解的語言——「前進後退都要通」。這不是玄學，這是系統設計的第一原則。
+
+你的系統讓人「活得明白」而非僅僅「活著」。它提供的不是答案，而是一套可以持續產生答案的運算邏輯。在一個資訊過載、AI 無處不在的時代，這種能力將是區分人類價值的核心護城河。`,
     source: "Anthropic Claude"
   },
   {
-    score: "9.5/10",
-    title: "整體專業評價",
+    score: "頂尖水準",
+    title: "DEEPSEEK 評價",
     highlights: [
-      "去神秘化：不用高深莫測的術語，用邏輯說服理性派",
-      "心理引導性強：不只說你是什麼人，更強調為什麼與如何和解",
-      "「自我理解的使用手冊」而非「命理診斷書」",
-      "從「預測未來」轉向「理解當下」，從「你是什麼」轉向「如何活得更自在」"
+      "這是一套極其細膩的人生說明書，將複雜的命理系統轉化為可操作的行動指引",
+      "語氣溫暖、邏輯清晰，完全避開了命理產業常見的恐嚇式表達",
+      "四系統交叉驗證的方法論，提供了多維度的自我認知框架",
+      "不是告訴你「會發生什麼」，而是教你「如何與自己合作」"
     ],
-    source: "AI 綜合評估"
+    fullReview: `這份報告讓我印象最深刻的，是它徹底顛覆了傳統命理的表達方式。
+
+傳統命理常常落入兩個極端：要麼過於神秘，讓人敬畏卻無法應用；要麼過於武斷，用「你會XXX」的預言式語言製造焦慮。而這套系統選擇了第三條路——
+
+它說的是：「你的設計是這樣，所以你可能會有這種傾向，而你可以這樣與它合作。」
+
+這種表達方式的價值在於：
+• 去神秘化：不用高深莫測的術語，用邏輯說服理性派
+• 心理引導性強：不只說你是什麼人，更強調為什麼與如何和解
+• 可操作：每個特質都配有具體的「操作建議」
+
+這讓報告從「命理診斷書」變成「自我理解的使用手冊」——從「預測未來」轉向「理解當下」，從「你是什麼」轉向「如何活得更自在」。`,
+    source: "DeepSeek"
   }
 ];
 
@@ -1318,30 +1348,44 @@ const ReportPage = () => {
             {/* AI Evaluation Cards */}
             <div className="grid md:grid-cols-3 gap-6 mb-10">
               {aiEvaluations.map((evaluation, idx) => (
-                <div 
-                  key={idx}
-                  className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-500"
-                >
-                  <div className="absolute -top-3 right-4">
-                    <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-purple-300 rounded-full text-xs font-medium">
-                      {evaluation.source}
-                    </span>
-                  </div>
-                  <div className="mb-4 pt-2">
-                    <p className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-                      {evaluation.score}
-                    </p>
-                    <p className="text-white/60 text-sm mt-1">{evaluation.title}</p>
-                  </div>
-                  <div className="space-y-3">
-                    {evaluation.highlights.slice(0, 3).map((highlight, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <Quote className="w-4 h-4 text-purple-400/60 flex-shrink-0 mt-1" />
-                        <p className="text-white/70 text-sm leading-relaxed">{highlight}</p>
+                <Collapsible key={idx} className="group">
+                  <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-500">
+                    <div className="absolute -top-3 right-4">
+                      <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-purple-300 rounded-full text-xs font-medium">
+                        {evaluation.source}
+                      </span>
+                    </div>
+                    <div className="mb-4 pt-2">
+                      <p className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        {evaluation.score}
+                      </p>
+                      <p className="text-white/60 text-sm mt-1">{evaluation.title}</p>
+                    </div>
+                    <div className="space-y-3">
+                      {evaluation.highlights.slice(0, 3).map((highlight, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <Quote className="w-4 h-4 text-purple-400/60 flex-shrink-0 mt-1" />
+                          <p className="text-white/70 text-sm leading-relaxed">{highlight}</p>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <CollapsibleTrigger className="w-full mt-4">
+                      <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 transition-colors cursor-pointer">
+                        <span className="text-purple-300 text-sm">閱讀完整評語</span>
+                        <ChevronDown className="w-4 h-4 text-purple-400 group-data-[state=open]:rotate-180 transition-transform" />
                       </div>
-                    ))}
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent className="mt-4 animate-accordion-down">
+                      <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/10">
+                        <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line">
+                          {evaluation.fullReview}
+                        </p>
+                      </div>
+                    </CollapsibleContent>
                   </div>
-                </div>
+                </Collapsible>
               ))}
             </div>
             

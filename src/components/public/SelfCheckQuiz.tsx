@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,10 +19,14 @@ import {
   Share2,
   Twitter,
   Facebook,
-  Link2,
-  Copy
+  Copy,
+  Download,
+  Image,
+  ArrowLeft
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoHongling from "@/assets/logo-hongling.png";
 
 interface QuizQuestion {
   id: number;
@@ -177,6 +181,13 @@ const dimensionResults = {
   },
 };
 
+const dimensionColors = {
+  emotion: { gradient: "from-rose-400 to-pink-500", icon: Heart, label: "情緒" },
+  action: { gradient: "from-amber-400 to-yellow-500", icon: Zap, label: "行動" },
+  mindset: { gradient: "from-blue-400 to-cyan-500", icon: Brain, label: "思維" },
+  value: { gradient: "from-purple-400 to-violet-500", icon: Target, label: "價值" },
+};
+
 interface SelfCheckQuizProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -189,6 +200,8 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const [showDiagnosticCard, setShowDiagnosticCard] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleAnswer = (dimension: string, optionIndex: number) => {
     setSelectedOption(optionIndex);
@@ -239,6 +252,7 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
     setShowResult(false);
     setSelectedOption(null);
     setShowShareMenu(false);
+    setShowDiagnosticCard(false);
   };
 
   const handleShare = (platform: string) => {
@@ -269,6 +283,39 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
     }
     setShowShareMenu(false);
   };
+
+  const handleDownloadCard = useCallback(async () => {
+    if (!cardRef.current) return;
+
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      
+      const canvas = await html2canvas(cardRef.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#0a0a0a",
+      });
+
+      const link = document.createElement("a");
+      const result = calculateResult();
+      link.download = `默默超思維診斷書-${result.primary.title}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+
+      toast({
+        title: "下載成功",
+        description: "診斷書已儲存到您的裝置",
+      });
+    } catch (error) {
+      console.error("Download failed:", error);
+      toast({
+        title: "下載失敗",
+        description: "請稍後再試",
+        variant: "destructive",
+      });
+    }
+  }, [answers]);
 
   const result = showResult ? calculateResult() : null;
 
@@ -342,6 +389,150 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                 ))}
               </div>
             </>
+          ) : showDiagnosticCard && result ? (
+            // Diagnostic Card View
+            <div className="animate-scale-in">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowDiagnosticCard(false)}
+                className="mb-4 text-white/60 hover:text-white"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                返回結果
+              </Button>
+
+              {/* Diagnostic Card for Download */}
+              <div
+                ref={cardRef}
+                className="relative w-full bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] rounded-3xl overflow-hidden p-6"
+                style={{ aspectRatio: "9/16" }}
+              >
+                {/* Background decorations */}
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl" />
+                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-purple-500/20 to-transparent rounded-full blur-3xl" />
+                </div>
+
+                {/* Content */}
+                <div className="relative h-full flex flex-col">
+                  {/* Header with logos */}
+                  <div className="flex items-center justify-between mb-4">
+                    <img src={logoChaoxuan} alt="超烜創意" className="h-6 object-contain" />
+                    <img src={logoHongling} alt="虹靈御所" className="h-6 object-contain" />
+                  </div>
+
+                  {/* Title */}
+                  <div className="text-center mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 mb-2">
+                      <Sparkles className="w-3 h-3 text-amber-400" />
+                      <span className="text-amber-300 text-xs font-medium">默默超思維診斷書</span>
+                    </div>
+                    <h2 className="text-sm text-white/60 font-medium">你的思維類型是</h2>
+                  </div>
+
+                  {/* Main result */}
+                  <div className="flex-1 flex flex-col items-center justify-center">
+                    <div
+                      className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${result.primary.color} flex items-center justify-center mb-4 shadow-xl`}
+                    >
+                      <result.primary.icon className="w-10 h-10 text-white" />
+                    </div>
+
+                    <h1 className="text-2xl font-bold text-white mb-1 text-center">
+                      {result.primary.title}
+                    </h1>
+                    <p className="text-white/60 text-xs mb-3">{result.primary.subtitle}</p>
+
+                    <p className="text-white/70 text-center text-xs leading-relaxed px-2 mb-4">
+                      {result.primary.description}
+                    </p>
+
+                    {/* Dimension bars */}
+                    <div className="w-full space-y-1.5">
+                      {Object.entries(result.counts).map(([key, value]) => {
+                        const config = dimensionColors[key as keyof typeof dimensionColors];
+                        const DimIcon = config.icon;
+                        const percentage = (value / 5) * 100;
+                        
+                        return (
+                          <div key={key} className="flex items-center gap-2">
+                            <DimIcon className="w-3 h-3 text-white/60 flex-shrink-0" />
+                            <span className="text-white/40 text-[10px] w-8">{config.label}</span>
+                            <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full bg-gradient-to-r ${config.gradient} rounded-full`}
+                                style={{ width: `${percentage}%` }}
+                              />
+                            </div>
+                            <span className="text-white/40 text-[10px] w-4 text-right">{value}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {result.secondary && (
+                      <p className="text-white/50 text-[10px] mt-3 text-center">
+                        次要傾向：{result.secondary.title}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Footer CTA */}
+                  <div className="mt-auto pt-4 border-t border-white/10">
+                    <div className="text-center">
+                      <p className="text-amber-400 text-xs font-medium mb-1">
+                        想深入了解如何運用你的思維優勢？
+                      </p>
+                      <p className="text-white/50 text-[10px]">
+                        momo-chao.com/reports
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Watermark */}
+                  <p className="text-white/20 text-[8px] text-center mt-2">© 默默超全方位命理解讀報告</p>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex flex-col gap-2 mt-4">
+                <Button
+                  onClick={handleDownloadCard}
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  下載診斷書圖片
+                </Button>
+                
+                <div className="grid grid-cols-3 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleShare("twitter")}
+                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                  >
+                    <Twitter className="w-3.5 h-3.5 text-[#1DA1F2]" />
+                    Twitter
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleShare("facebook")}
+                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                  >
+                    <Facebook className="w-3.5 h-3.5 text-[#4267B2]" />
+                    Facebook
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleShare("copy")}
+                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                  >
+                    <Copy className="w-3.5 h-3.5 text-amber-400" />
+                    複製
+                  </Button>
+                </div>
+              </div>
+            </div>
           ) : (
             result && (
               <div className="animate-scale-in">
@@ -422,6 +613,15 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
 
                 {/* Share & Actions */}
                 <div className="space-y-3">
+                  {/* Generate Diagnostic Card Button */}
+                  <Button
+                    onClick={() => setShowDiagnosticCard(true)}
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold gap-2"
+                  >
+                    <Image className="w-4 h-4" />
+                    生成診斷書圖片分享
+                  </Button>
+
                   {/* Share Button */}
                   <div className="relative">
                     <Button
@@ -430,7 +630,7 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                       className="w-full border-white/20 text-white/70 hover:bg-white/10 gap-2"
                     >
                       <Share2 className="w-4 h-4" />
-                      分享我的結果
+                      文字分享結果
                     </Button>
                     
                     {showShareMenu && (
