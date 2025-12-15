@@ -554,12 +554,20 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
       tabIndex={0}
       style={{ touchAction: 'pan-y' }}
     >
-      {/* Decorative Background */}
+      {/* Decorative Background with animation */}
       <div 
-        className="fixed inset-0 pointer-events-none transition-all duration-1000"
+        className="fixed inset-0 pointer-events-none transition-all duration-700 ease-out"
         style={{ background: patterns[patternIndex] }}
       />
-      <div className="fixed inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz4KPC9zdmc+')] opacity-50" />
+      <div className="fixed inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz4KPC9zdmc+')] opacity-40" />
+      
+      {/* Animated gradient overlay */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-30 animate-breathe"
+        style={{ 
+          background: 'radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 60%)',
+        }}
+      />
       
       {/* Header with Logos - optimized for mobile */}
       <div className="fixed top-3 sm:top-6 left-3 sm:left-6 right-3 sm:right-6 z-50 flex items-center justify-between pointer-events-none">
@@ -799,34 +807,27 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
       </div>
 
       {/* Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 pb-6 md:pb-8 px-4">
-        <div className="flex items-center justify-center gap-2 md:gap-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 pb-5 md:pb-6 px-4">
+        {/* Gradient backdrop for navigation */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+        
+        <div className="relative flex items-center justify-center gap-3 md:gap-6">
           <Button
             variant="outline"
             size="default"
             onClick={() => goToPage(currentPage - 1, 'left')}
             disabled={currentPage === 0 || isAnimating}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-3 md:px-6 transition-all hover:scale-105 active:scale-95 text-sm md:text-base"
+            className="rounded-full bg-card/95 backdrop-blur-md shadow-elevated border-primary/20 px-4 md:px-8 py-5 md:py-6 transition-all duration-300 hover:scale-105 hover:shadow-glow hover:border-primary/40 active:scale-95 text-sm md:text-base group"
           >
-            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 transition-transform group-hover:-translate-x-1" />
             上一頁
           </Button>
           
-          {/* Page Dots - hide on mobile when too many pages */}
-          <div className="hidden md:flex items-center gap-2 px-4 max-w-xs overflow-x-auto">
-            {pages.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => goToPage(idx)}
-                disabled={isAnimating}
-                className={cn(
-                  "w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 flex-shrink-0",
-                  idx === currentPage 
-                    ? "bg-primary scale-125" 
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                )}
-              />
-            ))}
+          {/* Progress indicator - shows on all devices */}
+          <div className="flex items-center gap-1.5 md:gap-2 px-4 py-2 bg-card/80 backdrop-blur-sm rounded-full border border-border/30">
+            <span className="text-sm md:text-base font-medium text-primary">{currentPage + 1}</span>
+            <span className="text-muted-foreground/60">/</span>
+            <span className="text-sm md:text-base text-muted-foreground">{pages.length}</span>
           </div>
 
           <Button
@@ -834,15 +835,15 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
             size="default"
             onClick={() => goToPage(currentPage + 1, 'right')}
             disabled={currentPage === pages.length - 1 || isAnimating}
-            className="rounded-full bg-card/90 backdrop-blur-sm shadow-elevated border-border/50 px-3 md:px-6 transition-all hover:scale-105 active:scale-95 text-sm md:text-base"
+            className="rounded-full bg-card/95 backdrop-blur-md shadow-elevated border-primary/20 px-4 md:px-8 py-5 md:py-6 transition-all duration-300 hover:scale-105 hover:shadow-glow hover:border-primary/40 active:scale-95 text-sm md:text-base group"
           >
             下一頁
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-1 md:ml-2" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-1.5 md:ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
         
         {/* Copyright */}
-        <div className="text-center mt-4 text-xs text-muted-foreground/60">
+        <div className="relative text-center mt-3 text-[10px] md:text-xs text-muted-foreground/50">
           © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
         </div>
       </div>
