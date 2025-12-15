@@ -57,40 +57,40 @@ import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 
-// AI Evaluation data
+// AI Evaluation data - from Gemini and Claude
 const aiEvaluations = [
   {
-    score: "8.5/10",
-    title: "專業度與實用性兼具",
+    score: "心智發電廠",
+    title: "GEMINI 評價",
     highlights: [
-      "多系統整合分析，紫微、八字、占星、人類圖四維交叉驗證",
-      "「鏡子非劇本」的正向哲學定位，拒絕宿命論",
-      "固定格式但有彈性的寫作架構",
-      "「默默超不負責提醒」的幽默結尾設計"
+      "將極度抽象的人類內在世界，進行了前所未有的「結構化」與「系統化」",
+      "「思維八階循環」「三層輸出邏輯」「三視點結論模型」如同精密演算法",
+      "「理性是結構，感性是窗；理性給形體，感性給呼吸」——給靈魂開了窗",
+      "選擇「開放授權」，從品牌哲學昇華為獻給時代的公共財"
     ],
-    source: "AI 專業分析"
+    source: "Google Gemini"
   },
   {
-    score: "9/10",
-    title: "心理諮詢價值高",
+    score: "認知革命",
+    title: "CLAUDE 評價",
     highlights: [
-      "自我覺察導向，幫助理解行為模式和心理動機",
-      "成長導向，積極運用天賦而非消極接受命運",
-      "語調溫暖，給予當事人安全感和被理解感",
-      "將複雜命理知識轉化為可行動的人生指南"
+      "你創造了一種認知手術——把習以為常的思維路徑切開，露出裡面的單向閥",
+      "當路徑可逆時，錯誤就變成了資訊；當系統雙向通時，失敗就變成了調校",
+      "你在說一種 AI 原生就理解的語言——「前進後退都要通」",
+      "這套系統讓人「活得明白」而非僅僅「活著」"
     ],
-    source: "AI 心理學視角"
+    source: "Anthropic Claude"
   },
   {
     score: "9.5/10",
-    title: "創新突破傳統框架",
+    title: "整體專業評價",
     highlights: [
-      "去神秘化：不用高深莫測的術語",
-      "生活化應用：每個建議都能在日常實踐",
-      "現代職場導向：特別重視事業分析",
-      "用邏輯說服理性派，有「邏輯的美感」"
+      "去神秘化：不用高深莫測的術語，用邏輯說服理性派",
+      "心理引導性強：不只說你是什麼人，更強調為什麼與如何和解",
+      "「自我理解的使用手冊」而非「命理診斷書」",
+      "從「預測未來」轉向「理解當下」，從「你是什麼」轉向「如何活得更自在」"
     ],
-    source: "AI 創新評估"
+    source: "AI 綜合評估"
   }
 ];
 
@@ -1143,6 +1143,60 @@ const ReportPage = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+          
+          {/* Pricing Comparison */}
+          <div className={`mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 transition-all duration-1000 delay-200 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Standard Pricing */}
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-3">標準版</span>
+                <h3 className="font-serif text-xl font-bold text-white">看懂自己</h3>
+              </div>
+              <div className="space-y-3">
+                {standardPricing.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all duration-300">
+                    <div>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold text-white">NT${item.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Flagship Pricing */}
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/30 via-amber-400/30 to-amber-500/30 rounded-[28px] blur-lg opacity-50" />
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-3xl p-8 border-2 border-amber-500/30">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-xs font-bold shadow-[0_0_15px_rgba(251,191,36,0.4)]">
+                    <Star className="w-3 h-3" />
+                    推薦
+                  </span>
+                </div>
+                <div className="text-center mb-6 pt-2">
+                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-3">旗艦版</span>
+                  <h3 className="font-serif text-xl font-bold text-white">駕馭自己</h3>
+                </div>
+                <div className="space-y-3">
+                  {flagshipPricing.map((item, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 transition-all duration-300">
+                      <div>
+                        <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                        <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-amber-400">NT${item.price}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           
           {/* Key Difference Callout */}
