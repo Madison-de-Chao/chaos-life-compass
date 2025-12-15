@@ -12,12 +12,17 @@ import {
   Heart, 
   Zap, 
   Target, 
-  ChevronRight, 
   RotateCcw,
   Sparkles,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  Share2,
+  Twitter,
+  Facebook,
+  Link2,
+  Copy
 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 interface QuizQuestion {
   id: number;
@@ -84,31 +89,91 @@ const quizQuestions: QuizQuestion[] = [
 const dimensionResults = {
   emotion: {
     title: "情緒導向型",
+    subtitle: "內在雷達敏銳者",
     icon: Heart,
     color: "from-rose-400 to-pink-500",
-    description: "你的內在雷達非常敏銳，情緒是你重要的決策指南針。",
-    insight: "報告會幫助你：將敏感轉化為精準的直覺，而非內耗的負擔。",
+    bgColor: "bg-rose-500/10",
+    borderColor: "border-rose-500/30",
+    description: "你的內在雷達非常敏銳，情緒是你重要的決策指南針。你能感知他人無法察覺的細微變化，這是你獨特的天賦。",
+    strengths: [
+      "高度同理心，能深刻理解他人感受",
+      "直覺敏銳，常能預感事情走向",
+      "情感豐富，創造力與藝術感強",
+      "關係經營細膩，重視情感連結"
+    ],
+    challenges: [
+      "容易被情緒淹沒，需要學習情緒疏導",
+      "過度在意他人感受，忽略自身需求",
+      "決策時可能過於依賴感覺"
+    ],
+    reportInsight: "在完整報告中，我們會深入分析你的情緒能量來源、最佳情緒管理策略，以及如何將敏感轉化為你的超能力，而非負擔。",
+    flagshipBonus: "旗艦版會加入「情緒權威SOP」，幫助你建立個人化的情緒決策流程，讓直覺成為可靠的導航系統。"
   },
   action: {
     title: "行動導向型",
+    subtitle: "天生實踐者",
     icon: Zap,
     color: "from-amber-400 to-yellow-500",
-    description: "你是天生的實踐者，習慣用行動來解決問題。",
-    insight: "報告會幫助你：找到專屬的「啟動節奏」，避免無效忙碌。",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/30",
+    description: "你是天生的實踐者，習慣用行動來解決問題。「做了再說」是你的人生哲學，這讓你比大多數人更快看到結果。",
+    strengths: [
+      "執行力強，想到就能做到",
+      "不怕失敗，願意反覆嘗試",
+      "能在混亂中快速找到出路",
+      "帶動團隊士氣，推動事情前進"
+    ],
+    challenges: [
+      "可能衝太快，忽略細節或風險",
+      "不耐等待，容易焦躁",
+      "有時行動先於思考"
+    ],
+    reportInsight: "在完整報告中，我們會分析你的最佳「啟動節奏」，找出何時該衝、何時該停，避免無效忙碌和能量耗損。",
+    flagshipBonus: "旗艦版會提供「行動策略兵符」，根據你的命盤設計專屬的行動時機判斷法則，讓每次出擊都更精準。"
   },
   mindset: {
     title: "思維導向型",
+    subtitle: "邏輯分析師",
     icon: Brain,
     color: "from-blue-400 to-cyan-500",
-    description: "你擅長邏輯分析，用理性來理解世界。",
-    insight: "報告會幫助你：優化思考迴路，減少決策疲勞。",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/30",
+    description: "你擅長邏輯分析，用理性來理解世界。複雜的問題在你面前會被拆解成清晰的步驟，這是你獨特的思維優勢。",
+    strengths: [
+      "分析能力強，能看穿問題本質",
+      "決策有條理，考慮周全",
+      "學習能力強，善於歸納整理",
+      "能在壓力下保持冷靜判斷"
+    ],
+    challenges: [
+      "可能過度分析，陷入思考迴圈",
+      "有時忽略情感因素的重要性",
+      "追求完美可能導致行動延遲"
+    ],
+    reportInsight: "在完整報告中，我們會幫你優化思考迴路，找出你的決策盲點，並建立減少決策疲勞的方法。",
+    flagshipBonus: "旗艦版會深入解析你的「心智運算模式」，教你如何在不同情境下切換思維模式，讓理性成為助力而非阻力。"
   },
   value: {
     title: "價值導向型",
+    subtitle: "人生定位者",
     icon: Target,
     color: "from-purple-400 to-violet-500",
-    description: "你注重意義和方向，追求與內心價值對齊的人生。",
-    insight: "報告會幫助你：明確核心價值，讓每個選擇都與使命共振。",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/30",
+    description: "你注重意義和方向，追求與內心價值對齊的人生。你不滿足於「做完」，更在乎「為何而做」。",
+    strengths: [
+      "人生方向感強，不易迷失",
+      "能分辨什麼值得投入時間",
+      "內在動力穩定，不易被外界動搖",
+      "追求深度而非廣度"
+    ],
+    challenges: [
+      "可能對「沒意義」的事缺乏耐心",
+      "有時過於理想化，與現實產生衝突",
+      "尋找意義的過程可能帶來焦慮"
+    ],
+    reportInsight: "在完整報告中，我們會幫你明確核心價值，讓每個人生選擇都能與內心使命產生共振，減少內耗。",
+    flagshipBonus: "旗艦版會提供「價值校準羅盤」，在人生重大抉擇時刻，幫助你快速判斷這條路是否真正屬於你。"
   },
 };
 
@@ -123,6 +188,7 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
   const handleAnswer = (dimension: string, optionIndex: number) => {
     setSelectedOption(optionIndex);
@@ -154,7 +220,17 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
       a[1] > b[1] ? a : b
     )[0] as keyof typeof dimensionResults;
 
-    return dimensionResults[maxDimension];
+    // Get secondary dimension
+    const sortedDimensions = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const secondaryDimension = sortedDimensions[1][1] > 0 
+      ? sortedDimensions[1][0] as keyof typeof dimensionResults 
+      : null;
+
+    return { 
+      primary: dimensionResults[maxDimension], 
+      secondary: secondaryDimension ? dimensionResults[secondaryDimension] : null,
+      counts 
+    };
   };
 
   const resetQuiz = () => {
@@ -162,13 +238,43 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
     setAnswers({});
     setShowResult(false);
     setSelectedOption(null);
+    setShowShareMenu(false);
+  };
+
+  const handleShare = (platform: string) => {
+    const result = calculateResult();
+    const shareText = `我在默默超思維測驗中是「${result.primary.title}」！${result.primary.description.slice(0, 50)}... 來測測你的思維類型 👉`;
+    const shareUrl = window.location.origin + "/reports";
+
+    switch (platform) {
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`,
+          "_blank"
+        );
+        break;
+      case "copy":
+        navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+        toast({
+          title: "已複製到剪貼簿",
+          description: "可以貼到任何地方分享",
+        });
+        break;
+    }
+    setShowShareMenu(false);
   };
 
   const result = showResult ? calculateResult() : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-lg overflow-hidden data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit">
+      <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-xl max-h-[90vh] overflow-y-auto data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit">
         <div className="absolute -inset-px bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 rounded-lg blur-xl opacity-60 animate-pulse" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-lg" />
 
@@ -238,51 +344,142 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
             </>
           ) : (
             result && (
-              <div className="text-center animate-scale-in">
-                <div
-                  className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r ${result.color} mb-6 shadow-lg`}
-                >
-                  <result.icon className="w-10 h-10 text-white" />
+              <div className="animate-scale-in">
+                {/* Result Header */}
+                <div className="text-center mb-6">
+                  <div
+                    className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r ${result.primary.color} mb-4 shadow-lg`}
+                  >
+                    <result.primary.icon className="w-10 h-10 text-white" />
+                  </div>
+
+                  <DialogTitle className="text-2xl font-bold text-white mb-1">
+                    你是<span className="text-amber-400">{result.primary.title}</span>
+                  </DialogTitle>
+                  <p className="text-white/50 text-sm">{result.primary.subtitle}</p>
                 </div>
 
-                <DialogTitle className="text-2xl font-bold text-white mb-2">
-                  你是<span className="text-amber-400">{result.title}</span>
-                </DialogTitle>
-
-                <p className="text-white/70 mb-4">{result.description}</p>
-
-                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 mb-6">
-                  <p className="text-amber-300 text-sm">
-                    <Sparkles className="w-4 h-4 inline mr-2" />
-                    {result.insight}
-                  </p>
-                </div>
-
-                <p className="text-white/50 text-sm mb-6">
-                  想深入了解你的思維運作模式？
-                  <br />
-                  完整報告將為你解開更多人生密碼。
+                {/* Main Description */}
+                <p className="text-white/70 text-center mb-6 leading-relaxed">
+                  {result.primary.description}
                 </p>
 
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={resetQuiz}
-                    className="flex-1 border-white/20 text-white/70 hover:bg-white/10"
-                  >
-                    <RotateCcw className="w-4 h-4 mr-2" />
-                    重新測驗
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      onOpenChange(false);
-                      onComplete?.();
-                    }}
-                    className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold"
-                  >
-                    了解完整報告
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
+                {/* Strengths */}
+                <div className={`p-4 rounded-xl ${result.primary.bgColor} ${result.primary.borderColor} border mb-4`}>
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    你的優勢
+                  </h4>
+                  <ul className="space-y-2">
+                    {result.primary.strengths.map((strength, i) => (
+                      <li key={i} className="flex items-start gap-2 text-white/70 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                        <span>{strength}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Challenges */}
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 mb-4">
+                  <h4 className="text-white font-semibold mb-3">可能的挑戰</h4>
+                  <ul className="space-y-2">
+                    {result.primary.challenges.map((challenge, i) => (
+                      <li key={i} className="text-white/60 text-sm flex items-start gap-2">
+                        <span className="text-amber-400">•</span>
+                        {challenge}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Secondary Type */}
+                {result.secondary && (
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-4">
+                    <p className="text-white/60 text-sm">
+                      <span className="text-white/80 font-medium">次要傾向：</span>{" "}
+                      {result.secondary.title} — 你同時具備{result.secondary.subtitle}的特質
+                    </p>
+                  </div>
+                )}
+
+                {/* Report Insights */}
+                <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/30 mb-4">
+                  <h4 className="text-amber-300 font-semibold mb-2 flex items-center gap-2">
+                    <Brain className="w-4 h-4" />
+                    完整報告會告訴你
+                  </h4>
+                  <p className="text-white/70 text-sm leading-relaxed mb-3">
+                    {result.primary.reportInsight}
+                  </p>
+                  <div className="pt-3 border-t border-amber-500/20">
+                    <p className="text-purple-300/90 text-sm">
+                      <span className="font-semibold">🚀 旗艦版加值：</span>{" "}
+                      {result.primary.flagshipBonus}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Share & Actions */}
+                <div className="space-y-3">
+                  {/* Share Button */}
+                  <div className="relative">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowShareMenu(!showShareMenu)}
+                      className="w-full border-white/20 text-white/70 hover:bg-white/10 gap-2"
+                    >
+                      <Share2 className="w-4 h-4" />
+                      分享我的結果
+                    </Button>
+                    
+                    {showShareMenu && (
+                      <div className="absolute bottom-full left-0 right-0 mb-2 p-2 bg-[#1a1a1a] border border-white/20 rounded-xl shadow-xl animate-slide-up z-50">
+                        <button
+                          onClick={() => handleShare("twitter")}
+                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                        >
+                          <Twitter className="w-5 h-5 text-[#1DA1F2]" />
+                          <span className="text-white/80">分享到 Twitter</span>
+                        </button>
+                        <button
+                          onClick={() => handleShare("facebook")}
+                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                        >
+                          <Facebook className="w-5 h-5 text-[#4267B2]" />
+                          <span className="text-white/80">分享到 Facebook</span>
+                        </button>
+                        <button
+                          onClick={() => handleShare("copy")}
+                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                        >
+                          <Copy className="w-5 h-5 text-amber-400" />
+                          <span className="text-white/80">複製連結</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={resetQuiz}
+                      className="flex-1 border-white/20 text-white/70 hover:bg-white/10"
+                    >
+                      <RotateCcw className="w-4 h-4 mr-2" />
+                      重新測驗
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onOpenChange(false);
+                        onComplete?.();
+                      }}
+                      className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold"
+                    >
+                      了解完整報告
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             )
