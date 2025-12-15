@@ -122,9 +122,44 @@ function parseMarkdown(text: string): string {
     .replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
 }
 
+// Generate disclaimer HTML
+function generateDisclaimer(): string {
+  const year = new Date().getFullYear();
+  return `
+<div class="document-disclaimer" data-system-generated="true">
+  <hr />
+  <p><strong>免責聲明</strong></p>
+  <p>本報告內容僅供個人參考使用，不構成任何形式的專業建議（包括但不限於醫療、法律、財務或心理諮詢）。報告中的分析與解讀基於命理學原理，旨在提供自我探索的參考方向，實際情況可能因個人選擇、環境變化及多重因素而有所不同。</p>
+  <p>本報告為付費授權內容，僅供購買者本人閱讀使用。未經書面授權，禁止以任何形式轉載、複製、傳播或用於商業用途。</p>
+  <p>© ${year} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有</p>
+</div>`;
+}
+
+// Generate version metadata HTML
+function generateVersionMeta(version?: number): string {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  const timeStr = now.toLocaleTimeString('zh-TW', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const versionNum = version || 1;
+  
+  return `
+<div class="document-version-meta" data-system-generated="true" data-version="${versionNum}">
+  <p class="version-info">版本 ${versionNum}.0 ・ 完成於 ${dateStr} ${timeStr}</p>
+</div>`;
+}
+
 // Convert sections back to HTML for display
-export function sectionsToHtml(sections: DocumentSection[]): string {
-  return sections
+export function sectionsToHtml(sections: DocumentSection[], options?: { includeSystemMeta?: boolean; version?: number }): string {
+  const includeSystemMeta = options?.includeSystemMeta !== false; // Default to true
+  
+  const contentHtml = sections
     .map((section) => {
       // Handle page break
       if (section.type === 'pagebreak') {
@@ -158,6 +193,13 @@ export function sectionsToHtml(sections: DocumentSection[]): string {
       }
     })
     .join('\n');
+  
+  // Add system-generated metadata at the end if enabled
+  if (includeSystemMeta) {
+    return contentHtml + generateVersionMeta(options?.version) + generateDisclaimer();
+  }
+  
+  return contentHtml;
 }
 
 export async function parseDocxFile(file: File): Promise<ParsedDocument> {

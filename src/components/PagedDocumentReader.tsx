@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send, LayoutDashboard } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Printer, Send, LayoutDashboard, List, X } from "lucide-react";
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useDrag } from "@use-gesture/react";
@@ -311,6 +311,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
   const [flipDirection, setFlipDirection] = useState<'left' | 'right'>('right');
   const [isAnimating, setIsAnimating] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [showToc, setShowToc] = useState(false);
   const [feedbackName, setFeedbackName] = useState("");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSendingFeedback, setIsSendingFeedback] = useState(false);
@@ -608,7 +609,71 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
             </Link>
           </Button>
         )}
+        {/* TOC Toggle Button */}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setShowToc(!showToc)}
+          className="rounded-full w-10 h-10 md:w-14 md:h-14 bg-card/80 backdrop-blur-sm shadow-soft hover:scale-110 transition-transform"
+          title="章節目錄"
+        >
+          <List className="w-4 h-4 md:w-6 md:h-6" />
+        </Button>
       </div>
+
+      {/* Table of Contents Sidebar */}
+      {showToc && (
+        <div className="fixed inset-0 z-[60] md:inset-auto md:top-0 md:left-0 md:bottom-0 md:w-80">
+          {/* Mobile overlay backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm md:hidden"
+            onClick={() => setShowToc(false)}
+          />
+          
+          {/* TOC Panel */}
+          <div className="absolute inset-x-4 top-16 bottom-20 md:inset-0 md:relative bg-card/95 backdrop-blur-md md:bg-card shadow-2xl md:shadow-xl border border-border/50 rounded-2xl md:rounded-none overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-border/50">
+              <h3 className="font-serif font-bold text-lg text-primary">章節目錄</h3>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowToc(false)}
+                className="h-8 w-8"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4 space-y-1">
+              {pages.map((p, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    goToPage(index);
+                    setShowToc(false);
+                  }}
+                  className={cn(
+                    "w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-start gap-3 group",
+                    currentPage === index
+                      ? "bg-primary/10 text-primary"
+                      : "hover:bg-muted/50 text-foreground/80 hover:text-foreground"
+                  )}
+                >
+                  <span className={cn(
+                    "flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium",
+                    currentPage === index
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground group-hover:bg-primary/20"
+                  )}>
+                    {index + 1}
+                  </span>
+                  <span className="text-sm leading-relaxed line-clamp-2">{p.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div 
