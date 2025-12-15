@@ -24,6 +24,7 @@ import HomePage from "./pages/public/HomePage";
 import AboutPage from "./pages/public/AboutPage";
 import MomoPage from "./pages/public/MomoPage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
+import ReportPage from "./pages/public/ReportPage";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/chaoxuan" element={<ChaoxuanPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/momo" element={<MomoPage />} />
+              <Route path="/reports" element={<ReportPage />} />
               
               {/* Protected routes - Admin dashboard */}
               <Route
