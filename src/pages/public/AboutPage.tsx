@@ -37,14 +37,14 @@ const values = [
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-parchment">
       <PublicHeader />
       
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute top-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-breathe" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '3s' }} />
+        <div className="absolute inset-0 bg-parchment-hero" />
+        <div className="absolute top-20 right-20 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl animate-breathe" />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '3s' }} />
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-fade-in">
@@ -84,7 +84,8 @@ const AboutPage = () => {
       </section>
       
       {/* Epigraph Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-background via-accent/20 to-background">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
         <div className="container mx-auto max-w-3xl text-center">
           <div className="mb-8">
             <Flame className="h-12 w-12 text-primary mx-auto mb-6" />

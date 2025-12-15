@@ -82,16 +82,17 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-parchment">
       <PublicHeader />
       
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background decorations */}
-        <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-breathe" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '4s' }} />
+        {/* Background parchment hero effect */}
+        <div className="absolute inset-0 bg-parchment-hero" />
+        {/* Subtle warm glow accents */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-600/5 rounded-full blur-3xl animate-breathe" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/3 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '4s' }} />
         
         <div className="relative z-10 container mx-auto px-4 text-center pt-20">
           {/* Brand Badge */}
@@ -220,7 +221,9 @@ const HomePage = () => {
       </section>
       
       {/* Quote Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-background via-accent/20 to-background">
+      <section className="py-24 px-4 relative overflow-hidden">
+        {/* Darker parchment edge effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center">
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-relaxed mb-8">
             「命運從來不是劇本，<br />
