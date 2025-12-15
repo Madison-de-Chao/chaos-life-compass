@@ -395,19 +395,33 @@
     line-height: 1;
   }
 
+  /* Table wrapper for horizontal scroll */
+  .document-page-content .table-wrapper {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
   /* Generic table styling - applies to all tables */
   .document-page-content table {
     display: table !important;
     width: 100%;
+    min-width: 600px;
     border-collapse: collapse;
-    margin: 2rem 0;
-    font-size: 0.9em;
-    line-height: 1.6;
+    font-size: 0.85em;
+    line-height: 1.5;
     background-color: hsl(var(--card));
     border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-soft);
-    table-layout: auto;
+    table-layout: fixed;
+  }
+
+  .document-page-content table thead {
+    display: table-header-group !important;
+  }
+
+  .document-page-content table tbody {
+    display: table-row-group !important;
   }
 
   .document-page-content table tr {
@@ -421,7 +435,7 @@
     text-align: left;
     border: 1px solid hsl(var(--border));
     vertical-align: top;
-    text-indent: 0;
+    text-indent: 0 !important;
     white-space: normal;
     word-break: break-word;
   }
@@ -430,6 +444,9 @@
     background-color: hsl(var(--primary) / 0.15);
     font-weight: 700;
     color: hsl(var(--primary));
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 
   .document-page-content table tr:nth-child(even) td {
@@ -509,56 +526,9 @@
     margin-bottom: 1em;
   }
 
-  /* Document table styling */
+  /* Document table styling - for markdown parsed tables */
   .document-page-content .document-table {
-    display: table !important;
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    font-size: 0.85em;
-    line-height: 1.5;
-    background-color: hsl(var(--card));
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-soft);
-    table-layout: auto;
-  }
-
-  .document-page-content .document-table tr {
-    display: table-row !important;
-  }
-
-  .document-page-content .document-table th,
-  .document-page-content .document-table td {
-    display: table-cell !important;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border: 1px solid hsl(var(--border));
-    vertical-align: top;
-    text-indent: 0;
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  .document-page-content .document-table th {
-    background-color: hsl(var(--primary) / 0.15);
-    font-weight: 700;
-    color: hsl(var(--primary));
-    white-space: nowrap;
-  }
-
-  .document-page-content .document-table tr:nth-child(even) {
-    background-color: hsl(var(--muted) / 0.3);
-  }
-
-  .document-page-content .document-table tr:hover {
-    background-color: hsl(var(--accent) / 0.5);
-    transition: background-color 0.2s ease;
-  }
-
-  .document-page-content .document-table strong {
-    color: hsl(var(--primary));
-    font-weight: 700;
+    min-width: 600px;
   }
 }
 

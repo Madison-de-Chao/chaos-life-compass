@@ -207,10 +207,19 @@ function convertToHtmlTable(rows: string[]): string {
   return tableHtml;
 }
 
+// Wrap existing HTML tables with scrollable container
+function wrapTablesWithScroller(html: string): string {
+  // Wrap <table> elements with a scrollable div
+  return html.replace(/<table([^>]*)>/gi, '<div class="table-wrapper"><table$1>').replace(/<\/table>/gi, '</table></div>');
+}
+
 // Parse markdown in HTML content
 function parseMarkdownInHtml(html: string): string {
-  // First parse tables
+  // First parse markdown tables
   let result = parseMarkdownTables(html);
+  
+  // Wrap all tables with scrollable container
+  result = wrapTablesWithScroller(result);
   
   return result
     // Remove #### (4 consecutive hash marks) but keep the text
