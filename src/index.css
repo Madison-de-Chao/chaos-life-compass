@@ -401,64 +401,81 @@
     margin: 2rem 0;
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Generic table styling - applies to all tables */
-  .document-page-content table {
+  .document-page-content table,
+  .document-page-content .document-table {
     display: table !important;
     width: 100%;
-    min-width: 600px;
+    min-width: 800px;
     border-collapse: collapse;
     font-size: 0.85em;
-    line-height: 1.5;
+    line-height: 1.6;
     background-color: hsl(var(--card));
-    border-radius: var(--radius);
-    table-layout: fixed;
+    table-layout: auto;
   }
 
-  .document-page-content table thead {
+  .document-page-content table thead,
+  .document-page-content .document-table thead {
     display: table-header-group !important;
   }
 
-  .document-page-content table tbody {
+  .document-page-content table tbody,
+  .document-page-content .document-table tbody {
     display: table-row-group !important;
   }
 
-  .document-page-content table tr {
+  .document-page-content table tr,
+  .document-page-content .document-table tr {
     display: table-row !important;
   }
 
   .document-page-content table th,
-  .document-page-content table td {
+  .document-page-content table td,
+  .document-page-content .document-table th,
+  .document-page-content .document-table td {
     display: table-cell !important;
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.25rem;
     text-align: left;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid hsl(var(--border) / 0.5);
     vertical-align: top;
     text-indent: 0 !important;
     white-space: normal;
     word-break: break-word;
+    min-width: 120px;
   }
 
-  .document-page-content table th {
-    background-color: hsl(var(--primary) / 0.15);
+  .document-page-content table th,
+  .document-page-content .document-table th {
+    background-color: hsl(var(--primary) / 0.12);
     font-weight: 700;
     color: hsl(var(--primary));
     position: sticky;
     top: 0;
     z-index: 1;
+    white-space: nowrap;
   }
 
-  .document-page-content table tr:nth-child(even) td {
-    background-color: hsl(var(--muted) / 0.2);
+  .document-page-content table tbody tr:nth-child(odd) td,
+  .document-page-content .document-table tbody tr:nth-child(odd) td {
+    background-color: hsl(var(--background));
   }
 
-  .document-page-content table tr:hover td {
-    background-color: hsl(var(--accent) / 0.3);
+  .document-page-content table tbody tr:nth-child(even) td,
+  .document-page-content .document-table tbody tr:nth-child(even) td {
+    background-color: hsl(var(--muted) / 0.15);
+  }
+
+  .document-page-content table tbody tr:hover td,
+  .document-page-content .document-table tbody tr:hover td {
+    background-color: hsl(var(--accent) / 0.25);
     transition: background-color 0.2s ease;
   }
 
-  .document-page-content table strong {
+  .document-page-content table strong,
+  .document-page-content .document-table strong {
     color: hsl(var(--primary));
     font-weight: 700;
   }
