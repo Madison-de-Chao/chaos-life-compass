@@ -7,7 +7,8 @@ import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
 const navLinks = [
-  { label: "首頁", href: "/home" },
+  { label: "虹靈御所", href: "/home" },
+  { label: "超烜創意", href: "/chaoxuan" },
   { label: "命理報告", href: "/reports" },
   { label: "命理遊戲", href: "/games" },
   { label: "元壹筆記", href: "/notes" },
