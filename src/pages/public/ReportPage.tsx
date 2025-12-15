@@ -54,7 +54,45 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
+import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
+
+// AI Evaluation data
+const aiEvaluations = [
+  {
+    score: "8.5/10",
+    title: "專業度與實用性兼具",
+    highlights: [
+      "多系統整合分析，紫微、八字、占星、人類圖四維交叉驗證",
+      "「鏡子非劇本」的正向哲學定位，拒絕宿命論",
+      "固定格式但有彈性的寫作架構",
+      "「默默超不負責提醒」的幽默結尾設計"
+    ],
+    source: "AI 專業分析"
+  },
+  {
+    score: "9/10",
+    title: "心理諮詢價值高",
+    highlights: [
+      "自我覺察導向，幫助理解行為模式和心理動機",
+      "成長導向，積極運用天賦而非消極接受命運",
+      "語調溫暖，給予當事人安全感和被理解感",
+      "將複雜命理知識轉化為可行動的人生指南"
+    ],
+    source: "AI 心理學視角"
+  },
+  {
+    score: "9.5/10",
+    title: "創新突破傳統框架",
+    highlights: [
+      "去神秘化：不用高深莫測的術語",
+      "生活化應用：每個建議都能在日常實踐",
+      "現代職場導向：特別重視事業分析",
+      "用邏輯說服理性派，有「邏輯的美感」"
+    ],
+    source: "AI 創新評估"
+  }
+];
 
 // CountUp animation hook
 const useCountUp = (end: number, duration: number = 2000, start: number = 0, isVisible: boolean = true) => {
@@ -428,6 +466,7 @@ const ReportPage = () => {
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [heroVisible, setHeroVisible] = useState(false);
   const [selectedService, setSelectedService] = useState<typeof valueAddedServices[0] | null>(null);
+  const [showQuiz, setShowQuiz] = useState(false);
   const observerRefs = useRef<{ [key: string]: Element | null }>({});
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -1513,6 +1552,136 @@ const ReportPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* AI Evaluation Section */}
+      <section 
+        id="ai-evaluation"
+        ref={(el) => (observerRefs.current['ai-evaluation'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent" />
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['ai-evaluation'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-6">
+              <Brain className="w-4 h-4 text-purple-400" />
+              <span className="text-purple-300 text-sm font-medium">AI 專業評價</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              多方 AI 專業認證
+            </h2>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto">
+              我們的報告經過多個 AI 系統深度分析與評估，獲得高度肯定
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {aiEvaluations.map((evaluation, idx) => (
+              <div 
+                key={idx}
+                className={`group relative transition-all duration-700 ${isVisible['ai-evaluation'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+                style={{ transitionDelay: `${0.2 + idx * 0.15}s` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-amber-500/10 opacity-0 group-hover:opacity-100 rounded-3xl blur-xl transition-opacity duration-500" />
+                <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-purple-500/30 transition-all duration-500 h-full">
+                  <div className="text-center mb-6">
+                    <div className="text-4xl font-black bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent mb-2">
+                      {evaluation.score}
+                    </div>
+                    <div className="text-xs text-white/40 uppercase tracking-wider">{evaluation.source}</div>
+                  </div>
+                  
+                  <h3 className="font-serif text-xl font-bold text-white mb-4 text-center">
+                    {evaluation.title}
+                  </h3>
+                  
+                  <ul className="space-y-3">
+                    {evaluation.highlights.map((highlight, i) => (
+                      <li key={i} className="flex items-start gap-2 text-white/60 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className={`mt-12 text-center transition-all duration-1000 delay-500 ${isVisible['ai-evaluation'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-white/40 text-sm italic">
+              "這不是算命，這是心靈的精密工業。" — AI 綜合評價
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Interactive Self-Check Quiz Section */}
+      <section 
+        id="self-check"
+        ref={(el) => (observerRefs.current['self-check'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 via-transparent to-purple-900/10" />
+        <FloatingOrb className="top-20 right-1/4 w-48 h-48 bg-amber-500/10" delay={0} duration={5} />
+        <FloatingOrb className="bottom-20 left-1/4 w-32 h-32 bg-purple-500/10" delay={1.5} duration={4} />
+        
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className={`relative bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0d0d0d] rounded-[40px] p-12 md:p-16 border border-amber-500/20 shadow-[0_0_80px_rgba(251,191,36,0.1)] transition-all duration-1000 ${isVisible['self-check'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-amber-500/30 rounded-tl-[40px]" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-purple-500/30 rounded-br-[40px]" />
+            
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/30 mb-6">
+                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                <span className="text-amber-300 text-sm font-medium">互動體驗</span>
+              </div>
+              
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                一分鐘探索你的<span className="text-amber-400">思維類型</span>
+              </h2>
+              
+              <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
+                完成 5 道簡單問題，初步了解你的決策傾向與思維模式。
+                <br />
+                <span className="text-amber-300/70">這只是完整報告的冰山一角。</span>
+              </p>
+              
+              <div className="flex flex-wrap justify-center gap-4 mb-10">
+                {[
+                  { icon: Heart, label: "情緒", color: "from-rose-400 to-pink-500" },
+                  { icon: Zap, label: "行動", color: "from-amber-400 to-yellow-500" },
+                  { icon: Brain, label: "心智", color: "from-blue-400 to-cyan-500" },
+                  { icon: Target, label: "價值", color: "from-purple-400 to-violet-500" },
+                ].map((dim, i) => (
+                  <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                    <div className={`p-1.5 rounded-lg bg-gradient-to-r ${dim.color}`}>
+                      <dim.icon className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-white/60 text-sm">{dim.label}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <Button
+                size="lg"
+                onClick={() => setShowQuiz(true)}
+                className="group text-lg px-10 py-6 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 hover:from-amber-400 hover:to-purple-400 text-white font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105"
+              >
+                <Sparkles className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                開始測驗
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Self Check Quiz Dialog */}
+      <SelfCheckQuiz 
+        open={showQuiz} 
+        onOpenChange={setShowQuiz}
+        onComplete={() => scrollToPlans()}
+      />
       
       {/* FAQ Section */}
       <section 
