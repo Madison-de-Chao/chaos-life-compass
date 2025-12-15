@@ -332,27 +332,33 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
   }, [content]);
 
   const goToPage = useCallback((page: number, direction?: 'left' | 'right') => {
-    if (page >= 0 && page < pages.length && !isAnimating) {
-      // Determine direction based on page difference if not specified
-      const dir = direction || (page > currentPage ? 'right' : 'left');
-      setFlipDirection(dir);
-      setIsAnimating(true);
-      
-      // Small delay for exit animation
-      setTimeout(() => {
-        setCurrentPage(page);
-        // Stop audio when changing pages
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current = null;
-          setIsPlaying(false);
-        }
-        // Scroll to top of page
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Reset animation state after enter animation
-        setTimeout(() => setIsAnimating(false), 400);
-      }, 50);
+    // Validate page range first
+    if (page < 0 || page >= pages.length) return;
+    // Skip if same page or already animating
+    if (page === currentPage || isAnimating) return;
+    
+    // Determine direction based on page difference if not specified
+    const dir = direction || (page > currentPage ? 'right' : 'left');
+    setFlipDirection(dir);
+    setIsAnimating(true);
+    
+    // Update page immediately
+    setCurrentPage(page);
+    
+    // Stop audio when changing pages
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      setIsPlaying(false);
     }
+    
+    // Scroll to top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Reset animation state after animation completes
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 450);
   }, [pages.length, currentPage, isAnimating]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
