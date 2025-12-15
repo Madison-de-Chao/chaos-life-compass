@@ -356,17 +356,35 @@ const ReportPage = () => {
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
         
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-8 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
             <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">v2026 人生操作系統</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8 animate-fade-in leading-tight tracking-tight">
+          {/* Main Product Title - Big and Bold */}
+          <div className="mb-8 animate-fade-in">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 tracking-tight leading-none">
+              <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(251,191,36,0.4)] animate-gradient-shift bg-[length:200%_auto]">
+                默默超
+              </span>
+            </h1>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white/95 tracking-wide">
+              全方位命理解讀報告
+            </h2>
+          </div>
+          
+          {/* Decorative divider */}
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="w-16 md:w-24 h-px bg-gradient-to-r from-transparent to-amber-500/60" />
+            <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_10px_rgba(251,191,36,0.6)]" />
+            <div className="w-16 md:w-24 h-px bg-gradient-to-l from-transparent to-amber-500/60" />
+          </div>
+          
+          <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.2s' }}>
             <span className="text-white/90">別讓你的靈魂，</span>
-            <br />
-            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent animate-text-glow bg-[length:200%_auto] animate-gradient-shift">跑在舊版的系統上。</span>
-          </h1>
+            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">跑在舊版的系統上。</span>
+          </p>
           
           <div className="space-y-4 mb-10" style={{ animationDelay: '0.2s' }}>
             <p className="font-serif text-xl md:text-2xl lg:text-3xl text-white/70 leading-relaxed font-light animate-slide-up" style={{ animationDelay: '0.3s' }}>
