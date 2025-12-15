@@ -714,35 +714,38 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
 
       {/* Main Content */}
       <div 
-        className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-32 pb-36 sm:pb-40"
+        className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 md:px-12 lg:px-16 py-20 sm:py-24 md:py-32 pb-40 sm:pb-44"
         style={{ perspective: '1200px' }}
       >
         {/* Page Title */}
         <header 
-          className={cn("text-center", currentPage === 0 ? "mb-6 sm:mb-8 md:mb-12" : "mb-10 sm:mb-16", pageAnimationClass)}
+          className={cn("text-center", currentPage === 0 ? "mb-8 sm:mb-12 md:mb-16" : "mb-12 sm:mb-16 md:mb-20", pageAnimationClass)}
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
-            <div className="inline-block mb-6">
-              <span className="text-primary/70 text-xs tracking-[0.4em] uppercase font-sans">
+            <div className="inline-block mb-8">
+              <span className="text-primary/60 text-[11px] tracking-[0.5em] uppercase font-sans border border-primary/20 px-4 py-1.5 rounded-full bg-primary/5">
                 命理報告
               </span>
             </div>
           )}
           <h1 
-            className="text-[24px] sm:text-[28px] md:text-[30px] lg:text-[32px] font-bold text-primary font-serif leading-tight tracking-tight px-2"
+            className="text-[26px] sm:text-[30px] md:text-[34px] lg:text-[38px] font-bold text-primary font-serif leading-[1.3] tracking-tight px-4"
             dangerouslySetInnerHTML={{ __html: page.styledTitle }}
           />
-          <div className="flex items-center justify-center gap-4 mt-6 md:mt-8">
-            <div className="w-16 md:w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-            <div className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-primary/30 animate-pulse" />
-            <div className="w-16 md:w-20 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+          <div className="flex items-center justify-center gap-5 mt-8 md:mt-10">
+            <div className="w-20 md:w-28 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            <div className="relative">
+              <div className="w-3 h-3 rounded-full bg-primary/25" />
+              <div className="absolute inset-0 w-3 h-3 rounded-full bg-primary/40 animate-ping" />
+            </div>
+            <div className="w-20 md:w-28 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
           </div>
         </header>
 
         {/* Cover Logo - only on first page */}
         {currentPage === 0 && (
-          <div className="flex justify-center items-center my-10 md:my-16 lg:my-20 perspective-1000">
+          <div className="flex justify-center items-center my-12 md:my-20 lg:my-24 perspective-1000">
             <div className="relative animate-cover-reveal">
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/30 to-primary/20 rounded-full blur-3xl animate-glow-pulse" />
@@ -761,25 +764,38 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
               <img 
                 src={reportLogo} 
                 alt="報告標誌" 
-                className="relative z-10 w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain drop-shadow-2xl animate-float"
+                className="relative z-10 w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl animate-float"
                 style={{
-                  filter: 'drop-shadow(0 20px 40px hsl(var(--primary) / 0.25))',
+                  filter: 'drop-shadow(0 25px 50px hsl(var(--primary) / 0.3))',
                 }}
               />
             </div>
           </div>
         )}
 
-        {/* Page Content */}
+        {/* Page Content Card */}
         <div 
           key={`content-${currentPage}`}
           className={cn(
-            "document-page-content font-serif text-foreground/85 leading-[1.9] sm:leading-[2.1] tracking-wide text-[17px] sm:text-[20px] md:text-[21px] lg:text-[22px]",
+            "relative",
             pageAnimationClass
           )}
           style={{ animationDelay: '0.08s' }}
-          dangerouslySetInnerHTML={{ __html: page.content }}
-        />
+        >
+          {/* Content background card */}
+          <div className="absolute -inset-6 sm:-inset-8 md:-inset-10 bg-card/40 backdrop-blur-sm rounded-3xl border border-border/20 shadow-lg -z-10" />
+          
+          {/* Decorative corner elements */}
+          <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-primary/20 rounded-tl-xl" />
+          <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-primary/20 rounded-tr-xl" />
+          <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-primary/20 rounded-bl-xl" />
+          <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-primary/20 rounded-br-xl" />
+          
+          <div 
+            className="document-page-content font-serif text-foreground/90 leading-[2.0] sm:leading-[2.2] tracking-wide text-[18px] sm:text-[20px] md:text-[21px] lg:text-[22px]"
+            dangerouslySetInnerHTML={{ __html: page.content }}
+          />
+        </div>
       </div>
 
       {/* Navigation */}

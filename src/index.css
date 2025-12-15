@@ -311,18 +311,34 @@
 
   .document-page-content h1,
   .document-page-content h2 {
-    @apply text-2xl md:text-3xl font-bold mt-12 mb-6 pb-4;
+    @apply text-2xl md:text-3xl font-bold mt-14 mb-8 pb-4 relative;
     color: hsl(var(--primary));
   }
 
+  .document-page-content h1::after,
+  .document-page-content h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--primary)), transparent);
+    border-radius: 2px;
+  }
+
   .document-page-content h3 {
-    @apply text-xl md:text-2xl font-semibold mt-10 mb-5;
+    @apply text-xl md:text-2xl font-semibold mt-12 mb-6;
     color: hsl(var(--foreground));
   }
 
   .document-page-content p {
-    @apply mb-8 leading-[2.4];
-    text-indent: 2.5em;
+    @apply mb-6 leading-[2.2];
+    text-indent: 2em;
+  }
+
+  .document-page-content p + p {
+    @apply mt-1;
   }
 
 
@@ -334,23 +350,49 @@
 
   .document-page-content ul,
   .document-page-content ol {
-    @apply my-8 space-y-4;
+    @apply my-10 space-y-4 pl-2;
   }
 
   .document-page-content li {
-    @apply pl-8 relative text-lg;
+    @apply pl-10 relative text-lg leading-relaxed;
   }
 
   .document-page-content ul li::before {
-    content: "◆";
-    @apply absolute left-0;
-    color: hsl(var(--primary) / 0.6);
+    content: "";
+    @apply absolute left-0 top-[0.6em] w-2 h-2 rounded-full;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.5));
+  }
+
+  .document-page-content ol {
+    counter-reset: list-counter;
+  }
+
+  .document-page-content ol li {
+    counter-increment: list-counter;
+  }
+
+  .document-page-content ol li::before {
+    content: counter(list-counter);
+    @apply absolute left-0 top-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-semibold;
+    background: hsl(var(--primary) / 0.15);
+    color: hsl(var(--primary));
   }
 
   .document-page-content blockquote {
-    @apply my-12 px-8 py-6 border-l-4 border-primary rounded-r-2xl italic text-xl;
-    background: linear-gradient(to right, hsl(var(--accent) / 0.5), transparent);
-    color: hsl(var(--foreground) / 0.85);
+    @apply my-14 px-8 py-8 border-l-4 border-primary rounded-2xl italic text-xl relative overflow-hidden;
+    background: linear-gradient(135deg, hsl(var(--accent) / 0.4), hsl(var(--primary) / 0.1));
+    color: hsl(var(--foreground) / 0.9);
+  }
+
+  .document-page-content blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 80px;
+    color: hsl(var(--primary) / 0.15);
+    font-family: Georgia, serif;
+    line-height: 1;
   }
 
   .document-page-content table {
