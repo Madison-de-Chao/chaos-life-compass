@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import HomePage from "./pages/public/HomePage";
 import AboutPage from "./pages/public/AboutPage";
 import MomoPage from "./pages/public/MomoPage";
+import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Routes>
             {/* Public routes - 虹靈御所前台 */}
             <Route path="/home" element={<HomePage />} />
+            <Route path="/chaoxuan" element={<ChaoxuanPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/momo" element={<MomoPage />} />
             

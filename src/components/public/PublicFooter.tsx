@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoHongling from "@/assets/logo-hongling.png";
 
 const currentYear = new Date().getFullYear();
 
@@ -20,13 +22,25 @@ const PublicFooter = () => {
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Brand */}
+          {/* Brand with Logos */}
           <div className="md:col-span-2">
-            <Link to="/home" className="inline-block mb-4">
-              <span className="font-serif text-2xl font-bold text-foreground">
-                <span className="text-primary">虹</span>靈御所
-              </span>
-            </Link>
+            <div className="flex items-center gap-4 mb-6">
+              <Link to="/chaoxuan" className="group">
+                <img 
+                  src={logoChaoxuan} 
+                  alt="超烜創意" 
+                  className="h-12 w-auto hover:scale-110 transition-transform duration-300"
+                />
+              </Link>
+              <div className="h-8 w-px bg-border/50" />
+              <Link to="/home" className="group">
+                <img 
+                  src={logoHongling} 
+                  alt="虹靈御所" 
+                  className="h-12 w-auto hover:scale-110 transition-transform duration-300"
+                />
+              </Link>
+            </div>
             <p className="text-muted-foreground mb-6 max-w-sm leading-relaxed">
               鏡子非劇本，真實即命運。<br />
               我們不預測未來，只幫你看清現在。
