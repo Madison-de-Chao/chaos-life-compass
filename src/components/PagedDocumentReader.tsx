@@ -173,12 +173,12 @@ function parseMarkdownTables(html: string): string {
 function convertToHtmlTable(rows: string[]): string {
   if (rows.length === 0) return '';
   
-  // Filter out separator rows (like |---|---|)
+  // Filter out separator rows (like |---|---|) but keep data rows
   const dataRows = rows.filter(row => !row.match(/^\|?\s*[-:]+\s*(\|\s*[-:]+\s*)+\|?\s*$/));
   
   if (dataRows.length === 0) return '';
 
-  let tableHtml = '<table class="document-table">';
+  let tableHtml = '<div class="table-wrapper"><table class="document-table"><thead>';
   
   dataRows.forEach((row, index) => {
     // Split by | and clean up
@@ -188,13 +188,21 @@ function convertToHtmlTable(rows: string[]): string {
     
     if (cells.length === 0) return;
     
+    // First row is always header
     const isHeader = index === 0;
     const cellTag = isHeader ? 'th' : 'td';
-    const rowClass = isHeader ? 'table-header' : '';
     
-    tableHtml += `<tr class="${rowClass}">`;
+    if (isHeader) {
+      tableHtml += '<tr>';
+    } else if (index === 1) {
+      // Close thead and open tbody before first data row
+      tableHtml += '</thead><tbody><tr>';
+    } else {
+      tableHtml += '<tr>';
+    }
+    
     cells.forEach(cell => {
-      // Parse bold text in cells
+      // Parse bold text in cells and remove ** markers
       const parsedCell = cell
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/__(.+?)__/g, '<strong>$1</strong>');
@@ -203,14 +211,22 @@ function convertToHtmlTable(rows: string[]): string {
     tableHtml += '</tr>';
   });
   
-  tableHtml += '</table>';
+  // Close tbody if we had data rows
+  if (dataRows.length > 1) {
+    tableHtml += '</tbody>';
+  } else {
+    tableHtml += '</thead>';
+  }
+  
+  tableHtml += '</table></div>';
   return tableHtml;
 }
 
-// Wrap existing HTML tables with scrollable container
+// Wrap existing HTML tables with scrollable container (skip already wrapped ones)
 function wrapTablesWithScroller(html: string): string {
-  // Wrap <table> elements with a scrollable div
-  return html.replace(/<table([^>]*)>/gi, '<div class="table-wrapper"><table$1>').replace(/<\/table>/gi, '</table></div>');
+  // Only wrap <table> elements that are NOT already inside a table-wrapper
+  // Match tables that are NOT preceded by <div class="table-wrapper">
+  return html.replace(/(?<!<div class="table-wrapper">)\s*<table(?![^>]*class="document-table")([^>]*)>/gi, '<div class="table-wrapper"><table$1>').replace(/<\/table>(?!\s*<\/div>)/gi, '</table></div>');
 }
 
 // Parse markdown in HTML content
