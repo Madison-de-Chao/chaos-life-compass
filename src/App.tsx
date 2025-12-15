@@ -13,6 +13,7 @@ import AuthPage from "./pages/AuthPage";
 import EditDocumentPage from "./pages/EditDocumentPage";
 import CustomersPage from "./pages/CustomersPage";
 import FeedbacksPage from "./pages/FeedbacksPage";
+import GuidePage from "./pages/GuidePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,6 +64,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <FeedbacksPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/guide"
+              element={
+                <ProtectedRoute>
+                  <GuidePage />
                 </ProtectedRoute>
               }
             />

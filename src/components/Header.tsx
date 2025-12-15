@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, Upload, List, LogOut, User, Users, MessageSquare, Menu, X } from "lucide-react";
+import { FileText, Upload, List, LogOut, User, Users, MessageSquare, Menu, X, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -29,6 +29,7 @@ export function Header() {
     { path: "/files", label: "檔案管理", icon: List },
     { path: "/customers", label: "客戶管理", icon: Users },
     { path: "/feedbacks", label: "反饋", icon: MessageSquare },
+    { path: "/guide", label: "說明", icon: BookOpen },
   ];
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
