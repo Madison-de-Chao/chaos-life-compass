@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoHongling from "@/assets/logo-hongling.png";
 
 const navLinks = [
   { label: "首頁", href: "/home" },
@@ -24,11 +26,20 @@ const PublicHeader = () => {
     <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/home" className="flex items-center gap-3 group">
-            <span className="font-serif text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-              <span className="text-primary">虹</span>靈御所
-            </span>
+          {/* Logos */}
+          <Link to="/home" className="flex items-center gap-4 group">
+            <img 
+              src={logoChaoxuan} 
+              alt="超烜創意" 
+              className="h-10 md:h-12 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
+            />
+            <div className="h-8 w-px bg-border/50" />
+            <img 
+              src={logoHongling} 
+              alt="虹靈御所" 
+              className="h-10 md:h-12 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: "0.1s" }}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -65,11 +76,19 @@ const PublicHeader = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[350px]">
               <div className="flex flex-col h-full">
-                {/* Mobile Logo */}
-                <div className="flex items-center justify-between py-4 border-b border-border">
-                  <span className="font-serif text-xl font-bold text-foreground">
-                    <span className="text-primary">虹</span>靈御所
-                  </span>
+                {/* Mobile Logos */}
+                <div className="flex items-center gap-3 py-4 border-b border-border">
+                  <img 
+                    src={logoChaoxuan} 
+                    alt="超烜創意" 
+                    className="h-8 w-auto"
+                  />
+                  <div className="h-6 w-px bg-border/50" />
+                  <img 
+                    src={logoHongling} 
+                    alt="虹靈御所" 
+                    className="h-8 w-auto"
+                  />
                 </div>
 
                 {/* Mobile Nav Links */}
