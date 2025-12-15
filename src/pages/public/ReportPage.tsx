@@ -771,7 +771,7 @@ const ReportPage = () => {
           </div>
 
           {/* Plan Tiers Explanation */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 perspective-1000">
             {[
               { title: "方案 1｜核心包", subtitle: "報告＋語音導讀＋整合圖", items: planIncludes, accent: false },
               { title: "方案 2｜深度吸收包", subtitle: "方案1＋語音摘要＋個人簡報", items: plan2Extras, prefix: "包含方案1全部 +", accent: false },
@@ -779,16 +779,22 @@ const ReportPage = () => {
             ].map((plan, idx) => (
               <div 
                 key={idx}
-                className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border transition-all duration-500 hover:-translate-y-2 ${plan.accent ? 'border-amber-500/20' : 'border-white/10'} ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border transition-all duration-500 card-3d shine-effect overflow-hidden ${plan.accent ? 'border-amber-500/30 glow-border-amber' : 'border-white/10 hover:border-white/30'} ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transitionDelay: `${0.2 + idx * 0.1}s` }}
               >
-                <h3 className={`font-serif text-xl font-bold mb-4 ${plan.accent ? 'text-amber-400' : 'text-white'}`}>{plan.title}</h3>
-                <p className="text-white/50 text-sm mb-6">{plan.subtitle}</p>
-                <div className="space-y-3">
+                {/* Hover glow effect */}
+                <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${plan.accent ? 'bg-amber-500/5' : 'bg-white/5'}`} />
+                
+                {/* Animated corner accent */}
+                <div className={`absolute top-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-all duration-500 ${plan.accent ? 'bg-gradient-to-br from-amber-500/20 to-transparent' : 'bg-gradient-to-br from-white/10 to-transparent'}`} style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 0)' }} />
+                
+                <h3 className={`font-serif text-xl font-bold mb-4 relative z-10 transition-all duration-300 group-hover:scale-105 ${plan.accent ? 'text-amber-400 group-hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]' : 'text-white'}`}>{plan.title}</h3>
+                <p className="text-white/50 text-sm mb-6 relative z-10">{plan.subtitle}</p>
+                <div className="space-y-3 relative z-10">
                   {plan.prefix && <div className="text-white/40 text-sm mb-2">{plan.prefix}</div>}
                   {plan.items.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 group-hover:translate-x-1 transition-transform" style={{ transitionDelay: `${i * 0.05}s` }}>
-                      <item.icon className={`h-5 w-5 ${plan.accent ? 'text-amber-400' : 'text-amber-400/70'}`} />
+                    <div key={i} className="flex items-center gap-3 group-hover:translate-x-2 transition-all duration-300" style={{ transitionDelay: `${i * 0.08}s` }}>
+                      <item.icon className={`h-5 w-5 transition-all duration-300 group-hover:scale-110 ${plan.accent ? 'text-amber-400 group-hover:drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]' : 'text-amber-400/70'}`} />
                       <div>
                         <span className="text-white/80 text-sm">{item.title}</span>
                         <span className="text-white/40 text-xs ml-2">{item.desc}</span>
@@ -811,26 +817,43 @@ const ReportPage = () => {
                 <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">看懂自己</h3>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-4 perspective-1000">
                 {standardPricing.map((item, idx) => (
                   <div 
                     key={idx}
-                    className={`group p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                    className={`group relative p-6 rounded-2xl border transition-all duration-500 shine-effect overflow-hidden cursor-pointer ${
                       idx === 2 
-                        ? 'bg-white/5 border-white/20' 
-                        : 'bg-transparent border-white/5 hover:border-white/10'
+                        ? 'bg-white/5 border-white/20 hover:border-white/40 hover:bg-white/10' 
+                        : 'bg-transparent border-white/5 hover:border-white/20 hover:bg-white/5'
                     }`}
+                    style={{
+                      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
+                      transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      const card = e.currentTarget;
+                      card.style.transform = 'perspective(1000px) rotateX(-5deg) rotateY(5deg) translateZ(20px)';
+                      card.style.boxShadow = '0 25px 50px -12px rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      const card = e.currentTarget;
+                      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                      card.style.boxShadow = 'none';
+                    }}
                   >
-                    <div className="flex justify-between items-start mb-3">
+                    {/* Hover gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="flex justify-between items-start mb-3 relative z-10">
                       <div>
-                        <h4 className="font-medium text-white group-hover:text-amber-300 transition-colors">{item.plan}</h4>
+                        <h4 className="font-medium text-white group-hover:text-amber-300 transition-all duration-300 group-hover:translate-x-1">{item.plan}</h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <Clock className="h-3.5 w-3.5 text-white/40" />
-                          <span className="text-white/40 text-xs">{item.days} 個工作天</span>
+                          <Clock className="h-3.5 w-3.5 text-white/40 group-hover:text-white/60 transition-colors" />
+                          <span className="text-white/40 text-xs group-hover:text-white/60 transition-colors">{item.days} 個工作天</span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-2xl font-bold text-white">NT$ {item.price}</span>
+                        <span className="text-2xl font-bold text-white group-hover:text-amber-300 transition-all duration-300 group-hover:scale-110 inline-block">NT$ {item.price}</span>
                       </div>
                     </div>
                   </div>
@@ -864,26 +887,48 @@ const ReportPage = () => {
                   <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">使用自己</h3>
                 </div>
                 
-                <div className="space-y-4 relative z-10">
+                <div className="space-y-4 relative z-10 perspective-1000">
                   {flagshipPricing.map((item, idx) => (
                     <div 
                       key={idx}
-                      className={`group/item p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+                      className={`group/item relative p-6 rounded-2xl border transition-all duration-500 shine-effect overflow-hidden cursor-pointer ${
                         idx === 2 
-                          ? 'bg-amber-500/10 border-amber-500/30' 
-                          : 'bg-transparent border-amber-500/10 hover:border-amber-500/20'
+                          ? 'bg-amber-500/10 border-amber-500/40 glow-border-amber' 
+                          : 'bg-transparent border-amber-500/10 hover:border-amber-500/30'
                       }`}
+                      style={{
+                        transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
+                        transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+                      }}
+                      onMouseEnter={(e) => {
+                        const card = e.currentTarget;
+                        card.style.transform = 'perspective(1000px) rotateX(-5deg) rotateY(-5deg) translateZ(20px)';
+                        card.style.boxShadow = '0 25px 50px -12px rgba(251, 191, 36, 0.2), 0 0 40px rgba(251, 191, 36, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        const card = e.currentTarget;
+                        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                        card.style.boxShadow = 'none';
+                      }}
                     >
-                      <div className="flex justify-between items-start mb-3">
+                      {/* Animated glow overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Sparkle effect on hover */}
+                      <div className="absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-all duration-500">
+                        <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                      </div>
+                      
+                      <div className="flex justify-between items-start mb-3 relative z-10">
                         <div>
-                          <h4 className="font-medium text-white group-hover/item:text-amber-300 transition-colors">{item.plan}</h4>
+                          <h4 className="font-medium text-white group-hover/item:text-amber-300 transition-all duration-300 group-hover/item:translate-x-1">{item.plan}</h4>
                           <div className="flex items-center gap-2 mt-1">
-                            <Clock className="h-3.5 w-3.5 text-amber-400/60" />
-                            <span className="text-amber-400/60 text-xs">{item.days} 個工作天</span>
+                            <Clock className="h-3.5 w-3.5 text-amber-400/60 group-hover/item:text-amber-400 transition-colors" />
+                            <span className="text-amber-400/60 text-xs group-hover/item:text-amber-400/80 transition-colors">{item.days} 個工作天</span>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="text-2xl font-bold text-amber-400">NT$ {item.price}</span>
+                          <span className="text-2xl font-bold text-amber-400 group-hover/item:text-amber-300 transition-all duration-300 group-hover/item:scale-110 group-hover/item:drop-shadow-[0_0_15px_rgba(251,191,36,0.6)] inline-block">NT$ {item.price}</span>
                         </div>
                       </div>
                     </div>
