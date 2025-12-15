@@ -388,6 +388,47 @@
     font-weight: 900;
   }
 
+  /* Document version meta styling */
+  .document-page-content .document-version-meta {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed hsl(var(--border));
+    text-align: center;
+  }
+
+  .document-page-content .document-version-meta .version-info {
+    font-size: 0.85em;
+    color: hsl(var(--muted-foreground));
+    text-indent: 0;
+    margin: 0;
+  }
+
+  /* Document disclaimer styling */
+  .document-page-content .document-disclaimer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: hsl(var(--muted) / 0.3);
+    border-radius: var(--radius);
+    font-size: 0.8em;
+    line-height: 1.6;
+  }
+
+  .document-page-content .document-disclaimer hr {
+    display: none;
+  }
+
+  .document-page-content .document-disclaimer p {
+    text-indent: 0;
+    margin-bottom: 0.5em;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .document-page-content .document-disclaimer p:first-of-type {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    margin-bottom: 1em;
+  }
+
   /* Document table styling */
   .document-page-content .document-table {
     display: table !important;
