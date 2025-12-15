@@ -188,6 +188,38 @@ const dimensionColors = {
   value: { gradient: "from-purple-400 to-violet-500", icon: Target, label: "價值" },
 };
 
+// Personalized card themes based on primary dimension
+const cardThemes = {
+  emotion: {
+    bgGradient: "from-rose-950 via-[#1a0a0f] to-[#0a0a0a]",
+    accentGlow1: "from-rose-500/30 to-pink-600/20",
+    accentGlow2: "from-pink-400/20 to-rose-500/10",
+    pattern: "rose",
+    borderAccent: "border-rose-500/30",
+  },
+  action: {
+    bgGradient: "from-amber-950 via-[#1a1008] to-[#0a0a0a]",
+    accentGlow1: "from-amber-500/30 to-yellow-600/20",
+    accentGlow2: "from-yellow-400/20 to-amber-500/10",
+    pattern: "amber",
+    borderAccent: "border-amber-500/30",
+  },
+  mindset: {
+    bgGradient: "from-blue-950 via-[#0a1018] to-[#0a0a0a]",
+    accentGlow1: "from-blue-500/30 to-cyan-600/20",
+    accentGlow2: "from-cyan-400/20 to-blue-500/10",
+    pattern: "blue",
+    borderAccent: "border-blue-500/30",
+  },
+  value: {
+    bgGradient: "from-purple-950 via-[#120a18] to-[#0a0a0a]",
+    accentGlow1: "from-purple-500/30 to-violet-600/20",
+    accentGlow2: "from-violet-400/20 to-purple-500/10",
+    pattern: "purple",
+    borderAccent: "border-purple-500/30",
+  },
+};
+
 interface SelfCheckQuizProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -239,9 +271,14 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
       ? sortedDimensions[1][0] as keyof typeof dimensionResults 
       : null;
 
+    // Get primary dimension key for theming
+    const primaryKey = maxDimension;
+
     return { 
       primary: dimensionResults[maxDimension], 
+      primaryKey,
       secondary: secondaryDimension ? dimensionResults[secondaryDimension] : null,
+      secondaryKey: secondaryDimension,
       counts 
     };
   };
@@ -403,97 +440,150 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
               </Button>
 
               {/* Diagnostic Card for Download */}
-              <div
-                ref={cardRef}
-                className="relative w-full bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] rounded-3xl overflow-hidden p-6"
-                style={{ aspectRatio: "9/16" }}
-              >
-                {/* Background decorations */}
-                <div className="absolute inset-0 opacity-30 pointer-events-none">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl" />
-                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-purple-500/20 to-transparent rounded-full blur-3xl" />
-                </div>
-
-                {/* Content */}
-                <div className="relative h-full flex flex-col">
-                  {/* Header with logos */}
-                  <div className="flex items-center justify-between mb-4">
-                    <img src={logoChaoxuan} alt="超烜創意" className="h-6 object-contain" />
-                    <img src={logoHongling} alt="虹靈御所" className="h-6 object-contain" />
-                  </div>
-
-                  {/* Title */}
-                  <div className="text-center mb-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 mb-2">
-                      <Sparkles className="w-3 h-3 text-amber-400" />
-                      <span className="text-amber-300 text-xs font-medium">默默超思維診斷書</span>
-                    </div>
-                    <h2 className="text-sm text-white/60 font-medium">你的思維類型是</h2>
-                  </div>
-
-                  {/* Main result */}
-                  <div className="flex-1 flex flex-col items-center justify-center">
-                    <div
-                      className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${result.primary.color} flex items-center justify-center mb-4 shadow-xl`}
-                    >
-                      <result.primary.icon className="w-10 h-10 text-white" />
-                    </div>
-
-                    <h1 className="text-2xl font-bold text-white mb-1 text-center">
-                      {result.primary.title}
-                    </h1>
-                    <p className="text-white/60 text-xs mb-3">{result.primary.subtitle}</p>
-
-                    <p className="text-white/70 text-center text-xs leading-relaxed px-2 mb-4">
-                      {result.primary.description}
-                    </p>
-
-                    {/* Dimension bars */}
-                    <div className="w-full space-y-1.5">
-                      {Object.entries(result.counts).map(([key, value]) => {
-                        const config = dimensionColors[key as keyof typeof dimensionColors];
-                        const DimIcon = config.icon;
-                        const percentage = (value / 5) * 100;
-                        
-                        return (
-                          <div key={key} className="flex items-center gap-2">
-                            <DimIcon className="w-3 h-3 text-white/60 flex-shrink-0" />
-                            <span className="text-white/40 text-[10px] w-8">{config.label}</span>
-                            <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                              <div
-                                className={`h-full bg-gradient-to-r ${config.gradient} rounded-full`}
-                                style={{ width: `${percentage}%` }}
-                              />
-                            </div>
-                            <span className="text-white/40 text-[10px] w-4 text-right">{value}</span>
-                          </div>
-                        );
-                      })}
+              {(() => {
+                const theme = cardThemes[result.primaryKey as keyof typeof cardThemes];
+                return (
+                  <div
+                    ref={cardRef}
+                    className={`relative w-full bg-gradient-to-br ${theme.bgGradient} rounded-3xl overflow-hidden p-6 border ${theme.borderAccent}`}
+                    style={{ aspectRatio: "9/16" }}
+                  >
+                    {/* Background decorations - personalized by dimension */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      {/* Primary glow */}
+                      <div className={`absolute top-0 left-0 w-40 h-40 bg-gradient-to-br ${theme.accentGlow1} rounded-full blur-3xl opacity-60`} />
+                      <div className={`absolute bottom-0 right-0 w-48 h-48 bg-gradient-to-tl ${theme.accentGlow2} rounded-full blur-3xl opacity-50`} />
+                      
+                      {/* Decorative patterns based on dimension */}
+                      {result.primaryKey === "emotion" && (
+                        <>
+                          {/* Heart-shaped decorations for emotion */}
+                          <div className="absolute top-16 right-4 text-rose-500/10 text-6xl">♡</div>
+                          <div className="absolute bottom-32 left-2 text-pink-400/10 text-4xl">♡</div>
+                          <div className="absolute top-1/3 right-8 w-2 h-2 rounded-full bg-rose-400/20" />
+                          <div className="absolute top-1/2 left-4 w-3 h-3 rounded-full bg-pink-400/15" />
+                          <div className="absolute bottom-1/4 right-12 w-1.5 h-1.5 rounded-full bg-rose-300/25" />
+                        </>
+                      )}
+                      {result.primaryKey === "action" && (
+                        <>
+                          {/* Lightning/energy decorations for action */}
+                          <div className="absolute top-20 right-6 text-amber-500/15 text-5xl">⚡</div>
+                          <div className="absolute bottom-40 left-4 text-yellow-400/10 text-3xl">⚡</div>
+                          {/* Dynamic lines */}
+                          <div className="absolute top-1/4 right-0 w-24 h-0.5 bg-gradient-to-l from-amber-500/20 to-transparent" />
+                          <div className="absolute bottom-1/3 left-0 w-16 h-0.5 bg-gradient-to-r from-yellow-500/15 to-transparent" />
+                          <div className="absolute top-2/3 right-4 w-2 h-2 rotate-45 bg-amber-400/20" />
+                        </>
+                      )}
+                      {result.primaryKey === "mindset" && (
+                        <>
+                          {/* Geometric/circuit decorations for mindset */}
+                          <div className="absolute top-16 right-8 w-8 h-8 border border-blue-400/15 rounded-lg rotate-12" />
+                          <div className="absolute bottom-36 left-6 w-6 h-6 border border-cyan-400/10 rounded-md -rotate-12" />
+                          {/* Circuit-like lines */}
+                          <div className="absolute top-1/4 right-2 w-12 h-px bg-blue-400/20" />
+                          <div className="absolute top-1/4 right-2 w-px h-8 bg-blue-400/20" />
+                          <div className="absolute bottom-1/4 left-4 w-8 h-px bg-cyan-400/15" />
+                          <div className="absolute top-1/2 right-6 w-3 h-3 rounded-full border border-blue-300/20" />
+                        </>
+                      )}
+                      {result.primaryKey === "value" && (
+                        <>
+                          {/* Compass/star decorations for value */}
+                          <div className="absolute top-20 right-6 text-purple-500/15 text-4xl">✦</div>
+                          <div className="absolute bottom-36 left-4 text-violet-400/10 text-3xl">✧</div>
+                          <div className="absolute top-1/3 right-10 text-purple-300/10 text-2xl">◇</div>
+                          {/* Subtle rings */}
+                          <div className="absolute top-1/2 left-8 w-6 h-6 rounded-full border border-violet-400/10" />
+                          <div className="absolute bottom-1/3 right-8 w-4 h-4 rounded-full border border-purple-300/15" />
+                        </>
+                      )}
                     </div>
 
-                    {result.secondary && (
-                      <p className="text-white/50 text-[10px] mt-3 text-center">
-                        次要傾向：{result.secondary.title}
-                      </p>
-                    )}
-                  </div>
+                    {/* Content */}
+                    <div className="relative h-full flex flex-col z-10">
+                      {/* Header with logos */}
+                      <div className="flex items-center justify-between mb-4">
+                        <img src={logoChaoxuan} alt="超烜創意" className="h-6 object-contain" />
+                        <img src={logoHongling} alt="虹靈御所" className="h-6 object-contain" />
+                      </div>
 
-                  {/* Footer CTA */}
-                  <div className="mt-auto pt-4 border-t border-white/10">
-                    <div className="text-center">
-                      <p className="text-amber-400 text-xs font-medium mb-1">
-                        想深入了解如何運用你的思維優勢？
-                      </p>
-                      <p className="text-white/50 text-[10px]">
-                        momo-chao.com/reports
-                      </p>
+                      {/* Title */}
+                      <div className="text-center mb-4">
+                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${result.primary.bgColor} ${result.primary.borderColor} border mb-2`}>
+                          <Sparkles className="w-3 h-3 text-amber-400" />
+                          <span className="text-amber-300 text-xs font-medium">默默超思維診斷書</span>
+                        </div>
+                        <h2 className="text-sm text-white/60 font-medium">你的思維類型是</h2>
+                      </div>
+
+                      {/* Main result */}
+                      <div className="flex-1 flex flex-col items-center justify-center">
+                        <div
+                          className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${result.primary.color} flex items-center justify-center mb-4 shadow-xl shadow-black/30`}
+                        >
+                          <result.primary.icon className="w-10 h-10 text-white" />
+                        </div>
+
+                        <h1 className="text-2xl font-bold text-white mb-1 text-center">
+                          {result.primary.title}
+                        </h1>
+                        <p className="text-white/60 text-xs mb-3">{result.primary.subtitle}</p>
+
+                        <p className="text-white/70 text-center text-xs leading-relaxed px-2 mb-4">
+                          {result.primary.description}
+                        </p>
+
+                        {/* Dimension bars with themed colors */}
+                        <div className="w-full space-y-1.5">
+                          {Object.entries(result.counts).map(([key, value]) => {
+                            const config = dimensionColors[key as keyof typeof dimensionColors];
+                            const DimIcon = config.icon;
+                            const percentage = (value / 5) * 100;
+                            const isPrimary = key === result.primaryKey;
+                            
+                            return (
+                              <div key={key} className={`flex items-center gap-2 ${isPrimary ? 'opacity-100' : 'opacity-70'}`}>
+                                <DimIcon className={`w-3 h-3 flex-shrink-0 ${isPrimary ? 'text-white' : 'text-white/60'}`} />
+                                <span className={`text-[10px] w-8 ${isPrimary ? 'text-white/80 font-medium' : 'text-white/40'}`}>{config.label}</span>
+                                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                  <div
+                                    className={`h-full bg-gradient-to-r ${config.gradient} rounded-full ${isPrimary ? 'shadow-sm' : ''}`}
+                                    style={{ width: `${percentage}%` }}
+                                  />
+                                </div>
+                                <span className={`text-[10px] w-4 text-right ${isPrimary ? 'text-white/80' : 'text-white/40'}`}>{value}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {result.secondary && (
+                          <p className="text-white/50 text-[10px] mt-3 text-center">
+                            次要傾向：{result.secondary.title}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Footer CTA */}
+                      <div className={`mt-auto pt-4 border-t ${theme.borderAccent}`}>
+                        <div className="text-center">
+                          <p className="text-amber-400 text-xs font-medium mb-1">
+                            想深入了解如何運用你的思維優勢？
+                          </p>
+                          <p className="text-white/50 text-[10px]">
+                            momo-chao.com/reports
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Watermark */}
+                      <p className="text-white/20 text-[8px] text-center mt-2">© 默默超全方位命理解讀報告</p>
                     </div>
                   </div>
-
-                  {/* Watermark */}
-                  <p className="text-white/20 text-[8px] text-center mt-2">© 默默超全方位命理解讀報告</p>
-                </div>
-              </div>
+                );
+              })()}
 
               {/* Action buttons */}
               <div className="flex flex-col gap-2 mt-4">
