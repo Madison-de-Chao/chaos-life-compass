@@ -395,17 +395,55 @@
     line-height: 1;
   }
 
+  /* Generic table styling - applies to all tables */
   .document-page-content table {
-    @apply w-full my-10 text-base;
+    display: table !important;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9em;
+    line-height: 1.6;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    table-layout: auto;
   }
 
-  .document-page-content th {
-    @apply p-4 text-left font-semibold;
-    background: hsl(var(--primary) / 0.1);
+  .document-page-content table tr {
+    display: table-row !important;
   }
 
-  .document-page-content td {
-    @apply p-4 border-b border-border/30;
+  .document-page-content table th,
+  .document-page-content table td {
+    display: table-cell !important;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: 1px solid hsl(var(--border));
+    vertical-align: top;
+    text-indent: 0;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .document-page-content table th {
+    background-color: hsl(var(--primary) / 0.15);
+    font-weight: 700;
+    color: hsl(var(--primary));
+  }
+
+  .document-page-content table tr:nth-child(even) td {
+    background-color: hsl(var(--muted) / 0.2);
+  }
+
+  .document-page-content table tr:hover td {
+    background-color: hsl(var(--accent) / 0.3);
+    transition: background-color 0.2s ease;
+  }
+
+  .document-page-content table strong {
+    color: hsl(var(--primary));
+    font-weight: 700;
   }
 
   /* Document images */
