@@ -1062,6 +1062,109 @@ const ReportPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Detailed Version Comparison Table */}
+      <section 
+        id="version-comparison"
+        ref={(el) => (observerRefs.current['version-comparison'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
+        
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+              內容詳細對比
+            </h2>
+            <p className="text-white/50 text-lg">
+              一目了然的功能差異
+            </p>
+          </div>
+          
+          <div className={`overflow-x-auto rounded-3xl border border-white/10 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <table className="w-full">
+              <thead>
+                <tr className="bg-white/5">
+                  <th className="text-left p-6 text-white font-semibold border-b border-white/10">功能項目</th>
+                  <th className="p-6 text-white/70 border-b border-white/10 min-w-[140px]">
+                    <div className="text-center">
+                      <span className="block text-sm">標準版</span>
+                      <span className="block text-xs text-white/40">看懂自己</span>
+                    </div>
+                  </th>
+                  <th className="p-6 border-b border-amber-500/30 min-w-[140px] bg-amber-500/5">
+                    <div className="text-center">
+                      <span className="block text-amber-400 font-bold">旗艦版</span>
+                      <span className="block text-xs text-amber-300/60">駕馭自己</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {[
+                  { feature: "四系統整合分析", desc: "紫微、八字、占星、人類圖", standard: true, flagship: true },
+                  { feature: "基礎章節", desc: "內在、外在、思考、行事風格", standard: true, flagship: true },
+                  { feature: "人生三大領域", desc: "事業、愛情、金錢深度解析", standard: true, flagship: true },
+                  { feature: "人生羅盤總覽圖", desc: "一張看懂四系統定位", standard: true, flagship: true },
+                  { feature: "落地小提醒", desc: "每章可執行建議", standard: true, flagship: true },
+                  { feature: "默默超不負責提醒", desc: "辛辣但溫暖的真心話", standard: true, flagship: true },
+                  { feature: "默默超思維系統", desc: "情緒/行動/心智/價值運作邏輯", standard: false, flagship: true, highlight: true },
+                  { feature: "思維啟動器", desc: "關鍵金句 + 視覺化流程圖", standard: false, flagship: true, highlight: true },
+                  { feature: "四時八字軍團敘事", desc: "命盤化身史詩級戰略故事", standard: false, flagship: true, highlight: true },
+                  { feature: "年齡階段指引", desc: "根據人生階段的專屬建議", standard: false, flagship: true, highlight: true },
+                  { feature: "能量管理SOP", desc: "個人化能量補充與釋放策略", standard: false, flagship: true, highlight: true },
+                  { feature: "預估總字數", desc: "", standard: "約 40,000 字", flagship: "約 80,000+ 字", isText: true },
+                  { feature: "定位", desc: "", standard: "自我說明書", flagship: "人生操作系統", isText: true },
+                ].map((row, idx) => (
+                  <tr key={idx} className={`${row.highlight ? 'bg-amber-500/5' : ''} hover:bg-white/5 transition-colors`}>
+                    <td className="p-5">
+                      <div className="font-medium text-white">{row.feature}</div>
+                      {row.desc && <div className="text-sm text-white/40 mt-1">{row.desc}</div>}
+                    </td>
+                    <td className="p-5 text-center">
+                      {row.isText ? (
+                        <span className="text-white/60 text-sm">{row.standard}</span>
+                      ) : row.standard ? (
+                        <CheckCircle2 className="w-5 h-5 text-green-400 mx-auto" />
+                      ) : (
+                        <X className="w-5 h-5 text-white/20 mx-auto" />
+                      )}
+                    </td>
+                    <td className={`p-5 text-center ${row.highlight ? 'bg-amber-500/5' : ''}`}>
+                      {row.isText ? (
+                        <span className="text-amber-400 font-semibold text-sm">{row.flagship}</span>
+                      ) : row.flagship ? (
+                        <CheckCircle2 className="w-5 h-5 text-amber-400 mx-auto" />
+                      ) : (
+                        <X className="w-5 h-5 text-white/20 mx-auto" />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Key Difference Callout */}
+          <div className={`mt-10 p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex flex-col md:flex-row gap-6 items-center">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-purple-500 flex items-center justify-center">
+                  <Scale className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <div className="text-center md:text-left">
+                <h3 className="text-xl font-bold text-white mb-2">核心差異一句話</h3>
+                <p className="text-white/70">
+                  <span className="text-white/90 font-medium">標準版</span>是一面清晰的鏡子，讓你「看見」自己的模樣；
+                  <br className="hidden md:block" />
+                  <span className="text-amber-400 font-medium">旗艦版</span>是一套完整的操作系統，教你「如何駕馭」這個自己。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* MomoChao Thinking System - Why Flagship */}
       <section 
