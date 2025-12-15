@@ -362,44 +362,118 @@ const ReportPage = () => {
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
-          {/* Main Product Title - Big and Bold */}
-          <div className="mb-8 animate-fade-in">
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 tracking-tight leading-none">
-              <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(251,191,36,0.4)] animate-gradient-shift bg-[length:200%_auto]">
+          {/* Main Product Title - Big and Bold with Glow Effects */}
+          <div className="mb-8 relative">
+            {/* Glow background effect */}
+            <div className="absolute inset-0 -top-10 blur-3xl bg-gradient-to-r from-amber-500/20 via-amber-400/30 to-amber-500/20 rounded-full animate-pulse" />
+            
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 tracking-tight leading-none relative animate-scale-in" style={{ animationDuration: '0.8s' }}>
+              <span 
+                className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]"
+                style={{ 
+                  filter: 'drop-shadow(0 0 40px rgba(251,191,36,0.5)) drop-shadow(0 0 80px rgba(251,191,36,0.3))',
+                  textShadow: '0 0 60px rgba(251,191,36,0.4)'
+                }}
+              >
                 默默超
               </span>
             </h1>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white/95 tracking-wide">
+            <h2 
+              className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white/95 tracking-wide animate-fade-in"
+              style={{ 
+                animationDelay: '0.3s',
+                textShadow: '0 0 30px rgba(255,255,255,0.2)'
+              }}
+            >
               全方位命理解讀報告
             </h2>
           </div>
           
+          {/* Word Count & Value Highlights - Interactive Cards */}
+          <div className="flex flex-wrap justify-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+            <div className="group relative cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 rounded-2xl px-6 py-4 hover:border-amber-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-6 h-6 text-amber-400" />
+                  <div className="text-left">
+                    <p className="text-3xl md:text-4xl font-black text-amber-400">80,000<span className="text-xl">+</span></p>
+                    <p className="text-white/60 text-sm">字精密解析</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="group relative cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-purple-500/30 rounded-2xl px-6 py-4 hover:border-purple-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                <div className="flex items-center gap-3">
+                  <Layers className="w-6 h-6 text-purple-400" />
+                  <div className="text-left">
+                    <p className="text-3xl md:text-4xl font-black text-purple-400">19<span className="text-xl">+</span></p>
+                    <p className="text-white/60 text-sm">深度章節</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="group relative cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-cyan-500/30 rounded-2xl px-6 py-4 hover:border-cyan-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+                <div className="flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-cyan-400" />
+                  <div className="text-left">
+                    <p className="text-3xl md:text-4xl font-black text-cyan-400">4</p>
+                    <p className="text-white/60 text-sm">命理系統交叉</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Value-Added Examples - Interactive Hover Preview */}
+          <div className="mb-10 animate-slide-up" style={{ animationDelay: '0.7s' }}>
+            <p className="text-amber-300/70 text-sm mb-4 tracking-wider uppercase">附加價值示意</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { icon: Headphones, label: '語音導讀', desc: '專業配音，隨時聆聽' },
+                { icon: Mic, label: '語音摘要', desc: '精華重點，快速回顧' },
+                { icon: Video, label: '影片總結', desc: '視覺化解說' },
+                { icon: Users, label: '一對一諮詢', desc: '60分鐘深度對談' },
+                { icon: BarChart3, label: '整合儀表板', desc: '人生羅盤視覺化' },
+              ].map((item, idx) => (
+                <div key={idx} className="group relative">
+                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105">
+                    <item.icon className="w-4 h-4 text-amber-400/70 group-hover:text-amber-400 transition-colors" />
+                    <span className="text-white/70 text-sm group-hover:text-white transition-colors">{item.label}</span>
+                  </div>
+                  {/* Tooltip on hover */}
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-amber-500/30 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-20">
+                    <p className="text-amber-300 text-xs">{item.desc}</p>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-amber-500/30" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
           {/* Decorative divider */}
-          <div className="flex items-center justify-center gap-4 mb-10">
+          <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-16 md:w-24 h-px bg-gradient-to-r from-transparent to-amber-500/60" />
             <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_10px_rgba(251,191,36,0.6)]" />
             <div className="w-16 md:w-24 h-px bg-gradient-to-l from-transparent to-amber-500/60" />
           </div>
           
-          <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.2s' }}>
+          <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
             <span className="text-white/90">別讓你的靈魂，</span>
             <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">跑在舊版的系統上。</span>
           </p>
           
-          <div className="space-y-4 mb-10" style={{ animationDelay: '0.2s' }}>
-            <p className="font-serif text-xl md:text-2xl lg:text-3xl text-white/70 leading-relaxed font-light animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              融合紫微、八字、占星、人類圖四維運算。
-            </p>
-            <p className="font-serif text-xl md:text-2xl lg:text-3xl text-white/90 leading-relaxed animate-slide-up" style={{ animationDelay: '0.5s' }}>
-              不僅是解讀命運，更是為您安裝一套<span className="text-amber-400 animate-text-glow">人生操作系統</span>。
-            </p>
-          </div>
-          
-          <p className="text-lg md:text-xl text-amber-300/80 mb-14 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.7s' }}>
-            這不是迷信，這是您靈魂的原廠說明書與升級驅動程式。
+          <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
+            融合紫微、八字、占星、人類圖四維運算，為您安裝一套<span className="text-amber-400">人生操作系統</span>。
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-5 justify-center animate-slide-up" style={{ animationDelay: '0.9s' }}>
+          <div className="flex flex-col sm:flex-row gap-5 justify-center animate-slide-up" style={{ animationDelay: '1s' }}>
             <Button size="xl" className="group text-lg px-10 py-7 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105">
               <BookOpen className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
               先看試閱
