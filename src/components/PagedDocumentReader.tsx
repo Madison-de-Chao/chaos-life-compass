@@ -115,58 +115,134 @@ function styleSectionKeywords(html: string): string {
   return doc.body.innerHTML;
 }
 
+// Split a line with multiple table rows into separate rows
+function splitTableRowsInLine(text: string): string[] {
+  // This handles cases where multiple table rows are in a single line
+  // e.g., "| A | B || C | D |" or "| A | B | | C | D |"
+  
+  // First, check if this looks like multiple rows combined
+  // Pattern: content ends with | and then starts again with |
+  // Split by patterns like "| |" or "||" that indicate row boundaries
+  
+  // More reliable: split by detecting where one row ends and another begins
+  // A row typically ends with | followed by another | starting a new row
+  const rows: string[] = [];
+  
+  // Split the text by <br> tags first (common in parsed HTML)
+  const brParts = text.split(/<br\s*\/?>/gi);
+  
+  for (const part of brParts) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    
+    // Check if this part contains multiple rows (multiple header-like patterns)
+    // Count pairs of pipes that indicate columns
+    const pipeCount = (trimmed.match(/\|/g) || []).length;
+    
+    if (pipeCount > 10) {
+      // Likely multiple rows in one line
+      // Try to split by finding row boundaries
+      // A row boundary is typically where we have a cell ending and new cell header starting
+      // e.g., "建議關鍵 || 紫微斗數" or "建議 | | 紫微"
+      
+      // Find the column structure from the first apparent row
+      // Split by looking for patterns where content ends and a system name starts
+      const systemKeywords = ['紫微斗數', '八字', '占星', '人類圖', '系統'];
+      let currentPos = 0;
+      let rowStart = 0;
+      
+      for (let i = 0; i < trimmed.length; i++) {
+        for (const keyword of systemKeywords) {
+          if (trimmed.substring(i).startsWith(`| ${keyword}`) || 
+              trimmed.substring(i).startsWith(`|${keyword}`)) {
+            // Check if this is not the very beginning
+            if (i > 10) {
+              // This is likely a new row
+              const row = trimmed.substring(rowStart, i).trim();
+              if (row && (row.match(/\|/g) || []).length >= 2) {
+                rows.push(row);
+              }
+              rowStart = i;
+            }
+          }
+        }
+      }
+      // Push remaining content
+      const remaining = trimmed.substring(rowStart).trim();
+      if (remaining && (remaining.match(/\|/g) || []).length >= 2) {
+        rows.push(remaining);
+      }
+      
+      // If splitting didn't work well, just use the original
+      if (rows.length === 0) {
+        rows.push(trimmed);
+      }
+    } else if (pipeCount >= 2) {
+      rows.push(trimmed);
+    }
+  }
+  
+  return rows;
+}
+
 // Parse markdown tables in HTML content
 function parseMarkdownTables(html: string): string {
-  // Split content by line to find table patterns
-  const lines = html.split('\n');
+  // First, handle the case where table content is all in one line or paragraph
+  // This is common when Word/HTML preserves tables as pipe-separated text
+  
+  // Look for patterns like "| header1 | header2 | ... | headerN |" in the content
+  // These need to be properly parsed even if on single lines
+  
+  // Split content by HTML block elements
+  const lines = html.split(/(<\/?(?:p|div|br)[^>]*>|\n)/gi);
   const result: string[] = [];
-  let tableLines: string[] = [];
+  let tableRows: string[] = [];
   let inTable = false;
-  let pendingEmptyLines: string[] = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    // Check if line contains pipe-separated content (table row)
-    // Remove HTML tags and &nbsp; for checking
-    const trimmed = line.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
-    const isTableRow = trimmed.includes('|') && (trimmed.match(/\|/g) || []).length >= 2;
     
-    // Check if line is empty or just whitespace/nbsp
-    const isEmptyLine = trimmed === '' || /^[\s ]*$/.test(trimmed);
+    // Skip empty lines and HTML tags
+    if (!line.trim() || /^<\/?(?:p|div|br)[^>]*>$/i.test(line.trim())) {
+      if (!inTable) {
+        result.push(line);
+      }
+      continue;
+    }
     
-    if (isTableRow) {
+    // Remove HTML tags for content checking
+    const textContent = line.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+    
+    // Check if this line contains table-like content
+    const pipeCount = (textContent.match(/\|/g) || []).length;
+    const hasTableContent = pipeCount >= 4; // At least a few pipes for table
+    
+    if (hasTableContent) {
       if (!inTable) {
         inTable = true;
-        tableLines = [];
-        pendingEmptyLines = [];
+        tableRows = [];
       }
-      // Discard pending empty lines within table
-      pendingEmptyLines = [];
-      tableLines.push(trimmed);
-    } else if (inTable && isEmptyLine) {
-      // If we're in a table and hit an empty line, keep it pending
-      // (don't break the table yet, might be spacing between rows)
-      pendingEmptyLines.push(line);
+      
+      // Split this line into individual rows if needed
+      const extractedRows = splitTableRowsInLine(textContent);
+      tableRows.push(...extractedRows);
     } else {
-      if (inTable && tableLines.length > 0) {
-        // Convert collected table lines to HTML table
-        result.push(convertToHtmlTable(tableLines));
-        tableLines = [];
+      if (inTable && tableRows.length > 0) {
+        // End of table, convert collected rows
+        result.push(convertToHtmlTable(tableRows));
+        tableRows = [];
         inTable = false;
-        // Add any pending empty lines after the table
-        result.push(...pendingEmptyLines);
-        pendingEmptyLines = [];
       }
       result.push(line);
     }
   }
   
   // Handle table at end of content
-  if (inTable && tableLines.length > 0) {
-    result.push(convertToHtmlTable(tableLines));
+  if (inTable && tableRows.length > 0) {
+    result.push(convertToHtmlTable(tableRows));
   }
 
-  return result.join('\n');
+  return result.join('');
 }
 
 // Convert markdown-style table rows to HTML table
@@ -178,44 +254,53 @@ function convertToHtmlTable(rows: string[]): string {
   
   if (dataRows.length === 0) return '';
 
-  let tableHtml = '<div class="table-wrapper"><table class="document-table"><thead>';
+  // Determine the expected column count from the first row (header)
+  const headerCells = dataRows[0].split('|')
+    .map(cell => cell.trim())
+    .filter(cell => cell.length > 0);
   
-  dataRows.forEach((row, index) => {
-    // Split by | and clean up
-    const cells = row.split('|')
-      .map(cell => cell.trim())
-      .filter(cell => cell.length > 0);
+  const expectedColCount = headerCells.length;
+  
+  if (expectedColCount === 0) return '';
+
+  let tableHtml = '<div class="table-wrapper"><table class="document-table"><thead><tr>';
+  
+  // Add header row
+  headerCells.forEach(cell => {
+    const parsedCell = cell
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>');
+    tableHtml += `<th>${parsedCell}</th>`;
+  });
+  tableHtml += '</tr></thead>';
+  
+  // Add body rows
+  if (dataRows.length > 1) {
+    tableHtml += '<tbody>';
     
-    if (cells.length === 0) return;
-    
-    // First row is always header
-    const isHeader = index === 0;
-    const cellTag = isHeader ? 'th' : 'td';
-    
-    if (isHeader) {
+    for (let i = 1; i < dataRows.length; i++) {
+      const row = dataRows[i];
+      const cells = row.split('|')
+        .map(cell => cell.trim())
+        .filter(cell => cell.length > 0);
+      
+      if (cells.length === 0) continue;
+      
       tableHtml += '<tr>';
-    } else if (index === 1) {
-      // Close thead and open tbody before first data row
-      tableHtml += '</thead><tbody><tr>';
-    } else {
-      tableHtml += '<tr>';
+      
+      // Ensure we have the right number of columns
+      for (let j = 0; j < expectedColCount; j++) {
+        const cellContent = cells[j] || '';
+        const parsedCell = cellContent
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/__(.+?)__/g, '<strong>$1</strong>');
+        tableHtml += `<td>${parsedCell}</td>`;
+      }
+      
+      tableHtml += '</tr>';
     }
     
-    cells.forEach(cell => {
-      // Parse bold text in cells and remove ** markers
-      const parsedCell = cell
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/__(.+?)__/g, '<strong>$1</strong>');
-      tableHtml += `<${cellTag}>${parsedCell}</${cellTag}>`;
-    });
-    tableHtml += '</tr>';
-  });
-  
-  // Close tbody if we had data rows
-  if (dataRows.length > 1) {
     tableHtml += '</tbody>';
-  } else {
-    tableHtml += '</thead>';
   }
   
   tableHtml += '</table></div>';
