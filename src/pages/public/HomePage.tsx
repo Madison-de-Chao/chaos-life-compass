@@ -108,10 +108,14 @@ const HomePage = () => {
             <div className="relative bg-background rounded-xl overflow-hidden border border-primary/30 shadow-[0_0_40px_rgba(var(--primary),0.15)]">
               <video
                 autoPlay
-                muted
                 loop
                 playsInline
-                className="w-full h-auto"
+                className="w-full h-auto cursor-pointer"
+                onClick={(e) => {
+                  const video = e.currentTarget;
+                  video.muted = !video.muted;
+                }}
+                title="點擊開啟/關閉聲音"
               >
                 <source src="/videos/hongling-logo.mp4" type="video/mp4" />
               </video>

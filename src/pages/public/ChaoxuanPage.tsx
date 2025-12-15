@@ -244,10 +244,14 @@ const ChaoxuanPage = () => {
               <div className="relative bg-[#0a0a0a] rounded-xl overflow-hidden border border-[#c9a962]/30 shadow-[0_0_40px_rgba(201,169,98,0.15)]">
                 <video
                   autoPlay
-                  muted
                   loop
                   playsInline
-                  className="w-full h-auto"
+                  className="w-full h-auto cursor-pointer"
+                  onClick={(e) => {
+                    const video = e.currentTarget;
+                    video.muted = !video.muted;
+                  }}
+                  title="點擊開啟/關閉聲音"
                 >
                   <source src="/videos/chaoxuan-logo.mp4" type="video/mp4" />
                 </video>
