@@ -7,8 +7,8 @@ import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
 const navLinks = [
-  { label: "虹靈御所", href: "/home" },
   { label: "超烜創意", href: "/chaoxuan" },
+  { label: "虹靈御所", href: "/home" },
   { label: "命理報告", href: "/reports" },
   { label: "命理遊戲", href: "/games" },
   { label: "元壹筆記", href: "/notes" },
@@ -28,7 +28,7 @@ const PublicHeader = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logos */}
-          <Link to="/home" className="flex items-center gap-4 group">
+          <Link to="/chaoxuan" className="flex items-center gap-4 group">
             <img 
               src={logoChaoxuan} 
               alt="超烜創意" 
