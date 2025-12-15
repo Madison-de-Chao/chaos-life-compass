@@ -1,5 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { 
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { 
   CheckCircle2, 
   FileText, 
   Sparkles, 
@@ -31,7 +36,9 @@ import {
   TrendingUp,
   Eye,
   Quote,
-  Settings
+  Settings,
+  ChevronDown,
+  Scale
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -816,23 +823,137 @@ const ReportPage = () => {
             <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-cyan-500/30 rounded-tl-[40px]" />
             <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-cyan-500/30 rounded-br-[40px]" />
             
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
-                  <Settings className="w-12 h-12 text-cyan-400" />
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
+                    <Settings className="w-12 h-12 text-cyan-400" />
+                  </div>
+                </div>
+                <div className="text-center md:text-left">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+                    <span className="text-cyan-300 text-xs font-medium tracking-wider uppercase">人機協作 SOP</span>
+                  </div>
+                  <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">
+                    《默默超全方位命理解讀報告》<br />
+                    <span className="text-lg text-cyan-400">100% 客製化・零套版內容</span>
+                  </h3>
+                  <p className="text-white/60 text-base leading-relaxed">
+                    本報告採用<span className="text-cyan-400 font-medium">人機協作</span>模式產出——結合專業命理師的深度解讀與 AI 的精準運算。從引言到大總結，每一個字都是為您量身打造，<span className="text-white font-medium">完全沒有套版文章</span>。我們建立了嚴格的 SOP 寫作規範與語氣設定，確保每一份報告都呈現相同水準的精密與深度。
+                  </p>
                 </div>
               </div>
-              <div className="text-center md:text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
-                  <span className="text-cyan-300 text-xs font-medium tracking-wider uppercase">人機協作 SOP</span>
-                </div>
-                <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">
-                  嚴格的寫作規範，確保每一份品質一致
-                </h3>
-                <p className="text-white/60 text-base leading-relaxed">
-                  本報告採用<span className="text-cyan-400 font-medium">人機協作</span>模式產出——結合專業命理師的深度解讀與 AI 的精準運算。我們建立了嚴格的 SOP 寫作規範與語氣設定，從「鏡子非劇本」的核心原則，到每一段落的邏輯架構，都經過標準化流程把關。無論是哪一份報告，都能為您呈現相同水準的精密與深度。
-                </p>
-              </div>
+              
+              {/* Expandable SOP Details */}
+              <Collapsible>
+                <CollapsibleTrigger className="w-full group">
+                  <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors cursor-pointer">
+                    <span className="text-cyan-300 font-medium">查看詳細寫作規範</span>
+                    <ChevronDown className="w-5 h-5 text-cyan-400 group-data-[state=open]:rotate-180 transition-transform" />
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-6 space-y-6 animate-accordion-down">
+                  {/* SOP Standards Grid */}
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                          <Layers className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <h4 className="text-white font-bold">高度整合與系統化</h4>
+                      </div>
+                      <p className="text-white/50 text-sm leading-relaxed">
+                        並非單一命理系統的解析，而是將四套系統交叉對照，找出共性與結構，形成一個立體的「人生羅盤」。
+                      </p>
+                    </div>
+                    
+                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <h4 className="text-white font-bold">標準化邏輯架構</h4>
+                      </div>
+                      <p className="text-white/50 text-sm leading-relaxed">
+                        每章節都以「命盤根據 → 過去現象 → 現在展現 → 星盤起源 → 小提醒」的邏輯展開，清晰且有層次。
+                      </p>
+                    </div>
+                    
+                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                          <Heart className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <h4 className="text-white font-bold">心理引導性強</h4>
+                      </div>
+                      <p className="text-white/50 text-sm leading-relaxed">
+                        報告不只說「你是什麼樣的人」，更強調「你為什麼會這樣」以及「你可以如何與自己和解」。
+                      </p>
+                    </div>
+                    
+                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                          <Sparkles className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <h4 className="text-white font-bold">溫暖且有文學感</h4>
+                      </div>
+                      <p className="text-white/50 text-sm leading-relaxed">
+                        語言富有意象且易於共情——「穩定型的深海，不是表面型的煙火」「你是一座整理得很好、但門關得很緊的圖書館」。
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Comparison Table */}
+                  <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
+                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                      <Scale className="w-5 h-5 text-cyan-400" />
+                      與傳統命理報告的比較
+                    </h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-cyan-500/20">
+                            <th className="text-left py-3 px-4 text-cyan-300 font-medium">維度</th>
+                            <th className="text-left py-3 px-4 text-white/40">傳統命理報告</th>
+                            <th className="text-left py-3 px-4 text-cyan-400">本報告</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-white/60">
+                          <tr className="border-b border-cyan-500/10">
+                            <td className="py-3 px-4 text-white/80">語言</td>
+                            <td className="py-3 px-4">術語多，較冷硬</td>
+                            <td className="py-3 px-4 text-cyan-300">溫暖對話，易理解</td>
+                          </tr>
+                          <tr className="border-b border-cyan-500/10">
+                            <td className="py-3 px-4 text-white/80">結構</td>
+                            <td className="py-3 px-4">單一系統，條列式</td>
+                            <td className="py-3 px-4 text-cyan-300">多系統整合，心理引導式</td>
+                          </tr>
+                          <tr className="border-b border-cyan-500/10">
+                            <td className="py-3 px-4 text-white/80">目的</td>
+                            <td className="py-3 px-4">預測、描述性格</td>
+                            <td className="py-3 px-4 text-cyan-300">理解自我、心理調適、行動建議</td>
+                          </tr>
+                          <tr>
+                            <td className="py-3 px-4 text-white/80">體驗</td>
+                            <td className="py-3 px-4">被動接收資訊</td>
+                            <td className="py-3 px-4 text-cyan-300">主動參與，有互動感</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  {/* Key Quote */}
+                  <div className="bg-gradient-to-r from-cyan-500/10 to-transparent rounded-2xl p-6 border-l-4 border-cyan-500">
+                    <p className="text-white/80 italic leading-relaxed">
+                      「這份報告更像是一本<span className="text-cyan-400 font-medium">『自我理解的使用手冊』</span>，而不只是一張『命理診斷書』。它把命理從『預測未來』轉向『理解當下』，從『你是什麼』轉向『你可以如何活得更自在』。」
+                    </p>
+                    <p className="text-white/40 text-sm mt-3">— AI 深度分析評價</p>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
           </div>
         </div>
