@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight, Volume2, VolumeX, Loader2, MessageSquare, Pr
 import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useDrag } from "@use-gesture/react";
+import { TypewriterText } from "@/components/TypewriterText";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
@@ -731,7 +732,7 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
           key={`header-${currentPage}`}
         >
           {currentPage === 0 && (
-            <div className="inline-block mb-8">
+            <div className="inline-block mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <span className="text-primary/60 text-[11px] tracking-[0.5em] uppercase font-sans border border-primary/20 px-4 py-1.5 rounded-full bg-primary/5">
                 命理報告
               </span>
@@ -739,9 +740,24 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
           )}
           <h1 
             className="text-[26px] sm:text-[30px] md:text-[34px] lg:text-[38px] font-bold text-primary font-serif leading-[1.3] tracking-tight px-4"
-            dangerouslySetInnerHTML={{ __html: page.styledTitle }}
-          />
-          <div className="flex items-center justify-center gap-5 mt-8 md:mt-10">
+          >
+            {currentPage === 0 ? (
+              <TypewriterText 
+                text={page.title} 
+                speed={100} 
+                delay={600}
+              />
+            ) : (
+              <span dangerouslySetInnerHTML={{ __html: page.styledTitle }} />
+            )}
+          </h1>
+          <div 
+            className={cn(
+              "flex items-center justify-center gap-5 mt-8 md:mt-10",
+              currentPage === 0 ? "opacity-0 animate-fade-in" : ""
+            )}
+            style={currentPage === 0 ? { animationDelay: '2s', animationFillMode: 'forwards' } : {}}
+          >
             <div className="w-20 md:w-28 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             <div className="relative">
               <div className="w-3 h-3 rounded-full bg-primary/25" />
