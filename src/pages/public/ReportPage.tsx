@@ -905,6 +905,143 @@ const ReportPage = () => {
         </div>
       </section>
 
+      {/* Life Compass Section - 人生羅盤 */}
+      <section 
+        id="life-compass"
+        ref={(el) => (observerRefs.current['life-compass'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-transparent to-transparent" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-3xl" />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-3 px-6 py-2 bg-amber-500/20 rounded-full mb-6">
+              <Compass className="w-5 h-5 text-amber-400" />
+              <span className="text-amber-400 font-medium">核心交付物</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              人生羅盤<span className="text-amber-400">總覽圖</span>
+            </h2>
+            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
+              一張圖，看懂你在四大系統中的定位
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Description */}
+            <div className={`space-y-8 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.2s' }}>
+              <div className="space-y-6">
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">
+                  什麼是人生羅盤？
+                </h3>
+                <p className="text-white/70 text-lg leading-relaxed">
+                  人生羅盤是我們獨創的<span className="text-amber-400 font-medium">四系統整合視覺化工具</span>——將紫微、八字、占星、人類圖的核心數據，濃縮在一張清晰的總覽圖中。
+                </p>
+                <p className="text-white/60 text-lg leading-relaxed">
+                  它不只是數據呈現，更是一份可以隨時回看的<span className="text-amber-300">生命校準儀表板</span>。
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="text-white/80 font-medium text-lg">羅盤包含：</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    { icon: Star, text: "紫微主星與輔星配置" },
+                    { icon: Zap, text: "八字五行能量分布" },
+                    { icon: Globe, text: "占星日月上升三角" },
+                    { icon: Target, text: "人類圖類型與權威" },
+                    { icon: BarChart3, text: "四維能量百分比圖" },
+                    { icon: CheckCircle2, text: "交叉驗證一致性指標" },
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/30 transition-colors">
+                      <item.icon className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                      <span className="text-white/70 text-sm">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="p-6 bg-gradient-to-r from-amber-500/10 to-transparent rounded-2xl border border-amber-500/20">
+                <p className="text-amber-300/90 italic font-serif text-lg">
+                  「當你迷失方向時，打開人生羅盤——<br />
+                  它會提醒你，你是誰、你適合什麼、你該往哪裡走。」
+                </p>
+              </div>
+            </div>
+            
+            {/* Right: Visual Preview */}
+            <div className={`transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.4s' }}>
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-purple-500/20 rounded-3xl blur-2xl opacity-50" />
+                <div className="relative bg-gradient-to-br from-[#1a1614] to-[#0d0b09] rounded-3xl p-8 border border-amber-500/30 shadow-2xl">
+                  <div className="text-center mb-6">
+                    <h4 className="font-serif text-xl text-amber-400 mb-2">人 生 羅 盤</h4>
+                    <p className="text-white/40 text-sm">Life Compass Overview</p>
+                  </div>
+                  
+                  <div className="space-y-4 font-mono text-sm">
+                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-purple-400">紫微斗數</span>
+                        <span className="text-white/60">天府星坐命</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-white/40 text-xs">主星特質</span>
+                        <span className="text-white/50 text-xs">穩重・包容・務實</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-amber-400">八字命盤</span>
+                        <span className="text-white/60">癸水日主</span>
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        {['水', '木', '火', '土', '金'].map((element, i) => (
+                          <div key={element} className="flex-1 text-center">
+                            <div className={`h-8 rounded ${i === 0 ? 'bg-blue-500/60' : i === 1 ? 'bg-green-500/40' : i === 2 ? 'bg-red-500/20' : i === 3 ? 'bg-yellow-600/40' : 'bg-gray-400/40'}`} style={{ height: `${[30, 20, 10, 20, 20][i]}px` }} />
+                            <span className="text-white/40 text-xs mt-1 block">{element}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-blue-400">占星配置</span>
+                        <span className="text-white/60">☉金牛 ☽雙魚</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-white/40 text-xs">上升星座</span>
+                        <span className="text-white/50 text-xs">處女座</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-emerald-400">人類圖</span>
+                        <span className="text-white/60">投射者 2/4</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-white/40 text-xs">內在權威</span>
+                        <span className="text-white/50 text-xs">薦骨權威</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <p className="text-center text-white/40 text-xs">
+                      ✓ 四系統交叉驗證 ・ 高度一致性
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Target Audience Section */}
       <section 
         id="target-audience"
