@@ -271,10 +271,34 @@ const reportFeatures = [
 ];
 
 const fourSystems = [
-  { name: "紫微斗數", icon: Star, color: "from-violet-500 to-purple-600" },
-  { name: "八字", icon: Target, color: "from-amber-500 to-orange-600" },
-  { name: "占星", icon: Compass, color: "from-blue-500 to-cyan-600" },
-  { name: "人類圖", icon: Brain, color: "from-emerald-500 to-teal-600" },
+  { 
+    name: "紫微斗數", 
+    icon: Star, 
+    color: "from-violet-500 to-purple-600",
+    meaning: "命宮格局",
+    description: "揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。"
+  },
+  { 
+    name: "八字", 
+    icon: Target, 
+    color: "from-amber-500 to-orange-600",
+    meaning: "五行能量",
+    description: "解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。"
+  },
+  { 
+    name: "占星", 
+    icon: Compass, 
+    color: "from-blue-500 to-cyan-600",
+    meaning: "星盤配置",
+    description: "透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。"
+  },
+  { 
+    name: "人類圖", 
+    icon: Brain, 
+    color: "from-emerald-500 to-teal-600",
+    meaning: "能量類型",
+    description: "定義你的決策權威與能量運作方式，找到最適合你的行動策略。"
+  },
 ];
 
 const thinkingDimensions = [
@@ -891,11 +915,16 @@ const ReportPage = () => {
                 >
                   <div className="group relative">
                     <div className={`absolute -inset-2 bg-gradient-to-br ${system.color} rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-                    <div className={`relative px-6 py-4 bg-gradient-to-br ${system.color} rounded-2xl shadow-lg transform hover:scale-110 transition-all duration-300`}>
-                      <div className="flex items-center gap-3">
-                        <system.icon className="w-6 h-6 text-white" />
-                        <span className="font-serif font-bold text-white text-lg">{system.name}</span>
+                    <div className={`relative px-5 py-4 bg-gradient-to-br ${system.color} rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 min-w-[140px] md:min-w-[180px]`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <system.icon className="w-5 h-5 text-white" />
+                        <span className="font-serif font-bold text-white text-base md:text-lg">{system.name}</span>
                       </div>
+                      <div className="text-white/80 text-xs md:text-sm font-medium">{system.meaning}</div>
+                    </div>
+                    {/* Tooltip on hover */}
+                    <div className="absolute z-20 w-56 p-3 bg-[#1a1a1a]/95 backdrop-blur-sm rounded-xl border border-white/20 shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 translate-y-2 group-hover:translate-y-0 top-full mt-2 left-1/2 -translate-x-1/2">
+                      <p className="text-white/70 text-xs leading-relaxed">{system.description}</p>
                     </div>
                   </div>
                 </div>
