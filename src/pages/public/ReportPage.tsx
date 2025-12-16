@@ -999,71 +999,66 @@ const ReportPage = () => {
               </div>
             </div>
             
-            {/* Right: Visual Preview */}
-            <div className={`transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-purple-500/20 rounded-3xl blur-2xl opacity-50" />
-                <div className="relative bg-gradient-to-br from-[#1a1614] to-[#0d0b09] rounded-3xl p-8 border border-amber-500/30 shadow-2xl">
-                  <div className="text-center mb-6">
-                    <h4 className="font-serif text-xl text-amber-400 mb-2">人 生 羅 盤</h4>
-                    <p className="text-white/40 text-sm">Life Compass Overview</p>
-                  </div>
-                  
-                  <div className="space-y-4 font-mono text-sm">
-                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-purple-400">紫微斗數</span>
-                        <span className="text-white/60">天府星坐命</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-white/40 text-xs">主星特質</span>
-                        <span className="text-white/50 text-xs">穩重・包容・務實</span>
-                      </div>
-                    </div>
-                    
-                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-amber-400">八字命盤</span>
-                        <span className="text-white/60">癸水日主</span>
-                      </div>
-                      <div className="flex gap-2 mt-2">
-                        {['水', '木', '火', '土', '金'].map((element, i) => (
-                          <div key={element} className="flex-1 text-center">
-                            <div className={`h-8 rounded ${i === 0 ? 'bg-blue-500/60' : i === 1 ? 'bg-green-500/40' : i === 2 ? 'bg-red-500/20' : i === 3 ? 'bg-yellow-600/40' : 'bg-gray-400/40'}`} style={{ height: `${[30, 20, 10, 20, 20][i]}px` }} />
-                            <span className="text-white/40 text-xs mt-1 block">{element}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-blue-400">占星配置</span>
-                        <span className="text-white/60">☉金牛 ☽雙魚</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-white/40 text-xs">上升星座</span>
-                        <span className="text-white/50 text-xs">處女座</span>
-                      </div>
-                    </div>
-                    
-                    <div className="p-4 bg-black/30 rounded-xl border border-white/10">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-emerald-400">人類圖</span>
-                        <span className="text-white/60">投射者 2/4</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-white/40 text-xs">內在權威</span>
-                        <span className="text-white/50 text-xs">薦骨權威</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    <p className="text-center text-white/40 text-xs">
-                      ✓ 四系統交叉驗證 ・ 高度一致性
-                    </p>
-                  </div>
+          </div>
+          
+          {/* Full-width Table Preview */}
+          <div className={`mt-16 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/10 to-purple-500/10 rounded-3xl blur-2xl opacity-50" />
+              <div className="relative bg-gradient-to-br from-[#1a1614] to-[#0d0b09] rounded-3xl p-4 md:p-8 border border-amber-500/30 shadow-2xl overflow-x-auto">
+                <div className="text-center mb-6">
+                  <h4 className="font-serif text-xl text-amber-400 mb-2">人生羅盤範例</h4>
+                  <p className="text-white/40 text-sm">Life Compass Overview Example</p>
+                </div>
+                
+                <div className="min-w-[800px]">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-white/20">
+                        <th className="py-4 px-4 text-left text-white/90 font-bold">系統</th>
+                        <th className="py-4 px-4 text-left text-white/90 font-bold">主軸設定/代表結構</th>
+                        <th className="py-4 px-4 text-left text-white/90 font-bold">你的優勢亮點</th>
+                        <th className="py-4 px-4 text-left text-white/90 font-bold">你的盲點&挑戰</th>
+                        <th className="py-4 px-4 text-left text-white/90 font-bold">建議關鍵<br/><span className="text-xs text-white/50">（療癒50/效率50）</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
+                        <td className="py-4 px-4 text-purple-400 font-bold align-top">紫微斗數</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">命宮天府獨坐西宮；陽男，火六局；命主文曲、身主火星</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">你外表穩定、好說話、有禮貌又不失分寸；別人自然信任你，把事情交給你</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">不喜歡麻煩別人，也不喜歡造成混亂，很多時候會先把「不舒服」吞下來；久了容易覺得自己被當成理所當然</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">練習把「我來穩住」改成「這一段我願意穩住，其他請一起分擔」；遇到真的踩到底線的情況，至少說出一點真實感受。</td>
+                      </tr>
+                      <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
+                        <td className="py-4 px-4 text-amber-400 font-bold align-top">八字</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">丙子、庚寅、癸巳、丙巳；癸水日主偏弱，巳火重複兩支；財官印齊，帶比肩、傷官</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">你既會看現實（財）、也願意負責（官）、也有學習與修復能力（印）；壓力來時你不會立刻散掉，反而會先想「我能怎麼撐過去」。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">巳巳雙火+喪門/孤辰/勞煞組合，讓你習慣自己扛，情緒和疲累不太會說出口；外面看起來樂觀，其實你只是很會撐。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">把「說出來、停一下」當成流程的一部分，而不是失敗；先從拒絕一件小事開始，讓自己知道「我可以不用每次都全部扛」。</td>
+                      </tr>
+                      <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
+                        <td className="py-4 px-4 text-blue-400 font-bold align-top">占星</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">太陽雙魚12宮；月亮雙子2宮；上升牡羊；金星牡羊1宮；木海魔羯10宮</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">你有深度共感力，感受細緻，直覺很準；外在表現又帶主動感，不是完全被動的人；事業上其實有想做出成就的野心與耐力。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">情緒容易被環境影響，壓力大時會用忙碌或理性分析把感覺蓋掉，久了會覺得「我好像不知道自己在幹嘛」；金錢與安全感綁太近時，會不敢選自己想要的。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">固定給自己一點沒有目的、只是舒服的時間（例如散步、看劇、畫畫），讓雙魚有出口；在做重大生涯或金錢決定前，問自己：「這是為了安全感，還是也有包含我想要的？」</td>
+                      </tr>
+                      <tr className="hover:bg-white/5 transition-colors">
+                        <td className="py-4 px-4 text-emerald-400 font-bold align-top">人類圖</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">顯示生產者（MG）；情緒權威；人生角色2/4；二分人</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">只要是打從心裡「嗯、想做」的事，你可以一次做很多、做得很快，還能邊做邊調整；你在熟悉關係裡會變成很可靠的合作夥伴。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">沒有內在回應時硬逼自己做，會很快進入挫敗；情緒波動時決定，事後容易後悔或生悶氣；二分人結構讓你有時覺得「需要有人一起」，才能真正啟動。</td>
+                        <td className="py-4 px-4 text-white/70 align-top leading-relaxed">把「我明天再回你」當成保護自己的標準動作；重要決定盡量在情緒比較平穩的那天做；多選擇能尊重你節奏、不一直催你的環境與人。</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div className="mt-6 pt-6 border-t border-white/10">
+                  <p className="text-center text-white/40 text-xs">
+                    ✓ 以上為範例展示，實際報告內容將根據您的命盤資料客製化生成
+                  </p>
                 </div>
               </div>
             </div>
