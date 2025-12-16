@@ -55,6 +55,7 @@ import Autoplay from "embla-carousel-autoplay";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
+import ReportPreview from "@/components/public/ReportPreview";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 
 // AI Evaluation data - from Gemini and Claude with detailed content
@@ -734,10 +735,7 @@ const ReportPage = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center animate-slide-up" style={{ animationDelay: '1s' }}>
-            <Button size="xl" className="group text-lg px-10 py-7 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105">
-              <BookOpen className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-              先看試閱
-            </Button>
+            <ReportPreview />
             <Button 
               variant="outline" 
               size="xl" 
