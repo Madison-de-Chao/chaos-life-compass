@@ -1068,10 +1068,14 @@ const ReportPage = () => {
                         <ChevronDown className="w-4 h-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                       </div>
                     </CollapsibleTrigger>
-                    <CollapsibleContent>
+                    <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
                       <div className="divide-y divide-white/5">
                         {category.items.map((item, itemIndex) => (
-                          <div key={itemIndex} className="px-4 py-3 flex items-start gap-3">
+                          <div 
+                            key={itemIndex} 
+                            className="px-4 py-3 flex items-start gap-3 animate-fade-in"
+                            style={{ animationDelay: `${itemIndex * 50}ms` }}
+                          >
                             <span className={`text-${item.color}-400 text-xs font-medium whitespace-nowrap`}>
                               {item.system}
                             </span>
