@@ -3,7 +3,26 @@ import { Link } from "react-router-dom";
 import { TypewriterText } from "@/components/TypewriterText";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
-import { Sparkles, Moon, Compass, User } from "lucide-react";
+import { Sparkles, Moon, Compass, User, ExternalLink } from "lucide-react";
+
+const thinkingConcepts = [
+  {
+    title: "完整性哲學",
+    description: "世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。",
+  },
+  {
+    title: "弧度模型",
+    description: "以「弧度模型」取代「二元模型」。所有狀態都在圓周上的不同位置。",
+  },
+  {
+    title: "高度整合型思維",
+    description: "不以刪除錯誤來追求秩序，而是以「整合全部」來追求穩定。",
+  },
+  {
+    title: "鏡子非劇本",
+    description: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。",
+  },
+];
 
 const portalItems = [
   {
@@ -47,7 +66,8 @@ const portalItems = [
     subtitle: "Who is MomoChao",
     description: "或許，只是另一個正在學會凝視自己的人",
     icon: User,
-    href: "/momo",
+    href: "https://im-momochao.manus.space",
+    isExternal: true,
     glowColor: "rgba(52, 211, 153, 0.35)",
     particleColor: "bg-emerald-300",
     borderColor: "border-emerald-400/20",
@@ -231,112 +251,226 @@ export default function PortalPage() {
           </div>
         </div>
 
+        {/* MomoChao Introduction Section */}
+        <div className={`transition-all duration-700 delay-300 ${showCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          {/* Main intro */}
+          <div className="text-center space-y-6 mb-12">
+            <div className="space-y-2">
+              <h2 className="font-display text-2xl md:text-3xl text-[#c9a962] tracking-wide">
+                MomoChao — The Guardian of Mirrors
+              </h2>
+              <p className="text-white/60 text-lg md:text-xl font-light italic">
+                「我們不預測未來，只幫你看清現在。」
+              </p>
+            </div>
+            
+            <div className="max-w-xl mx-auto space-y-4 text-white/50 text-sm md:text-base leading-relaxed font-light">
+              <p>
+                默默超不是一個人名，<br />
+                而是一種思維方式的代稱。
+              </p>
+              <p>
+                它代表著一種觀看世界的角度：<br />
+                不急著評判，不急著給答案，<br />
+                而是先安靜地看見。
+              </p>
+              <p className="text-white/70">
+                「默默」是方法，「超」是目標。<br />
+                <span className="text-[#c9a962]/80">在沉默中觀察，在理解中超越。</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Thinking system concepts */}
+          <div className="space-y-6">
+            <div className="text-center">
+              <h3 className="text-lg md:text-xl text-white/80 font-display tracking-wide mb-1">默默超思維</h3>
+              <p className="text-white/40 text-xs tracking-wider">一套改變世界的文明級生活方法</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {thinkingConcepts.map((concept, index) => (
+                <div 
+                  key={concept.title}
+                  className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-[#c9a962]/20 transition-all duration-300"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <h4 className="text-[#c9a962]/90 font-medium mb-2 tracking-wide">{concept.title}</h4>
+                  <p className="text-white/50 text-sm leading-relaxed font-light">{concept.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Language style */}
+          <div className="mt-10 p-6 rounded-xl bg-gradient-to-br from-white/[0.02] to-transparent border border-white/[0.05]">
+            <h3 className="text-center text-white/70 font-display mb-6 tracking-wide">語言風格</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <p className="text-[#c9a962]/80 text-sm font-medium tracking-wide">我們這樣說</p>
+                <div className="flex flex-wrap gap-2">
+                  {['看見', '照見', '回望', '聽見', '觀察', '辨識', '重新命名', '試試看', '留著', '安放'].map(word => (
+                    <span key={word} className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300/80 text-xs border border-emerald-500/20">
+                      {word}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-3">
+                <p className="text-white/40 text-sm font-medium tracking-wide">我們不這樣說</p>
+                <div className="flex flex-wrap gap-2">
+                  {['評論', '批判', '判斷', '定義', '修正', '糾錯', '放下', '忘記', '拋棄'].map(word => (
+                    <span key={word} className="px-3 py-1 rounded-full bg-white/[0.03] text-white/30 text-xs border border-white/[0.05] line-through">
+                      {word}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <p className="text-center text-white/40 text-xs mt-6 font-light">
+              對話以「我聽見」「要不要」「或許」開場，取代「你應該」「所以」「應該是」
+            </p>
+          </div>
+
+          {/* Separator before cards */}
+          <div className="flex items-center justify-center gap-4 mt-12 mb-4">
+            <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent" />
+            <div className="w-1.5 h-1.5 rotate-45 border border-[#c9a962]/30" />
+            <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#c9a962]/30 to-transparent" />
+          </div>
+          <p className="text-center text-white/30 text-sm mb-8 font-light">開始探索</p>
+        </div>
+
         {/* Portal cards with premium styling */}
         <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 transition-all duration-700 ${showCards ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          {portalItems.map((item, index) => (
-            <Link
-              key={item.title}
-              to={item.href}
-              className={`group relative block p-7 rounded-2xl border ${item.borderColor} backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${cardsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-              style={{ 
-                transitionDelay: `${index * 80}ms`,
-                background: `linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%)`,
-              }}
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {/* Outer glow effect */}
-              <div 
-                className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl -z-10"
-                style={{ 
-                  background: `radial-gradient(circle at center, ${item.glowColor}, transparent 70%)`,
-                }}
-              />
-              
-              {/* Subtle inner gradient on hover */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `radial-gradient(ellipse at 30% 0%, hsla(${item.accentHsl}, 0.08) 0%, transparent 60%)`,
-                }}
-              />
-              
-              {/* Animated border glow */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
-              >
+          {portalItems.map((item, index) => {
+            const CardWrapper = ({ children }: { children: React.ReactNode }) => 
+              item.isExternal ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group relative block p-7 rounded-2xl border ${item.borderColor} backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${cardsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                  style={{ 
+                    transitionDelay: `${index * 80}ms`,
+                    background: `linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%)`,
+                  }}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  {children}
+                </a>
+              ) : (
+                <Link
+                  to={item.href}
+                  className={`group relative block p-7 rounded-2xl border ${item.borderColor} backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${cardsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+                  style={{ 
+                    transitionDelay: `${index * 80}ms`,
+                    background: `linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%)`,
+                  }}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  {children}
+                </Link>
+              );
+
+            return (
+              <CardWrapper key={item.title}>
+                {/* Outer glow effect */}
                 <div 
-                  className="absolute inset-[-1px] rounded-2xl"
-                  style={{
-                    background: `conic-gradient(from 180deg at 50% 50%, transparent 0deg, hsla(${item.accentHsl}, 0.3) 60deg, transparent 120deg)`,
-                    animation: hoveredCard === index ? 'borderRotate 4s linear infinite' : 'none',
+                  className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl -z-10"
+                  style={{ 
+                    background: `radial-gradient(circle at center, ${item.glowColor}, transparent 70%)`,
                   }}
                 />
-              </div>
-              
-              {/* Light sweep effect */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                
+                {/* Subtle inner gradient on hover */}
                 <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
-                    background: `linear-gradient(105deg, transparent 40%, hsla(${item.accentHsl}, 0.1) 45%, hsla(${item.accentHsl}, 0.2) 50%, hsla(${item.accentHsl}, 0.1) 55%, transparent 60%)`,
-                    transform: 'translateX(-100%)',
-                    animation: hoveredCard === index ? 'shimmer 2s ease-in-out infinite' : 'none',
+                    background: `radial-gradient(ellipse at 30% 0%, hsla(${item.accentHsl}, 0.08) 0%, transparent 60%)`,
                   }}
                 />
-              </div>
-              
-              {/* Hover particles */}
-              <HoverParticles isHovered={hoveredCard === index} color={item.particleColor} />
-              
-              {/* Content */}
-              <div className="relative flex items-start gap-5">
-                {/* Icon with glow */}
-                <div className="relative">
+                
+                {/* Animated border glow */}
+                <div 
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
+                >
                   <div 
-                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                    style={{ backgroundColor: item.glowColor }}
-                  />
-                  <div 
-                    className={`relative w-14 h-14 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] flex items-center justify-center ${item.iconColor} transition-all duration-500 group-hover:border-white/20`}
+                    className="absolute inset-[-1px] rounded-2xl"
                     style={{
-                      boxShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}, inset 0 1px 0 rgba(255,255,255,0.1)` : 'inset 0 1px 0 rgba(255,255,255,0.05)',
+                      background: `conic-gradient(from 180deg at 50% 50%, transparent 0deg, hsla(${item.accentHsl}, 0.3) 60deg, transparent 120deg)`,
+                      animation: hoveredCard === index ? 'borderRotate 4s linear infinite' : 'none',
                     }}
-                  >
-                    <item.icon className="w-6 h-6 transition-transform duration-500 group-hover:scale-110" />
-                  </div>
+                  />
                 </div>
                 
-                {/* Text content */}
-                <div className="flex-1 space-y-2 pt-1">
-                  <h3 
-                    className="font-display text-xl md:text-2xl font-medium text-white/90 tracking-wide transition-all duration-300 group-hover:text-white"
+                {/* Light sweep effect */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{
-                      textShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}` : 'none',
+                      background: `linear-gradient(105deg, transparent 40%, hsla(${item.accentHsl}, 0.1) 45%, hsla(${item.accentHsl}, 0.2) 50%, hsla(${item.accentHsl}, 0.1) 55%, transparent 60%)`,
+                      transform: 'translateX(-100%)',
+                      animation: hoveredCard === index ? 'shimmer 2s ease-in-out infinite' : 'none',
+                    }}
+                  />
+                </div>
+                
+                {/* Hover particles */}
+                <HoverParticles isHovered={hoveredCard === index} color={item.particleColor} />
+                
+                {/* Content */}
+                <div className="relative flex items-start gap-5">
+                  {/* Icon with glow */}
+                  <div className="relative">
+                    <div 
+                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                      style={{ backgroundColor: item.glowColor }}
+                    />
+                    <div 
+                      className={`relative w-14 h-14 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] flex items-center justify-center ${item.iconColor} transition-all duration-500 group-hover:border-white/20`}
+                      style={{
+                        boxShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}, inset 0 1px 0 rgba(255,255,255,0.1)` : 'inset 0 1px 0 rgba(255,255,255,0.05)',
+                      }}
+                    >
+                      <item.icon className="w-6 h-6 transition-transform duration-500 group-hover:scale-110" />
+                    </div>
+                  </div>
+                  
+                  {/* Text content */}
+                  <div className="flex-1 space-y-2 pt-1">
+                    <h3 
+                      className="font-display text-xl md:text-2xl font-medium text-white/90 tracking-wide transition-all duration-300 group-hover:text-white flex items-center gap-2"
+                      style={{
+                        textShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}` : 'none',
+                      }}
+                    >
+                      {item.title}
+                      {item.isExternal && <ExternalLink className="w-4 h-4 opacity-50" />}
+                    </h3>
+                    <p className="text-[10px] text-white/30 font-medium tracking-[0.2em] uppercase group-hover:text-white/50 transition-colors duration-300">
+                      {item.subtitle}
+                    </p>
+                    <p className="text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300 font-light">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Arrow indicator */}
+                  <div 
+                    className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.05] flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-500"
+                    style={{
+                      boxShadow: hoveredCard === index ? `0 0 20px ${item.glowColor}` : 'none',
                     }}
                   >
-                    {item.title}
-                  </h3>
-                  <p className="text-[10px] text-white/30 font-medium tracking-[0.2em] uppercase group-hover:text-white/50 transition-colors duration-300">
-                    {item.subtitle}
-                  </p>
-                  <p className="text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300 font-light">
-                    {item.description}
-                  </p>
+                    <span className="text-white/60 text-lg">{item.isExternal ? '↗' : '→'}</span>
+                  </div>
                 </div>
-
-                {/* Arrow indicator */}
-                <div 
-                  className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.05] flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-500"
-                  style={{
-                    boxShadow: hoveredCard === index ? `0 0 20px ${item.glowColor}` : 'none',
-                  }}
-                >
-                  <span className="text-white/60 text-lg">→</span>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </CardWrapper>
+            );
+          })}
         </div>
 
         {/* Bottom decorative element */}
