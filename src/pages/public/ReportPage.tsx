@@ -62,6 +62,7 @@ import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import ReportPreview from "@/components/public/ReportPreview";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
+import { useSEO } from "@/hooks/useSEO";
 
 // AI Evaluation data - from Gemini and Claude with detailed content
 const aiEvaluations = [
@@ -529,6 +530,13 @@ const ReportPage = () => {
   const [showQuiz, setShowQuiz] = useState(false);
   const observerRefs = useRef<{ [key: string]: Element | null }>({});
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useSEO({
+    title: "默默超全方位命理解讀報告 | 紫微斗數・八字・占星・人類圖",
+    description: "獨家四系統交叉整合命理報告，80,000+字深度解析。標準版NT$4,980起，旗艦版包含元壹宇宙X默默超思維系統。100%全客製化，不套模板。",
+    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 全方位命理解讀, 命盤分析, 人生羅盤",
+    ogTitle: "默默超全方位命理解讀報告 - 看見自己，而非被命運定義",
+  });
 
   // Count animations with visibility trigger
   const wordCount = useCountUp(80000, 2500, 0, heroVisible);

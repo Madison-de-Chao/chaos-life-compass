@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import { useSEO } from "@/hooks/useSEO";
 
 // Custom hook for scroll animations
 const useScrollReveal = () => {
@@ -139,6 +140,13 @@ const clientLogos = [
 
 const ChaoxuanPage = () => {
   const [scrollY, setScrollY] = useState(0);
+
+  useSEO({
+    title: "超烜創意 Maison de Chao | 奢華創意服務平台",
+    description: "超烜創意提供六大專業服務領域：藝術之廊、全能之門、元素之庭、創意之殿、虹靈御所、養成之苑。讓品牌成為一面鏡子，照見獨特的本質。",
+    keywords: "超烜創意, Maison de Chao, 品牌設計, AI繪圖, 行銷策略, IP開發, 藝術策展, 企業培訓",
+    ogTitle: "超烜創意 Maison de Chao - 奢華創意服務平台",
+  });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
