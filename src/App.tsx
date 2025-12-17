@@ -33,8 +33,10 @@ const queryClient = new QueryClient();
 // Component to conditionally render chatbot on public pages
 function ChatBotWrapper() {
   const location = useLocation();
-  const publicRoutes = ["/portal", "/home", "/chaoxuan", "/about", "/momo", "/reports"];
-  const isPublicRoute = publicRoutes.some(route => location.pathname.startsWith(route));
+  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/about", "/momo", "/reports"];
+  const isPublicRoute = publicRoutes.some(route => 
+    route === "/" ? location.pathname === "/" : location.pathname.startsWith(route)
+  );
   
   if (!isPublicRoute) return null;
   return <MomoChatBot />;
@@ -50,6 +52,7 @@ const App = () => (
           <PageTransition>
             <Routes>
             {/* Public routes - 虹靈御所前台 */}
+              <Route path="/" element={<PortalPage />} />
               <Route path="/portal" element={<PortalPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/chaoxuan" element={<ChaoxuanPage />} />
@@ -59,7 +62,7 @@ const App = () => (
               
               {/* Protected routes - Admin dashboard */}
               <Route
-                path="/"
+                path="/dashboard"
                 element={
                   <ProtectedRoute>
                     <Index />
