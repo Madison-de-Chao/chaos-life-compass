@@ -11,9 +11,9 @@ const portalItems = [
     icon: Moon,
     href: "/home",
     glowColor: "rgba(245, 158, 11, 0.4)",
-    particleColor: "bg-amber-400",
-    borderColor: "border-amber-500/30",
-    iconColor: "text-amber-400",
+    particleColor: "bg-amber-300",
+    borderColor: "border-amber-400/20",
+    iconColor: "text-amber-300",
     accentHsl: "38, 92%, 50%",
   },
   {
@@ -22,11 +22,11 @@ const portalItems = [
     description: "頂級創意服務，打造品牌獨特魅力",
     icon: Sparkles,
     href: "/chaoxuan",
-    glowColor: "rgba(234, 179, 8, 0.4)",
-    particleColor: "bg-yellow-400",
-    borderColor: "border-yellow-500/30",
-    iconColor: "text-yellow-400",
-    accentHsl: "48, 96%, 53%",
+    glowColor: "rgba(201, 169, 98, 0.5)",
+    particleColor: "bg-[#c9a962]",
+    borderColor: "border-[#c9a962]/20",
+    iconColor: "text-[#c9a962]",
+    accentHsl: "43, 47%, 59%",
   },
   {
     title: "元壹宇宙",
@@ -34,10 +34,10 @@ const portalItems = [
     description: "生命哲學與思維方法論的探索",
     icon: Compass,
     href: "/about",
-    glowColor: "rgba(168, 85, 247, 0.4)",
-    particleColor: "bg-purple-400",
-    borderColor: "border-purple-500/30",
-    iconColor: "text-purple-400",
+    glowColor: "rgba(168, 85, 247, 0.35)",
+    particleColor: "bg-purple-300",
+    borderColor: "border-purple-400/20",
+    iconColor: "text-purple-300",
     accentHsl: "271, 91%, 65%",
   },
   {
@@ -46,30 +46,30 @@ const portalItems = [
     description: "認識默默超，了解思維系統的創始者",
     icon: User,
     href: "/momo",
-    glowColor: "rgba(52, 211, 153, 0.4)",
-    particleColor: "bg-emerald-400",
-    borderColor: "border-emerald-500/30",
-    iconColor: "text-emerald-400",
+    glowColor: "rgba(52, 211, 153, 0.35)",
+    particleColor: "bg-emerald-300",
+    borderColor: "border-emerald-400/20",
+    iconColor: "text-emerald-300",
     accentHsl: "160, 84%, 39%",
   },
 ];
 
 const greetings = [
-  "嗨，歡迎來到這裡 ✨",
-  "我是默默超，很高興見到你",
-  "這裡是一個探索自我的起點",
-  "請選擇你想前往的地方吧 👇",
+  "歡迎來到這裡",
+  "我是默默超",
+  "這是一個探索自我的起點",
+  "請選擇你想前往的地方",
 ];
 
 // Particle component for hover effect
 function HoverParticles({ isHovered, color }: { isHovered: boolean; color: string }) {
   const particles = useRef(
-    [...Array(12)].map(() => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 2 + Math.random() * 3,
-      delay: Math.random() * 0.5,
-      duration: 0.8 + Math.random() * 0.4,
+    [...Array(8)].map(() => ({
+      x: 20 + Math.random() * 60,
+      y: 20 + Math.random() * 60,
+      size: 2 + Math.random() * 2,
+      delay: Math.random() * 0.3,
+      duration: 0.6 + Math.random() * 0.3,
     }))
   ).current;
 
@@ -84,9 +84,9 @@ function HoverParticles({ isHovered, color }: { isHovered: boolean; color: strin
             top: `${particle.y}%`,
             width: particle.size,
             height: particle.size,
-            opacity: isHovered ? 1 : 0,
+            opacity: isHovered ? 0.8 : 0,
             transform: isHovered 
-              ? `scale(1) translateY(-20px)` 
+              ? `scale(1) translateY(-30px)` 
               : `scale(0) translateY(0)`,
             transitionDuration: `${particle.duration}s`,
             transitionDelay: `${particle.delay}s`,
@@ -108,11 +108,11 @@ export default function PortalPage() {
     if (currentGreetingIndex < greetings.length - 1) {
       setTimeout(() => {
         setCurrentGreetingIndex(prev => prev + 1);
-      }, 500);
+      }, 400);
     } else {
       setTimeout(() => {
         setShowCards(true);
-      }, 300);
+      }, 200);
     }
   };
 
@@ -125,54 +125,73 @@ export default function PortalPage() {
             newState[index] = true;
             return newState;
           });
-        }, index * 150);
+        }, index * 120);
       });
     }
   }, [showCards]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,98,0.08),transparent_70%)]" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <div className="min-h-screen bg-[#080808] flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
+      {/* Subtle noise texture overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.015] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
       
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-amber-400/30 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Elegant radial gradients */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(201,169,98,0.08),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_80%_50%,rgba(168,85,247,0.04),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_20%_80%,rgba(245,158,11,0.04),transparent)]" />
+      
+      {/* Animated ambient light */}
+      <div 
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[120px] opacity-20"
+        style={{
+          background: 'radial-gradient(circle, rgba(201,169,98,0.3) 0%, transparent 70%)',
+          animation: 'ambientPulse 8s ease-in-out infinite',
+        }}
+      />
+      
+      {/* Subtle grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(201,169,98,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,98,0.5) 1px, transparent 1px)`,
+          backgroundSize: '100px 100px',
+        }}
+      />
 
-      <div className="relative z-10 max-w-4xl w-full space-y-12">
+      <div className="relative z-10 max-w-4xl w-full space-y-16">
         {/* Greeting section */}
-        <div className="text-center space-y-6">
-          {/* Avatar */}
-          <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-amber-500/20 to-purple-500/20 border border-amber-500/30 flex items-center justify-center animate-fade-in">
-            <span className="text-3xl">🌟</span>
+        <div className="text-center space-y-8">
+          {/* Elegant decorative element */}
+          <div className="flex items-center justify-center gap-4 animate-fade-in">
+            <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#c9a962]/50 to-transparent" />
+            <div className="w-2 h-2 rotate-45 border border-[#c9a962]/40" />
+            <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#c9a962]/50 to-transparent" />
           </div>
 
-          {/* Typewriter greetings */}
-          <div className="min-h-[120px] flex flex-col items-center justify-center space-y-2">
+          {/* Typewriter greetings with elegant typography */}
+          <div className="min-h-[140px] flex flex-col items-center justify-center space-y-3">
             {greetings.slice(0, currentGreetingIndex + 1).map((greeting, index) => (
               <div 
                 key={index} 
-                className={`text-lg md:text-xl ${index === currentGreetingIndex ? 'text-white' : 'text-white/50'}`}
+                className={`font-display text-xl md:text-2xl tracking-wide transition-all duration-500 ${
+                  index === currentGreetingIndex 
+                    ? 'text-white/90' 
+                    : 'text-white/30'
+                }`}
+                style={{
+                  textShadow: index === currentGreetingIndex ? '0 0 40px rgba(201,169,98,0.3)' : 'none',
+                }}
               >
                 {index === currentGreetingIndex ? (
                   <TypewriterText
                     text={greeting}
-                    speed={60}
-                    delay={index === 0 ? 500 : 0}
+                    speed={50}
+                    delay={index === 0 ? 600 : 0}
                     onComplete={handleGreetingComplete}
                   />
                 ) : (
@@ -181,55 +200,66 @@ export default function PortalPage() {
               </div>
             ))}
           </div>
+
+          {/* Elegant separator */}
+          <div className={`flex items-center justify-center gap-3 transition-all duration-700 ${showCards ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent to-[#c9a962]/30" />
+            <div className="text-[#c9a962]/40 text-xs tracking-[0.3em] uppercase font-light">Select Your Path</div>
+            <div className="w-16 h-px bg-gradient-to-l from-transparent to-[#c9a962]/30" />
+          </div>
         </div>
 
-        {/* Portal cards */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 transition-opacity duration-500 ${showCards ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        {/* Portal cards with premium styling */}
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 transition-all duration-700 ${showCards ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           {portalItems.map((item, index) => (
             <Link
               key={item.title}
               to={item.href}
-              className={`group relative block p-6 rounded-2xl border ${item.borderColor} backdrop-blur-sm transition-all duration-500 hover:scale-[1.03] ${cardsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              className={`group relative block p-7 rounded-2xl border ${item.borderColor} backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${cardsVisible[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
               style={{ 
-                transitionDelay: `${index * 50}ms`,
-                background: `linear-gradient(135deg, hsla(${item.accentHsl}, 0.1) 0%, hsla(${item.accentHsl}, 0.05) 50%, transparent 100%)`,
+                transitionDelay: `${index * 80}ms`,
+                background: `linear-gradient(145deg, rgba(20,20,20,0.9) 0%, rgba(15,15,15,0.95) 100%)`,
               }}
               onMouseEnter={() => setHoveredCard(index)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Outer glow effect */}
               <div 
-                className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl -z-10"
                 style={{ 
                   background: `radial-gradient(circle at center, ${item.glowColor}, transparent 70%)`,
                 }}
               />
               
-              {/* Inner card background */}
-              <div className="absolute inset-0 rounded-2xl bg-black/40 backdrop-blur-sm" />
-              
-              {/* Animated border glow */}
+              {/* Subtle inner gradient on hover */}
               <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                  background: `linear-gradient(135deg, hsla(${item.accentHsl}, 0.3) 0%, transparent 50%, hsla(${item.accentHsl}, 0.3) 100%)`,
-                  padding: '1px',
-                  mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                  maskComposite: 'exclude',
-                  WebkitMaskComposite: 'xor',
+                  background: `radial-gradient(ellipse at 30% 0%, hsla(${item.accentHsl}, 0.08) 0%, transparent 60%)`,
                 }}
               />
               
-              {/* Light sweep effect */}
+              {/* Animated border glow */}
               <div 
-                className="absolute inset-0 rounded-2xl overflow-hidden"
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
               >
                 <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-[-1px] rounded-2xl"
                   style={{
-                    background: `linear-gradient(105deg, transparent 40%, hsla(${item.accentHsl}, 0.15) 45%, hsla(${item.accentHsl}, 0.3) 50%, hsla(${item.accentHsl}, 0.15) 55%, transparent 60%)`,
+                    background: `conic-gradient(from 180deg at 50% 50%, transparent 0deg, hsla(${item.accentHsl}, 0.3) 60deg, transparent 120deg)`,
+                    animation: hoveredCard === index ? 'borderRotate 4s linear infinite' : 'none',
+                  }}
+                />
+              </div>
+              
+              {/* Light sweep effect */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(105deg, transparent 40%, hsla(${item.accentHsl}, 0.1) 45%, hsla(${item.accentHsl}, 0.2) 50%, hsla(${item.accentHsl}, 0.1) 55%, transparent 60%)`,
                     transform: 'translateX(-100%)',
-                    animation: hoveredCard === index ? 'shimmer 1.5s ease-in-out infinite' : 'none',
+                    animation: hoveredCard === index ? 'shimmer 2s ease-in-out infinite' : 'none',
                   }}
                 />
               </div>
@@ -237,66 +267,82 @@ export default function PortalPage() {
               {/* Hover particles */}
               <HoverParticles isHovered={hoveredCard === index} color={item.particleColor} />
               
-              {/* Radial glow behind icon */}
-              <div 
-                className="absolute top-4 left-4 w-16 h-16 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"
-                style={{ backgroundColor: item.glowColor }}
-              />
-              
-              <div className="relative flex items-start gap-4">
-                <div 
-                  className={`w-12 h-12 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center ${item.iconColor} group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
-                  style={{
-                    boxShadow: hoveredCard === index ? `0 0 20px ${item.glowColor}` : 'none',
-                  }}
-                >
-                  <item.icon className="w-6 h-6 group-hover:animate-pulse" />
+              {/* Content */}
+              <div className="relative flex items-start gap-5">
+                {/* Icon with glow */}
+                <div className="relative">
+                  <div 
+                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                    style={{ backgroundColor: item.glowColor }}
+                  />
+                  <div 
+                    className={`relative w-14 h-14 rounded-xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] flex items-center justify-center ${item.iconColor} transition-all duration-500 group-hover:border-white/20`}
+                    style={{
+                      boxShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}, inset 0 1px 0 rgba(255,255,255,0.1)` : 'inset 0 1px 0 rgba(255,255,255,0.05)',
+                    }}
+                  >
+                    <item.icon className="w-6 h-6 transition-transform duration-500 group-hover:scale-110" />
+                  </div>
                 </div>
                 
-                <div className="flex-1 space-y-1">
+                {/* Text content */}
+                <div className="flex-1 space-y-2 pt-1">
                   <h3 
-                    className="text-xl font-bold text-white transition-all duration-300"
+                    className="font-display text-xl md:text-2xl font-medium text-white/90 tracking-wide transition-all duration-300 group-hover:text-white"
                     style={{
-                      textShadow: hoveredCard === index ? `0 0 20px ${item.glowColor}` : 'none',
+                      textShadow: hoveredCard === index ? `0 0 30px ${item.glowColor}` : 'none',
                     }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-xs text-white/40 font-medium tracking-wider uppercase group-hover:text-white/60 transition-colors">
+                  <p className="text-[10px] text-white/30 font-medium tracking-[0.2em] uppercase group-hover:text-white/50 transition-colors duration-300">
                     {item.subtitle}
                   </p>
-                  <p className="text-sm text-white/60 mt-2 leading-relaxed group-hover:text-white/80 transition-colors">
+                  <p className="text-sm text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300 font-light">
                     {item.description}
                   </p>
                 </div>
 
-                {/* Arrow indicator with glow */}
+                {/* Arrow indicator */}
                 <div 
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.05] flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-500"
                   style={{
-                    boxShadow: hoveredCard === index ? `0 0 15px ${item.glowColor}` : 'none',
+                    boxShadow: hoveredCard === index ? `0 0 20px ${item.glowColor}` : 'none',
                   }}
                 >
-                  <span className="text-white/80">→</span>
+                  <span className="text-white/60 text-lg">→</span>
                 </div>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Skip button for returning users */}
-        <div className={`text-center transition-opacity duration-500 ${showCards ? 'opacity-100' : 'opacity-0'}`}>
-          <p className="text-white/30 text-sm">
-            按下任一入口開始探索
+        {/* Bottom decorative element */}
+        <div className={`flex flex-col items-center gap-4 transition-all duration-700 ${showCards ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex items-center gap-3">
+            <div className="w-1 h-1 rounded-full bg-[#c9a962]/30" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#c9a962]/50" />
+            <div className="w-1 h-1 rounded-full bg-[#c9a962]/30" />
+          </div>
+          <p className="text-white/20 text-xs tracking-widest uppercase font-light">
+            Touch to explore
           </p>
         </div>
       </div>
       
-      {/* Shimmer animation keyframes */}
+      {/* Animations */}
       <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
+        }
+        @keyframes borderRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes ambientPulse {
+          0%, 100% { opacity: 0.15; transform: translate(-50%, 0) scale(1); }
+          50% { opacity: 0.25; transform: translate(-50%, 0) scale(1.1); }
         }
       `}</style>
     </div>
