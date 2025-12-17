@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { TypewriterText } from "@/components/TypewriterText";
@@ -102,6 +102,12 @@ export function MomoChatBot() {
     setIsOpen(false);
   };
 
+  const handleRestart = () => {
+    setMessages([]);
+    setShowGreeting(true);
+    setInput("");
+  };
+
   const handleQuickQuestion = (question: string) => {
     setInput(question);
     // Trigger send after a brief delay
@@ -179,14 +185,25 @@ export function MomoChatBot() {
         <div className="bg-[#0a0a0a]/95 backdrop-blur-xl border border-[#c9a962]/20 rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="px-5 py-4 border-b border-white/5 bg-gradient-to-r from-[#c9a962]/10 to-transparent">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a962]/30 to-[#c9a962]/10 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[#c9a962]" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c9a962]/30 to-[#c9a962]/10 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-[#c9a962]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-medium text-sm">默默超</h3>
+                  <p className="text-white/40 text-xs">在這裡，照見自己</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-white font-medium text-sm">默默超</h3>
-                <p className="text-white/40 text-xs">在這裡，照見自己</p>
-              </div>
+              {messages.length > 0 && (
+                <button
+                  onClick={handleRestart}
+                  className="p-2 rounded-lg text-white/40 hover:text-white/70 hover:bg-white/5 transition-all duration-300"
+                  title="重新開始對話"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
