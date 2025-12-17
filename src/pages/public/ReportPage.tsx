@@ -1021,7 +1021,7 @@ const ReportPage = () => {
             </div>
             
             {/* Mobile Card View */}
-            <div className="md:hidden space-y-4">
+            <div className="md:hidden space-y-3">
               {[
                 {
                   dimension: '核心本質',
@@ -1060,27 +1060,31 @@ const ReportPage = () => {
                   ]
                 }
               ].map((category, catIndex) => (
-                <div 
-                  key={catIndex} 
-                  className="bg-[#0a0a0a]/80 rounded-xl border border-white/10 overflow-hidden"
-                >
-                  <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-3">
-                    <h4 className="text-amber-400 font-medium text-sm">{category.dimension}</h4>
-                  </div>
-                  <div className="divide-y divide-white/5">
-                    {category.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="px-4 py-3 flex items-start gap-3">
-                        <span className={`text-${item.color}-400 text-xs font-medium whitespace-nowrap`}>
-                          {item.system}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white/90 text-xs font-medium">{item.label}</p>
-                          <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
-                        </div>
+                <Collapsible key={catIndex} defaultOpen={false} className="group">
+                  <div className="bg-[#0a0a0a]/80 rounded-xl border border-white/10 overflow-hidden">
+                    <CollapsibleTrigger className="w-full">
+                      <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-3 flex items-center justify-between">
+                        <h4 className="text-amber-400 font-medium text-sm">{category.dimension}</h4>
+                        <ChevronDown className="w-4 h-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                       </div>
-                    ))}
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="divide-y divide-white/5">
+                        {category.items.map((item, itemIndex) => (
+                          <div key={itemIndex} className="px-4 py-3 flex items-start gap-3">
+                            <span className={`text-${item.color}-400 text-xs font-medium whitespace-nowrap`}>
+                              {item.system}
+                            </span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-white/90 text-xs font-medium">{item.label}</p>
+                              <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CollapsibleContent>
                   </div>
-                </div>
+                </Collapsible>
               ))}
             </div>
             <p className="text-center text-white/50 text-xs mt-4">
