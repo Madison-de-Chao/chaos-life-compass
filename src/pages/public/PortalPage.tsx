@@ -7,7 +7,7 @@ const portalItems = [
   {
     title: "虹靈御所",
     subtitle: "Hongling Yusuo",
-    description: "探索命理的奧秘，解讀人生的密碼",
+    description: "看見命盤裡的自己，而非被命運定義",
     icon: Moon,
     href: "/home",
     glowColor: "rgba(245, 158, 11, 0.4)",
@@ -19,7 +19,7 @@ const portalItems = [
   {
     title: "超烜創意",
     subtitle: "Maison de Chao",
-    description: "頂級創意服務，打造品牌獨特魅力",
+    description: "讓品牌成為一面鏡子，照見獨特的本質",
     icon: Sparkles,
     href: "/chaoxuan",
     glowColor: "rgba(201, 169, 98, 0.5)",
@@ -31,7 +31,7 @@ const portalItems = [
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
-    description: "生命哲學與思維方法論的探索",
+    description: "在思維的鏡面裡，重新命名自己的世界",
     icon: Compass,
     href: "/about",
     glowColor: "rgba(168, 85, 247, 0.35)",
@@ -43,7 +43,7 @@ const portalItems = [
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
-    description: "認識默默超，了解思維系統的創始者",
+    description: "或許，只是另一個正在學會凝視自己的人",
     icon: User,
     href: "/momo",
     glowColor: "rgba(52, 211, 153, 0.35)",
@@ -55,10 +55,10 @@ const portalItems = [
 ];
 
 const greetings = [
-  "歡迎來到這裡",
-  "我是默默超",
-  "這是一個探索自我的起點",
-  "請選擇你想前往的地方",
+  "你來了…",
+  "這裡是一面鏡子",
+  "不給答案，只給倒影",
+  "要往哪裡照見自己…",
 ];
 
 // Particle component for hover effect
@@ -204,7 +204,7 @@ export default function PortalPage() {
           {/* Elegant separator */}
           <div className={`flex items-center justify-center gap-3 transition-all duration-700 ${showCards ? 'opacity-100' : 'opacity-0'}`}>
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-[#c9a962]/30" />
-            <div className="text-[#c9a962]/40 text-xs tracking-[0.3em] uppercase font-light">Select Your Path</div>
+            <div className="text-[#c9a962]/40 text-xs tracking-[0.2em] font-light font-serif">照見・回望・前行</div>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-[#c9a962]/30" />
           </div>
         </div>
@@ -324,8 +324,8 @@ export default function PortalPage() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#c9a962]/50" />
             <div className="w-1 h-1 rounded-full bg-[#c9a962]/30" />
           </div>
-          <p className="text-white/20 text-xs tracking-widest uppercase font-light">
-            Touch to explore
+          <p className="text-white/20 text-xs tracking-wider font-light font-serif">
+            此刻的你，已在途中
           </p>
         </div>
       </div>
