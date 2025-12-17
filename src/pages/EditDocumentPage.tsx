@@ -149,7 +149,7 @@ const EditDocumentPage = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate(state.isEditing ? "/files" : "/")}
+            onClick={() => navigate(state.isEditing ? "/files" : "/dashboard")}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />

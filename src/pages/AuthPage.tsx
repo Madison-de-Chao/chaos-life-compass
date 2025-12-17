@@ -44,7 +44,7 @@ const AuthPage = () => {
         title: "登入成功",
         description: "歡迎回來！",
       });
-      navigate("/");
+      navigate("/dashboard");
     }
     
     setIsLoading(false);
