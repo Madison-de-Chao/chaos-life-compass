@@ -237,6 +237,269 @@ function EnergyWaves({ active }: { active: boolean }) {
   );
 }
 
+// Lightning bolt component
+function LightningBolts({ active }: { active: boolean }) {
+  const bolts = useRef(
+    [...Array(6)].map(() => ({
+      x: 10 + Math.random() * 80,
+      rotation: -30 + Math.random() * 60,
+      delay: Math.random() * 3,
+      duration: 0.15 + Math.random() * 0.1,
+      scale: 0.5 + Math.random() * 0.8,
+    }))
+  ).current;
+
+  if (!active) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {bolts.map((bolt, i) => (
+        <svg
+          key={i}
+          className="absolute"
+          style={{
+            left: `${bolt.x}%`,
+            top: '-10%',
+            width: 60 * bolt.scale,
+            height: 300 * bolt.scale,
+            transform: `rotate(${bolt.rotation}deg)`,
+            animation: `lightning ${bolt.duration}s ease-out ${bolt.delay}s infinite`,
+            opacity: 0,
+          }}
+          viewBox="0 0 60 300"
+        >
+          <path
+            d="M30 0 L35 80 L50 85 L25 160 L40 165 L20 250 L35 170 L20 165 L40 90 L25 85 Z"
+            fill="url(#lightning-gradient)"
+            filter="url(#lightning-glow)"
+          />
+          <defs>
+            <linearGradient id="lightning-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#fff" />
+              <stop offset="50%" stopColor="#c9a962" />
+              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+            </linearGradient>
+            <filter id="lightning-glow">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+// Shooting stars / meteors
+function ShootingStars() {
+  const stars = useRef(
+    [...Array(8)].map(() => ({
+      startX: Math.random() * 100,
+      startY: Math.random() * 30,
+      angle: 20 + Math.random() * 40,
+      duration: 1 + Math.random() * 1.5,
+      delay: Math.random() * 8,
+      length: 80 + Math.random() * 120,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {stars.map((star, i) => (
+        <div
+          key={i}
+          className="absolute"
+          style={{
+            left: `${star.startX}%`,
+            top: `${star.startY}%`,
+            width: star.length,
+            height: 2,
+            background: `linear-gradient(90deg, transparent, #c9a962 30%, #fff 50%, #c9a962 70%, transparent)`,
+            transform: `rotate(${star.angle}deg)`,
+            animation: `shootingStar ${star.duration}s ease-out ${star.delay}s infinite`,
+            opacity: 0,
+            boxShadow: '0 0 10px #c9a962, 0 0 20px #c9a962',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Star burst explosion
+function StarBurst({ active, intensity = 1 }: { active: boolean; intensity?: number }) {
+  const particles = useRef(
+    [...Array(Math.floor(40 * intensity))].map(() => ({
+      angle: Math.random() * 360,
+      distance: 100 + Math.random() * 300,
+      size: 2 + Math.random() * 4,
+      duration: 0.8 + Math.random() * 0.6,
+      delay: Math.random() * 0.3,
+      color: Math.random() > 0.5 ? '#c9a962' : '#fff',
+    }))
+  ).current;
+
+  return (
+    <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 ${active ? 'opacity-100' : 'opacity-0'}`}>
+      {particles.map((p, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            width: p.size,
+            height: p.size,
+            background: `radial-gradient(circle, ${p.color} 0%, transparent 70%)`,
+            boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
+            animation: active ? `starBurst ${p.duration}s ease-out ${p.delay}s forwards` : 'none',
+            '--angle': `${p.angle}deg`,
+            '--distance': `${p.distance}px`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Electric arcs
+function ElectricArcs({ active }: { active: boolean }) {
+  if (!active) return null;
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      {[...Array(4)].map((_, i) => (
+        <svg
+          key={i}
+          className="absolute"
+          style={{
+            width: 400,
+            height: 400,
+            animation: `electricArc 2s ease-in-out ${i * 0.5}s infinite`,
+            transform: `rotate(${i * 90}deg)`,
+          }}
+          viewBox="0 0 400 400"
+        >
+          <path
+            d="M200 200 Q220 150 250 180 Q280 120 300 160 Q340 100 360 140"
+            fill="none"
+            stroke="url(#arc-gradient)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            filter="url(#arc-glow)"
+            style={{ animation: `arcPath 0.5s ease-in-out ${i * 0.1}s infinite alternate` }}
+          />
+          <defs>
+            <linearGradient id="arc-gradient">
+              <stop offset="0%" stopColor="#c9a962" stopOpacity="0" />
+              <stop offset="50%" stopColor="#fff" />
+              <stop offset="100%" stopColor="#c9a962" stopOpacity="0" />
+            </linearGradient>
+            <filter id="arc-glow">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+// Cosmic dust swirl
+function CosmicDust() {
+  const dust = useRef(
+    [...Array(100)].map(() => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 2,
+      orbitRadius: 100 + Math.random() * 400,
+      duration: 20 + Math.random() * 40,
+      delay: Math.random() * 20,
+      opacity: 0.1 + Math.random() * 0.3,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {dust.map((d, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full bg-[#c9a962]"
+          style={{
+            left: '50%',
+            top: '50%',
+            width: d.size,
+            height: d.size,
+            opacity: d.opacity,
+            animation: `cosmicOrbit ${d.duration}s linear ${d.delay}s infinite`,
+            '--orbit-radius': `${d.orbitRadius}px`,
+            '--start-angle': `${Math.random() * 360}deg`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Glowing orbs
+function GlowingOrbs({ active }: { active: boolean }) {
+  const orbs = [
+    { x: 20, y: 30, size: 80, color: 'rgba(201, 169, 98, 0.3)', delay: 0 },
+    { x: 80, y: 20, size: 60, color: 'rgba(168, 85, 247, 0.25)', delay: 1 },
+    { x: 70, y: 70, size: 100, color: 'rgba(245, 158, 11, 0.2)', delay: 2 },
+    { x: 30, y: 80, size: 70, color: 'rgba(52, 211, 153, 0.25)', delay: 0.5 },
+  ];
+
+  return (
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
+      {orbs.map((orb, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full blur-3xl"
+          style={{
+            left: `${orb.x}%`,
+            top: `${orb.y}%`,
+            width: orb.size,
+            height: orb.size,
+            background: orb.color,
+            animation: `orbFloat 8s ease-in-out ${orb.delay}s infinite, orbPulse 4s ease-in-out ${orb.delay}s infinite`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Central light pillar
+function LightPillar({ active }: { active: boolean }) {
+  return (
+    <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}>
+      <div 
+        className="absolute w-2 h-[150vh]"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, rgba(201,169,98,0.4), rgba(255,255,255,0.6), rgba(201,169,98,0.4), transparent)',
+          filter: 'blur(8px)',
+          animation: 'pillarPulse 2s ease-in-out infinite',
+        }}
+      />
+      <div 
+        className="absolute w-px h-[150vh]"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, #fff, transparent)',
+          filter: 'blur(1px)',
+        }}
+      />
+    </div>
+  );
+}
+
 // Hover particles for cards
 function HoverParticles({ isHovered, color }: { isHovered: boolean; color: string }) {
   const particles = useRef(
@@ -429,7 +692,14 @@ export default function PortalPage() {
         </div>
 
         <FloatingParticles />
+        <CosmicDust />
+        <ShootingStars />
+        <GlowingOrbs active={isInIntro} />
+        <LightningBolts active={isBetween('title', 'thinking-card4')} />
+        <ElectricArcs active={isBetween('thinking-title', 'thinking-card4')} />
         <EnergyWaves active={isBetween('title', 'intro3')} />
+        <StarBurst active={isAt('title')} intensity={1.5} />
+        <LightPillar active={isAt('title') || isAt('tagline')} />
         
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
@@ -783,6 +1053,58 @@ export default function PortalPage() {
         @keyframes popIn {
           from { opacity: 0; transform: scale(0); }
           to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes lightning {
+          0%, 100% { opacity: 0; }
+          5% { opacity: 1; }
+          10% { opacity: 0.3; }
+          15% { opacity: 0.9; }
+          20% { opacity: 0; }
+        }
+        @keyframes shootingStar {
+          0% { opacity: 0; transform: rotate(var(--angle, 30deg)) translateX(-100px); }
+          10% { opacity: 1; }
+          100% { opacity: 0; transform: rotate(var(--angle, 30deg)) translateX(500px); }
+        }
+        @keyframes starBurst {
+          0% { 
+            opacity: 1; 
+            transform: rotate(var(--angle, 0deg)) translateX(0) scale(1);
+          }
+          100% { 
+            opacity: 0; 
+            transform: rotate(var(--angle, 0deg)) translateX(var(--distance, 200px)) scale(0);
+          }
+        }
+        @keyframes electricArc {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes arcPath {
+          from { stroke-dashoffset: 100; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes cosmicOrbit {
+          from { 
+            transform: rotate(var(--start-angle, 0deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * var(--start-angle, 0deg)));
+          }
+          to { 
+            transform: rotate(calc(var(--start-angle, 0deg) + 360deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * (var(--start-angle, 0deg) + 360deg)));
+          }
+        }
+        @keyframes orbFloat {
+          0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+          25% { transform: translate(-50%, -50%) translate(30px, -20px); }
+          50% { transform: translate(-50%, -50%) translate(-20px, 30px); }
+          75% { transform: translate(-50%, -50%) translate(-30px, -10px); }
+        }
+        @keyframes orbPulse {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes pillarPulse {
+          0%, 100% { opacity: 0.5; transform: scaleX(1); }
+          50% { opacity: 1; transform: scaleX(1.5); }
         }
         .animate-zoomIn { animation: zoomIn 0.5s ease-out forwards; }
         .animate-fadeSlide { animation: fadeSlide 0.6s ease-out forwards; }
