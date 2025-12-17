@@ -23,6 +23,14 @@ const quickActions: QuickAction[] = [
   { label: "認識默默超", path: "/momo" },
 ];
 
+// Quick questions for common FAQ
+const quickQuestions = [
+  "報告多少錢？",
+  "需要多久？",
+  "標準版和旗艦版差在哪？",
+  "報告包含什麼？",
+];
+
 export function MomoChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -94,6 +102,44 @@ export function MomoChatBot() {
     setIsOpen(false);
   };
 
+  const handleQuickQuestion = (question: string) => {
+    setInput(question);
+    // Trigger send after a brief delay
+    setTimeout(() => {
+      setShowGreeting(false);
+      setMessages(prev => [...prev, { role: "user", content: question }]);
+      setIsLoading(true);
+      
+      supabase.functions.invoke("momo-chat", {
+        body: { 
+          message: question,
+          conversationHistory: messages.map(m => ({ role: m.role, content: m.content }))
+        }
+      }).then(({ data, error }) => {
+        if (error) throw error;
+        const reply = data?.reply || "我聽見了…";
+        setMessages(prev => [...prev, { role: "assistant", content: reply, isTyping: true }]);
+        
+        if (data?.navigation?.path) {
+          setTimeout(() => {
+            navigate(data.navigation.path);
+            setIsOpen(false);
+          }, 1500);
+        }
+      }).catch((error) => {
+        console.error("Chat error:", error);
+        setMessages(prev => [...prev, { 
+          role: "assistant", 
+          content: "或許，此刻需要靜一靜…" 
+        }]);
+      }).finally(() => {
+        setIsLoading(false);
+      });
+      
+      setInput("");
+    }, 50);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -157,8 +203,9 @@ export function MomoChatBot() {
                   </p>
                 </div>
                 
-                {/* Quick actions */}
-                <div className="flex flex-wrap gap-2">
+                {/* Quick navigation */}
+                <p className="text-white/40 text-xs mb-2">快速前往</p>
+                <div className="flex flex-wrap gap-2 mb-4">
                   {quickActions.map((action) => (
                     <button
                       key={action.path}
@@ -166,6 +213,20 @@ export function MomoChatBot() {
                       className="px-3 py-1.5 text-xs text-[#c9a962]/80 border border-[#c9a962]/20 rounded-full hover:bg-[#c9a962]/10 hover:border-[#c9a962]/40 transition-all duration-300"
                     >
                       {action.label}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Quick questions */}
+                <p className="text-white/40 text-xs mb-2">常見問題</p>
+                <div className="flex flex-wrap gap-2">
+                  {quickQuestions.map((question, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleQuickQuestion(question)}
+                      className="px-3 py-1.5 text-xs text-white/60 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white/80 transition-all duration-300"
+                    >
+                      {question}
                     </button>
                   ))}
                 </div>
