@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { MessageCircle, X, Send, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { TypewriterText } from "@/components/TypewriterText";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+  isTyping?: boolean; // Track if this message is currently typing
 }
 
 interface QuickAction {
@@ -65,7 +67,8 @@ export function MomoChatBot() {
       if (error) throw error;
 
       const reply = data?.reply || "我聽見了…";
-      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+      // Add message with isTyping flag for typewriter effect
+      setMessages(prev => [...prev, { role: "assistant", content: reply, isTyping: true }]);
 
       // Handle navigation if detected
       if (data?.navigation?.path) {
@@ -169,24 +172,43 @@ export function MomoChatBot() {
               </div>
             )}
 
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
-              >
+            {messages.map((msg, idx) => {
+              const isLastAssistant = msg.role === "assistant" && idx === messages.length - 1;
+              const shouldTypewrite = msg.role === "assistant" && msg.isTyping && isLastAssistant;
+              
+              return (
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3 ${
-                    msg.role === "user"
-                      ? "bg-[#c9a962]/20 rounded-br-sm text-white/90"
-                      : "bg-white/5 rounded-tl-sm text-white/80"
-                  }`}
+                  key={idx}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
                 >
-                  <p className="text-sm leading-relaxed font-light whitespace-pre-wrap">
-                    {msg.content}
-                  </p>
+                  <div
+                    className={`max-w-[85%] rounded-2xl p-3 ${
+                      msg.role === "user"
+                        ? "bg-[#c9a962]/20 rounded-br-sm text-white/90"
+                        : "bg-white/5 rounded-tl-sm text-white/80"
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed font-light whitespace-pre-wrap">
+                      {shouldTypewrite ? (
+                        <TypewriterText 
+                          text={msg.content} 
+                          speed={40}
+                          delay={100}
+                          onComplete={() => {
+                            // Mark typing as complete
+                            setMessages(prev => prev.map((m, i) => 
+                              i === idx ? { ...m, isTyping: false } : m
+                            ));
+                          }}
+                        />
+                      ) : (
+                        msg.content
+                      )}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {isLoading && (
               <div className="flex justify-start animate-fade-in">
