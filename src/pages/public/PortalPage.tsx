@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { TypewriterText } from "@/components/TypewriterText";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
+import { useSEO } from "@/hooks/useSEO";
 import { Sparkles, Moon, Compass, User } from "lucide-react";
 
 const portalItems = [
@@ -106,50 +107,12 @@ export default function PortalPage() {
   const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  // SEO meta tags
-  useEffect(() => {
-    document.title = "虹靈御所 × 超烜創意 | 命理報告・品牌創意・生命智慧";
-    
-    // Meta description
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.setAttribute('name', 'description');
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.setAttribute('content', '虹靈御所與超烜創意的交匯點。探索命理報告、品牌創意服務、元壹宇宙思維系統。看見命盤裡的自己，而非被命運定義。');
-
-    // Keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', '命理報告, 紫微斗數, 八字, 占星, 人類圖, 虹靈御所, 超烜創意, 默默超, 品牌設計, 生命智慧');
-
-    // Open Graph tags
-    const ogTags = [
-      { property: 'og:title', content: '虹靈御所 × 超烜創意' },
-      { property: 'og:description', content: '探索命理報告、品牌創意服務、元壹宇宙思維系統。看見命盤裡的自己，而非被命運定義。' },
-      { property: 'og:type', content: 'website' },
-      { property: 'og:site_name', content: '虹靈御所 × 超烜創意' },
-    ];
-
-    ogTags.forEach(({ property, content }) => {
-      let tag = document.querySelector(`meta[property="${property}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('property', property);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute('content', content);
-    });
-
-    return () => {
-      document.title = "虹靈御所";
-    };
-  }, []);
+  useSEO({
+    title: "虹靈御所 × 超烜創意 | 命理報告・品牌創意・生命智慧",
+    description: "虹靈御所與超烜創意的交匯點。探索命理報告、品牌創意服務、元壹宇宙思維系統。看見命盤裡的自己，而非被命運定義。",
+    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 虹靈御所, 超烜創意, 默默超, 品牌設計, 生命智慧",
+    ogTitle: "虹靈御所 × 超烜創意",
+  });
 
   // Simulate loading
   useEffect(() => {

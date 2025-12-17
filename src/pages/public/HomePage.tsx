@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
+import { useSEO } from "@/hooks/useSEO";
 
 const sections = [
   {
@@ -77,6 +78,13 @@ const sections = [
 ];
 
 const HomePage = () => {
+  useSEO({
+    title: "虹靈御所 | 看見命盤裡的自己，而非被命運定義",
+    description: "虹靈御所提供專業命理報告、創新命理遊戲、元壹筆記等服務。透過紫微斗數、八字、占星、人類圖四大系統，幫助你看清自己，自由選擇未來。",
+    keywords: "虹靈御所, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 元壹筆記, 命理遊戲",
+    ogTitle: "虹靈御所 - 看見自己，是最深的修行",
+  });
+
   const scrollToSections = () => {
     document.getElementById('sections')?.scrollIntoView({ behavior: 'smooth' });
   };
