@@ -945,7 +945,8 @@ const ReportPage = () => {
             <p className="text-center text-white/50 text-xs mb-4">
               點擊各欄位查看詳細解釋
             </p>
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full border-collapse bg-[#0a0a0a]/80 rounded-xl overflow-hidden">
                 <thead>
                   <tr className="bg-gradient-to-r from-amber-900/40 to-purple-900/40">
@@ -1017,6 +1018,70 @@ const ReportPage = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+            
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4">
+              {[
+                {
+                  dimension: '核心本質',
+                  items: [
+                    { system: '紫微斗數', label: '命宮主星組合', desc: '揭示性格核心與人生主軸方向', color: 'violet' },
+                    { system: '八字', label: '日主五行屬性', desc: '決定基本氣質與應對世界的方式', color: 'amber' },
+                    { system: '占星', label: '太陽星座', desc: '代表核心自我認同與生命力來源', color: 'blue' },
+                    { system: '人類圖', label: '類型與策略', desc: '定義與世界互動的正確策略', color: 'emerald' }
+                  ]
+                },
+                {
+                  dimension: '情緒模式',
+                  items: [
+                    { system: '紫微斗數', label: '福德宮星曜', desc: '揭示內心世界與精神狀態', color: 'violet' },
+                    { system: '八字', label: '食傷星狀態', desc: '反映情緒處理與自我表現方式', color: 'amber' },
+                    { system: '占星', label: '月亮星座', desc: '主宰情感需求與潛意識反應', color: 'blue' },
+                    { system: '人類圖', label: '情緒中心定義', desc: '決定情緒波動模式與決策時機', color: 'emerald' }
+                  ]
+                },
+                {
+                  dimension: '事業方向',
+                  items: [
+                    { system: '紫微斗數', label: '官祿宮配置', desc: '顯示事業發展方向與工作態度', color: 'violet' },
+                    { system: '八字', label: '官殺星格局', desc: '影響職涯發展路徑與野心', color: 'amber' },
+                    { system: '占星', label: '第十宮行星', desc: '揭示事業領域與發展方式', color: 'blue' },
+                    { system: '人類圖', label: 'G中心閘門', desc: '影響職業使命感與定位', color: 'emerald' }
+                  ]
+                },
+                {
+                  dimension: '關係互動',
+                  items: [
+                    { system: '紫微斗數', label: '夫妻宮特質', desc: '顯示親密關係需求與互動模式', color: 'violet' },
+                    { system: '八字', label: '正財偏財配置', desc: '反映感情態度與物質觀', color: 'amber' },
+                    { system: '占星', label: '金星位置', desc: '揭示愛情風格與吸引力表現', color: 'blue' },
+                    { system: '人類圖', label: '薦骨中心狀態', desc: '影響關係中的投入程度', color: 'emerald' }
+                  ]
+                }
+              ].map((category, catIndex) => (
+                <div 
+                  key={catIndex} 
+                  className="bg-[#0a0a0a]/80 rounded-xl border border-white/10 overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-3">
+                    <h4 className="text-amber-400 font-medium text-sm">{category.dimension}</h4>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {category.items.map((item, itemIndex) => (
+                      <div key={itemIndex} className="px-4 py-3 flex items-start gap-3">
+                        <span className={`text-${item.color}-400 text-xs font-medium whitespace-nowrap`}>
+                          {item.system}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white/90 text-xs font-medium">{item.label}</p>
+                          <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
             <p className="text-center text-white/50 text-xs mt-4">
               ✦ 四系統交叉驗證，避免單一系統偏見，提供更全面的自我理解 ✦
