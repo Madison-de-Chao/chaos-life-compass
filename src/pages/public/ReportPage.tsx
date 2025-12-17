@@ -931,6 +931,59 @@ const ReportPage = () => {
               );
             })}
           </div>
+          
+          {/* System Cross-Reference Table */}
+          <div className={`mt-16 transition-all duration-1000 delay-500 ${isVisible['four-systems'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h3 className="text-xl md:text-2xl font-serif font-bold text-center text-amber-400 mb-8">
+              系統交叉驗證對照表
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-[#0a0a0a]/80 rounded-xl overflow-hidden">
+                <thead>
+                  <tr className="bg-gradient-to-r from-amber-900/40 to-purple-900/40">
+                    <th className="px-4 py-3 text-left text-amber-400 font-medium text-sm">分析面向</th>
+                    <th className="px-4 py-3 text-center text-violet-400 font-medium text-sm">紫微斗數</th>
+                    <th className="px-4 py-3 text-center text-amber-400 font-medium text-sm">八字</th>
+                    <th className="px-4 py-3 text-center text-blue-400 font-medium text-sm">占星</th>
+                    <th className="px-4 py-3 text-center text-emerald-400 font-medium text-sm">人類圖</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/10">
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3 text-white/90 font-medium text-sm">核心本質</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">命宮主星組合</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">日主五行屬性</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">太陽星座</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">類型與策略</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3 text-white/90 font-medium text-sm">情緒模式</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">福德宮星曜</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">食傷星狀態</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">月亮星座</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">情緒中心定義</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3 text-white/90 font-medium text-sm">事業方向</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">官祿宮配置</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">官殺星格局</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">第十宮行星</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">G中心閘門</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3 text-white/90 font-medium text-sm">關係互動</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">夫妻宮特質</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">正財偏財配置</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">金星位置</td>
+                    <td className="px-4 py-3 text-center text-white/70 text-xs">薦骨中心狀態</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-center text-white/50 text-xs mt-4">
+              ✦ 四系統交叉驗證，避免單一系統偏見，提供更全面的自我理解 ✦
+            </p>
+          </div>
         </div>
       </section>
 
