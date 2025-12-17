@@ -5,6 +5,11 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -937,6 +942,9 @@ const ReportPage = () => {
             <h3 className="text-xl md:text-2xl font-serif font-bold text-center text-amber-400 mb-8">
               系統交叉驗證對照表
             </h3>
+            <p className="text-center text-white/50 text-xs mb-4">
+              點擊各欄位查看詳細解釋
+            </p>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse bg-[#0a0a0a]/80 rounded-xl overflow-hidden">
                 <thead>
@@ -949,34 +957,64 @@ const ReportPage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/10">
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 text-white/90 font-medium text-sm">核心本質</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">命宮主星組合</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">日主五行屬性</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">太陽星座</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">類型與策略</td>
-                  </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 text-white/90 font-medium text-sm">情緒模式</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">福德宮星曜</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">食傷星狀態</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">月亮星座</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">情緒中心定義</td>
-                  </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 text-white/90 font-medium text-sm">事業方向</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">官祿宮配置</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">官殺星格局</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">第十宮行星</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">G中心閘門</td>
-                  </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 text-white/90 font-medium text-sm">關係互動</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">夫妻宮特質</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">正財偏財配置</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">金星位置</td>
-                    <td className="px-4 py-3 text-center text-white/70 text-xs">薦骨中心狀態</td>
-                  </tr>
+                  {[
+                    {
+                      dimension: '核心本質',
+                      ziwei: { label: '命宮主星組合', desc: '透過命宮主星（如紫微、天府、天機等）的組合，揭示你與生俱來的性格核心與人生主軸方向。' },
+                      bazi: { label: '日主五行屬性', desc: '日主代表你的本命元素（木火土金水），決定了你的基本氣質與應對世界的根本方式。' },
+                      astro: { label: '太陽星座', desc: '太陽星座代表你的核心自我認同、生命力來源，以及你想要成為的自己。' },
+                      hd: { label: '類型與策略', desc: '人類圖的五種類型（生產者、投射者等）定義了你與世界互動的正確策略與能量運作模式。' }
+                    },
+                    {
+                      dimension: '情緒模式',
+                      ziwei: { label: '福德宮星曜', desc: '福德宮揭示你的內心世界、精神狀態，以及如何獲得內在的滿足與平靜。' },
+                      bazi: { label: '食傷星狀態', desc: '食神與傷官代表情感表達、創意輸出，反映你處理情緒與自我表現的方式。' },
+                      astro: { label: '月亮星座', desc: '月亮星座主宰你的情感需求、潛意識反應，以及在親密關係中的情緒模式。' },
+                      hd: { label: '情緒中心定義', desc: '情緒中心的定義與否，決定了你是情緒波動的發起者還是接收者，影響決策時機。' }
+                    },
+                    {
+                      dimension: '事業方向',
+                      ziwei: { label: '官祿宮配置', desc: '官祿宮顯示你的事業發展方向、工作態度，以及在職場上的表現特質。' },
+                      bazi: { label: '官殺星格局', desc: '正官與七殺代表權力、地位與事業野心，其強弱配置影響職涯發展路徑。' },
+                      astro: { label: '第十宮行星', desc: '第十宮（天頂）代表社會地位、職業成就，行星落點揭示事業領域與發展方式。' },
+                      hd: { label: 'G中心閘門', desc: 'G中心主宰身份認同與人生方向，其閘門啟動影響你的職業使命感與定位。' }
+                    },
+                    {
+                      dimension: '關係互動',
+                      ziwei: { label: '夫妻宮特質', desc: '夫妻宮顯示你在親密關係中的需求、互動模式，以及理想伴侶的特質傾向。' },
+                      bazi: { label: '正財偏財配置', desc: '財星在八字中也代表男性的妻緣，其配置反映感情態度與物質觀。' },
+                      astro: { label: '金星位置', desc: '金星主宰愛與美，其星座與宮位揭示你的愛情風格、審美觀與吸引力表現。' },
+                      hd: { label: '薦骨中心狀態', desc: '薦骨中心是生命力與回應力的來源，影響你在關係中的投入程度與持久力。' }
+                    }
+                  ].map((row, rowIndex) => (
+                    <tr key={rowIndex} className="hover:bg-white/5 transition-colors">
+                      <td className="px-4 py-3 text-white/90 font-medium text-sm">{row.dimension}</td>
+                      {['ziwei', 'bazi', 'astro', 'hd'].map((system, colIndex) => {
+                        const cell = row[system as keyof typeof row] as { label: string; desc: string };
+                        const colors = ['violet', 'amber', 'blue', 'emerald'];
+                        return (
+                          <td key={colIndex} className="px-4 py-3 text-center">
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button 
+                                  className={`text-white/70 text-xs hover:text-${colors[colIndex]}-400 hover:underline underline-offset-2 transition-colors cursor-help`}
+                                >
+                                  {cell.label}
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent 
+                                side="top" 
+                                className="max-w-[280px] bg-[#1a1a1a] border-white/20 text-white/90 text-xs p-3"
+                              >
+                                <p className={`font-medium text-${colors[colIndex]}-400 mb-1`}>{cell.label}</p>
+                                <p className="text-white/70 leading-relaxed">{cell.desc}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
