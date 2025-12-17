@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { TypewriterText } from "@/components/TypewriterText";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
-import { Sparkles, Moon, Compass, User, ExternalLink } from "lucide-react";
+import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw } from "lucide-react";
 
 const thinkingConcepts = [
   {
@@ -375,6 +375,51 @@ export default function PortalPage() {
             animation: 'centralPulse 4s ease-in-out infinite',
           }}
         />
+      </div>
+
+      {/* Skip and Replay buttons */}
+      <div className="fixed top-6 right-6 z-50 flex gap-3">
+        {/* Skip button - shown during animation */}
+        {!isAtOrPast('final-greeting') && stage !== 'loading' && (
+          <button
+            onClick={() => {
+              setStage('portal-fly');
+              portalItems.forEach((_, index) => {
+                setTimeout(() => {
+                  setCardsVisible(prev => {
+                    const newState = [...prev];
+                    newState[index] = true;
+                    return newState;
+                  });
+                }, index * 100);
+              });
+              setTimeout(() => {
+                setStage('final-greeting');
+                setShowFinalGreeting(true);
+              }, 600);
+            }}
+            className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+          >
+            <span className="text-sm">跳過</span>
+            <SkipForward className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        )}
+        
+        {/* Replay button - shown after animation ends */}
+        {isAtOrPast('final-greeting') && (
+          <button
+            onClick={() => {
+              setCardsVisible([false, false, false, false]);
+              setShowFinalGreeting(false);
+              setBurstActive(false);
+              setStage('greeting1');
+            }}
+            className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+          >
+            <RotateCcw className="w-4 h-4 group-hover:-rotate-180 transition-transform duration-500" />
+            <span className="text-sm">重播</span>
+          </button>
+        )}
       </div>
 
       <div className="relative z-10 max-w-4xl w-full">
