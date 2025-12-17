@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         serif: ["'Noto Serif TC'", "Georgia", "serif"],
         sans: ["'Inter'", "system-ui", "sans-serif"],
+        display: ["'Cormorant Garamond'", "'Noto Serif TC'", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
