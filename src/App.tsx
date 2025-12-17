@@ -20,6 +20,7 @@ import GuidePage from "./pages/GuidePage";
 import NotFound from "./pages/NotFound";
 
 // Public Pages
+import PortalPage from "./pages/public/PortalPage";
 import HomePage from "./pages/public/HomePage";
 import AboutPage from "./pages/public/AboutPage";
 import MomoPage from "./pages/public/MomoPage";
@@ -37,7 +38,8 @@ const App = () => (
         <BrowserRouter>
           <PageTransition>
             <Routes>
-              {/* Public routes - 虹靈御所前台 */}
+            {/* Public routes - 虹靈御所前台 */}
+              <Route path="/portal" element={<PortalPage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/chaoxuan" element={<ChaoxuanPage />} />
               <Route path="/about" element={<AboutPage />} />
