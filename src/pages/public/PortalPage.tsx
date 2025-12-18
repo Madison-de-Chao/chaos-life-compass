@@ -283,6 +283,107 @@ function FloatingParticles() {
   );
 }
 
+// Shooting stars
+function ShootingStars() {
+  const stars = useRef(
+    [...Array(6)].map(() => ({
+      startX: Math.random() * 100,
+      startY: Math.random() * 30,
+      angle: 20 + Math.random() * 40,
+      duration: 1.5 + Math.random() * 2,
+      delay: Math.random() * 12,
+      length: 80 + Math.random() * 100,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {stars.map((star, i) => (
+        <div
+          key={i}
+          className="absolute"
+          style={{
+            left: `${star.startX}%`,
+            top: `${star.startY}%`,
+            width: star.length,
+            height: 2,
+            background: `linear-gradient(90deg, transparent, #c9a962 30%, #fff 50%, #c9a962 70%, transparent)`,
+            transform: `rotate(${star.angle}deg)`,
+            animation: `shootingStar ${star.duration}s ease-out ${star.delay}s infinite`,
+            opacity: 0,
+            boxShadow: '0 0 8px #c9a962',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Glowing orbs
+function GlowingOrbs() {
+  const orbs = [
+    { x: 20, y: 30, size: 80, color: 'rgba(201, 169, 98, 0.2)', delay: 0 },
+    { x: 80, y: 20, size: 60, color: 'rgba(168, 85, 247, 0.15)', delay: 1 },
+    { x: 70, y: 70, size: 90, color: 'rgba(245, 158, 11, 0.15)', delay: 2 },
+    { x: 30, y: 75, size: 70, color: 'rgba(52, 211, 153, 0.15)', delay: 0.5 },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {orbs.map((orb, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full blur-3xl"
+          style={{
+            left: `${orb.x}%`,
+            top: `${orb.y}%`,
+            width: orb.size,
+            height: orb.size,
+            background: orb.color,
+            animation: `orbFloat 12s ease-in-out ${orb.delay}s infinite`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Cosmic dust swirl
+function CosmicDust() {
+  const dust = useRef(
+    [...Array(60)].map(() => ({
+      orbitRadius: 150 + Math.random() * 350,
+      duration: 30 + Math.random() * 50,
+      delay: Math.random() * 30,
+      size: 1 + Math.random() * 2,
+      opacity: 0.1 + Math.random() * 0.2,
+      startAngle: Math.random() * 360,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {dust.map((d, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full bg-[#c9a962]"
+          style={{
+            left: '50%',
+            top: '50%',
+            width: d.size,
+            height: d.size,
+            opacity: d.opacity,
+            animation: `cosmicOrbit ${d.duration}s linear ${d.delay}s infinite`,
+            '--orbit-radius': `${d.orbitRadius}px`,
+            '--start-angle': `${d.startAngle}deg`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
+  );
+}
+
 // Hover particles for cards
 function HoverParticles({ isHovered, color }: { isHovered: boolean; color: string }) {
   const particles = useRef(
@@ -422,11 +523,11 @@ export default function PortalPage() {
     timeoutRef.current = window.setTimeout(() => {
       if (currentSection < introSections.length - 1) {
         setIsFading(true);
-        // Wait for fade out, then switch content
+        // Wait for fade out with blur, then switch content
         setTimeout(() => {
           setCurrentSection(prev => prev + 1);
           setIsFading(false);
-        }, 800); // fade transition duration
+        }, 1000); // matches transition duration
       } else {
         // Show portal after last section
         setIsFading(true);
@@ -441,9 +542,9 @@ export default function PortalPage() {
                 newState[index] = true;
                 return newState;
               });
-            }, 200 + index * 150);
+            }, 300 + index * 200);
           });
-        }, 800);
+        }, 1000);
       }
     }, section.duration);
 
@@ -465,9 +566,9 @@ export default function PortalPage() {
             newState[index] = true;
             return newState;
           });
-        }, 100 + index * 100);
+        }, 150 + index * 120);
       });
-    }, 500);
+    }, 800);
   }, []);
 
   const replay = useCallback(() => {
@@ -506,6 +607,9 @@ export default function PortalPage() {
         </div>
 
         <FloatingParticles />
+        <ShootingStars />
+        <GlowingOrbs />
+        <CosmicDust />
         
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
@@ -548,10 +652,12 @@ export default function PortalPage() {
         {isInIntro && (
           <div className="fixed inset-0 flex items-center justify-center">
             <div 
-              className={`text-center max-w-3xl px-6 transition-all duration-800 ease-in-out ${
-                isFading ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
+              className={`text-center max-w-3xl px-6 transition-all ease-in-out ${
+                isFading 
+                  ? 'opacity-0 scale-95 blur-sm' 
+                  : 'opacity-100 scale-100 blur-0'
               }`}
-              style={{ transitionDuration: '800ms' }}
+              style={{ transitionDuration: '1000ms' }}
             >
               {introSections[currentSection]?.content}
             </div>
@@ -573,9 +679,10 @@ export default function PortalPage() {
         {/* Portal cards */}
         {showPortal && (
           <div 
-            className={`fixed inset-0 flex flex-col items-center justify-center px-4 transition-opacity duration-800 ${
-              isFading ? 'opacity-0' : 'opacity-100'
+            className={`fixed inset-0 flex flex-col items-center justify-center px-4 transition-all ${
+              isFading ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
             }`}
+            style={{ transitionDuration: '1000ms' }}
           >
             {/* Greeting */}
             <div className="text-center mb-8">
@@ -692,6 +799,39 @@ export default function PortalPage() {
           50% { 
             transform: translate(-50%, -50%) scale(1.2); 
             opacity: 0.7; 
+          }
+        }
+        @keyframes shootingStar {
+          0% { 
+            opacity: 0; 
+            transform: rotate(var(--angle, 30deg)) translateX(-100px); 
+          }
+          10% { opacity: 0.8; }
+          100% { 
+            opacity: 0; 
+            transform: rotate(var(--angle, 30deg)) translateX(600px); 
+          }
+        }
+        @keyframes orbFloat {
+          0%, 100% { 
+            transform: translate(-50%, -50%) translate(0, 0); 
+          }
+          25% { 
+            transform: translate(-50%, -50%) translate(25px, -15px); 
+          }
+          50% { 
+            transform: translate(-50%, -50%) translate(-15px, 25px); 
+          }
+          75% { 
+            transform: translate(-50%, -50%) translate(-25px, -10px); 
+          }
+        }
+        @keyframes cosmicOrbit {
+          from { 
+            transform: rotate(var(--start-angle, 0deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * var(--start-angle, 0deg)));
+          }
+          to { 
+            transform: rotate(calc(var(--start-angle, 0deg) + 360deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * (var(--start-angle, 0deg) + 360deg)));
           }
         }
       `}</style>
