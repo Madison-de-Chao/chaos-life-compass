@@ -96,11 +96,12 @@ type AnimationStage =
   | 'portal-fly'
   | 'final-greeting';
 
-// Ambient music generator using Web Audio API
+// Epic/Mysterious ambient music generator using Web Audio API
 function useAmbientMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
-  const oscillatorsRef = useRef<OscillatorNode[]>([]);
+  const nodesRef = useRef<AudioNode[]>([]);
+  const intervalsRef = useRef<number[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const startMusic = useCallback(() => {
@@ -108,58 +109,250 @@ function useAmbientMusic() {
     
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     audioContextRef.current = ctx;
+    const nodes: AudioNode[] = [];
     
+    // Master gain
     const masterGain = ctx.createGain();
     masterGain.gain.value = 0;
     masterGain.connect(ctx.destination);
     gainNodeRef.current = masterGain;
 
-    // Create ethereal drone with multiple oscillators
-    const frequencies = [65.41, 98.00, 130.81, 196.00, 261.63]; // C2, G2, C3, G3, C4
-    const oscillators: OscillatorNode[] = [];
+    // Create reverb using delay network
+    const createReverb = () => {
+      const convolver = ctx.createConvolver();
+      const reverbGain = ctx.createGain();
+      reverbGain.gain.value = 0.3;
+      
+      // Create impulse response for reverb
+      const sampleRate = ctx.sampleRate;
+      const length = sampleRate * 3;
+      const impulse = ctx.createBuffer(2, length, sampleRate);
+      for (let channel = 0; channel < 2; channel++) {
+        const channelData = impulse.getChannelData(channel);
+        for (let i = 0; i < length; i++) {
+          channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2.5);
+        }
+      }
+      convolver.buffer = impulse;
+      convolver.connect(reverbGain);
+      reverbGain.connect(masterGain);
+      return convolver;
+    };
 
-    frequencies.forEach((freq, i) => {
+    const reverb = createReverb();
+    nodes.push(reverb);
+
+    // Deep sub-bass drone (mysterious rumble)
+    const createSubBass = () => {
       const osc = ctx.createOscillator();
-      const oscGain = ctx.createGain();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
       
-      osc.type = i < 2 ? 'sine' : 'triangle';
-      osc.frequency.value = freq;
+      osc.type = 'sine';
+      osc.frequency.value = 32.7; // C1 - very deep
       
-      // Add subtle vibrato
+      filter.type = 'lowpass';
+      filter.frequency.value = 80;
+      filter.Q.value = 2;
+      
+      // Slow pulsing
       const lfo = ctx.createOscillator();
       const lfoGain = ctx.createGain();
-      lfo.frequency.value = 0.1 + Math.random() * 0.2;
-      lfoGain.gain.value = freq * 0.01;
+      lfo.frequency.value = 0.08;
+      lfoGain.gain.value = 0.15;
       lfo.connect(lfoGain);
-      lfoGain.connect(osc.frequency);
+      lfoGain.connect(gain.gain);
       lfo.start();
-
-      oscGain.gain.value = 0.08 / (i + 1);
-      osc.connect(oscGain);
-      oscGain.connect(masterGain);
+      nodes.push(lfo);
+      
+      gain.gain.value = 0.25;
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
       osc.start();
-      oscillators.push(osc);
-    });
+      nodes.push(osc);
+    };
 
-    oscillatorsRef.current = oscillators;
+    // String pad layers (epic/cinematic feel)
+    const createStringPad = () => {
+      const notes = [65.41, 98.00, 130.81, 164.81, 196.00]; // C2, G2, C3, E3, G3 (Cmaj)
+      
+      notes.forEach((freq, i) => {
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        
+        // Detuned oscillators for richness
+        osc1.type = 'sawtooth';
+        osc2.type = 'sawtooth';
+        osc1.frequency.value = freq;
+        osc2.frequency.value = freq * 1.003; // Slight detune
+        
+        filter.type = 'lowpass';
+        filter.frequency.value = 800 + i * 100;
+        filter.Q.value = 1;
+        
+        // Slow filter sweep for movement
+        const filterLfo = ctx.createOscillator();
+        const filterLfoGain = ctx.createGain();
+        filterLfo.frequency.value = 0.05 + Math.random() * 0.03;
+        filterLfoGain.gain.value = 400;
+        filterLfo.connect(filterLfoGain);
+        filterLfoGain.connect(filter.frequency);
+        filterLfo.start();
+        nodes.push(filterLfo);
+        
+        gain.gain.value = 0.04 / (i + 1);
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        gain.connect(reverb);
+        
+        osc1.start();
+        osc2.start();
+        nodes.push(osc1, osc2);
+      });
+    };
 
-    // Fade in
-    masterGain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 2);
+    // High shimmer/sparkle layer (mysterious)
+    const createShimmer = () => {
+      const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C5, E5, G5, C6, E6
+      
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        
+        filter.type = 'bandpass';
+        filter.frequency.value = freq;
+        filter.Q.value = 5;
+        
+        // Random amplitude modulation for twinkling
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        lfo.frequency.value = 0.3 + Math.random() * 0.5;
+        lfoGain.gain.value = 0.015;
+        lfo.connect(lfoGain);
+        lfoGain.connect(gain.gain);
+        lfo.start();
+        nodes.push(lfo);
+        
+        gain.gain.value = 0.02;
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(reverb);
+        
+        osc.start();
+        nodes.push(osc);
+      });
+    };
+
+    // Epic brass-like drone
+    const createBrassDrone = () => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+      
+      osc.type = 'sawtooth';
+      osc.frequency.value = 130.81; // C3
+      
+      filter.type = 'lowpass';
+      filter.frequency.value = 600;
+      filter.Q.value = 3;
+      
+      // Slow crescendo/decrescendo
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.frequency.value = 0.02;
+      lfoGain.gain.value = 0.03;
+      lfo.connect(lfoGain);
+      lfoGain.connect(gain.gain);
+      lfo.start();
+      nodes.push(lfo);
+      
+      gain.gain.value = 0.05;
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
+      gain.connect(reverb);
+      
+      osc.start();
+      nodes.push(osc);
+    };
+
+    // Random bell/chime hits (mysterious accents)
+    const createRandomChimes = () => {
+      const chimeNotes = [1046.5, 1318.5, 1568.0, 2093.0, 2637.0]; // High C, E, G
+      
+      const playChime = () => {
+        const freq = chimeNotes[Math.floor(Math.random() * chimeNotes.length)];
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.value = freq * (0.98 + Math.random() * 0.04);
+        
+        gain.gain.value = 0;
+        gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 3);
+        
+        osc.connect(gain);
+        gain.connect(reverb);
+        
+        osc.start();
+        osc.stop(ctx.currentTime + 3.5);
+      };
+      
+      // Play chimes at random intervals
+      const scheduleChime = () => {
+        playChime();
+        const nextDelay = 3000 + Math.random() * 5000;
+        const timeout = window.setTimeout(scheduleChime, nextDelay);
+        intervalsRef.current.push(timeout);
+      };
+      
+      const initialDelay = window.setTimeout(scheduleChime, 2000);
+      intervalsRef.current.push(initialDelay);
+    };
+
+    // Initialize all layers
+    createSubBass();
+    createStringPad();
+    createShimmer();
+    createBrassDrone();
+    createRandomChimes();
+
+    nodesRef.current = nodes;
+
+    // Slow fade in for epic entrance
+    masterGain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 4);
     setIsPlaying(true);
   }, []);
 
   const stopMusic = useCallback(() => {
     if (gainNodeRef.current && audioContextRef.current) {
-      gainNodeRef.current.gain.linearRampToValueAtTime(0, audioContextRef.current.currentTime + 1);
+      gainNodeRef.current.gain.linearRampToValueAtTime(0, audioContextRef.current.currentTime + 2);
+      
+      // Clear all intervals
+      intervalsRef.current.forEach(id => clearTimeout(id));
+      intervalsRef.current = [];
+      
       setTimeout(() => {
-        oscillatorsRef.current.forEach(osc => {
-          try { osc.stop(); } catch (e) {}
+        nodesRef.current.forEach(node => {
+          try { 
+            if (node instanceof OscillatorNode) node.stop(); 
+          } catch (e) {}
         });
         audioContextRef.current?.close();
         audioContextRef.current = null;
         gainNodeRef.current = null;
-        oscillatorsRef.current = [];
-      }, 1200);
+        nodesRef.current = [];
+      }, 2500);
     }
     setIsPlaying(false);
   }, []);
@@ -174,8 +367,11 @@ function useAmbientMusic() {
 
   useEffect(() => {
     return () => {
-      oscillatorsRef.current.forEach(osc => {
-        try { osc.stop(); } catch (e) {}
+      intervalsRef.current.forEach(id => clearTimeout(id));
+      nodesRef.current.forEach(node => {
+        try { 
+          if (node instanceof OscillatorNode) node.stop(); 
+        } catch (e) {}
       });
       audioContextRef.current?.close();
     };
