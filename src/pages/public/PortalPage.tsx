@@ -806,22 +806,22 @@ export default function PortalPage() {
     setStage('greeting1');
   }, []);
 
-  // Faster timing for each stage
+  // Slower, more cohesive timing for each stage
   useEffect(() => {
     const timings: Partial<Record<AnimationStage, number>> = {
-      'tagline': 800,
-      'title': 1500,
-      'intro1': 1200,
-      'intro2': 1200,
-      'intro3': 1200,
-      'thinking-title': 600,
-      'thinking-card1': 800,
-      'thinking-card2': 800,
-      'thinking-card3': 800,
-      'thinking-card4': 800,
-      'language-title': 600,
-      'language-do': 1000,
-      'language-dont': 1000,
+      'tagline': 2500,
+      'title': 4000,
+      'intro1': 3500,
+      'intro2': 3500,
+      'intro3': 4000,
+      'thinking-title': 2500,
+      'thinking-card1': 3500,
+      'thinking-card2': 3500,
+      'thinking-card3': 3500,
+      'thinking-card4': 3500,
+      'language-title': 2000,
+      'language-do': 3000,
+      'language-dont': 3000,
     };
 
     const delay = timings[stage];
@@ -953,16 +953,16 @@ export default function PortalPage() {
                   <div className="relative font-display text-4xl md:text-5xl lg:text-6xl tracking-wide text-white"
                     style={{ textShadow: '0 0 80px rgba(201,169,98,0.8), 0 0 160px rgba(201,169,98,0.4)' }}>
                     {isAt('greeting1') && (
-                      <TypewriterText text="你來了…" speed={260} delay={300} onComplete={advanceStage} />
+                      <TypewriterText text="你來了…" speed={380} delay={800} onComplete={advanceStage} />
                     )}
                     {isAt('greeting2') && (
-                      <TypewriterText text="這裡是一面鏡子。" speed={220} delay={200} onComplete={advanceStage} />
+                      <TypewriterText text="這裡是一面鏡子。" speed={320} delay={600} onComplete={advanceStage} />
                     )}
                     {isAt('greeting3') && (
-                      <TypewriterText text="不給答案，只給倒影。" speed={220} delay={200} onComplete={advanceStage} />
+                      <TypewriterText text="不給答案，只給倒影。" speed={320} delay={600} onComplete={advanceStage} />
                     )}
                     {isAt('greeting4') && (
-                      <TypewriterText text="你要往哪裡照見自己…" speed={220} delay={200} onComplete={advanceStage} />
+                      <TypewriterText text="你要往哪裡照見自己…" speed={320} delay={600} onComplete={advanceStage} />
                     )}
                   </div>
                 </div>
@@ -1108,7 +1108,7 @@ export default function PortalPage() {
               <div className="text-center mb-8 animate-fadeSlide">
                 <div className="font-display text-2xl md:text-3xl text-white mb-2"
                   style={{ textShadow: '0 0 40px rgba(201,169,98,0.5)' }}>
-                  <TypewriterText text="你好！我是默默超！" speed={220} delay={300} />
+                  <TypewriterText text="你好！我是默默超！" speed={320} delay={800} />
                 </div>
                 <p className="text-white/60 text-lg">想從哪裡開始呢？</p>
               </div>
