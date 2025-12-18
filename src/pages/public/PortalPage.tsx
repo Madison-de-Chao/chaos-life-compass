@@ -96,7 +96,7 @@ type AnimationStage =
   | 'portal-fly'
   | 'final-greeting';
 
-// Epic/Mysterious ambient music generator using Web Audio API
+// Gentle, ethereal ambient music with vocal humming
 function useAmbientMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
@@ -117,20 +117,19 @@ function useAmbientMusic() {
     masterGain.connect(ctx.destination);
     gainNodeRef.current = masterGain;
 
-    // Create reverb using delay network
+    // Create soft reverb
     const createReverb = () => {
       const convolver = ctx.createConvolver();
       const reverbGain = ctx.createGain();
-      reverbGain.gain.value = 0.3;
+      reverbGain.gain.value = 0.5;
       
-      // Create impulse response for reverb
       const sampleRate = ctx.sampleRate;
-      const length = sampleRate * 3;
+      const length = sampleRate * 4;
       const impulse = ctx.createBuffer(2, length, sampleRate);
       for (let channel = 0; channel < 2; channel++) {
         const channelData = impulse.getChannelData(channel);
         for (let i = 0; i < length; i++) {
-          channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2.5);
+          channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 3);
         }
       }
       convolver.buffer = impulse;
@@ -142,83 +141,9 @@ function useAmbientMusic() {
     const reverb = createReverb();
     nodes.push(reverb);
 
-    // Deep sub-bass drone (mysterious rumble)
-    const createSubBass = () => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      const filter = ctx.createBiquadFilter();
-      
-      osc.type = 'sine';
-      osc.frequency.value = 32.7; // C1 - very deep
-      
-      filter.type = 'lowpass';
-      filter.frequency.value = 80;
-      filter.Q.value = 2;
-      
-      // Slow pulsing
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-      lfo.frequency.value = 0.08;
-      lfoGain.gain.value = 0.15;
-      lfo.connect(lfoGain);
-      lfoGain.connect(gain.gain);
-      lfo.start();
-      nodes.push(lfo);
-      
-      gain.gain.value = 0.25;
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(masterGain);
-      osc.start();
-      nodes.push(osc);
-    };
-
-    // String pad layers (epic/cinematic feel)
-    const createStringPad = () => {
-      const notes = [65.41, 98.00, 130.81, 164.81, 196.00]; // C2, G2, C3, E3, G3 (Cmaj)
-      
-      notes.forEach((freq, i) => {
-        const osc1 = ctx.createOscillator();
-        const osc2 = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const filter = ctx.createBiquadFilter();
-        
-        // Detuned oscillators for richness
-        osc1.type = 'sawtooth';
-        osc2.type = 'sawtooth';
-        osc1.frequency.value = freq;
-        osc2.frequency.value = freq * 1.003; // Slight detune
-        
-        filter.type = 'lowpass';
-        filter.frequency.value = 800 + i * 100;
-        filter.Q.value = 1;
-        
-        // Slow filter sweep for movement
-        const filterLfo = ctx.createOscillator();
-        const filterLfoGain = ctx.createGain();
-        filterLfo.frequency.value = 0.05 + Math.random() * 0.03;
-        filterLfoGain.gain.value = 400;
-        filterLfo.connect(filterLfoGain);
-        filterLfoGain.connect(filter.frequency);
-        filterLfo.start();
-        nodes.push(filterLfo);
-        
-        gain.gain.value = 0.04 / (i + 1);
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(gain);
-        gain.connect(masterGain);
-        gain.connect(reverb);
-        
-        osc1.start();
-        osc2.start();
-        nodes.push(osc1, osc2);
-      });
-    };
-
-    // High shimmer/sparkle layer (mysterious)
-    const createShimmer = () => {
-      const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C5, E5, G5, C6, E6
+    // Soft warm pad (gentle foundation)
+    const createWarmPad = () => {
+      const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5 (gentle Cmaj)
       
       notes.forEach((freq, i) => {
         const osc = ctx.createOscillator();
@@ -228,23 +153,24 @@ function useAmbientMusic() {
         osc.type = 'sine';
         osc.frequency.value = freq;
         
-        filter.type = 'bandpass';
-        filter.frequency.value = freq;
-        filter.Q.value = 5;
+        filter.type = 'lowpass';
+        filter.frequency.value = 1200;
+        filter.Q.value = 0.5;
         
-        // Random amplitude modulation for twinkling
+        // Very slow gentle breathing
         const lfo = ctx.createOscillator();
         const lfoGain = ctx.createGain();
-        lfo.frequency.value = 0.3 + Math.random() * 0.5;
-        lfoGain.gain.value = 0.015;
+        lfo.frequency.value = 0.03 + Math.random() * 0.02;
+        lfoGain.gain.value = 0.008;
         lfo.connect(lfoGain);
         lfoGain.connect(gain.gain);
         lfo.start();
         nodes.push(lfo);
         
-        gain.gain.value = 0.02;
+        gain.gain.value = 0.025;
         osc.connect(filter);
         filter.connect(gain);
+        gain.connect(masterGain);
         gain.connect(reverb);
         
         osc.start();
@@ -252,85 +178,192 @@ function useAmbientMusic() {
       });
     };
 
-    // Epic brass-like drone
-    const createBrassDrone = () => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      const filter = ctx.createBiquadFilter();
+    // Vocal humming simulation using formant synthesis
+    const createVocalHum = () => {
+      // Base frequencies for "ahh" vocal sound
+      const baseFreq = 220; // A3 - comfortable vocal range
       
-      osc.type = 'sawtooth';
-      osc.frequency.value = 130.81; // C3
+      // Create multiple formants for realistic vocal timbre
+      const formants = [
+        { freq: 800, Q: 10, gain: 1.0 },   // First formant (vowel character)
+        { freq: 1200, Q: 12, gain: 0.6 },  // Second formant
+        { freq: 2500, Q: 15, gain: 0.3 },  // Third formant (brightness)
+      ];
+
+      // Main vocal oscillator
+      const vocalOsc = ctx.createOscillator();
+      vocalOsc.type = 'sawtooth';
+      vocalOsc.frequency.value = baseFreq;
       
-      filter.type = 'lowpass';
-      filter.frequency.value = 600;
-      filter.Q.value = 3;
-      
-      // Slow crescendo/decrescendo
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-      lfo.frequency.value = 0.02;
-      lfoGain.gain.value = 0.03;
-      lfo.connect(lfoGain);
-      lfoGain.connect(gain.gain);
-      lfo.start();
-      nodes.push(lfo);
-      
-      gain.gain.value = 0.05;
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(masterGain);
-      gain.connect(reverb);
-      
-      osc.start();
-      nodes.push(osc);
+      // Gentle vibrato
+      const vibrato = ctx.createOscillator();
+      const vibratoGain = ctx.createGain();
+      vibrato.frequency.value = 4.5; // Natural vibrato speed
+      vibratoGain.gain.value = 3; // Subtle pitch variation
+      vibrato.connect(vibratoGain);
+      vibratoGain.connect(vocalOsc.frequency);
+      vibrato.start();
+      nodes.push(vibrato);
+
+      // Create formant filters
+      const formantGains: GainNode[] = [];
+      formants.forEach(formant => {
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = formant.freq;
+        filter.Q.value = formant.Q;
+        
+        const formantGain = ctx.createGain();
+        formantGain.gain.value = formant.gain * 0.015;
+        
+        vocalOsc.connect(filter);
+        filter.connect(formantGain);
+        formantGain.connect(reverb);
+        formantGains.push(formantGain);
+      });
+
+      // Slow amplitude modulation for natural breathing
+      const breathLfo = ctx.createOscillator();
+      const breathGain = ctx.createGain();
+      breathLfo.frequency.value = 0.08; // Slow breathing
+      breathGain.gain.value = 0.01;
+      breathLfo.connect(breathGain);
+      formantGains.forEach(g => breathGain.connect(g.gain));
+      breathLfo.start();
+      nodes.push(breathLfo);
+
+      vocalOsc.start();
+      nodes.push(vocalOsc);
     };
 
-    // Random bell/chime hits (mysterious accents)
-    const createRandomChimes = () => {
-      const chimeNotes = [1046.5, 1318.5, 1568.0, 2093.0, 2637.0]; // High C, E, G
+    // Second vocal layer (harmony)
+    const createVocalHarmony = () => {
+      const baseFreq = 330; // E4 - major third harmony
+      
+      const formants = [
+        { freq: 700, Q: 10, gain: 0.8 },
+        { freq: 1100, Q: 12, gain: 0.5 },
+        { freq: 2400, Q: 15, gain: 0.2 },
+      ];
+
+      const vocalOsc = ctx.createOscillator();
+      vocalOsc.type = 'sawtooth';
+      vocalOsc.frequency.value = baseFreq;
+      
+      const vibrato = ctx.createOscillator();
+      const vibratoGain = ctx.createGain();
+      vibrato.frequency.value = 4.8;
+      vibratoGain.gain.value = 2.5;
+      vibrato.connect(vibratoGain);
+      vibratoGain.connect(vocalOsc.frequency);
+      vibrato.start();
+      nodes.push(vibrato);
+
+      formants.forEach(formant => {
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = formant.freq;
+        filter.Q.value = formant.Q;
+        
+        const formantGain = ctx.createGain();
+        formantGain.gain.value = formant.gain * 0.01;
+        
+        vocalOsc.connect(filter);
+        filter.connect(formantGain);
+        formantGain.connect(reverb);
+      });
+
+      vocalOsc.start();
+      nodes.push(vocalOsc);
+    };
+
+    // Gentle sparkle/wind chimes
+    const createGentleChimes = () => {
+      const chimeNotes = [1046.5, 1174.66, 1318.5, 1396.91, 1568.0]; // C6, D6, E6, F6, G6
       
       const playChime = () => {
         const freq = chimeNotes[Math.floor(Math.random() * chimeNotes.length)];
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
         
         osc.type = 'sine';
-        osc.frequency.value = freq * (0.98 + Math.random() * 0.04);
+        osc.frequency.value = freq;
+        
+        filter.type = 'highpass';
+        filter.frequency.value = 800;
         
         gain.gain.value = 0;
-        gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 3);
+        gain.gain.linearRampToValueAtTime(0.03, ctx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
         
-        osc.connect(gain);
+        osc.connect(filter);
+        filter.connect(gain);
         gain.connect(reverb);
         
         osc.start();
-        osc.stop(ctx.currentTime + 3.5);
+        osc.stop(ctx.currentTime + 4.5);
       };
       
-      // Play chimes at random intervals
       const scheduleChime = () => {
         playChime();
-        const nextDelay = 3000 + Math.random() * 5000;
+        const nextDelay = 4000 + Math.random() * 6000;
         const timeout = window.setTimeout(scheduleChime, nextDelay);
         intervalsRef.current.push(timeout);
       };
       
-      const initialDelay = window.setTimeout(scheduleChime, 2000);
+      const initialDelay = window.setTimeout(scheduleChime, 3000);
       intervalsRef.current.push(initialDelay);
     };
 
-    // Initialize all layers
-    createSubBass();
-    createStringPad();
-    createShimmer();
-    createBrassDrone();
-    createRandomChimes();
+    // Soft nature-like ambience (gentle wind)
+    const createSoftAmbience = () => {
+      const noise = ctx.createBufferSource();
+      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const noiseData = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < noiseData.length; i++) {
+        noiseData[i] = Math.random() * 2 - 1;
+      }
+      noise.buffer = noiseBuffer;
+      noise.loop = true;
+      
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'bandpass';
+      noiseFilter.frequency.value = 400;
+      noiseFilter.Q.value = 0.3;
+      
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.value = 0.008;
+      
+      // Slow modulation for wind-like effect
+      const windLfo = ctx.createOscillator();
+      const windLfoGain = ctx.createGain();
+      windLfo.frequency.value = 0.1;
+      windLfoGain.gain.value = 200;
+      windLfo.connect(windLfoGain);
+      windLfoGain.connect(noiseFilter.frequency);
+      windLfo.start();
+      nodes.push(windLfo);
+      
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(reverb);
+      
+      noise.start();
+      nodes.push(noise);
+    };
+
+    // Initialize gentle layers
+    createWarmPad();
+    createVocalHum();
+    createVocalHarmony();
+    createGentleChimes();
+    createSoftAmbience();
 
     nodesRef.current = nodes;
 
-    // Slow fade in for epic entrance
-    masterGain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 4);
+    // Gentle fade in
+    masterGain.gain.linearRampToValueAtTime(0.22, ctx.currentTime + 5);
     setIsPlaying(true);
   }, []);
 
