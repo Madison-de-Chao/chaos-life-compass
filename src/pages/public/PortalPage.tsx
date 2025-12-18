@@ -757,16 +757,16 @@ export default function PortalPage() {
                   <div className="relative font-display text-4xl md:text-5xl lg:text-6xl tracking-wide text-white"
                     style={{ textShadow: '0 0 80px rgba(201,169,98,0.8), 0 0 160px rgba(201,169,98,0.4)' }}>
                     {isAt('greeting1') && (
-                      <TypewriterText text="你來了…" speed={60} delay={200} onComplete={advanceStage} />
+                      <TypewriterText text="你來了…" speed={120} delay={300} onComplete={advanceStage} />
                     )}
                     {isAt('greeting2') && (
-                      <TypewriterText text="這裡是一面鏡子。" speed={50} delay={100} onComplete={advanceStage} />
+                      <TypewriterText text="這裡是一面鏡子。" speed={100} delay={200} onComplete={advanceStage} />
                     )}
                     {isAt('greeting3') && (
-                      <TypewriterText text="不給答案，只給倒影。" speed={50} delay={100} onComplete={advanceStage} />
+                      <TypewriterText text="不給答案，只給倒影。" speed={100} delay={200} onComplete={advanceStage} />
                     )}
                     {isAt('greeting4') && (
-                      <TypewriterText text="你要往哪裡照見自己…" speed={50} delay={100} onComplete={advanceStage} />
+                      <TypewriterText text="你要往哪裡照見自己…" speed={100} delay={200} onComplete={advanceStage} />
                     )}
                   </div>
                 </div>
@@ -912,7 +912,7 @@ export default function PortalPage() {
               <div className="text-center mb-8 animate-fadeSlide">
                 <div className="font-display text-2xl md:text-3xl text-white mb-2"
                   style={{ textShadow: '0 0 40px rgba(201,169,98,0.5)' }}>
-                  <TypewriterText text="你好！我是默默超！" speed={40} delay={200} />
+                  <TypewriterText text="你好！我是默默超！" speed={100} delay={300} />
                 </div>
                 <p className="text-white/60 text-lg">想從哪裡開始呢？</p>
               </div>
