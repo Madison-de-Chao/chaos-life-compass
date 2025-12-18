@@ -1,28 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { TypewriterText } from "@/components/TypewriterText";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
 import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX } from "lucide-react";
-
-const thinkingConcepts = [
-  {
-    title: "完整性哲學",
-    description: "世界缺乏的並非「正確性」，而是「完整性」。\n錯誤不是廢棄物，而是材料。",
-  },
-  {
-    title: "弧度模型",
-    description: "以「弧度」取代「二元」。\n所有狀態，都在圓周上的不同位置。",
-  },
-  {
-    title: "高度整合型思維",
-    description: "不以刪除錯誤來追求秩序，\n而以「整合全部」來追求穩定。",
-  },
-  {
-    title: "鏡子非劇本",
-    description: "我們不給答案，只給倒影。\n命運從來不是劇本，它只是一面鏡子。",
-  },
-];
 
 const portalItems = [
   {
@@ -36,7 +16,6 @@ const portalItems = [
     particleColor: "bg-amber-300",
     borderColor: "border-amber-400/20",
     iconColor: "text-amber-300",
-    accentHsl: "38, 92%, 50%",
   },
   {
     title: "超烜創意",
@@ -49,7 +28,6 @@ const portalItems = [
     particleColor: "bg-[#c9a962]",
     borderColor: "border-[#c9a962]/20",
     iconColor: "text-[#c9a962]",
-    accentHsl: "43, 47%, 59%",
   },
   {
     title: "元壹宇宙",
@@ -62,7 +40,6 @@ const portalItems = [
     particleColor: "bg-purple-300",
     borderColor: "border-purple-400/20",
     iconColor: "text-purple-300",
-    accentHsl: "271, 91%, 65%",
   },
   {
     title: "默默超是誰",
@@ -76,27 +53,10 @@ const portalItems = [
     particleColor: "bg-emerald-300",
     borderColor: "border-emerald-400/20",
     iconColor: "text-emerald-300",
-    accentHsl: "160, 84%, 39%",
   },
 ];
 
-const weDoSay = ['看見', '照見', '回望', '聽見', '觀察', '辨識', '重新命名', '試試看', '留著', '安放'];
-const weDontSay = ['評論', '批判', '判斷', '定義', '修正', '糾錯', '放下', '忘記', '拋棄'];
-
-type AnimationStage = 
-  | 'loading'
-  | 'greeting1' | 'greeting2' | 'greeting3' | 'greeting4'
-  | 'tagline'
-  | 'title'
-  | 'intro1' | 'intro2' | 'intro3'
-  | 'thinking-title'
-  | 'thinking-card1' | 'thinking-card2' | 'thinking-card3' | 'thinking-card4'
-  | 'language-title'
-  | 'language-do' | 'language-dont'
-  | 'portal-fly'
-  | 'final-greeting';
-
-// Gentle, ethereal ambient music with vocal humming
+// Gentle ambient music
 function useAmbientMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
@@ -111,18 +71,16 @@ function useAmbientMusic() {
     audioContextRef.current = ctx;
     const nodes: AudioNode[] = [];
     
-    // Master gain
     const masterGain = ctx.createGain();
     masterGain.gain.value = 0;
     masterGain.connect(ctx.destination);
     gainNodeRef.current = masterGain;
 
-    // Create soft reverb
+    // Reverb
     const createReverb = () => {
       const convolver = ctx.createConvolver();
       const reverbGain = ctx.createGain();
       reverbGain.gain.value = 0.5;
-      
       const sampleRate = ctx.sampleRate;
       const length = sampleRate * 4;
       const impulse = ctx.createBuffer(2, length, sampleRate);
@@ -141,23 +99,20 @@ function useAmbientMusic() {
     const reverb = createReverb();
     nodes.push(reverb);
 
-    // Soft warm pad (gentle foundation)
+    // Warm pad
     const createWarmPad = () => {
-      const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5 (gentle Cmaj)
-      
-      notes.forEach((freq, i) => {
+      const notes = [261.63, 329.63, 392.00, 523.25];
+      notes.forEach((freq) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         const filter = ctx.createBiquadFilter();
         
         osc.type = 'sine';
         osc.frequency.value = freq;
-        
         filter.type = 'lowpass';
         filter.frequency.value = 1200;
         filter.Q.value = 0.5;
         
-        // Very slow gentle breathing
         const lfo = ctx.createOscillator();
         const lfoGain = ctx.createGain();
         lfo.frequency.value = 0.03 + Math.random() * 0.02;
@@ -172,88 +127,28 @@ function useAmbientMusic() {
         filter.connect(gain);
         gain.connect(masterGain);
         gain.connect(reverb);
-        
         osc.start();
         nodes.push(osc);
       });
     };
 
-    // Vocal humming simulation using formant synthesis - softer, lower register
+    // Vocal hum
     const createVocalHum = () => {
-      // Lower base frequency for warmer, softer sound
-      const baseFreq = 165; // E3 - lower, warmer vocal range
-      
-      // Softer formants for mellow "mmm" humming sound
+      const baseFreq = 165;
       const formants = [
-        { freq: 400, Q: 6, gain: 1.0 },   // Lower first formant (darker vowel)
-        { freq: 800, Q: 8, gain: 0.4 },   // Softer second formant
-        { freq: 1600, Q: 10, gain: 0.15 }, // Reduced brightness
+        { freq: 400, Q: 6, gain: 1.0 },
+        { freq: 800, Q: 8, gain: 0.4 },
+        { freq: 1600, Q: 10, gain: 0.15 },
       ];
 
-      // Main vocal oscillator - use triangle for softer tone
       const vocalOsc = ctx.createOscillator();
       vocalOsc.type = 'triangle';
       vocalOsc.frequency.value = baseFreq;
       
-      // Very gentle, slow vibrato
       const vibrato = ctx.createOscillator();
       const vibratoGain = ctx.createGain();
-      vibrato.frequency.value = 3.5; // Slower, more relaxed vibrato
-      vibratoGain.gain.value = 1.5; // Very subtle pitch variation
-      vibrato.connect(vibratoGain);
-      vibratoGain.connect(vocalOsc.frequency);
-      vibrato.start();
-      nodes.push(vibrato);
-
-      // Create formant filters
-      const formantGains: GainNode[] = [];
-      formants.forEach(formant => {
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = formant.freq;
-        filter.Q.value = formant.Q;
-        
-        const formantGain = ctx.createGain();
-        formantGain.gain.value = formant.gain * 0.006; // Much softer
-        
-        vocalOsc.connect(filter);
-        filter.connect(formantGain);
-        formantGain.connect(reverb);
-        formantGains.push(formantGain);
-      });
-
-      // Very slow amplitude modulation for natural breathing
-      const breathLfo = ctx.createOscillator();
-      const breathGain = ctx.createGain();
-      breathLfo.frequency.value = 0.05; // Even slower breathing
-      breathGain.gain.value = 0.004;
-      breathLfo.connect(breathGain);
-      formantGains.forEach(g => breathGain.connect(g.gain));
-      breathLfo.start();
-      nodes.push(breathLfo);
-
-      vocalOsc.start();
-      nodes.push(vocalOsc);
-    };
-
-    // Second vocal layer (harmony) - softer, complementary
-    const createVocalHarmony = () => {
-      const baseFreq = 247; // B3 - perfect fifth harmony, still low
-      
-      const formants = [
-        { freq: 350, Q: 6, gain: 0.6 },
-        { freq: 700, Q: 8, gain: 0.3 },
-        { freq: 1400, Q: 10, gain: 0.1 },
-      ];
-
-      const vocalOsc = ctx.createOscillator();
-      vocalOsc.type = 'triangle'; // Softer waveform
-      vocalOsc.frequency.value = baseFreq;
-      
-      const vibrato = ctx.createOscillator();
-      const vibratoGain = ctx.createGain();
-      vibrato.frequency.value = 3.8;
-      vibratoGain.gain.value = 1.2;
+      vibrato.frequency.value = 3.5;
+      vibratoGain.gain.value = 1.5;
       vibrato.connect(vibratoGain);
       vibratoGain.connect(vocalOsc.frequency);
       vibrato.start();
@@ -264,10 +159,8 @@ function useAmbientMusic() {
         filter.type = 'bandpass';
         filter.frequency.value = formant.freq;
         filter.Q.value = formant.Q;
-        
         const formantGain = ctx.createGain();
-        formantGain.gain.value = formant.gain * 0.004; // Much softer
-        
+        formantGain.gain.value = formant.gain * 0.006;
         vocalOsc.connect(filter);
         filter.connect(formantGain);
         formantGain.connect(reverb);
@@ -277,9 +170,9 @@ function useAmbientMusic() {
       nodes.push(vocalOsc);
     };
 
-    // Gentle sparkle/wind chimes
+    // Chimes
     const createGentleChimes = () => {
-      const chimeNotes = [1046.5, 1174.66, 1318.5, 1396.91, 1568.0]; // C6, D6, E6, F6, G6
+      const chimeNotes = [1046.5, 1174.66, 1318.5, 1396.91, 1568.0];
       
       const playChime = () => {
         const freq = chimeNotes[Math.floor(Math.random() * chimeNotes.length)];
@@ -289,10 +182,8 @@ function useAmbientMusic() {
         
         osc.type = 'sine';
         osc.frequency.value = freq;
-        
         filter.type = 'highpass';
         filter.frequency.value = 800;
-        
         gain.gain.value = 0;
         gain.gain.linearRampToValueAtTime(0.03, ctx.currentTime + 0.1);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4);
@@ -300,7 +191,6 @@ function useAmbientMusic() {
         osc.connect(filter);
         filter.connect(gain);
         gain.connect(reverb);
-        
         osc.start();
         osc.stop(ctx.currentTime + 4.5);
       };
@@ -316,53 +206,10 @@ function useAmbientMusic() {
       intervalsRef.current.push(initialDelay);
     };
 
-    // Soft nature-like ambience (gentle wind)
-    const createSoftAmbience = () => {
-      const noise = ctx.createBufferSource();
-      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
-      const noiseData = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < noiseData.length; i++) {
-        noiseData[i] = Math.random() * 2 - 1;
-      }
-      noise.buffer = noiseBuffer;
-      noise.loop = true;
-      
-      const noiseFilter = ctx.createBiquadFilter();
-      noiseFilter.type = 'bandpass';
-      noiseFilter.frequency.value = 400;
-      noiseFilter.Q.value = 0.3;
-      
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.value = 0.008;
-      
-      // Slow modulation for wind-like effect
-      const windLfo = ctx.createOscillator();
-      const windLfoGain = ctx.createGain();
-      windLfo.frequency.value = 0.1;
-      windLfoGain.gain.value = 200;
-      windLfo.connect(windLfoGain);
-      windLfoGain.connect(noiseFilter.frequency);
-      windLfo.start();
-      nodes.push(windLfo);
-      
-      noise.connect(noiseFilter);
-      noiseFilter.connect(noiseGain);
-      noiseGain.connect(reverb);
-      
-      noise.start();
-      nodes.push(noise);
-    };
-
-    // Initialize gentle layers
     createWarmPad();
     createVocalHum();
-    createVocalHarmony();
     createGentleChimes();
-    createSoftAmbience();
-
     nodesRef.current = nodes;
-
-    // Gentle fade in
     masterGain.gain.linearRampToValueAtTime(0.22, ctx.currentTime + 5);
     setIsPlaying(true);
   }, []);
@@ -370,16 +217,11 @@ function useAmbientMusic() {
   const stopMusic = useCallback(() => {
     if (gainNodeRef.current && audioContextRef.current) {
       gainNodeRef.current.gain.linearRampToValueAtTime(0, audioContextRef.current.currentTime + 2);
-      
-      // Clear all intervals
       intervalsRef.current.forEach(id => clearTimeout(id));
       intervalsRef.current = [];
-      
       setTimeout(() => {
         nodesRef.current.forEach(node => {
-          try { 
-            if (node instanceof OscillatorNode) node.stop(); 
-          } catch (e) {}
+          try { if (node instanceof OscillatorNode) node.stop(); } catch (e) {}
         });
         audioContextRef.current?.close();
         audioContextRef.current = null;
@@ -391,38 +233,33 @@ function useAmbientMusic() {
   }, []);
 
   const toggleMusic = useCallback(() => {
-    if (isPlaying) {
-      stopMusic();
-    } else {
-      startMusic();
-    }
+    if (isPlaying) stopMusic();
+    else startMusic();
   }, [isPlaying, startMusic, stopMusic]);
 
   useEffect(() => {
     return () => {
       intervalsRef.current.forEach(id => clearTimeout(id));
       nodesRef.current.forEach(node => {
-        try { 
-          if (node instanceof OscillatorNode) node.stop(); 
-        } catch (e) {}
+        try { if (node instanceof OscillatorNode) node.stop(); } catch (e) {}
       });
       audioContextRef.current?.close();
     };
   }, []);
 
-  return { isPlaying, startMusic, stopMusic, toggleMusic };
+  return { isPlaying, startMusic, toggleMusic };
 }
 
-// Floating particle component
+// Floating particles
 function FloatingParticles() {
   const particles = useRef(
-    [...Array(50)].map(() => ({
+    [...Array(40)].map(() => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 1 + Math.random() * 3,
-      duration: 10 + Math.random() * 15,
-      delay: Math.random() * 5,
-      opacity: 0.1 + Math.random() * 0.4,
+      duration: 15 + Math.random() * 20,
+      delay: Math.random() * 10,
+      opacity: 0.1 + Math.random() * 0.3,
     }))
   ).current;
 
@@ -442,289 +279,6 @@ function FloatingParticles() {
           }}
         />
       ))}
-    </div>
-  );
-}
-
-// Energy waves
-function EnergyWaves({ active }: { active: boolean }) {
-  return (
-    <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}>
-      {[...Array(5)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full border border-[#c9a962]"
-          style={{
-            width: 100 + i * 150,
-            height: 100 + i * 150,
-            opacity: 0.3 - i * 0.05,
-            animation: `ripple 3s ease-out ${i * 0.3}s infinite`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Lightning bolt component
-function LightningBolts({ active }: { active: boolean }) {
-  const bolts = useRef(
-    [...Array(6)].map(() => ({
-      x: 10 + Math.random() * 80,
-      rotation: -30 + Math.random() * 60,
-      delay: Math.random() * 3,
-      duration: 0.15 + Math.random() * 0.1,
-      scale: 0.5 + Math.random() * 0.8,
-    }))
-  ).current;
-
-  if (!active) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {bolts.map((bolt, i) => (
-        <svg
-          key={i}
-          className="absolute"
-          style={{
-            left: `${bolt.x}%`,
-            top: '-10%',
-            width: 60 * bolt.scale,
-            height: 300 * bolt.scale,
-            transform: `rotate(${bolt.rotation}deg)`,
-            animation: `lightning ${bolt.duration}s ease-out ${bolt.delay}s infinite`,
-            opacity: 0,
-          }}
-          viewBox="0 0 60 300"
-        >
-          <path
-            d="M30 0 L35 80 L50 85 L25 160 L40 165 L20 250 L35 170 L20 165 L40 90 L25 85 Z"
-            fill="url(#lightning-gradient)"
-            filter="url(#lightning-glow)"
-          />
-          <defs>
-            <linearGradient id="lightning-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#fff" />
-              <stop offset="50%" stopColor="#c9a962" />
-              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-            </linearGradient>
-            <filter id="lightning-glow">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-        </svg>
-      ))}
-    </div>
-  );
-}
-
-// Shooting stars / meteors
-function ShootingStars() {
-  const stars = useRef(
-    [...Array(8)].map(() => ({
-      startX: Math.random() * 100,
-      startY: Math.random() * 30,
-      angle: 20 + Math.random() * 40,
-      duration: 1 + Math.random() * 1.5,
-      delay: Math.random() * 8,
-      length: 80 + Math.random() * 120,
-    }))
-  ).current;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {stars.map((star, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{
-            left: `${star.startX}%`,
-            top: `${star.startY}%`,
-            width: star.length,
-            height: 2,
-            background: `linear-gradient(90deg, transparent, #c9a962 30%, #fff 50%, #c9a962 70%, transparent)`,
-            transform: `rotate(${star.angle}deg)`,
-            animation: `shootingStar ${star.duration}s ease-out ${star.delay}s infinite`,
-            opacity: 0,
-            boxShadow: '0 0 10px #c9a962, 0 0 20px #c9a962',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Star burst explosion
-function StarBurst({ active, intensity = 1 }: { active: boolean; intensity?: number }) {
-  const particles = useRef(
-    [...Array(Math.floor(40 * intensity))].map(() => ({
-      angle: Math.random() * 360,
-      distance: 100 + Math.random() * 300,
-      size: 2 + Math.random() * 4,
-      duration: 0.8 + Math.random() * 0.6,
-      delay: Math.random() * 0.3,
-      color: Math.random() > 0.5 ? '#c9a962' : '#fff',
-    }))
-  ).current;
-
-  return (
-    <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 ${active ? 'opacity-100' : 'opacity-0'}`}>
-      {particles.map((p, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: p.size,
-            height: p.size,
-            background: `radial-gradient(circle, ${p.color} 0%, transparent 70%)`,
-            boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
-            animation: active ? `starBurst ${p.duration}s ease-out ${p.delay}s forwards` : 'none',
-            '--angle': `${p.angle}deg`,
-            '--distance': `${p.distance}px`,
-          } as React.CSSProperties}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Electric arcs
-function ElectricArcs({ active }: { active: boolean }) {
-  if (!active) return null;
-
-  return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      {[...Array(4)].map((_, i) => (
-        <svg
-          key={i}
-          className="absolute"
-          style={{
-            width: 400,
-            height: 400,
-            animation: `electricArc 2s ease-in-out ${i * 0.5}s infinite`,
-            transform: `rotate(${i * 90}deg)`,
-          }}
-          viewBox="0 0 400 400"
-        >
-          <path
-            d="M200 200 Q220 150 250 180 Q280 120 300 160 Q340 100 360 140"
-            fill="none"
-            stroke="url(#arc-gradient)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            filter="url(#arc-glow)"
-            style={{ animation: `arcPath 0.5s ease-in-out ${i * 0.1}s infinite alternate` }}
-          />
-          <defs>
-            <linearGradient id="arc-gradient">
-              <stop offset="0%" stopColor="#c9a962" stopOpacity="0" />
-              <stop offset="50%" stopColor="#fff" />
-              <stop offset="100%" stopColor="#c9a962" stopOpacity="0" />
-            </linearGradient>
-            <filter id="arc-glow">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-        </svg>
-      ))}
-    </div>
-  );
-}
-
-// Cosmic dust swirl
-function CosmicDust() {
-  const dust = useRef(
-    [...Array(100)].map(() => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 1 + Math.random() * 2,
-      orbitRadius: 100 + Math.random() * 400,
-      duration: 20 + Math.random() * 40,
-      delay: Math.random() * 20,
-      opacity: 0.1 + Math.random() * 0.3,
-    }))
-  ).current;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {dust.map((d, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full bg-[#c9a962]"
-          style={{
-            left: '50%',
-            top: '50%',
-            width: d.size,
-            height: d.size,
-            opacity: d.opacity,
-            animation: `cosmicOrbit ${d.duration}s linear ${d.delay}s infinite`,
-            '--orbit-radius': `${d.orbitRadius}px`,
-            '--start-angle': `${Math.random() * 360}deg`,
-          } as React.CSSProperties}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Glowing orbs
-function GlowingOrbs({ active }: { active: boolean }) {
-  const orbs = [
-    { x: 20, y: 30, size: 80, color: 'rgba(201, 169, 98, 0.3)', delay: 0 },
-    { x: 80, y: 20, size: 60, color: 'rgba(168, 85, 247, 0.25)', delay: 1 },
-    { x: 70, y: 70, size: 100, color: 'rgba(245, 158, 11, 0.2)', delay: 2 },
-    { x: 30, y: 80, size: 70, color: 'rgba(52, 211, 153, 0.25)', delay: 0.5 },
-  ];
-
-  return (
-    <div className={`absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-      {orbs.map((orb, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full blur-3xl"
-          style={{
-            left: `${orb.x}%`,
-            top: `${orb.y}%`,
-            width: orb.size,
-            height: orb.size,
-            background: orb.color,
-            animation: `orbFloat 8s ease-in-out ${orb.delay}s infinite, orbPulse 4s ease-in-out ${orb.delay}s infinite`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Central light pillar
-function LightPillar({ active }: { active: boolean }) {
-  return (
-    <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}>
-      <div 
-        className="absolute w-2 h-[150vh]"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(201,169,98,0.4), rgba(255,255,255,0.6), rgba(201,169,98,0.4), transparent)',
-          filter: 'blur(8px)',
-          animation: 'pillarPulse 2s ease-in-out infinite',
-        }}
-      />
-      <div 
-        className="absolute w-px h-[150vh]"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, #fff, transparent)',
-          filter: 'blur(1px)',
-        }}
-      />
     </div>
   );
 }
@@ -763,14 +317,72 @@ function HoverParticles({ isHovered, color }: { isHovered: boolean; color: strin
   );
 }
 
+// Content sections with cross-fade
+const introSections = [
+  {
+    id: 'greeting',
+    content: (
+      <div className="space-y-6">
+        <div className="text-[#c9a962] text-xl md:text-2xl tracking-[0.3em] font-light opacity-80">
+          照見・回望・前行
+        </div>
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-wide">
+          <span className="relative inline-block">
+            <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#c9a962] via-amber-400 to-[#c9a962] opacity-40" />
+            <span className="relative text-[#c9a962]">MomoChao</span>
+          </span>
+        </h1>
+        <p className="text-white/70 text-xl md:text-2xl font-light italic">
+          「我們不預測未來，只幫你看清現在。」
+        </p>
+      </div>
+    ),
+    duration: 6000,
+  },
+  {
+    id: 'intro',
+    content: (
+      <div className="space-y-8 text-white/80 text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto">
+        <p>默默超不是一個人名，<br />而是一種思維方式的代稱。</p>
+        <p>不急著評判，不急著給答案，<br />而是先安靜地看見。</p>
+        <p>「默默」是方法，「超」是目標。<br />
+          <span className="text-[#c9a962]">在沉默中觀察，在理解中超越。</span>
+        </p>
+      </div>
+    ),
+    duration: 8000,
+  },
+  {
+    id: 'philosophy',
+    content: (
+      <div className="space-y-8 max-w-2xl mx-auto">
+        <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide mb-8">默默超思維</h2>
+        <div className="grid gap-6">
+          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-2xl p-6 text-left">
+            <h3 className="text-[#c9a962] text-xl font-display mb-3">鏡子非劇本</h3>
+            <p className="text-white/60 text-base leading-relaxed">命運從來不是劇本，它只是一面鏡子。我們不給答案，只給倒影。</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-2xl p-6 text-left">
+            <h3 className="text-[#c9a962] text-xl font-display mb-3">完整性哲學</h3>
+            <p className="text-white/60 text-base leading-relaxed">世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。</p>
+          </div>
+        </div>
+      </div>
+    ),
+    duration: 7000,
+  },
+];
+
 export default function PortalPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [stage, setStage] = useState<AnimationStage>('loading');
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [currentSection, setCurrentSection] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  const [showPortal, setShowPortal] = useState(false);
   const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false]);
-  const [showFinalGreeting, setShowFinalGreeting] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
   const hasStartedMusic = useRef(false);
+  const timeoutRef = useRef<number | null>(null);
 
   useSEO({
     title: "虹靈御所 × 超烜創意 | 命理報告・品牌創意・生命智慧",
@@ -791,79 +403,61 @@ export default function PortalPage() {
     return () => window.removeEventListener('click', handleInteraction);
   }, [startMusic]);
 
+  // Initial loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-      setStage('greeting1');
     }, 800);
     return () => clearTimeout(timer);
   }, []);
 
-  const advanceStage = useCallback(() => {
-    setStage(prev => {
-      const stages: AnimationStage[] = [
-        'loading', 'greeting1', 'greeting2', 'greeting3', 'greeting4',
-        'tagline', 'title', 'intro1', 'intro2', 'intro3',
-        'thinking-title', 'thinking-card1', 'thinking-card2', 'thinking-card3', 'thinking-card4',
-        'language-title', 'language-do', 'language-dont',
-        'portal-fly', 'final-greeting'
-      ];
-      const currentIndex = stages.indexOf(prev);
-      if (currentIndex < stages.length - 1) {
-        return stages[currentIndex + 1];
+  // Section progression with cross-fade
+  useEffect(() => {
+    if (isLoading || showPortal) return;
+    
+    const section = introSections[currentSection];
+    if (!section) return;
+
+    // Wait for duration, then fade out and advance
+    timeoutRef.current = window.setTimeout(() => {
+      if (currentSection < introSections.length - 1) {
+        setIsFading(true);
+        // Wait for fade out, then switch content
+        setTimeout(() => {
+          setCurrentSection(prev => prev + 1);
+          setIsFading(false);
+        }, 800); // fade transition duration
+      } else {
+        // Show portal after last section
+        setIsFading(true);
+        setTimeout(() => {
+          setShowPortal(true);
+          setIsFading(false);
+          // Reveal cards one by one
+          portalItems.forEach((_, index) => {
+            setTimeout(() => {
+              setCardsVisible(prev => {
+                const newState = [...prev];
+                newState[index] = true;
+                return newState;
+              });
+            }, 200 + index * 150);
+          });
+        }, 800);
       }
-      return prev;
-    });
-  }, []);
+    }, section.duration);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [isLoading, currentSection, showPortal]);
 
   const skipToEnd = useCallback(() => {
-    setStage('portal-fly');
-    portalItems.forEach((_, index) => {
-      setTimeout(() => {
-        setCardsVisible(prev => {
-          const newState = [...prev];
-          newState[index] = true;
-          return newState;
-        });
-      }, index * 80);
-    });
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsFading(true);
     setTimeout(() => {
-      setStage('final-greeting');
-      setShowFinalGreeting(true);
-    }, 500);
-  }, []);
-
-  const replay = useCallback(() => {
-    setCardsVisible([false, false, false, false]);
-    setShowFinalGreeting(false);
-    setStage('greeting1');
-  }, []);
-
-  // Slower, more cohesive timing for each stage
-  useEffect(() => {
-    const timings: Partial<Record<AnimationStage, number>> = {
-      'tagline': 2500,
-      'title': 4000,
-      'intro1': 3500,
-      'intro2': 3500,
-      'intro3': 4000,
-      'thinking-title': 2500,
-      'thinking-card1': 3500,
-      'thinking-card2': 3500,
-      'thinking-card3': 3500,
-      'thinking-card4': 3500,
-      'language-title': 2000,
-      'language-do': 3000,
-      'language-dont': 3000,
-    };
-
-    const delay = timings[stage];
-    if (delay) {
-      const timer = setTimeout(advanceStage, delay);
-      return () => clearTimeout(timer);
-    }
-
-    if (stage === 'portal-fly') {
+      setShowPortal(true);
+      setIsFading(false);
       portalItems.forEach((_, index) => {
         setTimeout(() => {
           setCardsVisible(prev => {
@@ -871,80 +465,61 @@ export default function PortalPage() {
             newState[index] = true;
             return newState;
           });
-        }, index * 100);
+        }, 100 + index * 100);
       });
-      const timer = setTimeout(() => {
-        setStage('final-greeting');
-        setShowFinalGreeting(true);
-      }, 700);
-      return () => clearTimeout(timer);
-    }
-  }, [stage, advanceStage]);
+    }, 500);
+  }, []);
 
-  const stageIndex = (s: AnimationStage) => {
-    const stages: AnimationStage[] = [
-      'loading', 'greeting1', 'greeting2', 'greeting3', 'greeting4',
-      'tagline', 'title', 'intro1', 'intro2', 'intro3',
-      'thinking-title', 'thinking-card1', 'thinking-card2', 'thinking-card3', 'thinking-card4',
-      'language-title', 'language-do', 'language-dont',
-      'portal-fly', 'final-greeting'
-    ];
-    return stages.indexOf(s);
-  };
+  const replay = useCallback(() => {
+    setShowPortal(false);
+    setCardsVisible([false, false, false, false]);
+    setCurrentSection(0);
+    setIsFading(false);
+  }, []);
 
-  const isAt = (s: AnimationStage) => stage === s;
-  const isAtOrPast = (s: AnimationStage) => stageIndex(stage) >= stageIndex(s);
-  const isBetween = (start: AnimationStage, end: AnimationStage) => 
-    stageIndex(stage) >= stageIndex(start) && stageIndex(stage) <= stageIndex(end);
+  const isInIntro = !showPortal;
 
   if (isLoading) {
     return <PageLoadingSkeleton />;
   }
 
-  // Check if we're in the intro animation phase
-  const isInIntro = !isAtOrPast('portal-fly');
-
   return (
     <div className="min-h-screen h-screen bg-[#050505] flex flex-col items-center justify-center overflow-hidden relative">
-      {/* Animated background */}
+      {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#0a0a0a_0%,#050505_100%)]" />
         
-        {/* Dynamic nebula */}
+        {/* Nebula */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full bg-[#c9a962]/5 blur-[200px]"
-            style={{ animation: 'breathe 6s ease-in-out infinite' }} />
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[150px]"
-            style={{ animation: 'breathe 8s ease-in-out 2s infinite' }} />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-amber-500/5 blur-[150px]"
-            style={{ animation: 'breathe 7s ease-in-out 1s infinite' }} />
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full bg-[#c9a962]/5 blur-[180px]"
+            style={{ animation: 'breathe 8s ease-in-out infinite' }} 
+          />
+          <div 
+            className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-[120px]"
+            style={{ animation: 'breathe 10s ease-in-out 2s infinite' }} 
+          />
+          <div 
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-amber-500/5 blur-[120px]"
+            style={{ animation: 'breathe 9s ease-in-out 1s infinite' }} 
+          />
         </div>
 
         <FloatingParticles />
-        <CosmicDust />
-        <ShootingStars />
-        <GlowingOrbs active={isInIntro} />
-        <LightningBolts active={isBetween('title', 'thinking-card4')} />
-        <ElectricArcs active={isBetween('thinking-title', 'thinking-card4')} />
-        <EnergyWaves active={isBetween('title', 'intro3')} />
-        <StarBurst active={isAt('title')} intensity={1.5} />
-        <LightPillar active={isAt('title') || isAt('tagline')} />
         
         {/* Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
       </div>
 
-      {/* Control buttons */}
+      {/* Controls */}
       <div className="fixed top-6 right-6 z-50 flex gap-3">
-        {/* Music toggle */}
         <button
           onClick={toggleMusic}
-          className="group flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+          className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
         >
           {isPlaying ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
         </button>
 
-        {/* Skip button */}
         {isInIntro && (
           <button
             onClick={skipToEnd}
@@ -955,7 +530,6 @@ export default function PortalPage() {
           </button>
         )}
         
-        {/* Replay button */}
         {!isInIntro && (
           <button
             onClick={replay}
@@ -967,187 +541,54 @@ export default function PortalPage() {
         )}
       </div>
 
-      {/* Main content - fixed center, content replaces instead of stacking */}
-      <div className="relative z-10 w-full max-w-4xl px-4">
+      {/* Main content */}
+      <div className="relative z-10 w-full">
         
-        {/* Intro Animation - Single screen, replacing content */}
+        {/* Intro sections with cross-fade */}
         {isInIntro && (
           <div className="fixed inset-0 flex items-center justify-center">
-            <div className="text-center max-w-3xl px-6">
-              
-              {/* Greetings - one at a time */}
-              {isBetween('greeting1', 'greeting4') && (
-                <div className="relative">
-                  {/* Glow burst */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-[400px] h-[400px] rounded-full bg-[#c9a962]/20 blur-[100px] animate-pulse" />
-                  </div>
-                  
-                  <div className="relative font-display text-4xl md:text-5xl lg:text-6xl tracking-wide text-white"
-                    style={{ textShadow: '0 0 80px rgba(201,169,98,0.8), 0 0 160px rgba(201,169,98,0.4)' }}>
-                    {isAt('greeting1') && (
-                      <TypewriterText text="你來了…" speed={380} delay={800} onComplete={advanceStage} />
-                    )}
-                    {isAt('greeting2') && (
-                      <TypewriterText text="這裡是一面鏡子。" speed={320} delay={600} onComplete={advanceStage} />
-                    )}
-                    {isAt('greeting3') && (
-                      <TypewriterText text="不給答案，只給倒影。" speed={320} delay={600} onComplete={advanceStage} />
-                    )}
-                    {isAt('greeting4') && (
-                      <TypewriterText text="你要往哪裡照見自己…" speed={320} delay={600} onComplete={advanceStage} />
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Tagline */}
-              {isAt('tagline') && (
-                <div className="animate-zoomIn">
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#c9a962] to-transparent" />
-                    <div className="text-[#c9a962] text-xl md:text-2xl tracking-[0.4em] font-light">
-                      照見・回望・前行
-                    </div>
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#c9a962] to-transparent" />
-                  </div>
-                </div>
-              )}
-
-              {/* Title */}
-              {isAt('title') && (
-                <div className="space-y-6 animate-zoomIn">
-                  <h1 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-wide">
-                    <span className="relative inline-block">
-                      <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#c9a962] via-amber-400 to-[#c9a962] opacity-60" />
-                      <span className="relative bg-gradient-to-r from-[#c9a962] via-amber-300 to-[#c9a962] bg-clip-text text-transparent bg-[length:200%_auto] animate-gradientFlow">
-                        MomoChao
-                      </span>
-                    </span>
-                    <span className="text-white/60"> — </span>
-                    <span className="text-white">The Guardian of Mirrors</span>
-                  </h1>
-                  <p className="text-white/70 text-xl md:text-2xl font-light italic">
-                    「我們不預測未來，只幫你看清現在。」
-                  </p>
-                </div>
-              )}
-
-              {/* Intro paragraphs - one at a time */}
-              {isBetween('intro1', 'intro3') && (
-                <div className="space-y-2 text-white/80 text-xl md:text-2xl leading-relaxed font-light animate-fadeSlide">
-                  {isAt('intro1') && (
-                    <p>默默超不是一個人名，<br />而是一種思維方式的代稱。</p>
-                  )}
-                  {isAt('intro2') && (
-                    <p>不急著評判，不急著給答案，<br />而是先安靜地看見。</p>
-                  )}
-                  {isAt('intro3') && (
-                    <p>「默默」是方法，「超」是目標。<br />
-                      <span className="text-[#c9a962]">在沉默中觀察，在理解中超越。</span>
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* Thinking system title */}
-              {isAt('thinking-title') && (
-                <div className="animate-zoomIn space-y-3">
-                  <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide">默默超思維</h2>
-                  <p className="text-[#c9a962] text-lg tracking-wider">一套改變世界的文明級生活方法</p>
-                </div>
-              )}
-
-              {/* Thinking cards - one at a time */}
-              {isBetween('thinking-card1', 'thinking-card4') && (
-                <div className="animate-cardFlip">
-                  {isAt('thinking-card1') && (
-                    <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/30 rounded-2xl p-8 max-w-md mx-auto">
-                      <h3 className="text-[#c9a962] text-2xl font-display mb-4">{thinkingConcepts[0].title}</h3>
-                      <p className="text-white/70 whitespace-pre-line">{thinkingConcepts[0].description}</p>
-                    </div>
-                  )}
-                  {isAt('thinking-card2') && (
-                    <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/30 rounded-2xl p-8 max-w-md mx-auto">
-                      <h3 className="text-[#c9a962] text-2xl font-display mb-4">{thinkingConcepts[1].title}</h3>
-                      <p className="text-white/70 whitespace-pre-line">{thinkingConcepts[1].description}</p>
-                    </div>
-                  )}
-                  {isAt('thinking-card3') && (
-                    <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/30 rounded-2xl p-8 max-w-md mx-auto">
-                      <h3 className="text-[#c9a962] text-2xl font-display mb-4">{thinkingConcepts[2].title}</h3>
-                      <p className="text-white/70 whitespace-pre-line">{thinkingConcepts[2].description}</p>
-                    </div>
-                  )}
-                  {isAt('thinking-card4') && (
-                    <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/30 rounded-2xl p-8 max-w-md mx-auto">
-                      <h3 className="text-[#c9a962] text-2xl font-display mb-4">{thinkingConcepts[3].title}</h3>
-                      <p className="text-white/70 whitespace-pre-line">{thinkingConcepts[3].description}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Language style */}
-              {isAt('language-title') && (
-                <div className="animate-zoomIn">
-                  <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide">語言風格</h2>
-                </div>
-              )}
-
-              {isAt('language-do') && (
-                <div className="animate-slideInLeft space-y-4">
-                  <h3 className="text-emerald-400 text-xl">我們這樣說</h3>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {weDoSay.map((word, i) => (
-                      <span 
-                        key={word} 
-                        className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300"
-                        style={{ animation: `popIn 0.3s ease-out ${i * 0.05}s forwards`, opacity: 0 }}
-                      >
-                        {word}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {isAt('language-dont') && (
-                <div className="animate-slideInRight space-y-4">
-                  <h3 className="text-rose-400 text-xl">我們不這樣說</h3>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {weDontSay.map((word, i) => (
-                      <span 
-                        key={word} 
-                        className="px-4 py-2 bg-rose-500/10 border border-rose-500/30 rounded-full text-rose-300 line-through decoration-rose-400/50"
-                        style={{ animation: `popIn 0.3s ease-out ${i * 0.05}s forwards`, opacity: 0 }}
-                      >
-                        {word}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
+            <div 
+              className={`text-center max-w-3xl px-6 transition-all duration-800 ease-in-out ${
+                isFading ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
+              }`}
+              style={{ transitionDuration: '800ms' }}
+            >
+              {introSections[currentSection]?.content}
+            </div>
+            
+            {/* Progress indicator */}
+            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+              {introSections.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                    idx === currentSection ? 'bg-[#c9a962] w-6' : 'bg-white/20'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         )}
 
-        {/* Portal Cards - Final state */}
-        {isAtOrPast('portal-fly') && (
-          <div className="fixed inset-0 flex flex-col items-center justify-center px-4">
-            {/* Final greeting */}
-            {showFinalGreeting && (
-              <div className="text-center mb-8 animate-fadeSlide">
-                <div className="font-display text-2xl md:text-3xl text-white mb-2"
-                  style={{ textShadow: '0 0 40px rgba(201,169,98,0.5)' }}>
-                  <TypewriterText text="你好！我是默默超！" speed={320} delay={800} />
-                </div>
-                <p className="text-white/60 text-lg">想從哪裡開始呢？</p>
-              </div>
-            )}
+        {/* Portal cards */}
+        {showPortal && (
+          <div 
+            className={`fixed inset-0 flex flex-col items-center justify-center px-4 transition-opacity duration-800 ${
+              isFading ? 'opacity-0' : 'opacity-100'
+            }`}
+          >
+            {/* Greeting */}
+            <div className="text-center mb-8">
+              <h2 
+                className="font-display text-2xl md:text-3xl text-white mb-3"
+                style={{ textShadow: '0 0 40px rgba(201,169,98,0.4)' }}
+              >
+                你好！我是默默超！
+              </h2>
+              <p className="text-white/50 text-lg">想從哪裡開始呢？</p>
+            </div>
 
-            {/* Portal cards grid */}
+            {/* Cards grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl w-full">
               {portalItems.map((item, index) => {
                 const Icon = item.icon;
@@ -1158,14 +599,14 @@ export default function PortalPage() {
                 return (
                   <div
                     key={item.title}
-                    className={`transition-all duration-500 ${
+                    className={`transition-all duration-700 ease-out ${
                       isVisible 
                         ? 'opacity-100 translate-x-0 translate-y-0' 
                         : fromLeft 
-                          ? 'opacity-0 -translate-x-20' 
-                          : 'opacity-0 translate-x-20'
+                          ? 'opacity-0 -translate-x-12' 
+                          : 'opacity-0 translate-x-12'
                     }`}
-                    style={{ transitionDelay: `${index * 0.1}s` }}
+                    style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     {item.isExternal ? (
                       <a
@@ -1177,13 +618,10 @@ export default function PortalPage() {
                         onMouseLeave={() => setHoveredCard(null)}
                       >
                         <HoverParticles isHovered={isHovered} color={item.particleColor} />
-                        
-                        {/* Glow effect */}
                         <div 
                           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
-                        
                         <div className="relative flex items-start gap-4">
                           <div className={`p-3 rounded-xl bg-white/5 ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                             <Icon className="w-6 h-6" />
@@ -1206,12 +644,10 @@ export default function PortalPage() {
                         onMouseLeave={() => setHoveredCard(null)}
                       >
                         <HoverParticles isHovered={isHovered} color={item.particleColor} />
-                        
                         <div 
                           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
-                        
                         <div className="relative flex items-start gap-4">
                           <div className={`p-3 rounded-xl bg-white/5 ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                             <Icon className="w-6 h-6" />
@@ -1230,117 +666,34 @@ export default function PortalPage() {
             </div>
 
             {/* Footer */}
-            {showFinalGreeting && (
-              <p className="text-white/30 text-sm mt-8 animate-fade-in" style={{ animationDelay: '1s' }}>
-                此刻的你，已在途中。
-              </p>
-            )}
+            <p className="text-white/30 text-sm mt-8">
+              此刻的你，已在途中。
+            </p>
           </div>
         )}
       </div>
 
       <style>{`
         @keyframes floatParticle {
-          0%, 100% { transform: translate(0, 0) scale(1); opacity: var(--opacity, 0.3); }
-          25% { transform: translate(20px, -30px) scale(1.2); }
-          50% { transform: translate(-10px, -50px) scale(0.8); opacity: calc(var(--opacity, 0.3) * 1.5); }
-          75% { transform: translate(-30px, -20px) scale(1.1); }
+          0%, 100% { 
+            transform: translate(0, 0) scale(1); 
+            opacity: var(--opacity, 0.2); 
+          }
+          50% { 
+            transform: translate(30px, -40px) scale(1.1); 
+            opacity: calc(var(--opacity, 0.2) * 1.3); 
+          }
         }
         @keyframes breathe {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-          50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
-        }
-        @keyframes ripple {
-          0% { transform: scale(0.8); opacity: 0.6; }
-          100% { transform: scale(2); opacity: 0; }
-        }
-        @keyframes gradientFlow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes zoomIn {
-          from { opacity: 0; transform: scale(0.5); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes fadeSlide {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes cardFlip {
-          from { opacity: 0; transform: perspective(1000px) rotateX(-30deg) translateY(40px); }
-          to { opacity: 1; transform: perspective(1000px) rotateX(0) translateY(0); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-60px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(60px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes popIn {
-          from { opacity: 0; transform: scale(0); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes lightning {
-          0%, 100% { opacity: 0; }
-          5% { opacity: 1; }
-          10% { opacity: 0.3; }
-          15% { opacity: 0.9; }
-          20% { opacity: 0; }
-        }
-        @keyframes shootingStar {
-          0% { opacity: 0; transform: rotate(var(--angle, 30deg)) translateX(-100px); }
-          10% { opacity: 1; }
-          100% { opacity: 0; transform: rotate(var(--angle, 30deg)) translateX(500px); }
-        }
-        @keyframes starBurst {
-          0% { 
-            opacity: 1; 
-            transform: rotate(var(--angle, 0deg)) translateX(0) scale(1);
+          0%, 100% { 
+            transform: translate(-50%, -50%) scale(1); 
+            opacity: 0.4; 
           }
-          100% { 
-            opacity: 0; 
-            transform: rotate(var(--angle, 0deg)) translateX(var(--distance, 200px)) scale(0);
+          50% { 
+            transform: translate(-50%, -50%) scale(1.2); 
+            opacity: 0.7; 
           }
         }
-        @keyframes electricArc {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
-        }
-        @keyframes arcPath {
-          from { stroke-dashoffset: 100; }
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes cosmicOrbit {
-          from { 
-            transform: rotate(var(--start-angle, 0deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * var(--start-angle, 0deg)));
-          }
-          to { 
-            transform: rotate(calc(var(--start-angle, 0deg) + 360deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * (var(--start-angle, 0deg) + 360deg)));
-          }
-        }
-        @keyframes orbFloat {
-          0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
-          25% { transform: translate(-50%, -50%) translate(30px, -20px); }
-          50% { transform: translate(-50%, -50%) translate(-20px, 30px); }
-          75% { transform: translate(-50%, -50%) translate(-30px, -10px); }
-        }
-        @keyframes orbPulse {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes pillarPulse {
-          0%, 100% { opacity: 0.5; transform: scaleX(1); }
-          50% { opacity: 1; transform: scaleX(1.5); }
-        }
-        .animate-zoomIn { animation: zoomIn 0.5s ease-out forwards; }
-        .animate-fadeSlide { animation: fadeSlide 0.6s ease-out forwards; }
-        .animate-cardFlip { animation: cardFlip 0.6s ease-out forwards; }
-        .animate-slideInLeft { animation: slideInLeft 0.5s ease-out forwards; }
-        .animate-slideInRight { animation: slideInRight 0.5s ease-out forwards; }
-        .animate-gradientFlow { animation: gradientFlow 3s linear infinite; }
       `}</style>
     </div>
   );
