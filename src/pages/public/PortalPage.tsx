@@ -178,28 +178,28 @@ function useAmbientMusic() {
       });
     };
 
-    // Vocal humming simulation using formant synthesis
+    // Vocal humming simulation using formant synthesis - softer, lower register
     const createVocalHum = () => {
-      // Base frequencies for "ahh" vocal sound
-      const baseFreq = 220; // A3 - comfortable vocal range
+      // Lower base frequency for warmer, softer sound
+      const baseFreq = 165; // E3 - lower, warmer vocal range
       
-      // Create multiple formants for realistic vocal timbre
+      // Softer formants for mellow "mmm" humming sound
       const formants = [
-        { freq: 800, Q: 10, gain: 1.0 },   // First formant (vowel character)
-        { freq: 1200, Q: 12, gain: 0.6 },  // Second formant
-        { freq: 2500, Q: 15, gain: 0.3 },  // Third formant (brightness)
+        { freq: 400, Q: 6, gain: 1.0 },   // Lower first formant (darker vowel)
+        { freq: 800, Q: 8, gain: 0.4 },   // Softer second formant
+        { freq: 1600, Q: 10, gain: 0.15 }, // Reduced brightness
       ];
 
-      // Main vocal oscillator
+      // Main vocal oscillator - use triangle for softer tone
       const vocalOsc = ctx.createOscillator();
-      vocalOsc.type = 'sawtooth';
+      vocalOsc.type = 'triangle';
       vocalOsc.frequency.value = baseFreq;
       
-      // Gentle vibrato
+      // Very gentle, slow vibrato
       const vibrato = ctx.createOscillator();
       const vibratoGain = ctx.createGain();
-      vibrato.frequency.value = 4.5; // Natural vibrato speed
-      vibratoGain.gain.value = 3; // Subtle pitch variation
+      vibrato.frequency.value = 3.5; // Slower, more relaxed vibrato
+      vibratoGain.gain.value = 1.5; // Very subtle pitch variation
       vibrato.connect(vibratoGain);
       vibratoGain.connect(vocalOsc.frequency);
       vibrato.start();
@@ -214,7 +214,7 @@ function useAmbientMusic() {
         filter.Q.value = formant.Q;
         
         const formantGain = ctx.createGain();
-        formantGain.gain.value = formant.gain * 0.015;
+        formantGain.gain.value = formant.gain * 0.006; // Much softer
         
         vocalOsc.connect(filter);
         filter.connect(formantGain);
@@ -222,11 +222,11 @@ function useAmbientMusic() {
         formantGains.push(formantGain);
       });
 
-      // Slow amplitude modulation for natural breathing
+      // Very slow amplitude modulation for natural breathing
       const breathLfo = ctx.createOscillator();
       const breathGain = ctx.createGain();
-      breathLfo.frequency.value = 0.08; // Slow breathing
-      breathGain.gain.value = 0.01;
+      breathLfo.frequency.value = 0.05; // Even slower breathing
+      breathGain.gain.value = 0.004;
       breathLfo.connect(breathGain);
       formantGains.forEach(g => breathGain.connect(g.gain));
       breathLfo.start();
@@ -236,24 +236,24 @@ function useAmbientMusic() {
       nodes.push(vocalOsc);
     };
 
-    // Second vocal layer (harmony)
+    // Second vocal layer (harmony) - softer, complementary
     const createVocalHarmony = () => {
-      const baseFreq = 330; // E4 - major third harmony
+      const baseFreq = 247; // B3 - perfect fifth harmony, still low
       
       const formants = [
-        { freq: 700, Q: 10, gain: 0.8 },
-        { freq: 1100, Q: 12, gain: 0.5 },
-        { freq: 2400, Q: 15, gain: 0.2 },
+        { freq: 350, Q: 6, gain: 0.6 },
+        { freq: 700, Q: 8, gain: 0.3 },
+        { freq: 1400, Q: 10, gain: 0.1 },
       ];
 
       const vocalOsc = ctx.createOscillator();
-      vocalOsc.type = 'sawtooth';
+      vocalOsc.type = 'triangle'; // Softer waveform
       vocalOsc.frequency.value = baseFreq;
       
       const vibrato = ctx.createOscillator();
       const vibratoGain = ctx.createGain();
-      vibrato.frequency.value = 4.8;
-      vibratoGain.gain.value = 2.5;
+      vibrato.frequency.value = 3.8;
+      vibratoGain.gain.value = 1.2;
       vibrato.connect(vibratoGain);
       vibratoGain.connect(vocalOsc.frequency);
       vibrato.start();
@@ -266,7 +266,7 @@ function useAmbientMusic() {
         filter.Q.value = formant.Q;
         
         const formantGain = ctx.createGain();
-        formantGain.gain.value = formant.gain * 0.01;
+        formantGain.gain.value = formant.gain * 0.004; // Much softer
         
         vocalOsc.connect(filter);
         filter.connect(formantGain);
