@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
-import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX } from "lucide-react";
+import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward } from "lucide-react";
 
 const portalItems = [
   {
@@ -384,6 +384,145 @@ function CosmicDust() {
   );
 }
 
+// Lightning bolts
+function LightningBolts() {
+  const [bolts, setBolts] = useState<{ id: number; x: number; path: string; delay: number }[]>([]);
+  
+  useEffect(() => {
+    const generateBolt = () => {
+      const x = 10 + Math.random() * 80;
+      let path = `M ${x} 0`;
+      let y = 0;
+      while (y < 100) {
+        y += 5 + Math.random() * 15;
+        const xOffset = (Math.random() - 0.5) * 20;
+        path += ` L ${x + xOffset} ${y}`;
+      }
+      return { id: Date.now(), x, path, delay: 0 };
+    };
+
+    const interval = setInterval(() => {
+      if (Math.random() > 0.7) {
+        setBolts(prev => [...prev.slice(-2), generateBolt()]);
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <svg className="w-full h-full absolute">
+        {bolts.map((bolt) => (
+          <g key={bolt.id}>
+            <path
+              d={bolt.path}
+              fill="none"
+              stroke="rgba(201, 169, 98, 0.6)"
+              strokeWidth="3"
+              filter="url(#glow)"
+              style={{ animation: 'lightningFlash 0.5s ease-out forwards' }}
+            />
+            <path
+              d={bolt.path}
+              fill="none"
+              stroke="white"
+              strokeWidth="1"
+              style={{ animation: 'lightningFlash 0.5s ease-out forwards' }}
+            />
+          </g>
+        ))}
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
+// Energy ripples
+function EnergyRipples() {
+  const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() > 0.5) {
+        setRipples(prev => [
+          ...prev.slice(-3),
+          { id: Date.now(), x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 }
+        ]);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {ripples.map((ripple) => (
+        <div
+          key={ripple.id}
+          className="absolute"
+          style={{
+            left: `${ripple.x}%`,
+            top: `${ripple.y}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="absolute rounded-full border border-[#c9a962]/40"
+              style={{
+                width: 20,
+                height: 20,
+                transform: 'translate(-50%, -50%)',
+                animation: `rippleExpand 3s ease-out ${i * 0.4}s forwards`,
+              }}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Light pillars
+function LightPillars() {
+  const pillars = useRef(
+    [...Array(5)].map(() => ({
+      x: 10 + Math.random() * 80,
+      width: 2 + Math.random() * 4,
+      delay: Math.random() * 8,
+      duration: 4 + Math.random() * 4,
+      opacity: 0.1 + Math.random() * 0.2,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {pillars.map((pillar, i) => (
+        <div
+          key={i}
+          className="absolute top-0 h-full"
+          style={{
+            left: `${pillar.x}%`,
+            width: pillar.width,
+            background: `linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, ${pillar.opacity}) 20%, rgba(201, 169, 98, ${pillar.opacity * 1.5}) 50%, rgba(201, 169, 98, ${pillar.opacity}) 80%, transparent 100%)`,
+            animation: `pillarGlow ${pillar.duration}s ease-in-out ${pillar.delay}s infinite`,
+            filter: 'blur(2px)',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 // Hover particles for cards
 function HoverParticles({ isHovered, color }: { isHovered: boolean; color: string }) {
   const particles = useRef(
@@ -481,6 +620,7 @@ export default function PortalPage() {
   const [showPortal, setShowPortal] = useState(false);
   const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
   const hasStartedMusic = useRef(false);
   const timeoutRef = useRef<number | null>(null);
@@ -519,7 +659,10 @@ export default function PortalPage() {
     const section = introSections[currentSection];
     if (!section) return;
 
-    // Wait for duration, then fade out and advance
+    // Wait for duration (adjusted by speed multiplier), then fade out and advance
+    const adjustedDuration = section.duration / speedMultiplier;
+    const fadeTime = Math.max(400, 1000 / speedMultiplier);
+    
     timeoutRef.current = window.setTimeout(() => {
       if (currentSection < introSections.length - 1) {
         setIsFading(true);
@@ -527,7 +670,7 @@ export default function PortalPage() {
         setTimeout(() => {
           setCurrentSection(prev => prev + 1);
           setIsFading(false);
-        }, 1000); // matches transition duration
+        }, fadeTime);
       } else {
         // Show portal after last section
         setIsFading(true);
@@ -542,16 +685,16 @@ export default function PortalPage() {
                 newState[index] = true;
                 return newState;
               });
-            }, 300 + index * 200);
+            }, (300 + index * 200) / speedMultiplier);
           });
-        }, 1000);
+        }, fadeTime);
       }
-    }, section.duration);
+    }, adjustedDuration);
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [isLoading, currentSection, showPortal]);
+  }, [isLoading, currentSection, showPortal, speedMultiplier]);
 
   const skipToEnd = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -576,6 +719,11 @@ export default function PortalPage() {
     setCardsVisible([false, false, false, false]);
     setCurrentSection(0);
     setIsFading(false);
+    setSpeedMultiplier(1);
+  }, []);
+
+  const toggleSpeed = useCallback(() => {
+    setSpeedMultiplier(prev => prev === 1 ? 2 : prev === 2 ? 3 : 1);
   }, []);
 
   const isInIntro = !showPortal;
@@ -610,6 +758,9 @@ export default function PortalPage() {
         <ShootingStars />
         <GlowingOrbs />
         <CosmicDust />
+        <LightningBolts />
+        <EnergyRipples />
+        <LightPillars />
         
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
@@ -625,13 +776,26 @@ export default function PortalPage() {
         </button>
 
         {isInIntro && (
-          <button
-            onClick={skipToEnd}
-            className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
-          >
-            <span className="text-sm">跳過</span>
-            <SkipForward className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+          <>
+            <button
+              onClick={toggleSpeed}
+              className={`group flex items-center gap-2 px-4 py-2 border rounded-full transition-all duration-300 backdrop-blur-sm ${
+                speedMultiplier > 1 
+                  ? 'bg-[#c9a962]/20 border-[#c9a962]/40 text-[#c9a962]' 
+                  : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-[#c9a962]/30 text-white/60 hover:text-white'
+              }`}
+            >
+              <FastForward className="w-4 h-4" />
+              <span className="text-sm">{speedMultiplier}x</span>
+            </button>
+            <button
+              onClick={skipToEnd}
+              className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+            >
+              <span className="text-sm">跳過</span>
+              <SkipForward className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </>
         )}
         
         {!isInIntro && (
@@ -832,6 +996,35 @@ export default function PortalPage() {
           }
           to { 
             transform: rotate(calc(var(--start-angle, 0deg) + 360deg)) translateX(var(--orbit-radius, 200px)) rotate(calc(-1 * (var(--start-angle, 0deg) + 360deg)));
+          }
+        }
+        @keyframes lightningFlash {
+          0% { opacity: 0; }
+          10% { opacity: 1; }
+          30% { opacity: 0.8; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        @keyframes rippleExpand {
+          0% { 
+            width: 20px; 
+            height: 20px; 
+            opacity: 0.6; 
+          }
+          100% { 
+            width: 200px; 
+            height: 200px; 
+            opacity: 0; 
+          }
+        }
+        @keyframes pillarGlow {
+          0%, 100% { 
+            opacity: 0.1; 
+            transform: scaleY(0.8);
+          }
+          50% { 
+            opacity: 0.4; 
+            transform: scaleY(1);
           }
         }
       `}</style>
