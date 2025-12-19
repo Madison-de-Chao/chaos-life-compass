@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { 
   Users, Search, Filter, Mail, Phone, Calendar, 
   FileText, MessageSquare, Star, MoreHorizontal,
-  Eye, ChevronDown, Plus, Clock, User, Send, Check, X
+  Eye, ChevronDown, Plus, Clock, User, Send, Check, X, Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,8 +17,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Header } from "@/components/Header";
+import { SubscriptionManagement } from "@/components/SubscriptionManagement";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { type SubscriptionStatus, isExpiringSoon, getDaysRemaining } from "@/types/subscription";
 
 interface Member {
   id: string;
@@ -27,7 +29,9 @@ interface Member {
   phone: string | null;
   birth_date: string | null;
   gender: string | null;
-  subscription_status: string;
+  subscription_status: SubscriptionStatus;
+  subscription_started_at: string | null;
+  subscription_expires_at: string | null;
   created_at: string;
   updated_at: string;
   email?: string;
@@ -385,6 +389,12 @@ const MembersPage = () => {
                           <Badge variant={subInfo.variant} className="text-xs">
                             {subInfo.label}
                           </Badge>
+                          {isExpiringSoon(member.subscription_expires_at) && (
+                            <Badge variant="outline" className="text-xs text-yellow-500 border-yellow-500">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {getDaysRemaining(member.subscription_expires_at)}天到期
+                            </Badge>
+                          )}
                         </div>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                           {member.phone && (
@@ -462,27 +472,22 @@ const MembersPage = () => {
                                     <div>{new Date(selectedMember.created_at).toLocaleDateString('zh-TW')}</div>
                                   </div>
                                   <div>
-                                    <Label className="text-xs text-muted-foreground">會員狀態</Label>
-                                    <Select
-                                      value={selectedMember.subscription_status}
-                                      onValueChange={(value: "free" | "trial" | "active" | "cancelled" | "expired") => {
-                                        updateSubscriptionStatus(selectedMember.user_id, value);
-                                        setSelectedMember({ ...selectedMember, subscription_status: value });
-                                      }}
-                                    >
-                                      <SelectTrigger className="h-8 mt-1">
-                                        <SelectValue />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="free">免費</SelectItem>
-                                        <SelectItem value="trial">試用</SelectItem>
-                                        <SelectItem value="active">訂閱中</SelectItem>
-                                        <SelectItem value="cancelled">已取消</SelectItem>
-                                        <SelectItem value="expired">已過期</SelectItem>
-                                      </SelectContent>
-                                    </Select>
+                                    <Label className="text-xs text-muted-foreground">註冊時間</Label>
+                                    <div>{new Date(selectedMember.created_at).toLocaleDateString('zh-TW')}</div>
                                   </div>
                                 </div>
+
+                                {/* Subscription Management */}
+                                <SubscriptionManagement
+                                  userId={selectedMember.user_id}
+                                  currentStatus={selectedMember.subscription_status}
+                                  expiresAt={selectedMember.subscription_expires_at}
+                                  startedAt={selectedMember.subscription_started_at}
+                                  onUpdate={() => {
+                                    fetchMembers();
+                                    fetchMemberInteractions(selectedMember.user_id);
+                                  }}
+                                />
 
                                 {/* Add Note */}
                                 <div className="space-y-2">
