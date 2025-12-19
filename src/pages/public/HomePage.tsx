@@ -7,12 +7,14 @@ import {
   Building2, 
   User,
   ArrowRight,
-  ChevronDown
+  ChevronDown,
+  Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
+import { useMember } from "@/hooks/useMember";
 
 const sections = [
   {
@@ -78,6 +80,8 @@ const sections = [
 ];
 
 const HomePage = () => {
+  const { user, profile } = useMember();
+  
   useSEO({
     title: "虹靈御所 | 看見命盤裡的自己，而非被命運定義",
     description: "虹靈御所提供專業命理報告、創新命理遊戲、元壹筆記等服務。透過紫微斗數、八字、占星、人類圖四大系統，幫助你看清自己，自由選擇未來。",
@@ -148,7 +152,7 @@ const HomePage = () => {
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <Button asChild size="lg" className="px-8 shadow-glow">
               <Link to="/reports">
                 探索命理報告
@@ -161,6 +165,31 @@ const HomePage = () => {
               </Link>
             </Button>
           </div>
+
+          {/* Member Area CTA */}
+          {user ? (
+            <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
+              <Link 
+                to="/member" 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-600 hover:from-amber-500/30 hover:to-orange-500/30 transition-all duration-300 group"
+              >
+                <Crown className="h-5 w-5" />
+                <span className="font-medium">歡迎回來，{profile?.display_name || '會員'}！前往會員專區</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          ) : (
+            <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
+              <Link 
+                to="/member/auth" 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary hover:from-primary/20 hover:to-primary/10 transition-all duration-300 group"
+              >
+                <Crown className="h-5 w-5" />
+                <span className="font-medium">成為會員，解鎖專屬命理報告</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          )}
           
           {/* Scroll indicator */}
           <button 
