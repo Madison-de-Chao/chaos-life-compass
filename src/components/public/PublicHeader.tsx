@@ -1,8 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useMember } from "@/hooks/useMember";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
@@ -20,8 +28,14 @@ const navLinks = [
 const PublicHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, profile, signOut, loading } = useMember();
 
   const isActive = (href: string) => location.pathname === href;
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/10">
@@ -62,9 +76,40 @@ const PublicHeader = () => {
 
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button asChild variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/10 hover:text-white">
-              <Link to="/auth">登入</Link>
-            </Button>
+            {loading ? (
+              <div className="h-9 w-20 bg-white/10 rounded animate-pulse" />
+            ) : user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:text-amber-300">
+                    <User className="h-4 w-4 mr-2" />
+                    {profile?.display_name || '會員'}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-[#1a1a1a] border-white/10">
+                  <DropdownMenuItem asChild>
+                    <Link to="/member" className="cursor-pointer text-white/80 hover:text-white focus:text-white">
+                      <User className="h-4 w-4 mr-2" />
+                      會員專區
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/member/profile" className="cursor-pointer text-white/80 hover:text-white focus:text-white">
+                      個人資料
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/10" />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-400 hover:text-red-300 focus:text-red-300">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    登出
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/10 hover:text-white">
+                <Link to="/member/auth">會員登入</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -114,11 +159,32 @@ const PublicHeader = () => {
 
                 {/* Mobile CTA */}
                 <div className="py-4 border-t border-white/10 space-y-3">
-                  <Button asChild className="w-full border-white/20 text-white/80 hover:bg-white/10" variant="outline">
-                    <Link to="/auth" onClick={() => setIsOpen(false)}>
-                      登入
-                    </Link>
-                  </Button>
+                  {loading ? (
+                    <div className="h-10 w-full bg-white/10 rounded animate-pulse" />
+                  ) : user ? (
+                    <>
+                      <Button asChild className="w-full border-amber-500/30 text-amber-400 hover:bg-amber-500/10" variant="outline">
+                        <Link to="/member" onClick={() => setIsOpen(false)}>
+                          <User className="h-4 w-4 mr-2" />
+                          會員專區
+                        </Link>
+                      </Button>
+                      <Button 
+                        onClick={handleSignOut} 
+                        variant="ghost" 
+                        className="w-full text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        登出
+                      </Button>
+                    </>
+                  ) : (
+                    <Button asChild className="w-full border-white/20 text-white/80 hover:bg-white/10" variant="outline">
+                      <Link to="/member/auth" onClick={() => setIsOpen(false)}>
+                        會員登入
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </SheetContent>
