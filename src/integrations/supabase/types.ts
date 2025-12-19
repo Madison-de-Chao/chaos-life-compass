@@ -200,6 +200,190 @@ export type Database = {
           },
         ]
       }
+      member_documents: {
+        Row: {
+          document_id: string
+          granted_at: string
+          granted_by: string | null
+          id: string
+          is_favorited: boolean
+          last_viewed_at: string | null
+          notes: string | null
+          user_id: string
+          view_count: number
+        }
+        Insert: {
+          document_id: string
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          is_favorited?: boolean
+          last_viewed_at?: string | null
+          notes?: string | null
+          user_id: string
+          view_count?: number
+        }
+        Update: {
+          document_id?: string
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          is_favorited?: boolean
+          last_viewed_at?: string | null
+          notes?: string | null
+          user_id?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_documents_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      member_interactions: {
+        Row: {
+          content: string | null
+          created_at: string
+          created_by: string | null
+          document_id: string | null
+          id: string
+          interaction_type: string
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          document_id?: string | null
+          id?: string
+          interaction_type: string
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          created_by?: string | null
+          document_id?: string | null
+          id?: string
+          interaction_type?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_interactions_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          birth_date: string | null
+          birth_place: string | null
+          birth_time: string | null
+          created_at: string
+          display_name: string | null
+          gender: string | null
+          id: string
+          phone: string | null
+          subscription_expires_at: string | null
+          subscription_started_at: string | null
+          subscription_status: Database["public"]["Enums"]["subscription_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          birth_date?: string | null
+          birth_place?: string | null
+          birth_time?: string | null
+          created_at?: string
+          display_name?: string | null
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          subscription_expires_at?: string | null
+          subscription_started_at?: string | null
+          subscription_status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          birth_date?: string | null
+          birth_place?: string | null
+          birth_time?: string | null
+          created_at?: string
+          display_name?: string | null
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          subscription_expires_at?: string | null
+          subscription_started_at?: string | null
+          subscription_status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          amount: number | null
+          cancelled_at: string | null
+          created_at: string
+          currency: string | null
+          expires_at: string | null
+          id: string
+          metadata: Json | null
+          payment_method: string | null
+          plan_name: string
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          user_id: string
+        }
+        Insert: {
+          amount?: number | null
+          cancelled_at?: string | null
+          created_at?: string
+          currency?: string | null
+          expires_at?: string | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: string | null
+          plan_name: string
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          user_id: string
+        }
+        Update: {
+          amount?: number | null
+          cancelled_at?: string | null
+          created_at?: string
+          currency?: string | null
+          expires_at?: string | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: string | null
+          plan_name?: string
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -242,6 +426,7 @@ export type Database = {
         Args: { doc_share_link: string }
         Returns: undefined
       }
+      is_member: { Args: { _user_id: string }; Returns: boolean }
       verify_document_password: {
         Args: { doc_share_link: string; pwd: string }
         Returns: boolean
@@ -249,6 +434,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      subscription_status: "free" | "trial" | "active" | "cancelled" | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -377,6 +563,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      subscription_status: ["free", "trial", "active", "cancelled", "expired"],
     },
   },
 } as const
