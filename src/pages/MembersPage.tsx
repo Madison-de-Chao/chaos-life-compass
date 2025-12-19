@@ -345,7 +345,7 @@ const MembersPage = () => {
                                     <Label className="text-xs text-muted-foreground">會員狀態</Label>
                                     <Select
                                       value={selectedMember.subscription_status}
-                                      onValueChange={(value) => {
+                                      onValueChange={(value: "free" | "trial" | "active" | "cancelled" | "expired") => {
                                         updateSubscriptionStatus(selectedMember.user_id, value);
                                         setSelectedMember({ ...selectedMember, subscription_status: value });
                                       }}
