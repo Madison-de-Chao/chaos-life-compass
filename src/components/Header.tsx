@@ -28,6 +28,7 @@ export function Header() {
     { path: "/dashboard", label: "上傳", icon: Upload },
     { path: "/files", label: "檔案管理", icon: List },
     { path: "/customers", label: "客戶管理", icon: Users },
+    { path: "/members", label: "會員管理", icon: Users },
     { path: "/feedbacks", label: "反饋", icon: MessageSquare },
     { path: "/guide", label: "說明", icon: BookOpen },
   ];

@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { 
   Users, Search, Filter, Mail, Phone, Calendar, 
   FileText, MessageSquare, Star, MoreHorizontal,
-  Eye, ChevronDown, Plus, Clock, User
+  Eye, ChevronDown, Plus, Clock, User, Send, Check, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Header } from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -41,6 +43,21 @@ interface MemberInteraction {
   document?: { file_name: string } | null;
 }
 
+interface Document {
+  id: string;
+  file_name: string;
+  original_name: string;
+  share_link: string;
+  created_at: string;
+}
+
+interface MemberDocument {
+  id: string;
+  document_id: string;
+  granted_at: string;
+  document: { file_name: string } | null;
+}
+
 const MembersPage = () => {
   const navigate = useNavigate();
   const [members, setMembers] = useState<Member[]>([]);
@@ -51,6 +68,14 @@ const MembersPage = () => {
   const [interactions, setInteractions] = useState<MemberInteraction[]>([]);
   const [newNote, setNewNote] = useState("");
   const [isAddingNote, setIsAddingNote] = useState(false);
+  
+  // Document assignment state
+  const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+  const [allDocuments, setAllDocuments] = useState<Document[]>([]);
+  const [memberDocuments, setMemberDocuments] = useState<MemberDocument[]>([]);
+  const [selectedDocIds, setSelectedDocIds] = useState<string[]>([]);
+  const [isAssigning, setIsAssigning] = useState(false);
+  const [docSearchQuery, setDocSearchQuery] = useState("");
 
   useEffect(() => {
     fetchMembers();
@@ -147,6 +172,101 @@ const MembersPage = () => {
       fetchMembers();
     }
   };
+
+  // Document assignment functions
+  const openAssignDialog = async (member: Member) => {
+    setSelectedMember(member);
+    setAssignDialogOpen(true);
+    setSelectedDocIds([]);
+    setDocSearchQuery("");
+    
+    // Fetch all documents
+    const { data: docs } = await supabase
+      .from('documents')
+      .select('id, file_name, original_name, share_link, created_at')
+      .order('created_at', { ascending: false });
+    
+    setAllDocuments(docs || []);
+    
+    // Fetch member's current documents
+    const { data: memberDocs } = await supabase
+      .from('member_documents')
+      .select('id, document_id, granted_at, document:documents(file_name)')
+      .eq('user_id', member.user_id);
+    
+    setMemberDocuments(memberDocs as MemberDocument[] || []);
+  };
+
+  const assignDocuments = async () => {
+    if (!selectedMember || selectedDocIds.length === 0) return;
+    
+    setIsAssigning(true);
+    
+    // Filter out already assigned documents
+    const existingDocIds = memberDocuments.map(md => md.document_id);
+    const newDocIds = selectedDocIds.filter(id => !existingDocIds.includes(id));
+    
+    if (newDocIds.length === 0) {
+      toast({ title: "所選報告已全部指派給此會員", variant: "destructive" });
+      setIsAssigning(false);
+      return;
+    }
+    
+    const inserts = newDocIds.map(docId => ({
+      user_id: selectedMember.user_id,
+      document_id: docId,
+    }));
+    
+    const { error } = await supabase
+      .from('member_documents')
+      .insert(inserts);
+    
+    if (error) {
+      console.error('Error assigning documents:', error);
+      toast({ title: "指派失敗", variant: "destructive" });
+    } else {
+      toast({ title: `已指派 ${newDocIds.length} 份報告` });
+      // Refresh member documents
+      const { data: memberDocs } = await supabase
+        .from('member_documents')
+        .select('id, document_id, granted_at, document:documents(file_name)')
+        .eq('user_id', selectedMember.user_id);
+      setMemberDocuments(memberDocs as MemberDocument[] || []);
+      setSelectedDocIds([]);
+      fetchMembers(); // Refresh counts
+    }
+    
+    setIsAssigning(false);
+  };
+
+  const revokeDocument = async (memberDocId: string) => {
+    const { error } = await supabase
+      .from('member_documents')
+      .delete()
+      .eq('id', memberDocId);
+    
+    if (error) {
+      toast({ title: "撤銷失敗", variant: "destructive" });
+    } else {
+      toast({ title: "已撤銷報告存取權限" });
+      setMemberDocuments(prev => prev.filter(md => md.id !== memberDocId));
+      fetchMembers();
+    }
+  };
+
+  const toggleDocSelection = (docId: string) => {
+    setSelectedDocIds(prev => 
+      prev.includes(docId) 
+        ? prev.filter(id => id !== docId)
+        : [...prev, docId]
+    );
+  };
+
+  const filteredDocuments = allDocuments.filter(doc =>
+    !docSearchQuery || 
+    doc.file_name.toLowerCase().includes(docSearchQuery.toLowerCase()) ||
+    doc.original_name.toLowerCase().includes(docSearchQuery.toLowerCase())
+  );
 
   const filteredMembers = members.filter(member => {
     const matchesSearch = !searchQuery || 
@@ -423,6 +543,15 @@ const MembersPage = () => {
                           </DialogContent>
                         </Dialog>
 
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openAssignDialog(member)}
+                        >
+                          <Send className="w-4 h-4 mr-1" />
+                          指派報告
+                        </Button>
+
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -430,6 +559,10 @@ const MembersPage = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => openAssignDialog(member)}>
+                              <Send className="w-4 h-4 mr-2" />
+                              指派報告
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => updateSubscriptionStatus(member.user_id, 'active')}>
                               <Star className="w-4 h-4 mr-2" />
                               設為訂閱會員
@@ -447,6 +580,113 @@ const MembersPage = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Document Assignment Dialog */}
+        <Dialog open={assignDialogOpen} onOpenChange={setAssignDialogOpen}>
+          <DialogContent className="max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Send className="w-5 h-5" />
+                指派報告給 {selectedMember?.display_name || '會員'}
+              </DialogTitle>
+            </DialogHeader>
+            
+            <div className="flex-1 overflow-hidden flex flex-col gap-4">
+              {/* Member's current documents */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">已指派報告 ({memberDocuments.length})</Label>
+                {memberDocuments.length === 0 ? (
+                  <p className="text-sm text-muted-foreground py-2">尚未指派任何報告</p>
+                ) : (
+                  <ScrollArea className="h-32 rounded-md border p-2">
+                    <div className="space-y-2">
+                      {memberDocuments.map((md) => (
+                        <div key={md.id} className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <FileText className="w-4 h-4 text-primary" />
+                            <span className="text-sm">{md.document?.file_name || '報告'}</span>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 text-destructive hover:text-destructive"
+                            onClick={() => revokeDocument(md.id)}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                )}
+              </div>
+
+              {/* Available documents to assign */}
+              <div className="flex-1 overflow-hidden flex flex-col space-y-2">
+                <Label className="text-sm font-medium">選擇報告進行指派</Label>
+                <Input
+                  placeholder="搜尋報告..."
+                  value={docSearchQuery}
+                  onChange={(e) => setDocSearchQuery(e.target.value)}
+                  className="mb-2"
+                />
+                <ScrollArea className="flex-1 rounded-md border p-2">
+                  <div className="space-y-1">
+                    {filteredDocuments.length === 0 ? (
+                      <p className="text-sm text-muted-foreground text-center py-4">沒有可用的報告</p>
+                    ) : (
+                      filteredDocuments.map((doc) => {
+                        const isAssigned = memberDocuments.some(md => md.document_id === doc.id);
+                        const isSelected = selectedDocIds.includes(doc.id);
+                        return (
+                          <div
+                            key={doc.id}
+                            className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${
+                              isAssigned 
+                                ? 'bg-muted/50 opacity-60' 
+                                : isSelected 
+                                  ? 'bg-primary/10 border border-primary/30' 
+                                  : 'hover:bg-muted/30'
+                            }`}
+                            onClick={() => !isAssigned && toggleDocSelection(doc.id)}
+                          >
+                            <Checkbox
+                              checked={isSelected || isAssigned}
+                              disabled={isAssigned}
+                              onCheckedChange={() => !isAssigned && toggleDocSelection(doc.id)}
+                            />
+                            <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm truncate">{doc.file_name}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {new Date(doc.created_at).toLocaleDateString('zh-TW')}
+                              </p>
+                            </div>
+                            {isAssigned && (
+                              <Badge variant="secondary" className="text-xs">已指派</Badge>
+                            )}
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
+            <DialogFooter className="mt-4">
+              <Button variant="outline" onClick={() => setAssignDialogOpen(false)}>
+                取消
+              </Button>
+              <Button 
+                onClick={assignDocuments}
+                disabled={selectedDocIds.length === 0 || isAssigning}
+              >
+                {isAssigning ? '指派中...' : `指派 ${selectedDocIds.length} 份報告`}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );
