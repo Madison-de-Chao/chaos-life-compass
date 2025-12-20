@@ -285,6 +285,136 @@ export type Database = {
           },
         ]
       }
+      note_attachments: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_size: number
+          file_type: string
+          file_url: string
+          id: string
+          note_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_size?: number
+          file_type: string
+          file_url: string
+          id?: string
+          note_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          file_type?: string
+          file_url?: string
+          id?: string
+          note_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "note_attachments_note_id_fkey"
+            columns: ["note_id"]
+            isOneToOne: false
+            referencedRelation: "notes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      note_social_syncs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          external_post_id: string | null
+          id: string
+          note_id: string
+          platform: string
+          status: string
+          synced_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          external_post_id?: string | null
+          id?: string
+          note_id: string
+          platform: string
+          status?: string
+          synced_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          external_post_id?: string | null
+          id?: string
+          note_id?: string
+          platform?: string
+          status?: string
+          synced_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "note_social_syncs_note_id_fkey"
+            columns: ["note_id"]
+            isOneToOne: false
+            referencedRelation: "notes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notes: {
+        Row: {
+          content: Json | null
+          cover_image_url: string | null
+          created_at: string
+          created_by: string | null
+          excerpt: string | null
+          id: string
+          is_published: boolean
+          published_at: string | null
+          share_link: string
+          title: string
+          updated_at: string
+          view_count: number
+          visibility: Database["public"]["Enums"]["note_visibility"]
+        }
+        Insert: {
+          content?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          share_link: string
+          title: string
+          updated_at?: string
+          view_count?: number
+          visibility?: Database["public"]["Enums"]["note_visibility"]
+        }
+        Update: {
+          content?: Json | null
+          cover_image_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          share_link?: string
+          title?: string
+          updated_at?: string
+          view_count?: number
+          visibility?: Database["public"]["Enums"]["note_visibility"]
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -422,6 +552,10 @@ export type Database = {
         Returns: boolean
       }
       hash_document_password: { Args: { pwd: string }; Returns: string }
+      increment_note_view_count: {
+        Args: { note_share_link: string }
+        Returns: undefined
+      }
       increment_view_count: {
         Args: { doc_share_link: string }
         Returns: undefined
@@ -434,6 +568,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      note_visibility: "public" | "members" | "paid_members"
       subscription_status: "free" | "trial" | "active" | "cancelled" | "expired"
     }
     CompositeTypes: {
@@ -563,6 +698,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      note_visibility: ["public", "members", "paid_members"],
       subscription_status: ["free", "trial", "active", "cancelled", "expired"],
     },
   },
