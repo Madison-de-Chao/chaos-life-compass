@@ -30,6 +30,10 @@ import AboutPage from "./pages/public/AboutPage";
 import MomoPage from "./pages/public/MomoPage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
+import NotePage from "./pages/public/NotePage";
+
+// Admin Pages (additional)
+import NotesPage from "./pages/NotesPage";
 
 // Member Pages
 import MemberAuthPage from "./pages/member/MemberAuthPage";
@@ -68,6 +72,7 @@ const App = () => (
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/momo" element={<MomoPage />} />
                 <Route path="/reports" element={<ReportPage />} />
+                <Route path="/notes/:shareLink" element={<NotePage />} />
                 
                 {/* Member routes - 會員中心 */}
                 <Route path="/member/auth" element={<MemberAuthPage />} />
@@ -82,6 +87,7 @@ const App = () => (
                 <Route path="/feedbacks" element={<ProtectedRoute><FeedbacksPage /></ProtectedRoute>} />
                 <Route path="/guide" element={<ProtectedRoute><GuidePage /></ProtectedRoute>} />
                 <Route path="/members" element={<ProtectedRoute><MembersPage /></ProtectedRoute>} />
+                <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />
