@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoMaisonDeChao from "@/assets/logo-maison-de-chao.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
 const currentYear = new Date().getFullYear();
@@ -27,9 +27,9 @@ const PublicFooter = () => {
             <div className="flex items-center gap-4 mb-6">
               <Link to="/chaoxuan" className="group">
                 <img 
-                  src={logoChaoxuan} 
-                  alt="超烜創意" 
-                  className="h-12 w-auto hover:scale-110 transition-transform duration-300"
+                  src={logoMaisonDeChao} 
+                  alt="超烜創意 MAISON DE CHAO" 
+                  className="h-16 w-auto hover:scale-110 transition-transform duration-300"
                 />
               </Link>
               <div className="h-8 w-px bg-white/20" />
