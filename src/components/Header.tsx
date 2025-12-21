@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, Upload, List, LogOut, User, Users, MessageSquare, Menu, X, BookOpen, Key, StickyNote } from "lucide-react";
+import { FileText, Upload, List, LogOut, User, Users, MessageSquare, Menu, X, BookOpen, Key, StickyNote, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -25,7 +25,8 @@ export function Header() {
   };
 
   const navItems = [
-    { path: "/dashboard", label: "上傳", icon: Upload },
+    { path: "/dashboard", label: "總覽", icon: LayoutDashboard },
+    { path: "/upload", label: "上傳", icon: Upload },
     { path: "/files", label: "檔案管理", icon: List },
     { path: "/notes", label: "筆記", icon: StickyNote },
     { path: "/customers", label: "客戶管理", icon: Users },
