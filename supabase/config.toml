@@ -18,5 +18,11 @@ verify_jwt = false
 [functions.entitlements-me]
 verify_jwt = true
 
+[functions.entitlements-lookup]
+verify_jwt = false
+
+[functions.check-entitlement]
+verify_jwt = false
+
 [functions.external-api]
 verify_jwt = true
