@@ -12,6 +12,7 @@ import { MomoChatBot } from "@/components/MomoChatBot";
 
 // Admin Pages
 import Index from "./pages/Index";
+import DashboardPage from "./pages/DashboardPage";
 import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
 import PrintViewPage from "./pages/PrintViewPage";
@@ -88,7 +89,8 @@ const App = () => (
                 <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />
                 
                 {/* Protected routes - Admin dashboard */}
-                <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+                <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+                <Route path="/upload" element={<ProtectedRoute><Index /></ProtectedRoute>} />
                 <Route path="/files" element={<ProtectedRoute><FilesPage /></ProtectedRoute>} />
                 <Route path="/edit" element={<ProtectedRoute><EditDocumentPage /></ProtectedRoute>} />
                 <Route path="/customers" element={<ProtectedRoute><CustomersPage /></ProtectedRoute>} />
