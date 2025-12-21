@@ -3,10 +3,34 @@
  * 
  * 此 SDK 提供外部專案呼叫權限檢查 API 的便捷方法
  * 
- * 使用方式：
- * 1. 複製此檔案到你的專案中
- * 2. 設定環境變數 ENTITLEMENTS_API_URL
- * 3. 使用 EntitlementsClient 進行權限檢查
+ * ============================================
+ * 快速設定（適用於外部專案）
+ * ============================================
+ * 
+ * 中央授權系統資訊：
+ * - API URL: https://yyzcgxnvtprojutnxisz.supabase.co
+ * - Anon Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5emNneG52dHByb2p1dG54aXN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2Mzc4NjMsImV4cCI6MjA4MTIxMzg2M30.1MekiqwQCjZ4mWZlBmb7VY-Y2mnqKhHxCaYDJYoqWfw
+ * 
+ * 你的外部專案（例如 https://mwgxpmcngzwmyluhaltp.supabase.co）需要：
+ * 1. 複製此檔案到專案中
+ * 2. 使用上方的中央授權系統 URL 和 Anon Key 初始化 client
+ * 3. 使用你的專案的 user JWT token 呼叫 API
+ * 
+ * 重要：用戶必須在中央系統（yyzcgxnvtprojutnxisz）註冊並登入
+ *       外部專案的 JWT token 無法直接使用
+ * 
+ * ============================================
+ * 使用方式
+ * ============================================
+ * 
+ * 方案 A：共用帳號系統（推薦）
+ * - 外部專案也使用中央 Supabase 做認證
+ * - 直接用登入後取得的 access_token 呼叫 API
+ * 
+ * 方案 B：獨立帳號系統
+ * - 外部專案有自己的 Supabase 認證
+ * - 需實作 SSO 或帳號連結機制
+ * - 使用中央系統發的 token 呼叫 API
  */
 
 // ============================================
