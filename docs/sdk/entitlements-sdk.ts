@@ -391,4 +391,83 @@ async function checkAccessWithRetry(
   return false;
 }
 `,
+
+  serverToServer: `
+// ============================================
+// 服務端對服務端查詢（用 email 查權限）
+// ============================================
+// 
+// 這個方式適用於：
+// - 外部專案有自己的用戶系統
+// - 透過 email 對應中央授權系統的用戶
+// - 後端對後端呼叫，不需要用戶 JWT
+//
+// API 端點：GET /functions/v1/entitlements-lookup
+// 認證方式：Service Role Key（不是 anon key）
+
+interface LookupResponse {
+  found: boolean;
+  user_id?: string;
+  email?: string;
+  profile?: {
+    display_name: string | null;
+    full_name: string | null;
+    nickname: string | null;
+    subscription_status: string;
+  } | null;
+  entitlements: Array<{
+    id: string;
+    product_id: string;
+    plan_id: string | null;
+    status: string;
+    starts_at: string;
+    ends_at: string | null;
+    is_active: boolean;
+  }>;
+  has_active_entitlement?: boolean;
+}
+
+async function lookupEntitlementsByEmail(
+  email: string,
+  productId?: string
+): Promise<LookupResponse> {
+  const url = new URL('https://yyzcgxnvtprojutnxisz.supabase.co/functions/v1/entitlements-lookup');
+  url.searchParams.set('email', email);
+  if (productId) {
+    url.searchParams.set('product_id', productId);
+  }
+
+  const response = await fetch(url.toString(), {
+    method: 'GET',
+    headers: {
+      // 重要：使用 Service Role Key，不是 Anon Key
+      'Authorization': \`Bearer \${process.env.CENTRAL_SERVICE_ROLE_KEY}\`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(\`Lookup failed: \${response.status}\`);
+  }
+
+  return response.json();
+}
+
+// 使用範例
+async function checkUserAccessByEmail(email: string, productId: string) {
+  const result = await lookupEntitlementsByEmail(email, productId);
+  
+  if (!result.found) {
+    console.log('用戶尚未在中央系統註冊');
+    return false;
+  }
+  
+  return result.has_active_entitlement;
+}
+
+// 在你的外部專案中使用
+const userEmail = 'user@example.com';
+const hasAccess = await checkUserAccessByEmail(userEmail, 'report_platform');
+console.log('用戶權限:', hasAccess);
+`,
 };
