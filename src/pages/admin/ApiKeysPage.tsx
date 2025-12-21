@@ -9,9 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Plus, Copy, Trash2, Eye, EyeOff, RefreshCw } from "lucide-react";
-import { format } from "date-fns";
+import { Plus, Copy, Trash2, Eye, EyeOff, RefreshCw, BarChart3, Activity, Key } from "lucide-react";
+import { format, subDays } from "date-fns";
 import { zhTW } from "date-fns/locale";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 interface ApiKey {
   id: string;
@@ -24,6 +25,14 @@ interface ApiKey {
   is_active: boolean;
   usage_count: number;
 }
+
+const CHART_COLORS = [
+  "hsl(var(--primary))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+];
 
 export default function ApiKeysPage() {
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
@@ -158,8 +167,170 @@ export default function ApiKeysPage() {
     }
   };
 
+  // Calculate statistics
+  const totalUsage = apiKeys.reduce((sum, key) => sum + key.usage_count, 0);
+  const activeKeys = apiKeys.filter(key => key.is_active).length;
+  const expiredKeys = apiKeys.filter(key => key.expires_at && new Date(key.expires_at) < new Date()).length;
+
+  // Prepare data for pie chart (usage distribution)
+  const usageDistributionData = apiKeys
+    .filter(key => key.usage_count > 0)
+    .map(key => ({
+      name: key.name,
+      value: key.usage_count,
+    }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  // Prepare data for bar chart (top API keys by usage)
+  const topKeysData = apiKeys
+    .map(key => ({
+      name: key.name.length > 10 ? key.name.substring(0, 10) + '...' : key.name,
+      fullName: key.name,
+      usage: key.usage_count,
+    }))
+    .sort((a, b) => b.usage - a.usage)
+    .slice(0, 6);
+
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 space-y-6">
+      {/* Statistics Cards */}
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">總 API Keys</CardTitle>
+            <Key className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{apiKeys.length}</div>
+            <p className="text-xs text-muted-foreground">
+              {activeKeys} 個啟用中
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">總使用次數</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalUsage.toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">
+              所有 API 調用
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">啟用中</CardTitle>
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{activeKeys}</div>
+            <p className="text-xs text-muted-foreground">
+              可使用的 Keys
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">已過期</CardTitle>
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-destructive">{expiredKeys}</div>
+            <p className="text-xs text-muted-foreground">
+              需要更新
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Charts */}
+      {apiKeys.length > 0 && (
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Bar Chart - Top API Keys */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">使用量排行</CardTitle>
+              <CardDescription>各 API Key 使用次數統計</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {topKeysData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={250}>
+                  <BarChart data={topKeysData} layout="vertical" margin={{ left: 20, right: 20 }}>
+                    <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
+                    <XAxis type="number" />
+                    <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 12 }} />
+                    <Tooltip
+                      formatter={(value: number) => [value.toLocaleString(), '使用次數']}
+                      labelFormatter={(label) => topKeysData.find(d => d.name === label)?.fullName || label}
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--background))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                    />
+                    <Bar dataKey="usage" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-[250px] flex items-center justify-center text-muted-foreground">
+                  尚無使用數據
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Pie Chart - Usage Distribution */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">使用比例分布</CardTitle>
+              <CardDescription>前 5 名 API Key 使用佔比</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {usageDistributionData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={250}>
+                  <PieChart>
+                    <Pie
+                      data={usageDistributionData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={80}
+                      paddingAngle={2}
+                      dataKey="value"
+                      label={({ name, percent }) => `${name.substring(0, 6)}${name.length > 6 ? '..' : ''} ${(percent * 100).toFixed(0)}%`}
+                      labelLine={false}
+                    >
+                      {usageDistributionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value: number) => [value.toLocaleString(), '使用次數']}
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--background))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                    />
+                    <Legend 
+                      formatter={(value) => value.length > 12 ? value.substring(0, 12) + '...' : value}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-[250px] flex items-center justify-center text-muted-foreground">
+                  尚無使用數據
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* API Keys Table */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
@@ -314,7 +485,7 @@ export default function ApiKeysPage() {
                           <Badge variant="secondary">已停用</Badge>
                         )}
                       </TableCell>
-                      <TableCell>{key.usage_count}</TableCell>
+                      <TableCell>{key.usage_count.toLocaleString()}</TableCell>
                       <TableCell>
                         {key.last_used_at
                           ? format(new Date(key.last_used_at), "yyyy/MM/dd HH:mm", { locale: zhTW })
