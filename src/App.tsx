@@ -38,6 +38,7 @@ import NotesPage from "./pages/NotesPage";
 import EntitlementsPage from "./pages/admin/EntitlementsPage";
 import ApiKeysPage from "./pages/admin/ApiKeysPage";
 import ExternalApiTestPage from "./pages/admin/ExternalApiTestPage";
+import ApiDocsPage from "./pages/admin/ApiDocsPage";
 
 // Member Pages
 import MemberAuthPage from "./pages/member/MemberAuthPage";
@@ -102,6 +103,7 @@ const App = () => (
                 <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
                 <Route path="/admin/api-keys" element={<ProtectedRoute><ApiKeysPage /></ProtectedRoute>} />
                 <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
+                <Route path="/admin/api-docs" element={<ProtectedRoute><ApiDocsPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />
