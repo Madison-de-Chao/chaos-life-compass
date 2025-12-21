@@ -31,6 +31,7 @@ export function Header() {
     { path: "/customers", label: "客戶管理", icon: Users },
     { path: "/members", label: "會員管理", icon: Users },
     { path: "/admin/entitlements", label: "權限管理", icon: Key },
+    { path: "/admin/api-keys", label: "API Keys", icon: Key },
     { path: "/feedbacks", label: "反饋", icon: MessageSquare },
     { path: "/guide", label: "說明", icon: BookOpen },
   ];

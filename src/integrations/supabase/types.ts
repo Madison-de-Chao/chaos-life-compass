@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          permissions: Json | null
+          usage_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          permissions?: Json | null
+          usage_count?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          permissions?: Json | null
+          usage_count?: number
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           birth_date: string | null
@@ -685,6 +730,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      hash_api_key: { Args: { key: string }; Returns: string }
       hash_document_password: { Args: { pwd: string }; Returns: string }
       increment_note_view_count: {
         Args: { note_share_link: string }
@@ -695,6 +741,7 @@ export type Database = {
         Returns: undefined
       }
       is_member: { Args: { _user_id: string }; Returns: boolean }
+      verify_api_key: { Args: { key: string }; Returns: string }
       verify_document_password: {
         Args: { doc_share_link: string; pwd: string }
         Returns: boolean
