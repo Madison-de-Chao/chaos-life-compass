@@ -115,6 +115,63 @@ export type Database = {
           },
         ]
       }
+      entitlements: {
+        Row: {
+          created_at: string
+          ends_at: string | null
+          granted_by: string | null
+          id: string
+          notes: string | null
+          plan_id: string | null
+          product_id: string
+          starts_at: string
+          status: Database["public"]["Enums"]["entitlement_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          ends_at?: string | null
+          granted_by?: string | null
+          id?: string
+          notes?: string | null
+          plan_id?: string | null
+          product_id: string
+          starts_at?: string
+          status?: Database["public"]["Enums"]["entitlement_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          ends_at?: string | null
+          granted_by?: string | null
+          id?: string
+          notes?: string | null
+          plan_id?: string | null
+          product_id?: string
+          starts_at?: string
+          status?: Database["public"]["Enums"]["entitlement_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entitlements_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entitlements_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feedback_tracking: {
         Row: {
           created_at: string
@@ -415,6 +472,74 @@ export type Database = {
         }
         Relationships: []
       }
+      plans: {
+        Row: {
+          created_at: string
+          currency: string | null
+          description: string | null
+          duration_days: number | null
+          id: string
+          name: string
+          price: number | null
+          product_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          duration_days?: number | null
+          id?: string
+          name: string
+          price?: number | null
+          product_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          duration_days?: number | null
+          id?: string
+          name?: string
+          price?: number | null
+          product_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plans_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -568,6 +693,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      entitlement_status: "active" | "expired" | "revoked"
       note_visibility: "public" | "members" | "paid_members"
       subscription_status: "free" | "trial" | "active" | "cancelled" | "expired"
     }
@@ -698,6 +824,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      entitlement_status: ["active", "expired", "revoked"],
       note_visibility: ["public", "members", "paid_members"],
       subscription_status: ["free", "trial", "active", "cancelled", "expired"],
     },

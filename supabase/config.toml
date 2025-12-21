@@ -11,3 +11,9 @@ verify_jwt = false
 
 [functions.subscription-reminder]
 verify_jwt = false
+
+[functions.momo-chat]
+verify_jwt = false
+
+[functions.entitlements-me]
+verify_jwt = true

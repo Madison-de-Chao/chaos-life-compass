@@ -34,11 +34,15 @@ import NotePage from "./pages/public/NotePage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
+import EntitlementsPage from "./pages/admin/EntitlementsPage";
 
 // Member Pages
 import MemberAuthPage from "./pages/member/MemberAuthPage";
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberProfilePage from "./pages/member/MemberProfilePage";
+
+// Account Pages
+import ProductsPage from "./pages/account/ProductsPage";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +83,9 @@ const App = () => (
                 <Route path="/member" element={<MemberProtectedRoute><MemberDashboard /></MemberProtectedRoute>} />
                 <Route path="/member/profile" element={<MemberProtectedRoute><MemberProfilePage /></MemberProtectedRoute>} />
                 
+                {/* Account routes - 帳號相關 */}
+                <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />
+                
                 {/* Protected routes - Admin dashboard */}
                 <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />
                 <Route path="/files" element={<ProtectedRoute><FilesPage /></ProtectedRoute>} />
@@ -88,6 +95,7 @@ const App = () => (
                 <Route path="/guide" element={<ProtectedRoute><GuidePage /></ProtectedRoute>} />
                 <Route path="/members" element={<ProtectedRoute><MembersPage /></ProtectedRoute>} />
                 <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
+                <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />
