@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMember } from "@/hooks/useMember";
-import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoMaisonDeChao from "@/assets/logo-maison-de-chao.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
 const navLinks = [
@@ -44,9 +44,9 @@ const PublicHeader = () => {
           {/* Logos */}
           <Link to="/chaoxuan" className="flex items-center gap-4 group">
             <img 
-              src={logoChaoxuan} 
-              alt="超烜創意" 
-              className="h-10 md:h-12 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
+              src={logoMaisonDeChao} 
+              alt="超烜創意 MAISON DE CHAO" 
+              className="h-12 md:h-14 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
             />
             <div className="h-8 w-px bg-white/20" />
             <img 
@@ -125,9 +125,9 @@ const PublicHeader = () => {
                 {/* Mobile Logos */}
                 <div className="flex items-center gap-3 py-4 border-b border-white/10">
                   <img 
-                    src={logoChaoxuan} 
-                    alt="超烜創意" 
-                    className="h-8 w-auto"
+                    src={logoMaisonDeChao} 
+                    alt="超烜創意 MAISON DE CHAO" 
+                    className="h-10 w-auto"
                   />
                   <div className="h-6 w-px bg-white/20" />
                   <img 
