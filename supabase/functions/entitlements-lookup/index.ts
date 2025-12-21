@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-api-key',
 }
 
 Deno.serve(async (req) => {
@@ -12,33 +12,56 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Verify service role key for server-to-server calls
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader) {
-      console.log('Missing authorization header')
-      return new Response(
-        JSON.stringify({ error: 'Missing authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    const token = authHeader.replace('Bearer ', '')
-    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    
-    // Only allow service role key (server-to-server)
-    if (token !== serviceRoleKey) {
-      console.log('Invalid service role key')
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized - service role key required' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    // Create admin client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabase = createClient(supabaseUrl, serviceRoleKey!, {
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    
+    // Create admin client
+    const supabase = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false }
     })
+
+    // Check for API key first (preferred for external apps)
+    const apiKey = req.headers.get('X-API-Key')
+    const authHeader = req.headers.get('Authorization')
+    
+    let isAuthorized = false
+    let apiKeyId: string | null = null
+
+    if (apiKey) {
+      // Verify API key using database function
+      const { data: keyId, error: keyError } = await supabase
+        .rpc('verify_api_key', { key: apiKey })
+      
+      if (keyError) {
+        console.error('Error verifying API key:', keyError)
+      }
+      
+      if (keyId) {
+        isAuthorized = true
+        apiKeyId = keyId
+        console.log('Authenticated via API key:', apiKeyId)
+      }
+    }
+    
+    // Fallback to service role key (for backward compatibility)
+    if (!isAuthorized && authHeader) {
+      const token = authHeader.replace('Bearer ', '')
+      if (token === serviceRoleKey) {
+        isAuthorized = true
+        console.log('Authenticated via service role key')
+      }
+    }
+
+    if (!isAuthorized) {
+      console.log('Authentication failed - no valid API key or service role key')
+      return new Response(
+        JSON.stringify({ 
+          error: 'Unauthorized',
+          message: 'Provide a valid X-API-Key header or service role key'
+        }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     // Get query parameters
     const url = new URL(req.url)
