@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 interface Profile {
   id: string;
   user_id: string;
+  full_name: string | null;
+  nickname: string | null;
   display_name: string | null;
   phone: string | null;
   birth_date: string | null;
@@ -16,6 +18,7 @@ interface Profile {
   subscription_status: 'free' | 'trial' | 'active' | 'cancelled' | 'expired';
   subscription_started_at: string | null;
   subscription_expires_at: string | null;
+  total_spent: number | null;
   created_at: string;
   updated_at: string;
 }
