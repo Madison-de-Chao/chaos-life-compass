@@ -37,6 +37,7 @@ import NotePage from "./pages/public/NotePage";
 import NotesPage from "./pages/NotesPage";
 import EntitlementsPage from "./pages/admin/EntitlementsPage";
 import ApiKeysPage from "./pages/admin/ApiKeysPage";
+import ExternalApiTestPage from "./pages/admin/ExternalApiTestPage";
 
 // Member Pages
 import MemberAuthPage from "./pages/member/MemberAuthPage";
@@ -100,6 +101,7 @@ const App = () => (
                 <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
                 <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
                 <Route path="/admin/api-keys" element={<ProtectedRoute><ApiKeysPage /></ProtectedRoute>} />
+                <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />
