@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { 
   Users, Search, Filter, Mail, Calendar, 
   FileText, MessageSquare, Star, MoreHorizontal,
-  Eye, ChevronDown, Plus, Clock, User, Send, Check, X, Crown
+  Eye, ChevronDown, Plus, Clock, User, Send, Check, X, Crown, Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,6 +39,7 @@ interface Member {
   interaction_count?: number;
   roles?: string[];
   isAdmin?: boolean;
+  isHelper?: boolean;
 }
 
 interface MemberInteraction {
@@ -185,6 +186,7 @@ const MembersPage = () => {
           interaction_count: interactionCount || 0,
           roles,
           isAdmin: roles.includes('admin'),
+          isHelper: roles.includes('helper'),
         };
       })
     );
@@ -236,7 +238,69 @@ const MembersPage = () => {
     setIsAddingNote(false);
   };
 
+  // Log admin action
+  const logAdminAction = async (actionType: string, targetType: string, targetId: string, details: Record<string, unknown> = {}) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await supabase.from('admin_logs' as any).insert({
+        user_id: user.id,
+        action_type: actionType,
+        target_type: targetType,
+        target_id: targetId,
+        details,
+      } as any);
+    } catch (error) {
+      console.error('Failed to log admin action:', error);
+    }
+  };
+
+  // Role management
+  const assignHelperRole = async (userId: string, memberName: string | null) => {
+    const { data: existingRole } = await supabase
+      .from('user_roles')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('role', 'helper')
+      .maybeSingle();
+
+    if (existingRole) {
+      toast({ title: "此用戶已是小幫手", variant: "destructive" });
+      return;
+    }
+
+    const { error } = await supabase
+      .from('user_roles')
+      .insert({ user_id: userId, role: 'helper' });
+
+    if (error) {
+      toast({ title: "指派失敗", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "已指派為小幫手" });
+      await logAdminAction('assign_helper', 'user', userId, { member_name: memberName });
+      fetchMembers();
+    }
+  };
+
+  const revokeHelperRole = async (userId: string, memberName: string | null) => {
+    const { error } = await supabase
+      .from('user_roles')
+      .delete()
+      .eq('user_id', userId)
+      .eq('role', 'helper');
+
+    if (error) {
+      toast({ title: "撤銷失敗", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "已撤銷小幫手權限" });
+      await logAdminAction('revoke_helper', 'user', userId, { member_name: memberName });
+      fetchMembers();
+    }
+  };
+
   const updateSubscriptionStatus = async (userId: string, status: 'free' | 'trial' | 'active' | 'cancelled' | 'expired') => {
+    const member = members.find(m => m.user_id === userId);
     const { error } = await supabase
       .from('profiles')
       .update({ subscription_status: status })
@@ -246,6 +310,10 @@ const MembersPage = () => {
       toast({ title: "更新失敗", variant: "destructive" });
     } else {
       toast({ title: "會員狀態已更新" });
+      await logAdminAction('update_subscription', 'user', userId, { 
+        member_name: member?.display_name, 
+        new_status: status 
+      });
       fetchMembers();
     }
   };
@@ -465,6 +533,12 @@ const MembersPage = () => {
                               管理員
                             </Badge>
                           )}
+                          {member.isHelper && !member.isAdmin && (
+                            <Badge variant="outline" className="text-xs border-green-500 text-green-600">
+                              <Shield className="w-3 h-3 mr-1" />
+                              小幫手
+                            </Badge>
+                          )}
                           <Badge variant={subInfo.variant} className="text-xs">
                             {subInfo.label}
                           </Badge>
@@ -654,6 +728,24 @@ const MembersPage = () => {
                             <DropdownMenuItem onClick={() => updateSubscriptionStatus(member.user_id, 'free')}>
                               設為免費會員
                             </DropdownMenuItem>
+                            {!member.isAdmin && (
+                              <>
+                                {member.isHelper ? (
+                                  <DropdownMenuItem 
+                                    onClick={() => revokeHelperRole(member.user_id, member.display_name)}
+                                    className="text-destructive"
+                                  >
+                                    <X className="w-4 h-4 mr-2" />
+                                    撤銷小幫手權限
+                                  </DropdownMenuItem>
+                                ) : (
+                                  <DropdownMenuItem onClick={() => assignHelperRole(member.user_id, member.display_name)}>
+                                    <Shield className="w-4 h-4 mr-2" />
+                                    設為小幫手
+                                  </DropdownMenuItem>
+                                )}
+                              </>
+                            )}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>

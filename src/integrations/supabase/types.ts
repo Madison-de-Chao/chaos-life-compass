@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_logs: {
+        Row: {
+          action_type: string
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          target_id: string | null
+          target_type: string | null
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          user_id: string
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_type?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       api_keys: {
         Row: {
           created_at: string
@@ -740,6 +773,7 @@ export type Database = {
         Args: { doc_share_link: string }
         Returns: undefined
       }
+      is_admin_or_helper: { Args: { _user_id: string }; Returns: boolean }
       is_member: { Args: { _user_id: string }; Returns: boolean }
       verify_api_key: { Args: { key: string }; Returns: string }
       verify_document_password: {
