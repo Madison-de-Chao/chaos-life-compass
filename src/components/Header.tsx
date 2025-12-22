@@ -69,6 +69,7 @@ const navGroups = [
     icon: Settings,
     items: [
       { path: "/feedbacks", label: "意見反饋", icon: MessageSquare, description: "查看用戶回饋與建議" },
+      { path: "/admin/logs", label: "操作日誌", icon: FileText, description: "追蹤管理員操作記錄" },
       { path: "/guide", label: "使用說明", icon: BookOpen, description: "系統操作指南" },
     ],
   },
