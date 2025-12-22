@@ -46,7 +46,7 @@ import {
   useDeleteEntitlement,
   useSearchUsers 
 } from "@/hooks/useEntitlements";
-import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Users } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Users, Bell } from "lucide-react";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
@@ -74,9 +74,10 @@ export default function EntitlementsPage() {
   
   // Batch operation dialog
   const [batchDialogOpen, setBatchDialogOpen] = useState(false);
-  const [batchOperation, setBatchOperation] = useState<'extend' | 'revoke' | null>(null);
+  const [batchOperation, setBatchOperation] = useState<'extend' | 'revoke' | 'delete' | null>(null);
   const [extendDays, setExtendDays] = useState("30");
   const [isBatchProcessing, setIsBatchProcessing] = useState(false);
+  const [isSendingReminders, setIsSendingReminders] = useState(false);
 
   // Add member dialog
   const [addMemberDialogOpen, setAddMemberDialogOpen] = useState(false);
@@ -279,9 +280,53 @@ export default function EntitlementsPage() {
     setIsBatchProcessing(false);
   };
 
-  const openBatchDialog = (operation: 'extend' | 'revoke') => {
+  const handleBatchDelete = async () => {
+    if (selectedIds.length === 0) return;
+    
+    setIsBatchProcessing(true);
+    
+    try {
+      const { error } = await supabase
+        .from('entitlements')
+        .delete()
+        .in('id', selectedIds);
+      
+      if (error) throw error;
+      
+      toast({ title: `已刪除 ${selectedIds.length} 筆權限` });
+      queryClient.invalidateQueries({ queryKey: ['all-entitlements'] });
+      setSelectedIds([]);
+      setBatchDialogOpen(false);
+    } catch (error) {
+      toast({ title: "批次刪除失敗", variant: "destructive" });
+    }
+    
+    setIsBatchProcessing(false);
+  };
+
+  const openBatchDialog = (operation: 'extend' | 'revoke' | 'delete') => {
     setBatchOperation(operation);
     setBatchDialogOpen(true);
+  };
+
+  // Send reminder manually
+  const handleSendReminders = async () => {
+    setIsSendingReminders(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('subscription-reminder');
+      
+      if (error) throw error;
+      
+      const result = data;
+      toast({ 
+        title: "提醒已發送", 
+        description: `已處理 ${result?.entitlements?.expiring_count || 0} 筆即將到期權限，發送 ${result?.entitlements?.reminders_sent || 0} 封提醒` 
+      });
+    } catch (error: any) {
+      console.error('Send reminders error:', error);
+      toast({ title: "發送失敗", description: error.message, variant: "destructive" });
+    }
+    setIsSendingReminders(false);
   };
 
   // Add member handler
@@ -343,6 +388,16 @@ export default function EntitlementsPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <h1 className="text-2xl font-bold text-foreground">權限管理</h1>
           <div className="flex flex-wrap gap-2">
+            {/* Send Reminders Button */}
+            <Button 
+              variant="outline" 
+              onClick={handleSendReminders}
+              disabled={isSendingReminders}
+            >
+              <Bell className="h-4 w-4 mr-2" />
+              {isSendingReminders ? "發送中..." : "發送到期提醒"}
+            </Button>
+            
             {/* Add Member Button */}
             <Dialog open={addMemberDialogOpen} onOpenChange={setAddMemberDialogOpen}>
               <DialogTrigger asChild>
@@ -524,7 +579,9 @@ export default function EntitlementsPage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {batchOperation === 'extend' ? '批次延長權限' : '批次撤銷權限'}
+                {batchOperation === 'extend' && '批次延長權限'}
+                {batchOperation === 'revoke' && '批次撤銷權限'}
+                {batchOperation === 'delete' && '批次刪除權限'}
               </DialogTitle>
             </DialogHeader>
             <div className="py-4">
@@ -555,17 +612,29 @@ export default function EntitlementsPage() {
                   確定要撤銷所選的 {selectedIds.length} 筆權限嗎？此操作無法還原。
                 </p>
               )}
+              {batchOperation === 'delete' && (
+                <p className="text-destructive font-medium">
+                  ⚠️ 確定要永久刪除所選的 {selectedIds.length} 筆權限記錄嗎？此操作無法復原！
+                </p>
+              )}
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setBatchDialogOpen(false)}>
                 取消
               </Button>
               <Button 
-                variant={batchOperation === 'revoke' ? 'destructive' : 'default'}
-                onClick={batchOperation === 'extend' ? handleBatchExtend : handleBatchRevoke}
+                variant={batchOperation === 'revoke' || batchOperation === 'delete' ? 'destructive' : 'default'}
+                onClick={
+                  batchOperation === 'extend' ? handleBatchExtend : 
+                  batchOperation === 'delete' ? handleBatchDelete :
+                  handleBatchRevoke
+                }
                 disabled={isBatchProcessing}
               >
-                {isBatchProcessing ? "處理中..." : batchOperation === 'extend' ? '確認延長' : '確認撤銷'}
+                {isBatchProcessing ? "處理中..." : 
+                  batchOperation === 'extend' ? '確認延長' : 
+                  batchOperation === 'delete' ? '確認刪除' :
+                  '確認撤銷'}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -606,10 +675,17 @@ export default function EntitlementsPage() {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem 
                         onClick={() => openBatchDialog('revoke')}
-                        className="text-destructive"
+                        className="text-orange-600"
                       >
                         <Key className="h-4 w-4 mr-2" />
                         批次撤銷
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => openBatchDialog('delete')}
+                        className="text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        批次刪除
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
