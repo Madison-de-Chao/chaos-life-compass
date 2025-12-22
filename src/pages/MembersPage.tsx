@@ -37,6 +37,8 @@ interface Member {
   email?: string;
   document_count?: number;
   interaction_count?: number;
+  roles?: string[];
+  isAdmin?: boolean;
 }
 
 interface MemberInteraction {
@@ -97,6 +99,18 @@ const MembersPage = () => {
       return;
     }
 
+    // Fetch all user roles
+    const { data: userRoles } = await supabase
+      .from('user_roles')
+      .select('user_id, role');
+
+    const rolesMap = new Map<string, string[]>();
+    (userRoles || []).forEach(ur => {
+      const existing = rolesMap.get(ur.user_id) || [];
+      existing.push(ur.role);
+      rolesMap.set(ur.user_id, existing);
+    });
+
     // Fetch document counts
     const membersWithCounts = await Promise.all(
       (profiles || []).map(async (profile) => {
@@ -110,10 +124,14 @@ const MembersPage = () => {
           .select('*', { count: 'exact', head: true })
           .eq('user_id', profile.user_id);
 
+        const roles = rolesMap.get(profile.user_id) || [];
+
         return {
           ...profile,
           document_count: docCount || 0,
           interaction_count: interactionCount || 0,
+          roles,
+          isAdmin: roles.includes('admin'),
         };
       })
     );
@@ -386,6 +404,12 @@ const MembersPage = () => {
                           <h3 className="font-medium truncate">
                             {member.display_name || '未設定暱稱'}
                           </h3>
+                          {member.isAdmin && (
+                            <Badge variant="default" className="text-xs bg-amber-500 hover:bg-amber-600">
+                              <Crown className="w-3 h-3 mr-1" />
+                              管理員
+                            </Badge>
+                          )}
                           <Badge variant={subInfo.variant} className="text-xs">
                             {subInfo.label}
                           </Badge>
