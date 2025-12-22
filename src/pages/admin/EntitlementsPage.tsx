@@ -243,12 +243,12 @@ export default function EntitlementsPage() {
 
                 <div className="space-y-2">
                   <Label>方案（選填）</Label>
-                  <Select value={selectedPlanId} onValueChange={setSelectedPlanId}>
+                  <Select value={selectedPlanId || "none"} onValueChange={(v) => setSelectedPlanId(v === "none" ? "" : v)}>
                     <SelectTrigger>
                       <SelectValue placeholder="選擇方案" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">無</SelectItem>
+                      <SelectItem value="none">無</SelectItem>
                       {plans
                         .filter(p => p.product_id === selectedProductId)
                         .map((plan) => (
