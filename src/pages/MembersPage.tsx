@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
-  Users, Search, Filter, Mail, Phone, Calendar, 
+  Users, Search, Filter, Mail, Calendar, 
   FileText, MessageSquare, Star, MoreHorizontal,
   Eye, ChevronDown, Plus, Clock, User, Send, Check, X, Crown
 } from "lucide-react";
@@ -111,6 +111,26 @@ const MembersPage = () => {
       console.error('Error fetching user roles:', rolesError);
     }
 
+    // Fetch user emails from edge function
+    let emailMap = new Map<string, string>();
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (sessionData?.session?.access_token) {
+        const response = await supabase.functions.invoke('admin-get-users', {
+          headers: {
+            Authorization: `Bearer ${sessionData.session.access_token}`,
+          },
+        });
+        if (response.data?.users) {
+          response.data.users.forEach((u: { id: string; email: string }) => {
+            emailMap.set(u.id, u.email);
+          });
+        }
+      }
+    } catch (emailError) {
+      console.error('Error fetching user emails:', emailError);
+    }
+
     const rolesMap = new Map<string, string[]>();
     (userRoles || []).forEach((ur) => {
       const existing = rolesMap.get(ur.user_id) || [];
@@ -160,6 +180,7 @@ const MembersPage = () => {
 
         return {
           ...baseMember,
+          email: emailMap.get(userId) || undefined,
           document_count: docCount || 0,
           interaction_count: interactionCount || 0,
           roles,
@@ -327,7 +348,7 @@ const MembersPage = () => {
   const filteredMembers = members.filter(member => {
     const matchesSearch = !searchQuery || 
       (member.display_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (member.phone?.includes(searchQuery));
+      (member.email?.toLowerCase().includes(searchQuery.toLowerCase()));
     
     const matchesStatus = statusFilter === "all" || member.subscription_status === statusFilter;
     
@@ -373,7 +394,7 @@ const MembersPage = () => {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="搜尋暱稱或電話..."
+              placeholder="搜尋暱稱或 Email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -455,10 +476,10 @@ const MembersPage = () => {
                           )}
                         </div>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                          {member.phone && (
+                          {member.email && (
                             <span className="flex items-center gap-1">
-                              <Phone className="w-3 h-3" />
-                              {member.phone}
+                              <Mail className="w-3 h-3" />
+                              {member.email}
                             </span>
                           )}
                           {member.birth_date && (
