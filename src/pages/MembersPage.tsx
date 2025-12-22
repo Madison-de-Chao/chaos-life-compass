@@ -88,6 +88,8 @@ const MembersPage = () => {
   }, []);
 
   const fetchMembers = async () => {
+    setLoading(true);
+
     const { data: profiles, error } = await supabase
       .from('profiles')
       .select('*')
@@ -96,38 +98,68 @@ const MembersPage = () => {
     if (error) {
       console.error('Error fetching members:', error);
       toast({ title: "載入失敗", variant: "destructive" });
+      setLoading(false);
       return;
     }
 
-    // Fetch all user roles
-    const { data: userRoles } = await supabase
+    // Fetch all user roles (to include admins even if their profile row is missing)
+    const { data: userRoles, error: rolesError } = await supabase
       .from('user_roles')
       .select('user_id, role');
 
+    if (rolesError) {
+      console.error('Error fetching user roles:', rolesError);
+    }
+
     const rolesMap = new Map<string, string[]>();
-    (userRoles || []).forEach(ur => {
+    (userRoles || []).forEach((ur) => {
       const existing = rolesMap.get(ur.user_id) || [];
       existing.push(ur.role);
       rolesMap.set(ur.user_id, existing);
     });
 
-    // Fetch document counts
+    const profileByUserId = new Map<string, any>((profiles || []).map((p: any) => [p.user_id, p]));
+
+    const allUserIds = Array.from(
+      new Set([...(profiles || []).map((p: any) => p.user_id), ...(userRoles || []).map((r: any) => r.user_id)])
+    );
+
+    const nowIso = new Date().toISOString();
+
     const membersWithCounts = await Promise.all(
-      (profiles || []).map(async (profile) => {
+      allUserIds.map(async (userId) => {
+        const profile = profileByUserId.get(userId);
+
+        const baseMember: Member = profile
+          ? (profile as Member)
+          : {
+              id: `missing-${userId}`,
+              user_id: userId,
+              display_name: null,
+              phone: null,
+              birth_date: null,
+              gender: null,
+              subscription_status: 'free' as SubscriptionStatus,
+              subscription_started_at: null,
+              subscription_expires_at: null,
+              created_at: nowIso,
+              updated_at: nowIso,
+            };
+
         const { count: docCount } = await supabase
           .from('member_documents')
           .select('*', { count: 'exact', head: true })
-          .eq('user_id', profile.user_id);
+          .eq('user_id', userId);
 
         const { count: interactionCount } = await supabase
           .from('member_interactions')
           .select('*', { count: 'exact', head: true })
-          .eq('user_id', profile.user_id);
+          .eq('user_id', userId);
 
-        const roles = rolesMap.get(profile.user_id) || [];
+        const roles = rolesMap.get(userId) || [];
 
         return {
-          ...profile,
+          ...baseMember,
           document_count: docCount || 0,
           interaction_count: interactionCount || 0,
           roles,
@@ -135,6 +167,8 @@ const MembersPage = () => {
         };
       })
     );
+
+    membersWithCounts.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
 
     setMembers(membersWithCounts);
     setLoading(false);
@@ -405,8 +439,8 @@ const MembersPage = () => {
                             {member.display_name || '未設定暱稱'}
                           </h3>
                           {member.isAdmin && (
-                            <Badge variant="default" className="text-xs bg-amber-500 hover:bg-amber-600">
-                              <Crown className="w-3 h-3 mr-1" />
+                            <Badge variant="outline" className="text-xs">
+                              <Crown className="w-3 h-3 mr-1 text-primary" />
                               管理員
                             </Badge>
                           )}
