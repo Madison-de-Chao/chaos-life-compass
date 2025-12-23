@@ -30,9 +30,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2 } from "lucide-react";
+import { usePendingChanges } from "@/hooks/usePendingChanges";
+import { HelperPendingChanges } from "@/components/HelperPendingChanges";
+import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield } from "lucide-react";
 
 interface Customer {
   id: string;
@@ -52,6 +55,10 @@ const CustomersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
+  const [currentUserIsAdmin, setCurrentUserIsAdmin] = useState(false);
+  const [currentUserIsHelper, setCurrentUserIsHelper] = useState(false);
+
+  const { addDraftChange } = usePendingChanges();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -62,6 +69,22 @@ const CustomersPage = () => {
     email: "",
     notes: "",
   });
+
+  const fetchCurrentUserRole = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: roles } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id);
+
+    if (roles) {
+      const roleNames = roles.map(r => r.role);
+      setCurrentUserIsAdmin(roleNames.includes("admin"));
+      setCurrentUserIsHelper(roleNames.includes("helper") && !roleNames.includes("admin"));
+    }
+  };
 
   const fetchCustomers = async () => {
     try {
@@ -86,6 +109,7 @@ const CustomersPage = () => {
 
   useEffect(() => {
     fetchCustomers();
+    fetchCurrentUserRole();
   }, []);
 
   const filteredCustomers = customers.filter(
@@ -143,6 +167,37 @@ const CustomersPage = () => {
         notes: formData.notes.trim() || null,
       };
 
+      // Helper needs approval for changes
+      if (currentUserIsHelper && !currentUserIsAdmin) {
+        if (editingCustomer) {
+          await addDraftChange({
+            target_table: "customers",
+            change_type: "update",
+            target_id: editingCustomer.id,
+            change_data: payload,
+            notes: `更新客戶「${payload.name}」的資料`,
+          });
+          toast({
+            title: "已加入待審核清單",
+            description: "變更將在管理員核准後生效",
+          });
+        } else {
+          await addDraftChange({
+            target_table: "customers",
+            change_type: "create",
+            change_data: payload,
+            notes: `新增客戶「${payload.name}」`,
+          });
+          toast({
+            title: "已加入待審核清單",
+            description: "新增將在管理員核准後生效",
+          });
+        }
+        setDialogOpen(false);
+        return;
+      }
+
+      // Admin can directly modify
       if (editingCustomer) {
         const { error } = await supabase
           .from("customers")
@@ -176,8 +231,24 @@ const CustomersPage = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, customerName: string) => {
     try {
+      // Helper needs approval for delete
+      if (currentUserIsHelper && !currentUserIsAdmin) {
+        await addDraftChange({
+          target_table: "customers",
+          change_type: "delete",
+          target_id: id,
+          change_data: { id },
+          notes: `刪除客戶「${customerName}」`,
+        });
+        toast({
+          title: "已加入待審核清單",
+          description: "刪除將在管理員核准後生效",
+        });
+        return;
+      }
+
       const { error } = await supabase.from("customers").delete().eq("id", id);
 
       if (error) throw error;
@@ -234,6 +305,22 @@ const CustomersPage = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-10">
+        {/* Helper Mode Indicator */}
+        {currentUserIsHelper && !currentUserIsAdmin && (
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Badge variant="secondary" className="gap-1">
+                <Shield className="w-3 h-3" />
+                小幫手模式
+              </Badge>
+              <span className="text-sm text-muted-foreground">
+                您的變更需要管理員核准後才會生效
+              </span>
+            </div>
+            <HelperPendingChanges />
+          </div>
+        )}
+
         {/* Page Header */}
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3">
@@ -333,10 +420,10 @@ const CustomersPage = () => {
                         <AlertDialogFooter>
                           <AlertDialogCancel>取消</AlertDialogCancel>
                           <AlertDialogAction
-                            onClick={() => handleDelete(customer.id)}
+                            onClick={() => handleDelete(customer.id, customer.name)}
                             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                           >
-                            刪除
+                            {currentUserIsHelper && !currentUserIsAdmin ? "送審刪除" : "刪除"}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
