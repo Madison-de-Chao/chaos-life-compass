@@ -193,104 +193,76 @@ export function usePendingChanges() {
     return true;
   };
 
-  // Admin: Approve a change
+  // Admin: Approve changes via Edge Function (executes the actual changes)
   const approveChange = async (id: string, reviewNotes?: string): Promise<boolean> => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return false;
-
-    const { error } = await supabase
-      .from('pending_changes' as any)
-      .update({
-        status: 'approved',
-        reviewed_by: userData.user.id,
-        reviewed_at: new Date().toISOString(),
-        review_notes: reviewNotes || null,
-      } as any)
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error approving change:', error);
-      toast({ title: "核准失敗", variant: "destructive" });
-      return false;
-    }
-
-    toast({ title: "已核准變更" });
-    return true;
+    return await applyChangesViaEdgeFunction([id], 'approve', reviewNotes);
   };
 
-  // Admin: Reject a change
+  // Admin: Reject a change via Edge Function
   const rejectChange = async (id: string, reviewNotes?: string): Promise<boolean> => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return false;
-
-    const { error } = await supabase
-      .from('pending_changes' as any)
-      .update({
-        status: 'rejected',
-        reviewed_by: userData.user.id,
-        reviewed_at: new Date().toISOString(),
-        review_notes: reviewNotes || null,
-      } as any)
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error rejecting change:', error);
-      toast({ title: "拒絕失敗", variant: "destructive" });
-      return false;
-    }
-
-    toast({ title: "已拒絕變更" });
-    return true;
+    return await applyChangesViaEdgeFunction([id], 'reject', reviewNotes);
   };
 
-  // Admin: Batch approve changes
+  // Admin: Batch approve changes via Edge Function
   const batchApprove = async (ids: string[], reviewNotes?: string): Promise<boolean> => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return false;
-
-    const { error } = await supabase
-      .from('pending_changes' as any)
-      .update({
-        status: 'approved',
-        reviewed_by: userData.user.id,
-        reviewed_at: new Date().toISOString(),
-        review_notes: reviewNotes || null,
-      } as any)
-      .in('id', ids);
-
-    if (error) {
-      console.error('Error batch approving:', error);
-      toast({ title: "批量核准失敗", variant: "destructive" });
-      return false;
-    }
-
-    toast({ title: `已核准 ${ids.length} 項變更` });
-    return true;
+    return await applyChangesViaEdgeFunction(ids, 'approve', reviewNotes);
   };
 
-  // Admin: Batch reject changes
+  // Admin: Batch reject changes via Edge Function
   const batchReject = async (ids: string[], reviewNotes?: string): Promise<boolean> => {
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return false;
+    return await applyChangesViaEdgeFunction(ids, 'reject', reviewNotes);
+  };
 
-    const { error } = await supabase
-      .from('pending_changes' as any)
-      .update({
-        status: 'rejected',
-        reviewed_by: userData.user.id,
-        reviewed_at: new Date().toISOString(),
-        review_notes: reviewNotes || null,
-      } as any)
-      .in('id', ids);
+  // Call Edge Function to apply or reject changes
+  const applyChangesViaEdgeFunction = async (
+    changeIds: string[], 
+    action: 'approve' | 'reject', 
+    reviewNotes?: string
+  ): Promise<boolean> => {
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData?.session?.access_token) {
+        toast({ title: "請先登入", variant: "destructive" });
+        return false;
+      }
 
-    if (error) {
-      console.error('Error batch rejecting:', error);
-      toast({ title: "批量拒絕失敗", variant: "destructive" });
+      const response = await supabase.functions.invoke('apply-approved-changes', {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+        body: {
+          changeIds,
+          action,
+          reviewNotes,
+        },
+      });
+
+      if (response.error) {
+        console.error('Edge function error:', response.error);
+        toast({ 
+          title: action === 'approve' ? "核准失敗" : "拒絕失敗", 
+          description: response.error.message,
+          variant: "destructive" 
+        });
+        return false;
+      }
+
+      if (response.data?.error) {
+        toast({ 
+          title: action === 'approve' ? "核准失敗" : "拒絕失敗", 
+          description: response.data.error,
+          variant: "destructive" 
+        });
+        return false;
+      }
+
+      toast({ title: response.data?.message || (action === 'approve' ? "已核准變更" : "已拒絕變更") });
+      return true;
+    } catch (error) {
+      console.error('Error calling edge function:', error);
+      toast({ title: "操作失敗", variant: "destructive" });
       return false;
     }
-
-    toast({ title: `已拒絕 ${ids.length} 項變更` });
-    return true;
   };
 
   useEffect(() => {

@@ -18,8 +18,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Header } from "@/components/Header";
 import { SubscriptionManagement } from "@/components/SubscriptionManagement";
+import { HelperPendingChanges } from "@/components/HelperPendingChanges";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { usePendingChanges } from "@/hooks/usePendingChanges";
 import { type SubscriptionStatus, isExpiringSoon, getDaysRemaining } from "@/types/subscription";
 
 interface Member {
@@ -76,6 +78,13 @@ const MembersPage = () => {
   const [newNote, setNewNote] = useState("");
   const [isAddingNote, setIsAddingNote] = useState(false);
   
+  // Current user role state
+  const [currentUserIsAdmin, setCurrentUserIsAdmin] = useState(false);
+  const [currentUserIsHelper, setCurrentUserIsHelper] = useState(false);
+  
+  // Pending changes hook for helpers
+  const { addDraftChange, draftCount } = usePendingChanges();
+  
   // Document assignment state
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
   const [allDocuments, setAllDocuments] = useState<Document[]>([]);
@@ -86,7 +95,24 @@ const MembersPage = () => {
 
   useEffect(() => {
     fetchMembers();
+    fetchCurrentUserRole();
   }, []);
+
+  const fetchCurrentUserRole = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    
+    const { data: roles } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id);
+    
+    if (roles) {
+      const roleList = roles.map(r => r.role);
+      setCurrentUserIsAdmin(roleList.includes('admin'));
+      setCurrentUserIsHelper(roleList.includes('helper') && !roleList.includes('admin'));
+    }
+  };
 
   const fetchMembers = async () => {
     setLoading(true);
@@ -301,6 +327,20 @@ const MembersPage = () => {
 
   const updateSubscriptionStatus = async (userId: string, status: 'free' | 'trial' | 'active' | 'cancelled' | 'expired') => {
     const member = members.find(m => m.user_id === userId);
+    
+    // If current user is helper (not admin), add to pending changes instead
+    if (currentUserIsHelper && !currentUserIsAdmin) {
+      const success = await addDraftChange({
+        change_type: 'update',
+        target_table: 'profiles',
+        target_id: member?.id,
+        change_data: { subscription_status: status },
+        notes: `更新會員 ${member?.display_name || '未知'} 的狀態為 ${status}`,
+      });
+      return;
+    }
+    
+    // Admin: direct update
     const { error } = await supabase
       .from('profiles')
       .update({ subscription_status: status })
@@ -357,6 +397,27 @@ const MembersPage = () => {
       return;
     }
     
+    // If current user is helper, add to pending changes
+    if (currentUserIsHelper && !currentUserIsAdmin) {
+      for (const docId of newDocIds) {
+        const doc = allDocuments.find(d => d.id === docId);
+        await addDraftChange({
+          change_type: 'create',
+          target_table: 'member_documents',
+          change_data: {
+            user_id: selectedMember.user_id,
+            document_id: docId,
+          },
+          notes: `指派報告 "${doc?.file_name || docId}" 給會員 ${selectedMember.display_name || '未知'}`,
+        });
+      }
+      setSelectedDocIds([]);
+      setIsAssigning(false);
+      setAssignDialogOpen(false);
+      return;
+    }
+    
+    // Admin: direct insert
     const inserts = newDocIds.map(docId => ({
       user_id: selectedMember.user_id,
       document_id: docId,
@@ -385,6 +446,21 @@ const MembersPage = () => {
   };
 
   const revokeDocument = async (memberDocId: string) => {
+    const docToRevoke = memberDocuments.find(md => md.id === memberDocId);
+    
+    // If current user is helper, add to pending changes
+    if (currentUserIsHelper && !currentUserIsAdmin) {
+      await addDraftChange({
+        change_type: 'delete',
+        target_table: 'member_documents',
+        target_id: memberDocId,
+        change_data: { id: memberDocId },
+        notes: `撤銷會員報告存取權限: ${docToRevoke?.document?.file_name || memberDocId}`,
+      });
+      return;
+    }
+    
+    // Admin: direct delete
     const { error } = await supabase
       .from('member_documents')
       .delete()
@@ -445,17 +521,36 @@ const MembersPage = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Helper pending changes panel */}
+        {currentUserIsHelper && !currentUserIsAdmin && (
+          <div className="mb-6">
+            <HelperPendingChanges />
+          </div>
+        )}
+        
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold font-serif flex items-center gap-3">
               <Users className="w-8 h-8 text-primary" />
               會員管理
+              {currentUserIsHelper && !currentUserIsAdmin && (
+                <Badge variant="outline" className="text-xs border-amber-500 text-amber-600">
+                  <Shield className="w-3 h-3 mr-1" />
+                  小幫手模式
+                </Badge>
+              )}
             </h1>
             <p className="text-muted-foreground mt-1">
               共 {members.length} 位會員
+              {currentUserIsHelper && !currentUserIsAdmin && (
+                <span className="text-amber-600 ml-2">
+                  (變更需經管理員審核)
+                </span>
+              )}
             </p>
           </div>
         </div>
+
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
