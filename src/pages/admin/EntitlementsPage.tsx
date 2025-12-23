@@ -414,10 +414,22 @@ export default function EntitlementsPage() {
     setProductDialogOpen(true);
   };
 
+  // Product ID validation pattern: only English letters, numbers, and underscores
+  const isValidProductId = (id: string) => /^[a-zA-Z0-9_]+$/.test(id);
+
   const handleSaveProduct = async () => {
     const targetId = editingProduct ? newProductId : productId;
     if (!targetId || !productName) {
       toast({ title: "請填寫產品 ID 與名稱", variant: "destructive" });
+      return;
+    }
+
+    if (!isValidProductId(targetId)) {
+      toast({ 
+        title: "產品 ID 格式錯誤", 
+        description: "產品 ID 只能包含英文字母、數字和底線",
+        variant: "destructive" 
+      });
       return;
     }
 
@@ -1055,12 +1067,13 @@ export default function EntitlementsPage() {
                       <Input
                         placeholder="新的產品 ID"
                         value={newProductId}
-                        onChange={(e) => setNewProductId(e.target.value)}
+                        onChange={(e) => setNewProductId(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
+                        pattern="[a-zA-Z0-9_]+"
                         className="flex-1"
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      修改產品 ID 會自動更新所有相關權限記錄
+                      只能使用英文字母、數字和底線。修改會自動更新相關權限
                     </p>
                   </>
                 ) : (
@@ -1068,10 +1081,11 @@ export default function EntitlementsPage() {
                     <Input
                       placeholder="例如: report_platform"
                       value={productId}
-                      onChange={(e) => setProductId(e.target.value)}
+                      onChange={(e) => setProductId(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
+                      pattern="[a-zA-Z0-9_]+"
                     />
                     <p className="text-xs text-muted-foreground">
-                      建議使用英文小寫和底線，例如: yuanyi_divination
+                      只能使用英文字母、數字和底線，例如: yuanyi_divination
                     </p>
                   </>
                 )}
