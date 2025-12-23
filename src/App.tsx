@@ -40,6 +40,7 @@ import ApiKeysPage from "./pages/admin/ApiKeysPage";
 import ExternalApiTestPage from "./pages/admin/ExternalApiTestPage";
 import ApiDocsPage from "./pages/admin/ApiDocsPage";
 import AdminLogsPage from "./pages/admin/AdminLogsPage";
+import PendingChangesPage from "./pages/admin/PendingChangesPage";
 
 // Member Pages
 import MemberAuthPage from "./pages/member/MemberAuthPage";
@@ -106,6 +107,7 @@ const App = () => (
                 <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
                 <Route path="/admin/api-docs" element={<ProtectedRoute><ApiDocsPage /></ProtectedRoute>} />
                 <Route path="/admin/logs" element={<ProtectedRoute><AdminLogsPage /></ProtectedRoute>} />
+                <Route path="/admin/pending-changes" element={<ProtectedRoute><PendingChangesPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />

@@ -30,6 +30,7 @@ interface MemberContextType {
   loading: boolean;
   isAdmin: boolean;
   isMember: boolean;
+  isHelper: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -46,6 +47,7 @@ export function MemberProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMember, setIsMember] = useState(false);
+  const [isHelper, setIsHelper] = useState(false);
 
   const fetchProfile = async (userId: string) => {
     const { data, error } = await supabase
@@ -69,6 +71,7 @@ export function MemberProvider({ children }: { children: ReactNode }) {
       const roles = data.map(r => r.role);
       setIsAdmin(roles.includes('admin'));
       setIsMember(roles.includes('user'));
+      setIsHelper(roles.includes('helper'));
     }
   };
 
@@ -87,6 +90,7 @@ export function MemberProvider({ children }: { children: ReactNode }) {
           setProfile(null);
           setIsAdmin(false);
           setIsMember(false);
+          setIsHelper(false);
         }
         setLoading(false);
       }
@@ -134,6 +138,7 @@ export function MemberProvider({ children }: { children: ReactNode }) {
     setProfile(null);
     setIsAdmin(false);
     setIsMember(false);
+    setIsHelper(false);
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {
@@ -166,6 +171,7 @@ export function MemberProvider({ children }: { children: ReactNode }) {
       loading, 
       isAdmin,
       isMember,
+      isHelper,
       signIn, 
       signUp,
       signOut,
