@@ -43,6 +43,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   useProducts, 
   useAllEntitlements, 
@@ -107,6 +109,10 @@ export default function EntitlementsPage() {
   const [productPrice, setProductPrice] = useState("");
   const [productDuration, setProductDuration] = useState("");
   const [isProductSaving, setIsProductSaving] = useState(false);
+  
+  // Product entitlements detail sheet
+  const [productEntitlementsSheetOpen, setProductEntitlementsSheetOpen] = useState(false);
+  const [viewingProductId, setViewingProductId] = useState<string | null>(null);
   
   // Form state for entitlement
   const [selectedUserId, setSelectedUserId] = useState("");
@@ -1045,7 +1051,14 @@ export default function EntitlementsPage() {
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => {
+                                  setViewingProductId(product.id);
+                                  setProductEntitlementsSheetOpen(true);
+                                }}
+                                className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+                                title="點擊查看詳細權限列表"
+                              >
                                 <Badge variant="default" className="gap-1">
                                   <Users className="h-3 w-3" />
                                   {activeCount}
@@ -1055,7 +1068,7 @@ export default function EntitlementsPage() {
                                     / {totalCount} 總計
                                   </span>
                                 )}
-                              </div>
+                              </button>
                             </TableCell>
                             <TableCell>
                               {product.price ? `NT$ ${product.price.toLocaleString()}` : '-'}
@@ -1207,6 +1220,182 @@ export default function EntitlementsPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Product Entitlements Detail Sheet */}
+        <Sheet open={productEntitlementsSheetOpen} onOpenChange={setProductEntitlementsSheetOpen}>
+          <SheetContent className="w-full sm:max-w-xl">
+            <SheetHeader>
+              <SheetTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5" />
+                {viewingProductId ? getProductName(viewingProductId) : '產品權限'}
+              </SheetTitle>
+              <SheetDescription>
+                {viewingProductId && (
+                  <code className="text-xs bg-muted px-2 py-1 rounded">{viewingProductId}</code>
+                )}
+              </SheetDescription>
+            </SheetHeader>
+            <ScrollArea className="h-[calc(100vh-120px)] mt-4">
+              {viewingProductId && (() => {
+                const productEnts = entitlements.filter(e => e.product_id === viewingProductId);
+                if (productEnts.length === 0) {
+                  return (
+                    <p className="text-center py-8 text-muted-foreground">
+                      此產品尚無任何權限記錄
+                    </p>
+                  );
+                }
+                
+                // Group by status
+                const activeEnts = productEnts.filter(e => e.status === 'active');
+                const expiredEnts = productEnts.filter(e => e.status === 'expired');
+                const revokedEnts = productEnts.filter(e => e.status === 'revoked');
+                
+                return (
+                  <div className="space-y-6">
+                    {/* Summary */}
+                    <div className="flex gap-2 flex-wrap">
+                      <Badge variant="default" className="gap-1">
+                        <Users className="h-3 w-3" />
+                        啟用中: {activeEnts.length}
+                      </Badge>
+                      {expiredEnts.length > 0 && (
+                        <Badge variant="secondary" className="gap-1">
+                          已過期: {expiredEnts.length}
+                        </Badge>
+                      )}
+                      {revokedEnts.length > 0 && (
+                        <Badge variant="destructive" className="gap-1">
+                          已撤銷: {revokedEnts.length}
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    {/* Active Users */}
+                    {activeEnts.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-medium mb-2 text-green-600">啟用中</h4>
+                        <div className="space-y-2">
+                          {activeEnts.map(ent => (
+                            <div 
+                              key={ent.id} 
+                              className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
+                            >
+                              <div>
+                                <p className="font-medium">{getUserDisplay(ent.user_id)}</p>
+                                {ent.ends_at && (
+                                  <p className="text-xs text-muted-foreground">
+                                    到期: {format(new Date(ent.ends_at), 'yyyy/MM/dd', { locale: zhTW })}
+                                  </p>
+                                )}
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  setProductEntitlementsSheetOpen(false);
+                                  setEditingEntitlement(ent);
+                                  setSelectedUserId(ent.user_id);
+                                  setSelectedProductId(ent.product_id);
+                                  setStatus(ent.status);
+                                  setEndsAt(ent.ends_at ? ent.ends_at.split('T')[0] : '');
+                                  setNotes(ent.notes || '');
+                                  setIsDialogOpen(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Expired Users */}
+                    {expiredEnts.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-medium mb-2 text-yellow-600">已過期</h4>
+                        <div className="space-y-2">
+                          {expiredEnts.map(ent => (
+                            <div 
+                              key={ent.id} 
+                              className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border border-yellow-200 dark:border-yellow-800"
+                            >
+                              <div>
+                                <p className="font-medium">{getUserDisplay(ent.user_id)}</p>
+                                {ent.ends_at && (
+                                  <p className="text-xs text-muted-foreground">
+                                    過期於: {format(new Date(ent.ends_at), 'yyyy/MM/dd', { locale: zhTW })}
+                                  </p>
+                                )}
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  setProductEntitlementsSheetOpen(false);
+                                  setEditingEntitlement(ent);
+                                  setSelectedUserId(ent.user_id);
+                                  setSelectedProductId(ent.product_id);
+                                  setStatus(ent.status);
+                                  setEndsAt(ent.ends_at ? ent.ends_at.split('T')[0] : '');
+                                  setNotes(ent.notes || '');
+                                  setIsDialogOpen(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Revoked Users */}
+                    {revokedEnts.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-medium mb-2 text-red-600">已撤銷</h4>
+                        <div className="space-y-2">
+                          {revokedEnts.map(ent => (
+                            <div 
+                              key={ent.id} 
+                              className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800"
+                            >
+                              <div>
+                                <p className="font-medium">{getUserDisplay(ent.user_id)}</p>
+                                {ent.notes && (
+                                  <p className="text-xs text-muted-foreground truncate max-w-[200px]">
+                                    {ent.notes}
+                                  </p>
+                                )}
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  setProductEntitlementsSheetOpen(false);
+                                  setEditingEntitlement(ent);
+                                  setSelectedUserId(ent.user_id);
+                                  setSelectedProductId(ent.product_id);
+                                  setStatus(ent.status);
+                                  setEndsAt(ent.ends_at ? ent.ends_at.split('T')[0] : '');
+                                  setNotes(ent.notes || '');
+                                  setIsDialogOpen(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
       </main>
     </div>
   );
