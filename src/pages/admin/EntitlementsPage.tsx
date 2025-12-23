@@ -45,14 +45,13 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { 
   useProducts, 
-  usePlans, 
   useAllEntitlements, 
   useCreateEntitlement,
   useUpdateEntitlement,
   useDeleteEntitlement,
   useSearchUsers 
 } from "@/hooks/useEntitlements";
-import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Users, Bell, Package, Layers } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Bell, Package, ShoppingCart, Repeat } from "lucide-react";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,6 +68,11 @@ const statusColors: Record<string, string> = {
   active: 'bg-green-500',
   expired: 'bg-yellow-500',
   revoked: 'bg-red-500',
+};
+
+const purchaseTypeLabels: Record<string, string> = {
+  one_time: '單次購買',
+  subscription: '訂閱制',
 };
 
 export default function EntitlementsPage() {
@@ -98,28 +102,19 @@ export default function EntitlementsPage() {
   const [productId, setProductId] = useState("");
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productPurchaseType, setProductPurchaseType] = useState<'one_time' | 'subscription'>('one_time');
+  const [productPrice, setProductPrice] = useState("");
+  const [productDuration, setProductDuration] = useState("");
   const [isProductSaving, setIsProductSaving] = useState(false);
   
-  // Plan management state
-  const [planDialogOpen, setPlanDialogOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState<any>(null);
-  const [planName, setPlanName] = useState("");
-  const [planProductId, setPlanProductId] = useState("");
-  const [planDescription, setPlanDescription] = useState("");
-  const [planPrice, setPlanPrice] = useState("");
-  const [planDuration, setPlanDuration] = useState("");
-  const [isPlanSaving, setIsPlanSaving] = useState(false);
-  
-  // Form state
+  // Form state for entitlement
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedProductId, setSelectedProductId] = useState("");
-  const [selectedPlanId, setSelectedPlanId] = useState("");
   const [status, setStatus] = useState<'active' | 'expired' | 'revoked'>('active');
   const [endsAt, setEndsAt] = useState("");
   const [notes, setNotes] = useState("");
   
   const { data: products = [] } = useProducts();
-  const { data: plans = [] } = usePlans();
   const { data: entitlements = [], isLoading } = useAllEntitlements();
   const { data: searchResults = [] } = useSearchUsers(searchEmail);
   const createEntitlement = useCreateEntitlement();
@@ -142,11 +137,6 @@ export default function EntitlementsPage() {
     return products.find(p => p.id === productId)?.name || productId;
   };
 
-  const getPlanName = (planId: string | null) => {
-    if (!planId) return '-';
-    return plans.find(p => p.id === planId)?.name || planId;
-  };
-
   const getUserDisplay = (userId: string) => {
     const profile = profiles.find(p => p.user_id === userId);
     return profile?.display_name || userId.substring(0, 8) + '...';
@@ -163,7 +153,6 @@ export default function EntitlementsPage() {
       setEditingEntitlement(entitlement);
       setSelectedUserId(entitlement.user_id);
       setSelectedProductId(entitlement.product_id);
-      setSelectedPlanId(entitlement.plan_id || "");
       setStatus(entitlement.status);
       setEndsAt(entitlement.ends_at ? format(new Date(entitlement.ends_at), 'yyyy-MM-dd') : "");
       setNotes(entitlement.notes || "");
@@ -171,7 +160,6 @@ export default function EntitlementsPage() {
       setEditingEntitlement(null);
       setSelectedUserId("");
       setSelectedProductId("");
-      setSelectedPlanId("");
       setStatus('active');
       setEndsAt("");
       setNotes("");
@@ -185,7 +173,6 @@ export default function EntitlementsPage() {
     const entitlementData = {
       user_id: selectedUserId,
       product_id: selectedProductId,
-      plan_id: selectedPlanId || undefined,
       status,
       ends_at: endsAt ? new Date(endsAt).toISOString() : null,
       notes: notes || undefined,
@@ -363,8 +350,6 @@ export default function EntitlementsPage() {
     setIsCreatingMember(true);
     
     try {
-      // Create user via admin API - this requires service role key
-      // For now, we'll use the sign up method
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: newMemberEmail,
         password: newMemberPassword,
@@ -378,7 +363,6 @@ export default function EntitlementsPage() {
       if (authError) throw authError;
       
       if (authData.user) {
-        // Create profile for the new user
         await supabase
           .from('profiles')
           .upsert({
@@ -412,11 +396,17 @@ export default function EntitlementsPage() {
       setProductId(product.id);
       setProductName(product.name);
       setProductDescription(product.description || "");
+      setProductPurchaseType(product.purchase_type || 'one_time');
+      setProductPrice(product.price?.toString() || "");
+      setProductDuration(product.duration_days?.toString() || "");
     } else {
       setEditingProduct(null);
       setProductId("");
       setProductName("");
       setProductDescription("");
+      setProductPurchaseType('one_time');
+      setProductPrice("");
+      setProductDuration("");
     }
     setProductDialogOpen(true);
   };
@@ -429,14 +419,19 @@ export default function EntitlementsPage() {
 
     setIsProductSaving(true);
     try {
+      const productData = {
+        name: productName,
+        description: productDescription || null,
+        purchase_type: productPurchaseType,
+        price: productPrice ? parseFloat(productPrice) : null,
+        duration_days: productPurchaseType === 'subscription' && productDuration ? parseInt(productDuration) : null,
+        updated_at: new Date().toISOString(),
+      };
+
       if (editingProduct) {
         const { error } = await supabase
           .from('products')
-          .update({
-            name: productName,
-            description: productDescription || null,
-            updated_at: new Date().toISOString(),
-          })
+          .update(productData)
           .eq('id', editingProduct.id);
         
         if (error) throw error;
@@ -446,8 +441,7 @@ export default function EntitlementsPage() {
           .from('products')
           .insert({
             id: productId,
-            name: productName,
-            description: productDescription || null,
+            ...productData,
           });
         
         if (error) throw error;
@@ -468,7 +462,7 @@ export default function EntitlementsPage() {
   };
 
   const handleDeleteProduct = async (id: string) => {
-    if (!confirm('確定要刪除此產品？此操作將同時刪除相關的方案與權限。')) return;
+    if (!confirm('確定要刪除此產品？此操作將同時刪除相關的權限。')) return;
     
     try {
       const { error } = await supabase
@@ -483,94 +477,6 @@ export default function EntitlementsPage() {
       toast({ 
         title: "刪除失敗", 
         description: error.message || "可能還有相關的權限存在",
-        variant: "destructive" 
-      });
-    }
-  };
-
-  // Plan management handlers
-  const handleOpenPlanDialog = (plan?: any) => {
-    if (plan) {
-      setEditingPlan(plan);
-      setPlanName(plan.name);
-      setPlanProductId(plan.product_id);
-      setPlanDescription(plan.description || "");
-      setPlanPrice(plan.price?.toString() || "");
-      setPlanDuration(plan.duration_days?.toString() || "");
-    } else {
-      setEditingPlan(null);
-      setPlanName("");
-      setPlanProductId("");
-      setPlanDescription("");
-      setPlanPrice("");
-      setPlanDuration("");
-    }
-    setPlanDialogOpen(true);
-  };
-
-  const handleSavePlan = async () => {
-    if (!planName || !planProductId) {
-      toast({ title: "請填寫方案名稱與選擇產品", variant: "destructive" });
-      return;
-    }
-
-    setIsPlanSaving(true);
-    try {
-      const planData = {
-        name: planName,
-        product_id: planProductId,
-        description: planDescription || null,
-        price: planPrice ? parseFloat(planPrice) : null,
-        duration_days: planDuration ? parseInt(planDuration) : null,
-        updated_at: new Date().toISOString(),
-      };
-
-      if (editingPlan) {
-        const { error } = await supabase
-          .from('plans')
-          .update(planData)
-          .eq('id', editingPlan.id);
-        
-        if (error) throw error;
-        toast({ title: "方案已更新" });
-      } else {
-        const { error } = await supabase
-          .from('plans')
-          .insert(planData);
-        
-        if (error) throw error;
-        toast({ title: "方案已建立" });
-      }
-      
-      setPlanDialogOpen(false);
-      queryClient.invalidateQueries({ queryKey: ['plans'] });
-    } catch (error: any) {
-      console.error('Save plan error:', error);
-      toast({ 
-        title: "儲存失敗", 
-        description: error.message || "請稍後再試",
-        variant: "destructive" 
-      });
-    }
-    setIsPlanSaving(false);
-  };
-
-  const handleDeletePlan = async (id: string) => {
-    if (!confirm('確定要刪除此方案？')) return;
-    
-    try {
-      const { error } = await supabase
-        .from('plans')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
-      toast({ title: "方案已刪除" });
-      queryClient.invalidateQueries({ queryKey: ['plans'] });
-    } catch (error: any) {
-      toast({ 
-        title: "刪除失敗", 
-        description: error.message,
         variant: "destructive" 
       });
     }
@@ -698,28 +604,14 @@ export default function EntitlementsPage() {
                       <SelectContent>
                         {products.map((product) => (
                           <SelectItem key={product.id} value={product.id}>
-                            {product.name}
+                            <div className="flex items-center gap-2">
+                              {product.name}
+                              <Badge variant="outline" className="text-xs">
+                                {purchaseTypeLabels[(product as any).purchase_type] || '單次購買'}
+                              </Badge>
+                            </div>
                           </SelectItem>
                         ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>方案（選填）</Label>
-                    <Select value={selectedPlanId || "none"} onValueChange={(v) => setSelectedPlanId(v === "none" ? "" : v)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="選擇方案" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">無</SelectItem>
-                        {plans
-                          .filter(p => p.product_id === selectedProductId)
-                          .map((plan) => (
-                            <SelectItem key={plan.id} value={plan.id}>
-                              {plan.name}
-                            </SelectItem>
-                          ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -739,7 +631,7 @@ export default function EntitlementsPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>到期日（選填）</Label>
+                    <Label>到期日（選填，留空為永久）</Label>
                     <Input
                       type="date"
                       value={endsAt}
@@ -836,7 +728,7 @@ export default function EntitlementsPage() {
         </Dialog>
 
         <Tabs defaultValue="entitlements" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+          <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-flex">
             <TabsTrigger value="entitlements" className="gap-2">
               <Key className="h-4 w-4" />
               權限列表
@@ -844,10 +736,6 @@ export default function EntitlementsPage() {
             <TabsTrigger value="products" className="gap-2">
               <Package className="h-4 w-4" />
               產品管理
-            </TabsTrigger>
-            <TabsTrigger value="plans" className="gap-2">
-              <Layers className="h-4 w-4" />
-              方案管理
             </TabsTrigger>
           </TabsList>
 
@@ -930,7 +818,6 @@ export default function EntitlementsPage() {
                         </TableHead>
                         <TableHead>使用者</TableHead>
                         <TableHead>產品</TableHead>
-                        <TableHead>方案</TableHead>
                         <TableHead>狀態</TableHead>
                         <TableHead>開始日期</TableHead>
                         <TableHead>到期日期</TableHead>
@@ -953,7 +840,6 @@ export default function EntitlementsPage() {
                             {getUserDisplay(entitlement.user_id)}
                           </TableCell>
                           <TableCell>{getProductName(entitlement.product_id)}</TableCell>
-                          <TableCell>{getPlanName(entitlement.plan_id)}</TableCell>
                           <TableCell>
                             <Badge className={statusColors[entitlement.status]}>
                               {statusLabels[entitlement.status]}
@@ -1022,7 +908,7 @@ export default function EntitlementsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle>產品管理</CardTitle>
-                    <CardDescription>管理系統中可授權的產品</CardDescription>
+                    <CardDescription>管理系統中可授權的產品（訂閱或單次購買）</CardDescription>
                   </div>
                   <Button onClick={() => handleOpenProductDialog()}>
                     <Plus className="h-4 w-4 mr-2" />
@@ -1039,13 +925,15 @@ export default function EntitlementsPage() {
                       <TableRow>
                         <TableHead>產品 ID</TableHead>
                         <TableHead>名稱</TableHead>
+                        <TableHead>類型</TableHead>
+                        <TableHead>價格</TableHead>
+                        <TableHead>期限</TableHead>
                         <TableHead>描述</TableHead>
-                        <TableHead>建立時間</TableHead>
                         <TableHead>操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {products.map((product) => (
+                      {products.map((product: any) => (
                         <TableRow key={product.id}>
                           <TableCell>
                             <code className="text-xs bg-muted px-2 py-1 rounded">
@@ -1053,11 +941,31 @@ export default function EntitlementsPage() {
                             </code>
                           </TableCell>
                           <TableCell className="font-medium">{product.name}</TableCell>
-                          <TableCell className="text-muted-foreground max-w-[200px] truncate">
-                            {product.description || '-'}
+                          <TableCell>
+                            <Badge variant="outline" className="gap-1">
+                              {product.purchase_type === 'subscription' ? (
+                                <>
+                                  <Repeat className="h-3 w-3" />
+                                  訂閱制
+                                </>
+                              ) : (
+                                <>
+                                  <ShoppingCart className="h-3 w-3" />
+                                  單次購買
+                                </>
+                              )}
+                            </Badge>
                           </TableCell>
                           <TableCell>
-                            {format(new Date(product.created_at), 'yyyy/MM/dd', { locale: zhTW })}
+                            {product.price ? `NT$ ${product.price.toLocaleString()}` : '-'}
+                          </TableCell>
+                          <TableCell>
+                            {product.purchase_type === 'subscription' && product.duration_days 
+                              ? `${product.duration_days} 天` 
+                              : '-'}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground max-w-[200px] truncate">
+                            {product.description || '-'}
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-1">
@@ -1073,83 +981,6 @@ export default function EntitlementsPage() {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => handleDeleteProduct(product.id)}
-                                title="刪除"
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Plans Tab */}
-          <TabsContent value="plans">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>方案管理</CardTitle>
-                    <CardDescription>管理各產品的訂閱方案</CardDescription>
-                  </div>
-                  <Button onClick={() => handleOpenPlanDialog()}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    新增方案
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {plans.length === 0 ? (
-                  <p className="text-center py-8 text-muted-foreground">尚無方案資料</p>
-                ) : (
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>方案名稱</TableHead>
-                        <TableHead>所屬產品</TableHead>
-                        <TableHead>價格</TableHead>
-                        <TableHead>期限</TableHead>
-                        <TableHead>描述</TableHead>
-                        <TableHead>操作</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {plans.map((plan) => (
-                        <TableRow key={plan.id}>
-                          <TableCell className="font-medium">{plan.name}</TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {getProductName(plan.product_id)}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {plan.price ? `NT$ ${plan.price.toLocaleString()}` : '-'}
-                          </TableCell>
-                          <TableCell>
-                            {plan.duration_days ? `${plan.duration_days} 天` : '永久'}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground max-w-[200px] truncate">
-                            {plan.description || '-'}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-1">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleOpenPlanDialog(plan)}
-                                title="編輯"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleDeletePlan(plan.id)}
                                 title="刪除"
                               >
                                 <Trash2 className="h-4 w-4 text-destructive" />
@@ -1194,6 +1025,50 @@ export default function EntitlementsPage() {
                 />
               </div>
               <div className="space-y-2">
+                <Label>購買類型</Label>
+                <Select value={productPurchaseType} onValueChange={(v) => setProductPurchaseType(v as any)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="one_time">
+                      <div className="flex items-center gap-2">
+                        <ShoppingCart className="h-4 w-4" />
+                        單次購買
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="subscription">
+                      <div className="flex items-center gap-2">
+                        <Repeat className="h-4 w-4" />
+                        訂閱制
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>價格 (TWD)</Label>
+                  <Input
+                    type="number"
+                    placeholder="選填"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                  />
+                </div>
+                {productPurchaseType === 'subscription' && (
+                  <div className="space-y-2">
+                    <Label>訂閱週期（天）</Label>
+                    <Input
+                      type="number"
+                      placeholder="例如: 30"
+                      value={productDuration}
+                      onChange={(e) => setProductDuration(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="space-y-2">
                 <Label>描述（選填）</Label>
                 <Textarea
                   placeholder="產品描述..."
@@ -1208,76 +1083,6 @@ export default function EntitlementsPage() {
               </Button>
               <Button onClick={handleSaveProduct} disabled={isProductSaving || !productId || !productName}>
                 {isProductSaving ? "儲存中..." : editingProduct ? "更新" : "建立"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Plan Dialog */}
-        <Dialog open={planDialogOpen} onOpenChange={setPlanDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{editingPlan ? '編輯方案' : '新增方案'}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 pt-4">
-              <div className="space-y-2">
-                <Label>所屬產品 *</Label>
-                <Select value={planProductId} onValueChange={setPlanProductId}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇產品" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {products.map((product) => (
-                      <SelectItem key={product.id} value={product.id}>
-                        {product.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>方案名稱 *</Label>
-                <Input
-                  placeholder="例如: 月繳方案"
-                  value={planName}
-                  onChange={(e) => setPlanName(e.target.value)}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>價格 (TWD)</Label>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={planPrice}
-                    onChange={(e) => setPlanPrice(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>期限（天）</Label>
-                  <Input
-                    type="number"
-                    placeholder="留空為永久"
-                    value={planDuration}
-                    onChange={(e) => setPlanDuration(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>描述（選填）</Label>
-                <Textarea
-                  placeholder="方案描述..."
-                  value={planDescription}
-                  onChange={(e) => setPlanDescription(e.target.value)}
-                />
-              </div>
-            </div>
-            <DialogFooter className="mt-4">
-              <Button variant="outline" onClick={() => setPlanDialogOpen(false)}>
-                取消
-              </Button>
-              <Button onClick={handleSavePlan} disabled={isPlanSaving || !planProductId || !planName}>
-                {isPlanSaving ? "儲存中..." : editingPlan ? "更新" : "建立"}
               </Button>
             </DialogFooter>
           </DialogContent>

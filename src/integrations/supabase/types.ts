@@ -649,22 +649,31 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          duration_days: number | null
           id: string
           name: string
+          price: number | null
+          purchase_type: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           description?: string | null
+          duration_days?: number | null
           id: string
           name: string
+          price?: number | null
+          purchase_type?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
+          duration_days?: number | null
           id?: string
           name?: string
+          price?: number | null
+          purchase_type?: string
           updated_at?: string
         }
         Relationships: []
