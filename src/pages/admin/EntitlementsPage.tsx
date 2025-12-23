@@ -100,6 +100,7 @@ export default function EntitlementsPage() {
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [productId, setProductId] = useState("");
+  const [newProductId, setNewProductId] = useState(""); // For editing product ID
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPurchaseType, setProductPurchaseType] = useState<'one_time' | 'subscription'>('one_time');
@@ -394,6 +395,7 @@ export default function EntitlementsPage() {
     if (product) {
       setEditingProduct(product);
       setProductId(product.id);
+      setNewProductId(product.id); // Initialize with current ID
       setProductName(product.name);
       setProductDescription(product.description || "");
       setProductPurchaseType(product.purchase_type || 'one_time');
@@ -402,6 +404,7 @@ export default function EntitlementsPage() {
     } else {
       setEditingProduct(null);
       setProductId("");
+      setNewProductId("");
       setProductName("");
       setProductDescription("");
       setProductPurchaseType('one_time');
@@ -412,7 +415,8 @@ export default function EntitlementsPage() {
   };
 
   const handleSaveProduct = async () => {
-    if (!productId || !productName) {
+    const targetId = editingProduct ? newProductId : productId;
+    if (!targetId || !productName) {
       toast({ title: "請填寫產品 ID 與名稱", variant: "destructive" });
       return;
     }
@@ -429,13 +433,49 @@ export default function EntitlementsPage() {
       };
 
       if (editingProduct) {
-        const { error } = await supabase
-          .from('products')
-          .update(productData)
-          .eq('id', editingProduct.id);
-        
-        if (error) throw error;
-        toast({ title: "產品已更新" });
+        // Check if product ID is being changed
+        if (newProductId !== editingProduct.id) {
+          // Need to create new product and migrate entitlements
+          const { error: insertError } = await supabase
+            .from('products')
+            .insert({
+              id: newProductId,
+              ...productData,
+            });
+          
+          if (insertError) throw insertError;
+
+          // Update all entitlements to use new product ID
+          const { error: updateEntError } = await supabase
+            .from('entitlements')
+            .update({ product_id: newProductId })
+            .eq('product_id', editingProduct.id);
+          
+          if (updateEntError) {
+            // Rollback: delete the new product
+            await supabase.from('products').delete().eq('id', newProductId);
+            throw updateEntError;
+          }
+
+          // Delete old product
+          const { error: deleteError } = await supabase
+            .from('products')
+            .delete()
+            .eq('id', editingProduct.id);
+          
+          if (deleteError) throw deleteError;
+          
+          toast({ title: "產品 ID 已更新", description: `${editingProduct.id} → ${newProductId}` });
+        } else {
+          // Just update the product without changing ID
+          const { error } = await supabase
+            .from('products')
+            .update(productData)
+            .eq('id', editingProduct.id);
+          
+          if (error) throw error;
+          toast({ title: "產品已更新" });
+        }
       } else {
         const { error } = await supabase
           .from('products')
@@ -450,6 +490,7 @@ export default function EntitlementsPage() {
       
       setProductDialogOpen(false);
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['all-entitlements'] });
     } catch (error: any) {
       console.error('Save product error:', error);
       toast({ 
@@ -1006,15 +1047,34 @@ export default function EntitlementsPage() {
             <div className="space-y-4 pt-4">
               <div className="space-y-2">
                 <Label>產品 ID *</Label>
-                <Input
-                  placeholder="例如: report_platform"
-                  value={productId}
-                  onChange={(e) => setProductId(e.target.value)}
-                  disabled={!!editingProduct}
-                />
-                <p className="text-xs text-muted-foreground">
-                  建立後無法修改，建議使用英文小寫和底線
-                </p>
+                {editingProduct ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <code className="text-xs bg-muted px-2 py-1 rounded">{editingProduct.id}</code>
+                      <span className="text-muted-foreground">→</span>
+                      <Input
+                        placeholder="新的產品 ID"
+                        value={newProductId}
+                        onChange={(e) => setNewProductId(e.target.value)}
+                        className="flex-1"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      修改產品 ID 會自動更新所有相關權限記錄
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Input
+                      placeholder="例如: report_platform"
+                      value={productId}
+                      onChange={(e) => setProductId(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      建議使用英文小寫和底線，例如: yuanyi_divination
+                    </p>
+                  </>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>名稱 *</Label>
