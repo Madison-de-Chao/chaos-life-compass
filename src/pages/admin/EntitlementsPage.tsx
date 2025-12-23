@@ -155,6 +155,22 @@ export default function EntitlementsPage() {
     return userDisplay.includes(searchEmail.toLowerCase());
   });
 
+  // Group entitlements by user for consolidated view
+  const groupedByUser = filteredEntitlements.reduce((acc, ent) => {
+    if (!acc[ent.user_id]) {
+      acc[ent.user_id] = [];
+    }
+    acc[ent.user_id].push(ent);
+    return acc;
+  }, {} as Record<string, typeof filteredEntitlements>);
+
+  const userEntitlementsList = Object.entries(groupedByUser).map(([userId, userEnts]) => ({
+    userId,
+    entitlements: userEnts,
+    activeCount: userEnts.filter(e => e.status === 'active').length,
+    totalCount: userEnts.length,
+  }));
+
   const handleOpenDialog = (entitlement?: any) => {
     if (entitlement) {
       setEditingEntitlement(entitlement);
@@ -884,7 +900,7 @@ export default function EntitlementsPage() {
               <CardContent>
                 {isLoading ? (
                   <p className="text-center py-8 text-muted-foreground">載入中...</p>
-                ) : filteredEntitlements.length === 0 ? (
+                ) : userEntitlementsList.length === 0 ? (
                   <p className="text-center py-8 text-muted-foreground">尚無權限資料</p>
                 ) : (
                   <Table>
@@ -897,83 +913,98 @@ export default function EntitlementsPage() {
                           />
                         </TableHead>
                         <TableHead>使用者</TableHead>
-                        <TableHead>產品</TableHead>
-                        <TableHead>狀態</TableHead>
-                        <TableHead>開始日期</TableHead>
-                        <TableHead>到期日期</TableHead>
+                        <TableHead>擁有產品</TableHead>
                         <TableHead>操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredEntitlements.map((entitlement) => (
-                        <TableRow 
-                          key={entitlement.id}
-                          className={selectedIds.includes(entitlement.id) ? 'bg-muted/50' : ''}
-                        >
-                          <TableCell>
-                            <Checkbox
-                              checked={selectedIds.includes(entitlement.id)}
-                              onCheckedChange={() => toggleSelect(entitlement.id)}
-                            />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {getUserDisplay(entitlement.user_id)}
-                          </TableCell>
-                          <TableCell>{getProductName(entitlement.product_id)}</TableCell>
-                          <TableCell>
-                            <Badge className={statusColors[entitlement.status]}>
-                              {statusLabels[entitlement.status]}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {format(new Date(entitlement.starts_at), 'yyyy/MM/dd', { locale: zhTW })}
-                          </TableCell>
-                          <TableCell>
-                            {entitlement.ends_at 
-                              ? format(new Date(entitlement.ends_at), 'yyyy/MM/dd', { locale: zhTW })
-                              : '永久'
-                            }
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-1">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleOpenDialog(entitlement)}
-                                title="編輯"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleExtend(entitlement, 30)}
-                                title="延長30天"
-                              >
-                                <RefreshCw className="h-4 w-4" />
-                              </Button>
-                              {entitlement.status === 'active' && (
+                      {userEntitlementsList.map(({ userId, entitlements: userEnts }) => {
+                        const allUserEntIds = userEnts.map(e => e.id);
+                        const allSelected = allUserEntIds.every(id => selectedIds.includes(id));
+                        const someSelected = allUserEntIds.some(id => selectedIds.includes(id));
+                        
+                        return (
+                          <TableRow 
+                            key={userId}
+                            className={someSelected ? 'bg-muted/50' : ''}
+                          >
+                            <TableCell>
+                              <Checkbox
+                                checked={allSelected}
+                                onCheckedChange={() => {
+                                  if (allSelected) {
+                                    setSelectedIds(prev => prev.filter(id => !allUserEntIds.includes(id)));
+                                  } else {
+                                    setSelectedIds(prev => [...new Set([...prev, ...allUserEntIds])]);
+                                  }
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              <div className="flex items-center gap-2">
+                                <span>{getUserDisplay(userId)}</span>
+                                <Badge variant="outline" className="text-xs">
+                                  {userEnts.filter(e => e.status === 'active').length} 啟用
+                                </Badge>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-wrap gap-1.5">
+                                {userEnts.map(ent => (
+                                  <Badge 
+                                    key={ent.id}
+                                    variant={ent.status === 'active' ? 'default' : ent.status === 'expired' ? 'secondary' : 'destructive'}
+                                    className="gap-1 cursor-pointer hover:opacity-80"
+                                    onClick={() => handleOpenDialog(ent)}
+                                    title={`${statusLabels[ent.status]}${ent.ends_at ? ` · 到期: ${format(new Date(ent.ends_at), 'yyyy/MM/dd', { locale: zhTW })}` : ' · 永久'}`}
+                                  >
+                                    {getProductName(ent.product_id)}
+                                    {ent.status !== 'active' && (
+                                      <span className="text-[10px] opacity-70">
+                                        ({statusLabels[ent.status]})
+                                      </span>
+                                    )}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-1">
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  onClick={() => handleRevoke(entitlement)}
-                                  title="撤銷"
+                                  onClick={() => {
+                                    // Open add entitlement dialog for this user
+                                    setEditingEntitlement(null);
+                                    setSelectedUserId(userId);
+                                    setSelectedProductId("");
+                                    setStatus('active');
+                                    setEndsAt("");
+                                    setNotes("");
+                                    setIsDialogOpen(true);
+                                  }}
+                                  title="新增產品權限"
                                 >
-                                  <Key className="h-4 w-4 text-orange-500" />
+                                  <Plus className="h-4 w-4" />
                                 </Button>
-                              )}
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleDelete(entitlement.id)}
-                                title="刪除"
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                                {userEnts.some(e => e.status === 'active') && (
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => {
+                                      const activeEnts = userEnts.filter(e => e.status === 'active');
+                                      activeEnts.forEach(ent => handleExtend(ent, 30));
+                                    }}
+                                    title="延長所有權限30天"
+                                  >
+                                    <RefreshCw className="h-4 w-4" />
+                                  </Button>
+                                )}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 )}
