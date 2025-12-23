@@ -28,6 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +36,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { usePendingChanges } from "@/hooks/usePendingChanges";
 import { HelperPendingChanges } from "@/components/HelperPendingChanges";
-import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield } from "lucide-react";
+import { CustomerListSkeleton } from "@/components/CustomerCardSkeleton";
+import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X } from "lucide-react";
 
 interface Customer {
   id: string;
@@ -287,172 +289,245 @@ const CustomersPage = () => {
     return dateStr + timeStr;
   };
 
-  if (loading) {
-    return (
+  return (
+    <TooltipProvider>
       <div className="min-h-screen bg-background">
         <Header />
+
         <main className="container mx-auto px-4 py-10">
-          <div className="text-center py-20">
-            <div className="animate-pulse text-muted-foreground">載入中...</div>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
-      <main className="container mx-auto px-4 py-10">
-        {/* Helper Mode Indicator */}
-        {currentUserIsHelper && !currentUserIsAdmin && (
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="gap-1">
-                <Shield className="w-3 h-3" />
-                小幫手模式
-              </Badge>
-              <span className="text-sm text-muted-foreground">
-                您的變更需要管理員核准後才會生效
-              </span>
+          {/* Helper Mode Indicator */}
+          {currentUserIsHelper && !currentUserIsAdmin && (
+            <div className="mb-6 animate-fade-in">
+              <div className="flex items-center gap-2 mb-4">
+                <Badge variant="secondary" className="gap-1 animate-pulse">
+                  <Shield className="w-3 h-3" />
+                  小幫手模式
+                </Badge>
+                <span className="text-sm text-muted-foreground">
+                  您的變更需要管理員核准後才會生效
+                </span>
+              </div>
+              <HelperPendingChanges />
             </div>
-            <HelperPendingChanges />
+          )}
+
+          {/* Page Header */}
+          <div className="mb-8 animate-fade-in">
+            <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3 flex items-center gap-3">
+              <div className="relative">
+                <User className="w-8 h-8 text-primary" />
+                <Sparkles className="w-3 h-3 text-primary absolute -top-1 -right-1 animate-pulse" />
+              </div>
+              客戶管理
+            </h1>
+            <p className="text-muted-foreground flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              共 <span className="font-semibold text-foreground">{customers.length}</span> 位客戶
+            </p>
           </div>
-        )}
 
-        {/* Page Header */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3">
-            客戶管理
-          </h1>
-          <p className="text-muted-foreground">
-            管理客戶資料與聯繫方式
-          </p>
-        </div>
-
-        {/* Actions Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="搜尋姓名、電話、Email..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12"
-            />
-          </div>
-          <Button onClick={openCreateDialog} className="gap-2">
-            <Plus className="w-4 h-4" />
-            新增客戶
-          </Button>
-        </div>
-
-        {/* Customer List */}
-        {filteredCustomers.length > 0 ? (
-          <div className="grid gap-4">
-            {filteredCustomers.map((customer, index) => (
-              <Card
-                key={customer.id}
-                className="p-6 animate-slide-up"
-                style={{ animationDelay: `${index * 0.05}s`, opacity: 0 }}
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {[
+              { label: '總客戶', value: customers.length, color: 'primary' },
+              { label: '本月新增', value: customers.filter(c => new Date(c.created_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)).length, color: 'green-500' },
+              { label: '有電話', value: customers.filter(c => c.phone).length, color: 'blue-500' },
+              { label: '有Email', value: customers.filter(c => c.email).length, color: 'purple-500' },
+            ].map((stat, index) => (
+              <Card 
+                key={stat.label} 
+                className="p-4 bg-card/60 backdrop-blur hover:shadow-lg hover:scale-[1.02] transition-all duration-300 animate-fade-in"
+                style={{ animationDelay: `${100 + index * 50}ms` }}
               >
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <User className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg text-foreground">
-                        {customer.name}
-                      </h3>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
-                        <span>{formatGender(customer.gender)}</span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {formatDateTime(customer.birth_date, customer.birth_time)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                    {customer.phone && (
-                      <span className="flex items-center gap-1.5">
-                        <Phone className="w-4 h-4" />
-                        {customer.phone}
-                      </span>
-                    )}
-                    {customer.email && (
-                      <span className="flex items-center gap-1.5">
-                        <Mail className="w-4 h-4" />
-                        {customer.email}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => openEditDialog(customer)}
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </Button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>確定要刪除嗎？</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            此操作無法復原。客戶「{customer.name}」將被永久刪除。
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>取消</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleDelete(customer.id, customer.name)}
-                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                          >
-                            {currentUserIsHelper && !currentUserIsAdmin ? "送審刪除" : "刪除"}
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
-
-                {customer.notes && (
-                  <div className="mt-4 pt-4 border-t border-border text-sm text-muted-foreground">
-                    {customer.notes}
-                  </div>
-                )}
               </Card>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-20">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-muted flex items-center justify-center">
-              <User className="w-10 h-10 text-muted-foreground" />
+
+          {/* Actions Bar */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-8 animate-fade-in" style={{ animationDelay: '150ms' }}>
+            <div className="relative flex-1 max-w-md group">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+              <Input
+                type="text"
+                placeholder="搜尋姓名、電話、Email..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-12 transition-all focus:ring-2 focus:ring-primary/20"
+              />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
+                  onClick={() => setSearchQuery("")}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              )}
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2 font-serif">
-              沒有找到客戶
-            </h3>
-            <p className="text-muted-foreground">
-              {searchQuery ? "嘗試其他搜尋關鍵字" : "新增您的第一位客戶"}
-            </p>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button onClick={openCreateDialog} className="gap-2 transition-all hover:scale-105">
+                  <Plus className="w-4 h-4" />
+                  新增客戶
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>新增一位新客戶</TooltipContent>
+            </Tooltip>
           </div>
-        )}
-      </main>
+
+          {/* Customer List */}
+          {loading ? (
+            <CustomerListSkeleton count={5} />
+          ) : filteredCustomers.length > 0 ? (
+            <div className="grid gap-4">
+              {filteredCustomers.map((customer, index) => (
+                <Card
+                  key={customer.id}
+                  className="p-6 hover:shadow-lg hover:bg-muted/30 transition-all duration-300 group animate-fade-in"
+                  style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20 group-hover:shadow-lg">
+                        <User className="w-6 h-6 text-primary transition-transform group-hover:scale-95" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                          {customer.name}
+                        </h3>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
+                          <Badge variant="outline" className="text-xs">
+                            {formatGender(customer.gender)}
+                          </Badge>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="flex items-center gap-1 cursor-help hover:text-primary transition-colors">
+                                <Calendar className="w-3.5 h-3.5" />
+                                {formatDateTime(customer.birth_date, customer.birth_time)}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent>出生日期時間</TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                      {customer.phone && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="flex items-center gap-1.5 cursor-help hover:text-primary transition-colors">
+                              <Phone className="w-4 h-4" />
+                              {customer.phone}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>點擊可複製電話</TooltipContent>
+                        </Tooltip>
+                      )}
+                      {customer.email && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="flex items-center gap-1.5 cursor-help hover:text-primary transition-colors">
+                              <Mail className="w-4 h-4" />
+                              {customer.email}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>點擊可複製 Email</TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+
+                    <div className="flex gap-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => openEditDialog(customer)}
+                            className="transition-all hover:border-primary hover:text-primary"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>編輯客戶資料</TooltipContent>
+                      </Tooltip>
+                      <AlertDialog>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                          </TooltipTrigger>
+                          <TooltipContent>刪除客戶</TooltipContent>
+                        </Tooltip>
+                        <AlertDialogContent className="animate-scale-in">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-2">
+                              <Trash2 className="w-5 h-5 text-destructive" />
+                              確定要刪除嗎？
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              此操作無法復原。客戶「{customer.name}」將被永久刪除。
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>取消</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(customer.id, customer.name)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              {currentUserIsHelper && !currentUserIsAdmin ? "送審刪除" : "刪除"}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </div>
+
+                  {customer.notes && (
+                    <div className="mt-4 pt-4 border-t border-border text-sm text-muted-foreground flex items-start gap-2">
+                      <FileText className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      {customer.notes}
+                    </div>
+                  )}
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 animate-fade-in">
+              <div className="relative inline-block">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-muted flex items-center justify-center">
+                  <User className="w-10 h-10 text-muted-foreground" />
+                </div>
+                {searchQuery && (
+                  <Search className="w-6 h-6 absolute -bottom-1 -right-1 text-muted-foreground" />
+                )}
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2 font-serif">
+                {searchQuery ? "沒有找到符合的客戶" : "沒有找到客戶"}
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                {searchQuery ? "嘗試其他搜尋關鍵字" : "新增您的第一位客戶"}
+              </p>
+              {searchQuery && (
+                <Button variant="ghost" size="sm" onClick={() => setSearchQuery("")}>
+                  清除搜尋
+                </Button>
+              )}
+            </div>
+          )}
+        </main>
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -569,6 +644,7 @@ const CustomersPage = () => {
         </DialogContent>
       </Dialog>
     </div>
+    </TooltipProvider>
   );
 };
 
