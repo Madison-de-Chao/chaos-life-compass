@@ -51,7 +51,7 @@ import {
   useDeleteEntitlement,
   useSearchUsers 
 } from "@/hooks/useEntitlements";
-import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Bell, Package, ShoppingCart, Repeat } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Key, RefreshCw, CheckSquare, UserPlus, ChevronDown, Bell, Package, ShoppingCart, Repeat, Users } from "lucide-react";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
@@ -1000,69 +1000,94 @@ export default function EntitlementsPage() {
                         <TableHead>產品 ID</TableHead>
                         <TableHead>名稱</TableHead>
                         <TableHead>類型</TableHead>
+                        <TableHead>使用者數</TableHead>
                         <TableHead>價格</TableHead>
                         <TableHead>期限</TableHead>
-                        <TableHead>描述</TableHead>
                         <TableHead>操作</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {products.map((product: any) => (
-                        <TableRow key={product.id}>
-                          <TableCell>
-                            <code className="text-xs bg-muted px-2 py-1 rounded">
-                              {product.id}
-                            </code>
-                          </TableCell>
-                          <TableCell className="font-medium">{product.name}</TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className="gap-1">
-                              {product.purchase_type === 'subscription' ? (
-                                <>
-                                  <Repeat className="h-3 w-3" />
-                                  訂閱制
-                                </>
-                              ) : (
-                                <>
-                                  <ShoppingCart className="h-3 w-3" />
-                                  單次購買
-                                </>
-                              )}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {product.price ? `NT$ ${product.price.toLocaleString()}` : '-'}
-                          </TableCell>
-                          <TableCell>
-                            {product.purchase_type === 'subscription' && product.duration_days 
-                              ? `${product.duration_days} 天` 
-                              : '-'}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground max-w-[200px] truncate">
-                            {product.description || '-'}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-1">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleOpenProductDialog(product)}
-                                title="編輯"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => handleDeleteProduct(product.id)}
-                                title="刪除"
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {products.map((product: any) => {
+                        const productEntitlements = entitlements.filter(e => e.product_id === product.id);
+                        const activeCount = productEntitlements.filter(e => e.status === 'active').length;
+                        const totalCount = productEntitlements.length;
+                        
+                        return (
+                          <TableRow key={product.id}>
+                            <TableCell>
+                              <code className="text-xs bg-muted px-2 py-1 rounded">
+                                {product.id}
+                              </code>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              <div>
+                                <p>{product.name}</p>
+                                {product.description && (
+                                  <p className="text-xs text-muted-foreground truncate max-w-[200px]">
+                                    {product.description}
+                                  </p>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="gap-1">
+                                {product.purchase_type === 'subscription' ? (
+                                  <>
+                                    <Repeat className="h-3 w-3" />
+                                    訂閱制
+                                  </>
+                                ) : (
+                                  <>
+                                    <ShoppingCart className="h-3 w-3" />
+                                    單次購買
+                                  </>
+                                )}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="default" className="gap-1">
+                                  <Users className="h-3 w-3" />
+                                  {activeCount}
+                                </Badge>
+                                {totalCount > activeCount && (
+                                  <span className="text-xs text-muted-foreground">
+                                    / {totalCount} 總計
+                                  </span>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {product.price ? `NT$ ${product.price.toLocaleString()}` : '-'}
+                            </TableCell>
+                            <TableCell>
+                              {product.purchase_type === 'subscription' && product.duration_days 
+                                ? `${product.duration_days} 天` 
+                                : '-'}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleOpenProductDialog(product)}
+                                  title="編輯"
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => handleDeleteProduct(product.id)}
+                                  title="刪除"
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 )}
