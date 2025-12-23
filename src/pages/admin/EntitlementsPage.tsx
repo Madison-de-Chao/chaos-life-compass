@@ -433,6 +433,27 @@ export default function EntitlementsPage() {
       return;
     }
 
+    // Check for duplicate product ID (only when creating new or changing ID)
+    const isNewProduct = !editingProduct;
+    const isChangingId = editingProduct && newProductId !== editingProduct.id;
+    
+    if (isNewProduct || isChangingId) {
+      const { data: existingProduct } = await supabase
+        .from('products')
+        .select('id')
+        .eq('id', targetId)
+        .maybeSingle();
+      
+      if (existingProduct) {
+        toast({ 
+          title: "產品 ID 已存在", 
+          description: `產品 ID「${targetId}」已被使用，請使用其他 ID`,
+          variant: "destructive" 
+        });
+        return;
+      }
+    }
+
     setIsProductSaving(true);
     try {
       const productData = {
