@@ -550,6 +550,57 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_changes: {
+        Row: {
+          batch_id: string | null
+          change_data: Json
+          change_type: string
+          created_at: string
+          id: string
+          notes: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_by: string
+          target_id: string | null
+          target_table: string
+          updated_at: string
+        }
+        Insert: {
+          batch_id?: string | null
+          change_data: Json
+          change_type: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_by: string
+          target_id?: string | null
+          target_table: string
+          updated_at?: string
+        }
+        Update: {
+          batch_id?: string | null
+          change_data?: Json
+          change_type?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_by?: string
+          target_id?: string | null
+          target_table?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       plans: {
         Row: {
           created_at: string
