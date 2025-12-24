@@ -1245,7 +1245,10 @@ export default function EntitlementsPage() {
               <Button variant="outline" onClick={() => setProductDialogOpen(false)}>
                 取消
               </Button>
-              <Button onClick={handleSaveProduct} disabled={isProductSaving || !productId || !productName}>
+              <Button 
+                onClick={handleSaveProduct} 
+                disabled={isProductSaving || !(editingProduct ? newProductId : productId) || !productName}
+              >
                 {isProductSaving ? "儲存中..." : editingProduct ? "更新" : "建立"}
               </Button>
             </DialogFooter>
