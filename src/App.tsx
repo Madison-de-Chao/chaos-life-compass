@@ -42,10 +42,15 @@ import ApiDocsPage from "./pages/admin/ApiDocsPage";
 import AdminLogsPage from "./pages/admin/AdminLogsPage";
 import PendingChangesPage from "./pages/admin/PendingChangesPage";
 
-// Member Pages
+// Member Pages (Legacy - 虹靈御所專用)
 import MemberAuthPage from "./pages/member/MemberAuthPage";
 import MemberDashboard from "./pages/member/MemberDashboard";
 import MemberProfilePage from "./pages/member/MemberProfilePage";
+
+// Unified Member Pages (統一會員系統)
+import UnifiedAuthPage from "./pages/member/UnifiedAuthPage";
+import UnifiedDashboard from "./pages/member/UnifiedDashboard";
+import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
 
 // Account Pages
 import ProductsPage from "./pages/account/ProductsPage";
@@ -84,13 +89,16 @@ const App = () => (
                 <Route path="/reports" element={<ReportPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />
                 
-                {/* Member routes - 會員中心 */}
+                {/* Unified Auth routes - 統一會員系統 */}
+                <Route path="/auth/login" element={<UnifiedAuthPage />} />
+                <Route path="/account" element={<MemberProtectedRoute><UnifiedDashboard /></MemberProtectedRoute>} />
+                <Route path="/account/profile" element={<MemberProtectedRoute><UnifiedProfilePage /></MemberProtectedRoute>} />
+                <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />
+                
+                {/* Member routes - 虹靈御所會員中心 (Legacy, redirects to unified) */}
                 <Route path="/member/auth" element={<MemberAuthPage />} />
                 <Route path="/member" element={<MemberProtectedRoute><MemberDashboard /></MemberProtectedRoute>} />
                 <Route path="/member/profile" element={<MemberProtectedRoute><MemberProfilePage /></MemberProtectedRoute>} />
-                
-                {/* Account routes - 帳號相關 */}
-                <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />
                 
                 {/* Protected routes - Admin dashboard */}
                 <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
