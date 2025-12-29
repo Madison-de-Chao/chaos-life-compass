@@ -71,8 +71,10 @@ const CustomersPage = () => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState<Set<string>>(new Set());
   const [batchMode, setBatchMode] = useState(false);
   const [batchTagDialogOpen, setBatchTagDialogOpen] = useState(false);
+  const [batchRemoveTagDialogOpen, setBatchRemoveTagDialogOpen] = useState(false);
   const [batchDeleteDialogOpen, setBatchDeleteDialogOpen] = useState(false);
   const [batchTagId, setBatchTagId] = useState<string>("");
+  const [batchRemoveTagId, setBatchRemoveTagId] = useState<string>("");
 
   const { tags } = useCustomerTags();
   const { addDraftChange } = usePendingChanges();
@@ -279,6 +281,42 @@ const CustomersPage = () => {
       console.error("Batch delete error:", error);
       toast({
         title: "批量刪除失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleBatchRemoveTag = async () => {
+    if (!batchRemoveTagId || selectedCustomerIds.size === 0) return;
+
+    try {
+      const customerIds = Array.from(selectedCustomerIds);
+      
+      const { data: deletedAssignments, error } = await supabase
+        .from("customer_tag_assignments")
+        .delete()
+        .eq("tag_id", batchRemoveTagId)
+        .in("customer_id", customerIds)
+        .select();
+
+      if (error) throw error;
+
+      const removedCount = deletedAssignments?.length || 0;
+
+      toast({
+        title: "標籤已移除",
+        description: `已從 ${removedCount} 位客戶移除標籤`,
+      });
+
+      setBatchRemoveTagDialogOpen(false);
+      setBatchRemoveTagId("");
+      clearSelection();
+      fetchCustomers();
+    } catch (error: any) {
+      console.error("Batch remove tag error:", error);
+      toast({
+        title: "批量移除標籤失敗",
         description: error.message,
         variant: "destructive",
       });
@@ -589,6 +627,16 @@ const CustomersPage = () => {
                   >
                     <Tags className="w-4 h-4" />
                     添加標籤
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={selectedCustomerIds.size === 0}
+                    onClick={() => setBatchRemoveTagDialogOpen(true)}
+                    className="gap-1.5"
+                  >
+                    <X className="w-4 h-4" />
+                    移除標籤
                   </Button>
                   <Button
                     variant="outline"
@@ -1018,6 +1066,50 @@ const CustomersPage = () => {
             </Button>
             <Button onClick={handleBatchAddTag} disabled={!batchTagId}>
               添加標籤
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Batch Remove Tag Dialog */}
+      <Dialog open={batchRemoveTagDialogOpen} onOpenChange={setBatchRemoveTagDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <X className="w-5 h-5" />
+              批量移除標籤
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground mb-4">
+              從已選擇的 <span className="font-semibold text-foreground">{selectedCustomerIds.size}</span> 位客戶移除標籤
+            </p>
+            <Label>選擇標籤</Label>
+            <Select value={batchRemoveTagId} onValueChange={setBatchRemoveTagId}>
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="選擇要移除的標籤" />
+              </SelectTrigger>
+              <SelectContent>
+                {tags.map((tag) => (
+                  <SelectItem key={tag.id} value={tag.id}>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: tag.color }}
+                      />
+                      {tag.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBatchRemoveTagDialogOpen(false)}>
+              取消
+            </Button>
+            <Button onClick={handleBatchRemoveTag} disabled={!batchRemoveTagId} variant="destructive">
+              移除標籤
             </Button>
           </DialogFooter>
         </DialogContent>
