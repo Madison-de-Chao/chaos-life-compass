@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { 
   FileText, Settings, LogOut, Sparkles, Zap, Star, Compass,
@@ -15,6 +15,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
+import { PullToRefreshIndicator } from "@/components/PullToRefresh";
 
 // Product display info
 const PRODUCT_INFO: Record<string, { 
@@ -82,9 +84,9 @@ interface AuthorizedApp {
 
 const UnifiedDashboard = () => {
   const navigate = useNavigate();
-  const { user, profile, loading, isAdmin, signOut } = useMember();
-  const { data: entitlements = [], isLoading: loadingEntitlements } = useMyEntitlements();
-  const { data: products = [] } = useProducts();
+  const { user, profile, loading, isAdmin, signOut, refreshProfile } = useMember();
+  const { data: entitlements = [], isLoading: loadingEntitlements, refetch: refetchEntitlements } = useMyEntitlements();
+  const { data: products = [], refetch: refetchProducts } = useProducts();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loadingSubscriptions, setLoadingSubscriptions] = useState(true);
   const [authorizedApps, setAuthorizedApps] = useState<AuthorizedApp[]>([]);
@@ -188,6 +190,32 @@ const UnifiedDashboard = () => {
     navigate("/");
   };
 
+  // Pull to refresh handler
+  const handleRefresh = useCallback(async () => {
+    await Promise.all([
+      refreshProfile(),
+      refetchEntitlements(),
+      refetchProducts(),
+      fetchSubscriptions(),
+      fetchAuthorizedApps(),
+    ]);
+    toast({
+      title: "已更新",
+      description: "所有資料已重新載入",
+    });
+  }, [refreshProfile, refetchEntitlements, refetchProducts]);
+
+  const {
+    containerRef,
+    pullDistance,
+    isRefreshing,
+    progress,
+    shouldTrigger,
+  } = usePullToRefresh({
+    onRefresh: handleRefresh,
+    threshold: 80,
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
@@ -221,7 +249,18 @@ const UnifiedDashboard = () => {
   const SubIcon = subInfo.icon;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div 
+      ref={containerRef}
+      className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-y-auto relative"
+    >
+      {/* Pull to Refresh Indicator */}
+      <PullToRefreshIndicator
+        pullDistance={pullDistance}
+        isRefreshing={isRefreshing}
+        progress={progress}
+        shouldTrigger={shouldTrigger}
+      />
+      
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50">
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
