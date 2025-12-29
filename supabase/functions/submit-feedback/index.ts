@@ -10,6 +10,9 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limit configuration: 5 feedback submissions per minute per IP
+const FEEDBACK_RATE_LIMIT = { maxRequests: 5, windowSeconds: 60 };
+
 interface FeedbackRequest {
   documentId?: string;
   documentTitle: string;
@@ -24,6 +27,44 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Create Supabase client with service role key
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Get client IP for rate limiting
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() 
+      || req.headers.get('x-real-ip') 
+      || 'unknown';
+
+    // Check rate limit
+    const { data: rateLimitResult, error: rateLimitError } = await supabase
+      .rpc('check_rate_limit', {
+        p_identifier: clientIp,
+        p_endpoint: 'submit-feedback',
+        p_max_requests: FEEDBACK_RATE_LIMIT.maxRequests,
+        p_window_seconds: FEEDBACK_RATE_LIMIT.windowSeconds
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    } else if (!rateLimitResult?.allowed) {
+      console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "提交次數過多，請稍後再試",
+          retryAfter: rateLimitResult?.reset_at 
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            "Content-Type": "application/json",
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(rateLimitResult?.reset_at || 0)
+          } 
+        }
+      );
+    }
+
     const { documentId, documentTitle, customerName, message }: FeedbackRequest = await req.json();
 
     console.log("Received feedback submission:", { documentId, documentTitle, customerName, messageLength: message?.length });
@@ -45,8 +86,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Create Supabase client with service role key
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    // Insert feedback into database (using supabase client created earlier)
 
     // Insert feedback into database
     const { data: feedbackData, error: dbError } = await supabase
