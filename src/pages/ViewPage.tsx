@@ -139,14 +139,24 @@ const ViewPage = () => {
   };
 
   const handleDownload = async () => {
-    if (!document?.file_path) return;
+    if (!shareLink) return;
     
-    const { data } = await supabase.storage
-      .from("documents")
-      .createSignedUrl(document.file_path, 60);
-    
-    if (data?.signedUrl) {
-      window.open(data.signedUrl, "_blank");
+    try {
+      // Use server-side Edge Function for secure signed URL generation
+      const { data, error } = await supabase.functions.invoke('download-document', {
+        body: { shareLink }
+      });
+      
+      if (error) {
+        console.error('Download error:', error);
+        return;
+      }
+      
+      if (data?.signedUrl) {
+        window.open(data.signedUrl, "_blank");
+      }
+    } catch (err) {
+      console.error('Download failed:', err);
     }
   };
 
