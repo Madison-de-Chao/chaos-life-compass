@@ -235,10 +235,10 @@ const UnifiedDashboard = () => {
           <div className="flex items-center gap-3">
             {isAdmin && (
               <Button 
-                variant="outline" 
+                variant="default" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="border-slate-600 text-slate-300 hover:bg-slate-800"
+                className="bg-amber-600 hover:bg-amber-500 text-white font-medium"
               >
                 管理後台
               </Button>
