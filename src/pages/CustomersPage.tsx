@@ -32,6 +32,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { usePendingChanges } from "@/hooks/usePendingChanges";
@@ -40,7 +41,7 @@ import { CustomerListSkeleton } from "@/components/CustomerCardSkeleton";
 import { CustomerDetailsSidebar } from "@/components/crm/CustomerDetailsSidebar";
 import { CustomerTagBadge } from "@/components/crm/CustomerTagBadge";
 import { useCustomerTags } from "@/hooks/useCRM";
-import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight, Tag, Filter } from "lucide-react";
+import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight, Tag, Filter, CheckSquare, Square, Tags } from "lucide-react";
 
 interface Customer {
   id: string;
@@ -65,6 +66,13 @@ const CustomersPage = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [currentUserIsAdmin, setCurrentUserIsAdmin] = useState(false);
   const [currentUserIsHelper, setCurrentUserIsHelper] = useState(false);
+  
+  // Batch selection state
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState<Set<string>>(new Set());
+  const [batchMode, setBatchMode] = useState(false);
+  const [batchTagDialogOpen, setBatchTagDialogOpen] = useState(false);
+  const [batchDeleteDialogOpen, setBatchDeleteDialogOpen] = useState(false);
+  const [batchTagId, setBatchTagId] = useState<string>("");
 
   const { tags } = useCustomerTags();
   const { addDraftChange } = usePendingChanges();
@@ -162,6 +170,119 @@ const CustomersPage = () => {
 
   const clearTagFilters = () => {
     setSelectedTagIds([]);
+  };
+
+  // Batch selection functions
+  const toggleCustomerSelection = (customerId: string) => {
+    setSelectedCustomerIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(customerId)) {
+        newSet.delete(customerId);
+      } else {
+        newSet.add(customerId);
+      }
+      return newSet;
+    });
+  };
+
+  const selectAllFiltered = () => {
+    setSelectedCustomerIds(new Set(filteredCustomers.map((c) => c.id)));
+  };
+
+  const clearSelection = () => {
+    setSelectedCustomerIds(new Set());
+    setBatchMode(false);
+  };
+
+  const handleBatchAddTag = async () => {
+    if (!batchTagId || selectedCustomerIds.size === 0) return;
+
+    try {
+      const { data: user } = await supabase.auth.getUser();
+      const customerIds = Array.from(selectedCustomerIds);
+      
+      // Get existing assignments to avoid duplicates
+      const { data: existingAssignments } = await supabase
+        .from("customer_tag_assignments")
+        .select("customer_id")
+        .eq("tag_id", batchTagId)
+        .in("customer_id", customerIds);
+
+      const existingCustomerIds = new Set(existingAssignments?.map((a) => a.customer_id) || []);
+      const newAssignments = customerIds
+        .filter((id) => !existingCustomerIds.has(id))
+        .map((customerId) => ({
+          customer_id: customerId,
+          tag_id: batchTagId,
+          assigned_by: user.user?.id,
+        }));
+
+      if (newAssignments.length > 0) {
+        const { error } = await supabase.from("customer_tag_assignments").insert(newAssignments);
+        if (error) throw error;
+      }
+
+      toast({
+        title: "標籤已添加",
+        description: `已為 ${newAssignments.length} 位客戶添加標籤（${existingCustomerIds.size} 位已有此標籤）`,
+      });
+
+      setBatchTagDialogOpen(false);
+      setBatchTagId("");
+      clearSelection();
+      fetchCustomers();
+    } catch (error: any) {
+      console.error("Batch add tag error:", error);
+      toast({
+        title: "批量添加標籤失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleBatchDelete = async () => {
+    if (selectedCustomerIds.size === 0) return;
+
+    try {
+      const customerIds = Array.from(selectedCustomerIds);
+
+      if (currentUserIsHelper && !currentUserIsAdmin) {
+        // Helper needs approval
+        for (const customerId of customerIds) {
+          const customer = customers.find((c) => c.id === customerId);
+          await addDraftChange({
+            target_table: "customers",
+            change_type: "delete",
+            target_id: customerId,
+            change_data: { id: customerId },
+            notes: `刪除客戶「${customer?.name || customerId}」`,
+          });
+        }
+        toast({
+          title: "已加入待審核清單",
+          description: `${customerIds.length} 位客戶的刪除將在管理員核准後生效`,
+        });
+      } else {
+        const { error } = await supabase.from("customers").delete().in("id", customerIds);
+        if (error) throw error;
+        toast({
+          title: "客戶已刪除",
+          description: `已刪除 ${customerIds.length} 位客戶`,
+        });
+        fetchCustomers();
+      }
+
+      setBatchDeleteDialogOpen(false);
+      clearSelection();
+    } catch (error: any) {
+      console.error("Batch delete error:", error);
+      toast({
+        title: "批量刪除失敗",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   const openCreateDialog = () => {
@@ -413,16 +534,82 @@ const CustomersPage = () => {
                   </Button>
                 )}
               </div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={openCreateDialog} className="gap-2 transition-all hover:scale-105">
-                    <Plus className="w-4 h-4" />
-                    新增客戶
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>新增一位新客戶</TooltipContent>
-              </Tooltip>
+              <div className="flex gap-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      variant={batchMode ? "secondary" : "outline"} 
+                      onClick={() => {
+                        setBatchMode(!batchMode);
+                        if (batchMode) clearSelection();
+                      }}
+                      className="gap-2"
+                    >
+                      {batchMode ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
+                      批量操作
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>開啟批量選擇模式</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button onClick={openCreateDialog} className="gap-2 transition-all hover:scale-105">
+                      <Plus className="w-4 h-4" />
+                      新增客戶
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>新增一位新客戶</TooltipContent>
+                </Tooltip>
+              </div>
             </div>
+
+            {/* Batch Actions Bar */}
+            {batchMode && (
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg border animate-fade-in">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={selectedCustomerIds.size === filteredCustomers.length && filteredCustomers.length > 0}
+                    onCheckedChange={(checked) => {
+                      if (checked) selectAllFiltered();
+                      else setSelectedCustomerIds(new Set());
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">
+                    已選 <span className="font-semibold text-foreground">{selectedCustomerIds.size}</span> / {filteredCustomers.length} 位客戶
+                  </span>
+                </div>
+                <div className="flex-1" />
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={selectedCustomerIds.size === 0}
+                    onClick={() => setBatchTagDialogOpen(true)}
+                    className="gap-1.5"
+                  >
+                    <Tags className="w-4 h-4" />
+                    添加標籤
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={selectedCustomerIds.size === 0}
+                    onClick={() => setBatchDeleteDialogOpen(true)}
+                    className="gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    批量刪除
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearSelection}
+                  >
+                    取消
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* Tag Filters */}
             {tags.length > 0 && (
@@ -476,15 +663,34 @@ const CustomersPage = () => {
             <CustomerListSkeleton count={5} />
           ) : filteredCustomers.length > 0 ? (
             <div className="grid gap-4">
-              {filteredCustomers.map((customer, index) => (
+              {filteredCustomers.map((customer, index) => {
+                const isSelected = selectedCustomerIds.has(customer.id);
+                return (
                 <Card
                   key={customer.id}
-                  className="p-6 hover:shadow-lg hover:bg-muted/30 transition-all duration-300 group animate-fade-in cursor-pointer"
+                  className={`p-6 hover:shadow-lg hover:bg-muted/30 transition-all duration-300 group animate-fade-in cursor-pointer ${
+                    isSelected ? 'ring-2 ring-primary bg-primary/5' : ''
+                  }`}
                   style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
-                  onClick={() => setSelectedCustomer(customer)}
+                  onClick={() => {
+                    if (batchMode) {
+                      toggleCustomerSelection(customer.id);
+                    } else {
+                      setSelectedCustomer(customer);
+                    }
+                  }}
                 >
                   <div className="flex flex-col md:flex-row md:items-center gap-4">
                     <div className="flex items-center gap-4 flex-1">
+                      {batchMode && (
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <Checkbox
+                            checked={isSelected}
+                            onCheckedChange={() => toggleCustomerSelection(customer.id)}
+                            className="h-5 w-5"
+                          />
+                        </div>
+                      )}
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20 group-hover:shadow-lg">
                         <User className="w-6 h-6 text-primary transition-transform group-hover:scale-95" />
                       </div>
@@ -622,7 +828,8 @@ const CustomersPage = () => {
                     </div>
                   )}
                 </Card>
-              ))}
+              );
+              })}
             </div>
           ) : (
             <div className="text-center py-20 animate-fade-in">
@@ -771,6 +978,82 @@ const CustomersPage = () => {
           onClose={() => setSelectedCustomer(null)}
         />
       )}
+
+      {/* Batch Add Tag Dialog */}
+      <Dialog open={batchTagDialogOpen} onOpenChange={setBatchTagDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Tags className="w-5 h-5" />
+              批量添加標籤
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground mb-4">
+              為已選擇的 <span className="font-semibold text-foreground">{selectedCustomerIds.size}</span> 位客戶添加標籤
+            </p>
+            <Label>選擇標籤</Label>
+            <Select value={batchTagId} onValueChange={setBatchTagId}>
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="選擇要添加的標籤" />
+              </SelectTrigger>
+              <SelectContent>
+                {tags.map((tag) => (
+                  <SelectItem key={tag.id} value={tag.id}>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: tag.color }}
+                      />
+                      {tag.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBatchTagDialogOpen(false)}>
+              取消
+            </Button>
+            <Button onClick={handleBatchAddTag} disabled={!batchTagId}>
+              添加標籤
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Batch Delete Confirmation Dialog */}
+      <AlertDialog open={batchDeleteDialogOpen} onOpenChange={setBatchDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-destructive">
+              <Trash2 className="w-5 h-5" />
+              確認批量刪除
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              確定要刪除已選擇的 <span className="font-semibold">{selectedCustomerIds.size}</span> 位客戶嗎？
+              {currentUserIsHelper && !currentUserIsAdmin && (
+                <span className="block mt-2 text-amber-600">
+                  您的刪除請求將提交給管理員審核。
+                </span>
+              )}
+              <span className="block mt-2 text-destructive">
+                此操作無法撤銷，客戶的所有相關資料也將被刪除。
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>取消</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleBatchDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              確認刪除
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
     </TooltipProvider>
   );
