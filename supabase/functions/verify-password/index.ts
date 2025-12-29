@@ -103,6 +103,31 @@ serve(async (req) => {
         if (error) console.error('Failed to log rate limit event:', error);
       });
 
+      // Check if IP should be auto-blocked (3 violations in 1 hour)
+      const { data: wasBlocked, error: autoBlockError } = await supabase
+        .rpc('auto_block_ip_if_needed', { 
+          p_ip_address: clientIp,
+          p_threshold: 3,
+          p_window_hours: 1
+        });
+
+      if (autoBlockError) {
+        console.error('Auto-block check error:', autoBlockError);
+      } else if (wasBlocked) {
+        console.warn(`IP ${clientIp} was auto-blocked due to repeated violations`);
+        return new Response(
+          JSON.stringify({ 
+            error: '由於多次異常嘗試，您的 IP 已被暫時封鎖 24 小時',
+            isBlocked: true,
+            isAutoBlocked: true
+          }),
+          { 
+            status: 403, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
+
       return new Response(
         JSON.stringify({ 
           error: '密碼嘗試次數過多，請稍後再試',
