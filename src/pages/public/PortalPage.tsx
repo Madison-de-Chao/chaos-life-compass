@@ -2,7 +2,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
-import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward } from "lucide-react";
+import { useMember } from "@/hooks/useMember";
+import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
+import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
 
 const portalItems = [
   {
@@ -557,6 +559,47 @@ function HoverParticles({ isHovered, color }: { isHovered: boolean; color: strin
   );
 }
 
+// Member login section component
+function MemberLoginSection() {
+  const { user } = useMember();
+  const [showWidget, setShowWidget] = useState(false);
+
+  if (user) {
+    return (
+      <div className="mt-8 flex justify-center">
+        <Link
+          to="/account"
+          className="group flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm"
+        >
+          <UserCircle2 className="w-5 h-5 text-[#c9a962]" />
+          <span>前往會員中心</span>
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-8 flex flex-col items-center">
+      {!showWidget ? (
+        <button
+          onClick={() => setShowWidget(true)}
+          className="group flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm"
+        >
+          <LogIn className="w-5 h-5 text-[#c9a962]" />
+          <span>會員登入 / 註冊</span>
+        </button>
+      ) : (
+        <div className="w-full max-w-sm animate-fade-in">
+          <MemberLoginWidget 
+            onClose={() => setShowWidget(false)} 
+            compact
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Content sections with cross-fade
 const introSections = [
   {
@@ -935,6 +978,9 @@ export default function PortalPage() {
                 );
               })}
             </div>
+
+            {/* Member Login Section */}
+            <MemberLoginSection />
 
             {/* Footer */}
             <p className="text-white/30 text-sm mt-8">
