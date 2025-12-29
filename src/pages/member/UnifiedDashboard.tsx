@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { 
   FileText, Settings, LogOut, Sparkles, Zap, Star, Compass,
   Calendar, CreditCard, ChevronRight, Shield, User, ExternalLink,
-  Clock, CheckCircle, XCircle, AlertCircle
+  Clock, CheckCircle, XCircle, AlertCircle, KeyRound, Unlink, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -69,6 +69,17 @@ interface Subscription {
   currency: string | null;
 }
 
+interface AuthorizedApp {
+  id: string;
+  client_id: string;
+  scope: string | null;
+  created_at: string;
+  expires_at: string;
+  revoked_at: string | null;
+  client_name?: string;
+  client_description?: string;
+}
+
 const UnifiedDashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading, isAdmin, signOut } = useMember();
@@ -76,6 +87,9 @@ const UnifiedDashboard = () => {
   const { data: products = [] } = useProducts();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loadingSubscriptions, setLoadingSubscriptions] = useState(true);
+  const [authorizedApps, setAuthorizedApps] = useState<AuthorizedApp[]>([]);
+  const [loadingApps, setLoadingApps] = useState(true);
+  const [revokingId, setRevokingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -86,6 +100,7 @@ const UnifiedDashboard = () => {
   useEffect(() => {
     if (user) {
       fetchSubscriptions();
+      fetchAuthorizedApps();
     }
   }, [user]);
 
@@ -100,6 +115,71 @@ const UnifiedDashboard = () => {
       setSubscriptions(data);
     }
     setLoadingSubscriptions(false);
+  };
+
+  const fetchAuthorizedApps = async () => {
+    setLoadingApps(true);
+    try {
+      // Fetch access tokens with client info
+      const { data: tokens, error: tokensError } = await supabase
+        .from('oauth_access_tokens')
+        .select('id, client_id, scope, created_at, expires_at, revoked_at')
+        .eq('user_id', user?.id)
+        .is('revoked_at', null)
+        .order('created_at', { ascending: false });
+
+      if (tokensError) throw tokensError;
+
+      // Fetch client details for each unique client_id
+      const uniqueClientIds = [...new Set((tokens || []).map(t => t.client_id))];
+      const { data: clients } = await supabase
+        .from('oauth_clients')
+        .select('client_id, name, description')
+        .in('client_id', uniqueClientIds);
+
+      // Map client info to tokens
+      const appsWithDetails: AuthorizedApp[] = (tokens || []).map(token => {
+        const client = clients?.find(c => c.client_id === token.client_id);
+        return {
+          ...token,
+          client_name: client?.name,
+          client_description: client?.description || undefined,
+        };
+      });
+
+      setAuthorizedApps(appsWithDetails);
+    } catch (error) {
+      console.error('Error fetching authorized apps:', error);
+    } finally {
+      setLoadingApps(false);
+    }
+  };
+
+  const handleRevokeAccess = async (tokenId: string, clientName: string) => {
+    setRevokingId(tokenId);
+    try {
+      const { error } = await supabase
+        .from('oauth_access_tokens')
+        .update({ revoked_at: new Date().toISOString() })
+        .eq('id', tokenId);
+
+      if (error) throw error;
+
+      setAuthorizedApps(prev => prev.filter(app => app.id !== tokenId));
+      toast({
+        title: "已撤銷授權",
+        description: `已取消「${clientName}」的存取權限`,
+      });
+    } catch (error) {
+      console.error('Error revoking access:', error);
+      toast({
+        title: "撤銷失敗",
+        description: "無法撤銷授權，請稍後再試",
+        variant: "destructive",
+      });
+    } finally {
+      setRevokingId(null);
+    }
   };
 
   const handleSignOut = async () => {
@@ -207,6 +287,9 @@ const UnifiedDashboard = () => {
             </TabsTrigger>
             <TabsTrigger value="subscriptions" className="data-[state=active]:bg-slate-700">
               訂閱記錄
+            </TabsTrigger>
+            <TabsTrigger value="apps" className="data-[state=active]:bg-slate-700">
+              已授權應用
             </TabsTrigger>
             <TabsTrigger value="profile" className="data-[state=active]:bg-slate-700">
               個人資料
@@ -350,6 +433,128 @@ const UnifiedDashboard = () => {
                         </div>
                       );
                     })}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Authorized Apps Tab */}
+          <TabsContent value="apps" className="space-y-6">
+            <Card className="bg-slate-800/50 border-slate-700/50">
+              <CardHeader>
+                <CardTitle className="text-slate-100 flex items-center gap-2">
+                  <KeyRound className="w-5 h-5 text-purple-500" />
+                  已授權應用程式
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  您已授權以下外部應用程式存取您的帳戶資料
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {loadingApps ? (
+                  <div className="text-slate-400 text-center py-8">載入中...</div>
+                ) : authorizedApps.length === 0 ? (
+                  <div className="text-center py-12">
+                    <KeyRound className="w-12 h-12 mx-auto mb-4 text-slate-600" />
+                    <p className="text-slate-400 mb-2">尚無授權的應用程式</p>
+                    <p className="text-sm text-slate-500">
+                      當您使用第三方應用程式登入時，授權記錄會顯示在這裡
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {authorizedApps.map((app) => {
+                      const isExpired = new Date(app.expires_at) < new Date();
+                      
+                      return (
+                        <div
+                          key={app.id}
+                          className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                            isExpired 
+                              ? 'bg-slate-700/20 border-slate-600/20 opacity-60' 
+                              : 'bg-purple-500/10 border-purple-500/30 hover:bg-purple-500/15'
+                          }`}
+                        >
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                            isExpired ? 'bg-slate-700/50' : 'bg-purple-500/20'
+                          }`}>
+                            <KeyRound className={`w-6 h-6 ${isExpired ? 'text-slate-500' : 'text-purple-400'}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="font-semibold text-slate-200">
+                                {app.client_name || app.client_id}
+                              </h3>
+                              {isExpired && (
+                                <Badge variant="secondary" className="text-xs">
+                                  已過期
+                                </Badge>
+                              )}
+                            </div>
+                            {app.client_description && (
+                              <p className="text-sm text-slate-400 mb-1">
+                                {app.client_description}
+                              </p>
+                            )}
+                            <div className="flex flex-wrap gap-3 text-xs text-slate-500">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                授權於 {format(new Date(app.created_at), 'yyyy/MM/dd HH:mm', { locale: zhTW })}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                有效至 {format(new Date(app.expires_at), 'yyyy/MM/dd HH:mm', { locale: zhTW })}
+                              </span>
+                            </div>
+                            {app.scope && (
+                              <div className="mt-2 flex flex-wrap gap-1">
+                                {app.scope.split(' ').map((s) => (
+                                  <Badge key={s} variant="outline" className="text-xs border-slate-600 text-slate-400">
+                                    {s}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          {!isExpired && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleRevokeAccess(app.id, app.client_name || app.client_id)}
+                              disabled={revokingId === app.id}
+                              className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                            >
+                              {revokingId === app.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <>
+                                  <Unlink className="w-4 h-4 mr-1" />
+                                  撤銷
+                                </>
+                              )}
+                            </Button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            
+            {/* Security Note */}
+            <Card className="bg-amber-500/5 border-amber-500/20">
+              <CardContent className="pt-6">
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-5 h-5 text-amber-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-amber-200 mb-1">安全提示</h4>
+                    <p className="text-sm text-slate-400">
+                      定期檢查您授權的應用程式。如果發現不認識或不再使用的應用，建議立即撤銷其存取權限以保護您的帳戶安全。
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
