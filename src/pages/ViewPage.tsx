@@ -112,29 +112,44 @@ const ViewPage = () => {
   const handlePasswordSubmit = async (password: string) => {
     if (!shareLink) return;
     
-    // Use secure server-side password verification
-    const { data: isValid, error } = await supabase.rpc('verify_document_password', {
-      doc_share_link: shareLink,
-      pwd: password
-    });
-    
-    if (error) {
-      console.error('Password verification error:', error);
+    try {
+      // Use secure server-side password verification with rate limiting
+      const { data, error } = await supabase.functions.invoke('verify-password', {
+        body: { shareLink, password }
+      });
+      
+      if (error) {
+        console.error('Password verification error:', error);
+        setPasswordError("驗證失敗，請重試");
+        return;
+      }
+      
+      // Check if rate limited
+      if (data?.isRateLimited) {
+        setPasswordError(data.error || "密碼嘗試次數過多，請稍後再試");
+        return;
+      }
+      
+      if (data?.valid) {
+        setIsAuthenticated(true);
+        setShowPasswordDialog(false);
+        setPasswordError("");
+        // Store authentication in sessionStorage for print access
+        const authKey = `doc_auth_${shareLink}`;
+        sessionStorage.setItem(authKey, 'true');
+        // Increment view count after successful authentication
+        await incrementViewCount(shareLink);
+      } else {
+        const remaining = data?.remaining;
+        if (remaining !== undefined && remaining <= 2) {
+          setPasswordError(`密碼錯誤，剩餘 ${remaining} 次嘗試機會`);
+        } else {
+          setPasswordError("密碼錯誤，請重試");
+        }
+      }
+    } catch (err) {
+      console.error('Password verification failed:', err);
       setPasswordError("驗證失敗，請重試");
-      return;
-    }
-    
-    if (isValid) {
-      setIsAuthenticated(true);
-      setShowPasswordDialog(false);
-      setPasswordError("");
-      // Store authentication in sessionStorage for print access
-      const authKey = `doc_auth_${shareLink}`;
-      sessionStorage.setItem(authKey, 'true');
-      // Increment view count after successful authentication
-      await incrementViewCount(shareLink);
-    } else {
-      setPasswordError("密碼錯誤，請重試");
     }
   };
 
