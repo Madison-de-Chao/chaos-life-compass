@@ -5,12 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+import { useAllPendingFollowUps } from "@/hooks/useCRM";
 import { 
   FileText, Users, MessageSquare, Key, Eye, Upload, 
   ArrowRight, TrendingUp, Clock, Star, Activity,
-  BarChart3, PieChart, Bell
+  BarChart3, PieChart, Bell, AlertCircle, CheckCircle2, Calendar
 } from "lucide-react";
-import { format, subDays, isToday, isThisWeek } from "date-fns";
+import { format, subDays, isToday, isThisWeek, isPast, isTomorrow } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart as RechartsPie, Pie, Cell, Legend } from "recharts";
 
@@ -45,6 +47,7 @@ const CHART_COLORS = [
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const { followUps, loading: followUpsLoading, refresh: refreshFollowUps } = useAllPendingFollowUps();
   const [stats, setStats] = useState<DashboardStats>({
     totalDocuments: 0,
     totalCustomers: 0,
@@ -365,6 +368,121 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Pending Follow-ups */}
+        {followUps.length > 0 && (
+          <Card className="border-amber-200 bg-amber-50/30 dark:bg-amber-950/10 dark:border-amber-800">
+            <CardHeader className="flex flex-row items-center justify-between pb-3">
+              <div>
+                <CardTitle className="text-base flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                  <AlertCircle className="w-4 h-4" />
+                  待處理跟進提醒
+                  <Badge variant="secondary" className="ml-2 bg-amber-200 text-amber-800 dark:bg-amber-800 dark:text-amber-200">
+                    {followUps.length}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>需要跟進的客戶事項</CardDescription>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/customers")}>
+                查看全部
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {followUps.slice(0, 5).map((followUp) => {
+                  const dueDate = new Date(followUp.due_date);
+                  const isOverdue = isPast(dueDate) && !isToday(dueDate);
+                  const isDueToday = isToday(dueDate);
+                  const isDueTomorrow = isTomorrow(dueDate);
+                  
+                  return (
+                    <div 
+                      key={followUp.id}
+                      className={`flex items-center gap-4 p-3 rounded-lg border transition-colors ${
+                        isOverdue 
+                          ? 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-800' 
+                          : isDueToday 
+                            ? 'bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-800'
+                            : 'bg-background border-border hover:bg-muted/50'
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
+                        isOverdue 
+                          ? 'bg-red-100 dark:bg-red-900' 
+                          : isDueToday 
+                            ? 'bg-amber-100 dark:bg-amber-900'
+                            : 'bg-muted'
+                      }`}>
+                        <Calendar className={`w-5 h-5 ${
+                          isOverdue 
+                            ? 'text-red-600 dark:text-red-400' 
+                            : isDueToday 
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : 'text-muted-foreground'
+                        }`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-foreground truncate">{followUp.title}</p>
+                          {followUp.priority === 'high' && (
+                            <Badge variant="destructive" className="text-xs px-1.5">緊急</Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">
+                          客戶：{followUp.customer_name || '未知'}
+                          {followUp.description && ` · ${followUp.description}`}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <div className={`text-xs font-medium ${
+                          isOverdue 
+                            ? 'text-red-600 dark:text-red-400' 
+                            : isDueToday 
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : isDueTomorrow 
+                                ? 'text-blue-600 dark:text-blue-400'
+                                : 'text-muted-foreground'
+                        }`}>
+                          {isOverdue && '已逾期 · '}
+                          {isDueToday && '今天 · '}
+                          {isDueTomorrow && '明天 · '}
+                          {format(dueDate, 'MM/dd', { locale: zhTW })}
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0"
+                          onClick={async () => {
+                            const { data: user } = await supabase.auth.getUser();
+                            await supabase.from("customer_follow_ups").update({
+                              status: "completed",
+                              completed_at: new Date().toISOString(),
+                              completed_by: user.user?.id,
+                            }).eq("id", followUp.id);
+                            refreshFollowUps();
+                            toast({
+                              title: "已完成跟進",
+                            });
+                          }}
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-green-600" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+                {followUps.length > 5 && (
+                  <div className="text-center pt-2">
+                    <Button variant="link" size="sm" onClick={() => navigate("/customers")}>
+                      還有 {followUps.length - 5} 項待處理...
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Recent Activities */}
         <Card>
