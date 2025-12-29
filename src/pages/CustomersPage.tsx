@@ -38,7 +38,8 @@ import { usePendingChanges } from "@/hooks/usePendingChanges";
 import { HelperPendingChanges } from "@/components/HelperPendingChanges";
 import { CustomerListSkeleton } from "@/components/CustomerCardSkeleton";
 import { CustomerDetailsSidebar } from "@/components/crm/CustomerDetailsSidebar";
-import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight } from "lucide-react";
+import { useCustomerTags } from "@/hooks/useCRM";
+import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight, Tag, Filter } from "lucide-react";
 
 interface Customer {
   id: string;
@@ -54,14 +55,17 @@ interface Customer {
 
 const CustomersPage = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customerTagMap, setCustomerTagMap] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [currentUserIsAdmin, setCurrentUserIsAdmin] = useState(false);
   const [currentUserIsHelper, setCurrentUserIsHelper] = useState(false);
 
+  const { tags } = useCustomerTags();
   const { addDraftChange } = usePendingChanges();
 
   const [formData, setFormData] = useState({
@@ -99,6 +103,22 @@ const CustomersPage = () => {
 
       if (error) throw error;
       setCustomers(data || []);
+
+      // Fetch all tag assignments to build a map
+      const { data: assignments } = await supabase
+        .from("customer_tag_assignments")
+        .select("customer_id, tag_id");
+
+      if (assignments) {
+        const tagMap: Record<string, string[]> = {};
+        assignments.forEach((a) => {
+          if (!tagMap[a.customer_id]) {
+            tagMap[a.customer_id] = [];
+          }
+          tagMap[a.customer_id].push(a.tag_id);
+        });
+        setCustomerTagMap(tagMap);
+      }
     } catch (error) {
       console.error("Error fetching customers:", error);
       toast({
@@ -116,12 +136,32 @@ const CustomersPage = () => {
     fetchCurrentUserRole();
   }, []);
 
-  const filteredCustomers = customers.filter(
-    (c) =>
+  const filteredCustomers = customers.filter((c) => {
+    // Text search filter
+    const matchesSearch =
       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.phone?.includes(searchQuery) ||
-      c.email?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      c.email?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Tag filter - if no tags selected, show all; otherwise show customers with ALL selected tags
+    const matchesTags =
+      selectedTagIds.length === 0 ||
+      selectedTagIds.every((tagId) => customerTagMap[c.id]?.includes(tagId));
+
+    return matchesSearch && matchesTags;
+  });
+
+  const toggleTagFilter = (tagId: string) => {
+    setSelectedTagIds((prev) =>
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId]
+    );
+  };
+
+  const clearTagFilters = () => {
+    setSelectedTagIds([]);
+  };
 
   const openCreateDialog = () => {
     setEditingCustomer(null);
@@ -350,36 +390,84 @@ const CustomersPage = () => {
           </div>
 
           {/* Actions Bar */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8 animate-fade-in" style={{ animationDelay: '150ms' }}>
-            <div className="relative flex-1 max-w-md group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <Input
-                type="text"
-                placeholder="搜尋姓名、電話、Email..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 transition-all focus:ring-2 focus:ring-primary/20"
-              />
-              {searchQuery && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
-                  onClick={() => setSearchQuery("")}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              )}
+          <div className="flex flex-col gap-4 mb-8 animate-fade-in" style={{ animationDelay: '150ms' }}>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1 max-w-md group">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <Input
+                  type="text"
+                  placeholder="搜尋姓名、電話、Email..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 transition-all focus:ring-2 focus:ring-primary/20"
+                />
+                {searchQuery && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
+                    onClick={() => setSearchQuery("")}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={openCreateDialog} className="gap-2 transition-all hover:scale-105">
+                    <Plus className="w-4 h-4" />
+                    新增客戶
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>新增一位新客戶</TooltipContent>
+              </Tooltip>
             </div>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button onClick={openCreateDialog} className="gap-2 transition-all hover:scale-105">
-                  <Plus className="w-4 h-4" />
-                  新增客戶
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>新增一位新客戶</TooltipContent>
-            </Tooltip>
+
+            {/* Tag Filters */}
+            {tags.length > 0 && (
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Filter className="w-4 h-4" />
+                  <span>標籤篩選：</span>
+                </div>
+                {tags.map((tag) => {
+                  const isSelected = selectedTagIds.includes(tag.id);
+                  return (
+                    <button
+                      key={tag.id}
+                      onClick={() => toggleTagFilter(tag.id)}
+                      className={`
+                        inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
+                        transition-all duration-200 border
+                        ${isSelected 
+                          ? 'ring-2 ring-offset-1 ring-primary shadow-md scale-105' 
+                          : 'hover:scale-102 hover:shadow-sm opacity-70 hover:opacity-100'
+                        }
+                      `}
+                      style={{
+                        backgroundColor: isSelected ? tag.color : `${tag.color}20`,
+                        color: isSelected ? '#fff' : tag.color,
+                        borderColor: tag.color,
+                      }}
+                    >
+                      <Tag className="w-3 h-3" />
+                      {tag.name}
+                    </button>
+                  );
+                })}
+                {selectedTagIds.length > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearTagFilters}
+                    className="text-muted-foreground hover:text-foreground h-8"
+                  >
+                    <X className="w-3 h-3 mr-1" />
+                    清除篩選
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Customer List */}
