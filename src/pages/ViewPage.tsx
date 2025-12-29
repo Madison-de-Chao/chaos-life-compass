@@ -7,7 +7,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, FileText, Download, Calendar, Eye, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { User } from "@supabase/supabase-js";
 import { isBefore, parseISO } from "date-fns";
 
 const ViewPage = () => {
@@ -18,20 +17,37 @@ const ViewPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [adminUser, setAdminUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
 
-  // Check if admin is logged in
+  // Check if user has admin role (not just authenticated)
   useEffect(() => {
-    const checkAdmin = async () => {
+    const checkAdminRole = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      setAdminUser(session?.user ?? null);
+      if (session?.user) {
+        // Verify admin role using has_role RPC function
+        const { data: hasAdminRole } = await supabase.rpc('has_role', {
+          _user_id: session.user.id,
+          _role: 'admin'
+        });
+        setIsAdmin(hasAdminRole === true);
+      } else {
+        setIsAdmin(false);
+      }
     };
-    checkAdmin();
+    checkAdminRole();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setAdminUser(session?.user ?? null);
+      async (event, session) => {
+        if (session?.user) {
+          const { data: hasAdminRole } = await supabase.rpc('has_role', {
+            _user_id: session.user.id,
+            _role: 'admin'
+          });
+          setIsAdmin(hasAdminRole === true);
+        } else {
+          setIsAdmin(false);
+        }
       }
     );
 
@@ -210,7 +226,7 @@ const ViewPage = () => {
       {isAuthenticated && (
         <>
           {content ? (
-            <PagedDocumentReader content={content} documentId={document.id} shareLink={shareLink} isAdmin={!!adminUser} />
+            <PagedDocumentReader content={content} documentId={document.id} shareLink={shareLink} isAdmin={isAdmin} />
           ) : (
             /* File Download Card when no parsed content */
             <main className="container mx-auto px-4 py-12 md:py-20">
