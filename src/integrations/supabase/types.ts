@@ -1002,6 +1002,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      auto_block_ip_if_needed: {
+        Args: {
+          p_ip_address: string
+          p_threshold?: number
+          p_window_hours?: number
+        }
+        Returns: boolean
+      }
       check_rate_limit: {
         Args: {
           p_endpoint: string
