@@ -37,7 +37,8 @@ import { toast } from "@/hooks/use-toast";
 import { usePendingChanges } from "@/hooks/usePendingChanges";
 import { HelperPendingChanges } from "@/components/HelperPendingChanges";
 import { CustomerListSkeleton } from "@/components/CustomerCardSkeleton";
-import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X } from "lucide-react";
+import { CustomerDetailsSidebar } from "@/components/crm/CustomerDetailsSidebar";
+import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight } from "lucide-react";
 
 interface Customer {
   id: string;
@@ -57,6 +58,7 @@ const CustomersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [currentUserIsAdmin, setCurrentUserIsAdmin] = useState(false);
   const [currentUserIsHelper, setCurrentUserIsHelper] = useState(false);
 
@@ -388,8 +390,9 @@ const CustomersPage = () => {
               {filteredCustomers.map((customer, index) => (
                 <Card
                   key={customer.id}
-                  className="p-6 hover:shadow-lg hover:bg-muted/30 transition-all duration-300 group animate-fade-in"
+                  className="p-6 hover:shadow-lg hover:bg-muted/30 transition-all duration-300 group animate-fade-in cursor-pointer"
                   style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
+                  onClick={() => setSelectedCustomer(customer)}
                 >
                   <div className="flex flex-col md:flex-row md:items-center gap-4">
                     <div className="flex items-center gap-4 flex-1">
@@ -442,7 +445,20 @@ const CustomersPage = () => {
                       )}
                     </div>
 
-                    <div className="flex gap-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <div className="flex gap-2 opacity-70 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => setSelectedCustomer(customer)}
+                            className="transition-all hover:border-primary hover:text-primary"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>查看詳情</TooltipContent>
+                      </Tooltip>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
@@ -643,6 +659,14 @@ const CustomersPage = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Customer Details Sidebar */}
+      {selectedCustomer && (
+        <CustomerDetailsSidebar
+          customer={selectedCustomer}
+          onClose={() => setSelectedCustomer(null)}
+        />
+      )}
     </div>
     </TooltipProvider>
   );
