@@ -224,74 +224,75 @@ const UnifiedDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
-              <Shield className="w-5 h-5 text-amber-500" />
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
+              <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
             </div>
-            <span className="font-bold text-lg text-slate-100">會員中心</span>
+            <span className="font-bold text-base sm:text-lg text-slate-100">會員中心</span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             {isAdmin && (
               <Button 
                 variant="default" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="bg-amber-600 hover:bg-amber-500 text-white font-medium"
+                className="bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs sm:text-sm px-2.5 sm:px-3"
               >
-                管理後台
+                <span className="hidden sm:inline">管理後台</span>
+                <span className="sm:hidden">後台</span>
               </Button>
             )}
             <Button 
               variant="ghost" 
-              size="sm" 
+              size="icon"
               onClick={() => navigate("/account/profile")}
-              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
             <Button 
               variant="ghost" 
-              size="sm" 
+              size="icon"
               onClick={handleSignOut}
-              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-6xl">
         {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-100 mb-2">
+        <div className="mb-5 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-100 mb-2">
             歡迎回來，{profile?.display_name || '會員'}
           </h1>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Badge variant={subInfo.variant} className="flex items-center gap-1">
               <SubIcon className="w-3 h-3" />
               {subInfo.label}
             </Badge>
             {user?.email && (
-              <span className="text-sm text-slate-400">{user.email}</span>
+              <span className="text-xs sm:text-sm text-slate-400 truncate max-w-[200px] sm:max-w-none">{user.email}</span>
             )}
           </div>
         </div>
 
-        <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="bg-slate-800/50 border border-slate-700/50">
-            <TabsTrigger value="products" className="data-[state=active]:bg-slate-700">
+        <Tabs defaultValue="products" className="space-y-4 sm:space-y-6">
+          <TabsList className="bg-slate-800/50 border border-slate-700/50 w-full flex overflow-x-auto no-scrollbar">
+            <TabsTrigger value="products" className="data-[state=active]:bg-slate-700 flex-1 text-xs sm:text-sm px-2 sm:px-3">
               產品權限
             </TabsTrigger>
-            <TabsTrigger value="subscriptions" className="data-[state=active]:bg-slate-700">
+            <TabsTrigger value="subscriptions" className="data-[state=active]:bg-slate-700 flex-1 text-xs sm:text-sm px-2 sm:px-3">
               訂閱記錄
             </TabsTrigger>
-            <TabsTrigger value="apps" className="data-[state=active]:bg-slate-700">
-              已授權應用
+            <TabsTrigger value="apps" className="data-[state=active]:bg-slate-700 flex-1 text-xs sm:text-sm px-2 sm:px-3">
+              已授權
             </TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-slate-700">
+            <TabsTrigger value="profile" className="data-[state=active]:bg-slate-700 flex-1 text-xs sm:text-sm px-2 sm:px-3">
               個人資料
             </TabsTrigger>
           </TabsList>
@@ -334,21 +335,21 @@ const UnifiedDashboard = () => {
                       return (
                         <div
                           key={ent.id}
-                          className={`p-5 rounded-xl ${info.bgColor} border ${info.borderColor} transition-all hover:scale-[1.02] group`}
+                          className={`p-3 sm:p-5 rounded-xl ${info.bgColor} border ${info.borderColor} transition-all hover:scale-[1.01] sm:hover:scale-[1.02] group`}
                         >
-                          <div className="flex items-start gap-4">
-                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${info.color} flex items-center justify-center flex-shrink-0`}>
-                              <Icon className="w-6 h-6 text-white" />
+                          <div className="flex items-start gap-3 sm:gap-4">
+                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${info.color} flex items-center justify-center flex-shrink-0`}>
+                              <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-slate-100 mb-1">
+                              <h3 className="font-semibold text-sm sm:text-base text-slate-100 mb-0.5 sm:mb-1">
                                 {product?.name || ent.product_id}
                               </h3>
-                              <p className="text-sm text-slate-400 mb-2">
+                              <p className="text-xs sm:text-sm text-slate-400 mb-1.5 sm:mb-2">
                                 {info.description}
                               </p>
                               {ent.ends_at && (
-                                <p className="text-xs text-slate-500 flex items-center gap-1">
+                                <p className="text-[10px] sm:text-xs text-slate-500 flex items-center gap-1">
                                   <Calendar className="w-3 h-3" />
                                   有效至 {format(new Date(ent.ends_at), 'yyyy/MM/dd', { locale: zhTW })}
                                 </p>
@@ -356,10 +357,10 @@ const UnifiedDashboard = () => {
                             </div>
                             {info.externalUrl && (
                               <Button
-                                size="sm"
+                                size="icon"
                                 variant="ghost"
                                 onClick={() => navigate(info.externalUrl!)}
-                                className="text-slate-400 hover:text-slate-200"
+                                className="text-slate-400 hover:text-slate-200 w-8 h-8 sm:w-9 sm:h-9"
                               >
                                 <ExternalLink className="w-4 h-4" />
                               </Button>
@@ -469,52 +470,54 @@ const UnifiedDashboard = () => {
                       return (
                         <div
                           key={app.id}
-                          className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
+                          className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all ${
                             isExpired 
                               ? 'bg-slate-700/20 border-slate-600/20 opacity-60' 
                               : 'bg-purple-500/10 border-purple-500/30 hover:bg-purple-500/15'
                           }`}
                         >
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                            isExpired ? 'bg-slate-700/50' : 'bg-purple-500/20'
-                          }`}>
-                            <KeyRound className={`w-6 h-6 ${isExpired ? 'text-slate-500' : 'text-purple-400'}`} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-semibold text-slate-200">
-                                {app.client_name || app.client_id}
-                              </h3>
-                              {isExpired && (
-                                <Badge variant="secondary" className="text-xs">
-                                  已過期
-                                </Badge>
+                          <div className="flex items-start gap-3 sm:gap-4 flex-1">
+                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                              isExpired ? 'bg-slate-700/50' : 'bg-purple-500/20'
+                            }`}>
+                              <KeyRound className={`w-5 h-5 sm:w-6 sm:h-6 ${isExpired ? 'text-slate-500' : 'text-purple-400'}`} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-0.5 sm:mb-1 flex-wrap">
+                                <h3 className="font-semibold text-sm sm:text-base text-slate-200">
+                                  {app.client_name || app.client_id}
+                                </h3>
+                                {isExpired && (
+                                  <Badge variant="secondary" className="text-[10px] sm:text-xs">
+                                    已過期
+                                  </Badge>
+                                )}
+                              </div>
+                              {app.client_description && (
+                                <p className="text-xs sm:text-sm text-slate-400 mb-1">
+                                  {app.client_description}
+                                </p>
+                              )}
+                              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-3 text-[10px] sm:text-xs text-slate-500">
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3" />
+                                  授權於 {format(new Date(app.created_at), 'MM/dd HH:mm', { locale: zhTW })}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  有效至 {format(new Date(app.expires_at), 'MM/dd HH:mm', { locale: zhTW })}
+                                </span>
+                              </div>
+                              {app.scope && (
+                                <div className="mt-1.5 sm:mt-2 flex flex-wrap gap-1">
+                                  {app.scope.split(' ').map((s) => (
+                                    <Badge key={s} variant="outline" className="text-[10px] sm:text-xs border-slate-600 text-slate-400">
+                                      {s}
+                                    </Badge>
+                                  ))}
+                                </div>
                               )}
                             </div>
-                            {app.client_description && (
-                              <p className="text-sm text-slate-400 mb-1">
-                                {app.client_description}
-                              </p>
-                            )}
-                            <div className="flex flex-wrap gap-3 text-xs text-slate-500">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3" />
-                                授權於 {format(new Date(app.created_at), 'yyyy/MM/dd HH:mm', { locale: zhTW })}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                有效至 {format(new Date(app.expires_at), 'yyyy/MM/dd HH:mm', { locale: zhTW })}
-                              </span>
-                            </div>
-                            {app.scope && (
-                              <div className="mt-2 flex flex-wrap gap-1">
-                                {app.scope.split(' ').map((s) => (
-                                  <Badge key={s} variant="outline" className="text-xs border-slate-600 text-slate-400">
-                                    {s}
-                                  </Badge>
-                                ))}
-                              </div>
-                            )}
                           </div>
                           {!isExpired && (
                             <Button
@@ -522,14 +525,14 @@ const UnifiedDashboard = () => {
                               size="sm"
                               onClick={() => handleRevokeAccess(app.id, app.client_name || app.client_id)}
                               disabled={revokingId === app.id}
-                              className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                              className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 w-full sm:w-auto justify-center text-xs sm:text-sm"
                             >
                               {revokingId === app.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
                                 <>
                                   <Unlink className="w-4 h-4 mr-1" />
-                                  撤銷
+                                  撤銷授權
                                 </>
                               )}
                             </Button>
@@ -583,29 +586,29 @@ const UnifiedDashboard = () => {
                     {subscriptions.map((sub) => (
                       <div
                         key={sub.id}
-                        className="flex items-center gap-4 p-4 rounded-xl bg-slate-700/30 border border-slate-600/30"
+                        className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-slate-700/30 border border-slate-600/30"
                       >
-                        <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                          <CreditCard className="w-5 h-5 text-blue-400" />
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                          <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-slate-200">
+                          <h3 className="font-medium text-sm sm:text-base text-slate-200">
                             {sub.plan_name}
                           </h3>
-                          <p className="text-xs text-slate-500">
-                            {format(new Date(sub.started_at), 'yyyy/MM/dd', { locale: zhTW })}
-                            {sub.expires_at && ` - ${format(new Date(sub.expires_at), 'yyyy/MM/dd', { locale: zhTW })}`}
+                          <p className="text-[10px] sm:text-xs text-slate-500">
+                            {format(new Date(sub.started_at), 'MM/dd', { locale: zhTW })}
+                            {sub.expires_at && ` - ${format(new Date(sub.expires_at), 'MM/dd', { locale: zhTW })}`}
                           </p>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right flex-shrink-0">
                           {sub.amount && (
-                            <p className="text-sm font-medium text-slate-200">
+                            <p className="text-xs sm:text-sm font-medium text-slate-200">
                               {sub.currency || 'TWD'} {sub.amount.toLocaleString()}
                             </p>
                           )}
                           <Badge 
                             variant={sub.status === 'active' ? 'default' : 'secondary'}
-                            className="text-xs"
+                            className="text-[10px] sm:text-xs"
                           >
                             {sub.status === 'active' ? '有效' : sub.status}
                           </Badge>
