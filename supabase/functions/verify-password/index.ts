@@ -115,6 +115,36 @@ serve(async (req) => {
         console.error('Auto-block check error:', autoBlockError);
       } else if (wasBlocked) {
         console.warn(`IP ${clientIp} was auto-blocked due to repeated violations`);
+        
+        // Send email notification to admin
+        try {
+          const emailResponse = await fetch(`${supabaseUrl}/functions/v1/security-alert-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseServiceKey}`,
+            },
+            body: JSON.stringify({
+              alertType: 'ip_auto_blocked',
+              ipAddress: clientIp,
+              details: {
+                violationCount: 3,
+                threshold: 3,
+                windowHours: 1,
+                expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+              }
+            }),
+          });
+          
+          if (!emailResponse.ok) {
+            console.error('Failed to send security alert email:', await emailResponse.text());
+          } else {
+            console.log('Security alert email sent successfully');
+          }
+        } catch (emailError) {
+          console.error('Error sending security alert email:', emailError);
+        }
+        
         return new Response(
           JSON.stringify({ 
             error: '由於多次異常嘗試，您的 IP 已被暫時封鎖 24 小時',
