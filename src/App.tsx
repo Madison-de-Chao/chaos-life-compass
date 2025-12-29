@@ -51,6 +51,7 @@ import MemberProfilePage from "./pages/member/MemberProfilePage";
 import UnifiedAuthPage from "./pages/member/UnifiedAuthPage";
 import UnifiedDashboard from "./pages/member/UnifiedDashboard";
 import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
+import OAuthAuthorizePage from "./pages/member/OAuthAuthorizePage";
 
 // Account Pages
 import ProductsPage from "./pages/account/ProductsPage";
@@ -91,6 +92,7 @@ const App = () => (
                 
                 {/* Unified Auth routes - 統一會員系統 */}
                 <Route path="/auth/login" element={<UnifiedAuthPage />} />
+                <Route path="/oauth/authorize" element={<OAuthAuthorizePage />} />
                 <Route path="/account" element={<MemberProtectedRoute><UnifiedDashboard /></MemberProtectedRoute>} />
                 <Route path="/account/profile" element={<MemberProtectedRoute><UnifiedProfilePage /></MemberProtectedRoute>} />
                 <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />

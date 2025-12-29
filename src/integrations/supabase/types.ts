@@ -550,6 +550,136 @@ export type Database = {
         }
         Relationships: []
       }
+      oauth_access_tokens: {
+        Row: {
+          client_id: string
+          created_at: string
+          expires_at: string
+          id: string
+          revoked_at: string | null
+          scope: string | null
+          token_hash: string
+          user_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          revoked_at?: string | null
+          scope?: string | null
+          token_hash: string
+          user_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          revoked_at?: string | null
+          scope?: string | null
+          token_hash?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oauth_access_tokens_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "oauth_clients"
+            referencedColumns: ["client_id"]
+          },
+        ]
+      }
+      oauth_authorization_codes: {
+        Row: {
+          client_id: string
+          code: string
+          created_at: string
+          expires_at: string
+          id: string
+          redirect_uri: string
+          scope: string | null
+          state: string | null
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          client_id: string
+          code: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          redirect_uri: string
+          scope?: string | null
+          state?: string | null
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          client_id?: string
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          redirect_uri?: string
+          scope?: string | null
+          state?: string | null
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "oauth_authorization_codes_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "oauth_clients"
+            referencedColumns: ["client_id"]
+          },
+        ]
+      }
+      oauth_clients: {
+        Row: {
+          allowed_products: string[]
+          client_id: string
+          client_secret_hash: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          redirect_uris: string[]
+          updated_at: string
+        }
+        Insert: {
+          allowed_products?: string[]
+          client_id: string
+          client_secret_hash: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          redirect_uris?: string[]
+          updated_at?: string
+        }
+        Update: {
+          allowed_products?: string[]
+          client_id?: string
+          client_secret_hash?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          redirect_uris?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pending_changes: {
         Row: {
           batch_id: string | null
@@ -825,6 +955,7 @@ export type Database = {
       }
       hash_api_key: { Args: { key: string }; Returns: string }
       hash_document_password: { Args: { pwd: string }; Returns: string }
+      hash_oauth_secret: { Args: { secret: string }; Returns: string }
       increment_note_view_count: {
         Args: { note_share_link: string }
         Returns: undefined
@@ -838,6 +969,10 @@ export type Database = {
       verify_api_key: { Args: { key: string }; Returns: string }
       verify_document_password: {
         Args: { doc_share_link: string; pwd: string }
+        Returns: boolean
+      }
+      verify_oauth_secret: {
+        Args: { client_id_param: string; secret: string }
         Returns: boolean
       }
     }

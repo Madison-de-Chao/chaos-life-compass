@@ -849,11 +849,349 @@ async function checkAccessWithLogging(email: string, productId: string) {
 
 ---
 
+## OAuth 2.0 授權流程
+
+統一會員系統支援標準 OAuth 2.0 Authorization Code Flow，讓外部應用程式可以安全地取得用戶授權。
+
+### 流程概述
+
+```
+┌─────────────┐                               ┌─────────────────────┐
+│  外部應用    │                               │    統一會員系統       │
+│  (Client)   │                               │  (Authorization     │
+│             │                               │      Server)        │
+└──────┬──────┘                               └──────────┬──────────┘
+       │                                                 │
+       │ 1. 重定向用戶到授權頁面                            │
+       │ ───────────────────────────────────────────────>│
+       │                                                 │
+       │                              2. 用戶登入並確認授權   │
+       │                                                 │
+       │ 3. 重定向回應用 (帶 code)                         │
+       │ <───────────────────────────────────────────────│
+       │                                                 │
+       │ 4. 用 code 交換 access_token                     │
+       │ ───────────────────────────────────────────────>│
+       │                                                 │
+       │ 5. 返回 access_token                            │
+       │ <───────────────────────────────────────────────│
+       │                                                 │
+       │ 6. 用 access_token 取得用戶資訊                   │
+       │ ───────────────────────────────────────────────>│
+       │                                                 │
+       │ 7. 返回用戶資訊                                   │
+       │ <───────────────────────────────────────────────│
+       │                                                 │
+```
+
+### 前置作業：註冊 OAuth 客戶端
+
+聯繫管理員在 `oauth_clients` 表中註冊您的應用：
+
+| 欄位 | 說明 |
+|-----|------|
+| `client_id` | 您的應用程式 ID（例如：`yuanyi_app`） |
+| `client_secret` | 應用程式密鑰（妥善保管，切勿公開） |
+| `redirect_uris` | 允許的回調網址列表 |
+| `allowed_products` | 可存取的產品 ID 列表 |
+
+### 步驟 1：重定向用戶到授權頁面
+
+```
+GET https://your-unified-platform.com/oauth/authorize
+  ?response_type=code
+  &client_id=your_client_id
+  &redirect_uri=https://your-app.com/callback
+  &scope=profile email
+  &state=random_state_string
+```
+
+**參數說明：**
+
+| 參數 | 必填 | 說明 |
+|-----|-----|------|
+| `response_type` | ✅ | 必須為 `code` |
+| `client_id` | ✅ | 您的應用程式 ID |
+| `redirect_uri` | ✅ | 回調網址（必須在註冊的列表中） |
+| `scope` | ❌ | 請求的權限範圍，預設 `profile email` |
+| `state` | 建議 | 隨機字串，用於防止 CSRF 攻擊 |
+
+**可用 Scope：**
+
+| Scope | 說明 |
+|-------|------|
+| `profile` | 讀取基本資料（名稱、頭像） |
+| `email` | 讀取電子郵件地址 |
+| `entitlements` | 查看產品權限 |
+
+### 步驟 2：用戶確認授權
+
+用戶會看到授權確認頁面，顯示：
+- 請求授權的應用程式名稱
+- 請求的權限範圍
+- 同意/拒絕按鈕
+
+### 步驟 3：接收授權碼
+
+用戶同意後，系統會重定向到您的回調網址：
+
+```
+https://your-app.com/callback
+  ?code=authorization_code_here
+  &state=random_state_string
+```
+
+用戶拒絕時：
+
+```
+https://your-app.com/callback
+  ?error=access_denied
+  &error_description=User denied authorization
+  &state=random_state_string
+```
+
+### 步驟 4：用授權碼交換 Access Token
+
+**端點**
+```
+POST /functions/v1/oauth-authorize/token
+Content-Type: application/json
+```
+
+**請求範例**
+```bash
+curl -X POST \
+  "https://yyzcgxnvtprojutnxisz.supabase.co/functions/v1/oauth-authorize/token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "grant_type": "authorization_code",
+    "code": "authorization_code_here",
+    "client_id": "your_client_id",
+    "client_secret": "your_client_secret",
+    "redirect_uri": "https://your-app.com/callback"
+  }'
+```
+
+**回應範例**
+```json
+{
+  "access_token": "mat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "token_type": "Bearer",
+  "expires_in": 86400,
+  "scope": "profile email"
+}
+```
+
+### 步驟 5：取得用戶資訊
+
+**端點**
+```
+GET /functions/v1/oauth-authorize/userinfo
+Authorization: Bearer mat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**回應範例**
+```json
+{
+  "sub": "user-uuid",
+  "email": "user@example.com",
+  "email_verified": true,
+  "name": "用戶名稱",
+  "nickname": "暱稱",
+  "picture": "https://avatar-url.com/image.jpg",
+  "updated_at": "2024-01-01T00:00:00Z"
+}
+```
+
+### TypeScript 實作範例
+
+```typescript
+// oauth-client.ts
+
+interface OAuthConfig {
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
+  authorizationUrl: string;
+  tokenUrl: string;
+  userInfoUrl: string;
+}
+
+interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+}
+
+interface UserInfo {
+  sub: string;
+  email: string;
+  email_verified: boolean;
+  name?: string;
+  nickname?: string;
+  picture?: string;
+}
+
+export class UnifiedMemberOAuthClient {
+  private config: OAuthConfig;
+
+  constructor(config: Partial<OAuthConfig> & { clientId: string; clientSecret: string; redirectUri: string }) {
+    const baseUrl = 'https://your-unified-platform.com';
+    const functionsUrl = 'https://yyzcgxnvtprojutnxisz.supabase.co/functions/v1';
+    
+    this.config = {
+      clientId: config.clientId,
+      clientSecret: config.clientSecret,
+      redirectUri: config.redirectUri,
+      authorizationUrl: config.authorizationUrl || `${baseUrl}/oauth/authorize`,
+      tokenUrl: config.tokenUrl || `${functionsUrl}/oauth-authorize/token`,
+      userInfoUrl: config.userInfoUrl || `${functionsUrl}/oauth-authorize/userinfo`,
+    };
+  }
+
+  /**
+   * 產生授權 URL
+   */
+  getAuthorizationUrl(scope = 'profile email', state?: string): string {
+    const url = new URL(this.config.authorizationUrl);
+    url.searchParams.set('response_type', 'code');
+    url.searchParams.set('client_id', this.config.clientId);
+    url.searchParams.set('redirect_uri', this.config.redirectUri);
+    url.searchParams.set('scope', scope);
+    if (state) {
+      url.searchParams.set('state', state);
+    }
+    return url.toString();
+  }
+
+  /**
+   * 用授權碼交換 Token
+   */
+  async exchangeCode(code: string): Promise<TokenResponse> {
+    const response = await fetch(this.config.tokenUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        grant_type: 'authorization_code',
+        code,
+        client_id: this.config.clientId,
+        client_secret: this.config.clientSecret,
+        redirect_uri: this.config.redirectUri,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error_description || error.error);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * 取得用戶資訊
+   */
+  async getUserInfo(accessToken: string): Promise<UserInfo> {
+    const response = await fetch(this.config.userInfoUrl, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get user info');
+    }
+
+    return response.json();
+  }
+}
+
+// 使用範例
+const oauthClient = new UnifiedMemberOAuthClient({
+  clientId: 'yuanyi_app',
+  clientSecret: 'your_secret',
+  redirectUri: 'https://your-app.com/callback',
+});
+
+// 1. 重定向用戶去授權
+const authUrl = oauthClient.getAuthorizationUrl('profile email', crypto.randomUUID());
+window.location.href = authUrl;
+
+// 2. 在回調頁面處理
+async function handleCallback(code: string) {
+  const tokens = await oauthClient.exchangeCode(code);
+  const userInfo = await oauthClient.getUserInfo(tokens.access_token);
+  console.log('User:', userInfo);
+}
+```
+
+### Express.js 後端實作
+
+```typescript
+// routes/auth.ts
+import express from 'express';
+
+const router = express.Router();
+const oauthClient = new UnifiedMemberOAuthClient({
+  clientId: process.env.OAUTH_CLIENT_ID!,
+  clientSecret: process.env.OAUTH_CLIENT_SECRET!,
+  redirectUri: process.env.OAUTH_REDIRECT_URI!,
+});
+
+// 發起 OAuth 登入
+router.get('/login', (req, res) => {
+  const state = crypto.randomUUID();
+  req.session.oauthState = state;
+  res.redirect(oauthClient.getAuthorizationUrl('profile email entitlements', state));
+});
+
+// OAuth 回調
+router.get('/callback', async (req, res) => {
+  const { code, state, error } = req.query;
+
+  if (error) {
+    return res.redirect('/login?error=' + error);
+  }
+
+  if (state !== req.session.oauthState) {
+    return res.status(403).send('Invalid state');
+  }
+
+  try {
+    const tokens = await oauthClient.exchangeCode(code as string);
+    const userInfo = await oauthClient.getUserInfo(tokens.access_token);
+
+    // 建立或更新本地用戶
+    req.session.user = {
+      id: userInfo.sub,
+      email: userInfo.email,
+      name: userInfo.name,
+    };
+
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.error('OAuth error:', err);
+    res.redirect('/login?error=oauth_failed');
+  }
+});
+
+export default router;
+```
+
+### 安全性注意事項
+
+1. **妥善保管 client_secret** - 切勿在前端程式碼中暴露
+2. **驗證 state 參數** - 防止 CSRF 攻擊
+3. **使用 HTTPS** - 所有通訊必須加密
+4. **驗證 redirect_uri** - 僅接受已註冊的回調網址
+5. **Token 安全存儲** - 在後端安全存儲 access_token
+
+---
+
 ## 支援與聯繫
 
 如有任何整合問題，請聯繫系統管理員。
 
 ---
 
-*文件版本: 1.0.0*
-*最後更新: 2025-12-28*
+*文件版本: 1.1.0*
+*最後更新: 2025-12-29*
