@@ -26,6 +26,40 @@ serve(async (req) => {
       || req.headers.get('x-real-ip') 
       || 'unknown';
 
+    // Check if IP is blacklisted
+    const { data: isBlacklisted, error: blacklistError } = await supabase
+      .rpc('is_ip_blacklisted', { p_ip_address: clientIp });
+
+    if (blacklistError) {
+      console.error('IP blacklist check error:', blacklistError);
+    } else if (isBlacklisted) {
+      console.warn(`Blocked request from blacklisted IP: ${clientIp}`);
+      
+      // Log the blocked attempt
+      await supabase.from('admin_logs').insert({
+        user_id: '00000000-0000-0000-0000-000000000000',
+        action_type: 'ip_blocked',
+        target_type: 'ip_address',
+        target_id: clientIp,
+        details: {
+          endpoint: 'verify-password',
+          reason: 'IP is blacklisted'
+        },
+        ip_address: clientIp
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          error: '您的 IP 已被封鎖，請聯繫管理員',
+          isBlocked: true
+        }),
+        { 
+          status: 403, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
     const { shareLink, password } = await req.json();
 
     if (!shareLink || !password) {
