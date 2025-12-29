@@ -38,6 +38,7 @@ import { usePendingChanges } from "@/hooks/usePendingChanges";
 import { HelperPendingChanges } from "@/components/HelperPendingChanges";
 import { CustomerListSkeleton } from "@/components/CustomerCardSkeleton";
 import { CustomerDetailsSidebar } from "@/components/crm/CustomerDetailsSidebar";
+import { CustomerTagBadge } from "@/components/crm/CustomerTagBadge";
 import { useCustomerTags } from "@/hooks/useCRM";
 import { Plus, Search, User, Phone, Mail, Calendar, Pencil, Trash2, Shield, Sparkles, TrendingUp, FileText, X, ChevronRight, Tag, Filter } from "lucide-react";
 
@@ -488,9 +489,24 @@ const CustomersPage = () => {
                         <User className="w-6 h-6 text-primary transition-transform group-hover:scale-95" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-                          {customer.name}
-                        </h3>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                            {customer.name}
+                          </h3>
+                          {/* Customer Tags */}
+                          {customerTagMap[customer.id]?.map((tagId) => {
+                            const tag = tags.find((t) => t.id === tagId);
+                            if (!tag) return null;
+                            return (
+                              <CustomerTagBadge
+                                key={tagId}
+                                name={tag.name}
+                                color={tag.color}
+                                size="sm"
+                              />
+                            );
+                          })}
+                        </div>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
                           <Badge variant="outline" className="text-xs">
                             {formatGender(customer.gender)}
