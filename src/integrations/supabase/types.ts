@@ -335,6 +335,39 @@ export type Database = {
           },
         ]
       }
+      ip_blacklist: {
+        Row: {
+          blocked_at: string
+          blocked_by: string | null
+          created_at: string
+          expires_at: string | null
+          id: string
+          ip_address: string
+          is_active: boolean
+          reason: string | null
+        }
+        Insert: {
+          blocked_at?: string
+          blocked_by?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          ip_address: string
+          is_active?: boolean
+          reason?: string | null
+        }
+        Update: {
+          blocked_at?: string
+          blocked_by?: string | null
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          ip_address?: string
+          is_active?: boolean
+          reason?: string | null
+        }
+        Relationships: []
+      }
       member_documents: {
         Row: {
           document_id: string
@@ -1002,6 +1035,7 @@ export type Database = {
         Returns: undefined
       }
       is_admin_or_helper: { Args: { _user_id: string }; Returns: boolean }
+      is_ip_blacklisted: { Args: { p_ip_address: string }; Returns: boolean }
       is_member: { Args: { _user_id: string }; Returns: boolean }
       verify_api_key: { Args: { key: string }; Returns: string }
       verify_document_password: {
