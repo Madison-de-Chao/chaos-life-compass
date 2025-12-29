@@ -98,7 +98,7 @@ const EditDocumentPage = () => {
         });
       } else {
         // Create new document
-        const shareLink = `doc-${Math.random().toString(36).substring(2, 10)}`;
+        const shareLink = `doc-${crypto.randomUUID().replace(/-/g, '').substring(0, 12)}`;
 
         const { error: dbError } = await supabase
           .from("documents")
