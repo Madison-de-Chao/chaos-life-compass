@@ -60,6 +60,7 @@ const navGroups = [
     icon: Code,
     items: [
       { path: "/admin/api-keys", label: "API Keys", icon: Key, description: "管理 API 金鑰" },
+      { path: "/admin/oauth-clients", label: "OAuth 客戶端", icon: Shield, description: "管理 OAuth 應用程式" },
       { path: "/admin/api-docs", label: "API 文件", icon: BookOpen, description: "查看 API 使用說明" },
       { path: "/admin/external-api-test", label: "API 測試", icon: FileText, description: "測試外部 API 端點" },
     ],

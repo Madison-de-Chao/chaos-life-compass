@@ -37,6 +37,7 @@ import NotePage from "./pages/public/NotePage";
 import NotesPage from "./pages/NotesPage";
 import EntitlementsPage from "./pages/admin/EntitlementsPage";
 import ApiKeysPage from "./pages/admin/ApiKeysPage";
+import OAuthClientsPage from "./pages/admin/OAuthClientsPage";
 import ExternalApiTestPage from "./pages/admin/ExternalApiTestPage";
 import ApiDocsPage from "./pages/admin/ApiDocsPage";
 import AdminLogsPage from "./pages/admin/AdminLogsPage";
@@ -114,6 +115,7 @@ const App = () => (
                 <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
                 <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
                 <Route path="/admin/api-keys" element={<ProtectedRoute><ApiKeysPage /></ProtectedRoute>} />
+                <Route path="/admin/oauth-clients" element={<ProtectedRoute><OAuthClientsPage /></ProtectedRoute>} />
                 <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
                 <Route path="/admin/api-docs" element={<ProtectedRoute><ApiDocsPage /></ProtectedRoute>} />
                 <Route path="/admin/logs" element={<ProtectedRoute><AdminLogsPage /></ProtectedRoute>} />
