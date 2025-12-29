@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   FileText, 
@@ -8,8 +9,10 @@ import {
   User,
   ArrowRight,
   ChevronDown,
-  Crown
+  Crown,
+  LogIn
 } from "lucide-react";
+import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -81,6 +84,7 @@ const sections = [
 
 const HomePage = () => {
   const { user, profile } = useMember();
+  const [showLoginWidget, setShowLoginWidget] = useState(false);
   
   useSEO({
     title: "虹靈御所 | 看見命盤裡的自己，而非被命運定義",
@@ -170,7 +174,7 @@ const HomePage = () => {
           {user ? (
             <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
               <Link 
-                to="/member" 
+                to="/account" 
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-600 hover:from-amber-500/30 hover:to-orange-500/30 transition-all duration-300 group"
               >
                 <Crown className="h-5 w-5" />
@@ -180,14 +184,26 @@ const HomePage = () => {
             </div>
           ) : (
             <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
-              <Link 
-                to="/member/auth" 
+              <button 
+                onClick={() => setShowLoginWidget(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary hover:from-primary/20 hover:to-primary/10 transition-all duration-300 group"
               >
-                <Crown className="h-5 w-5" />
-                <span className="font-medium">成為會員，解鎖專屬命理報告</span>
+                <LogIn className="h-5 w-5" />
+                <span className="font-medium">會員登入 / 註冊</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </button>
+            </div>
+          )}
+          
+          {/* Login Widget Modal */}
+          {showLoginWidget && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+              <div className="w-full max-w-md animate-scale-in">
+                <MemberLoginWidget 
+                  onClose={() => setShowLoginWidget(false)}
+                  onSuccess={() => setShowLoginWidget(false)}
+                />
+              </div>
             </div>
           )}
           

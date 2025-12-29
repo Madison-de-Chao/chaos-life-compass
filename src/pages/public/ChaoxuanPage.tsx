@@ -14,11 +14,14 @@ import {
   Target,
   TrendingUp,
   Award,
-  Diamond
+  Diamond,
+  LogIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import { useSEO } from "@/hooks/useSEO";
+import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
+import { useMember } from "@/hooks/useMember";
 
 // Custom hook for scroll animations
 const useScrollReveal = () => {
@@ -140,6 +143,8 @@ const clientLogos = [
 
 const ChaoxuanPage = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [showLoginWidget, setShowLoginWidget] = useState(false);
+  const { user } = useMember();
 
   useSEO({
     title: "超烜創意 Maison de Chao | 奢華創意服務平台",
@@ -193,12 +198,36 @@ const ChaoxuanPage = () => {
               </Link>
             </nav>
 
-            <Button asChild variant="outline" size="sm" className="border-[#c9a962]/50 text-[#c9a962] hover:bg-[#c9a962]/10 hover:text-[#c9a962]">
-              <Link to="/auth">登入</Link>
-            </Button>
+            {user ? (
+              <Button asChild variant="outline" size="sm" className="border-[#c9a962]/50 text-[#c9a962] hover:bg-[#c9a962]/10 hover:text-[#c9a962]">
+                <Link to="/account">會員中心</Link>
+              </Button>
+            ) : (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-[#c9a962]/50 text-[#c9a962] hover:bg-[#c9a962]/10 hover:text-[#c9a962]"
+                onClick={() => setShowLoginWidget(true)}
+              >
+                <LogIn className="w-4 h-4 mr-2" />
+                登入
+              </Button>
+            )}
           </div>
         </div>
       </header>
+
+      {/* Login Widget Modal */}
+      {showLoginWidget && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md animate-scale-in">
+            <MemberLoginWidget 
+              onClose={() => setShowLoginWidget(false)}
+              onSuccess={() => setShowLoginWidget(false)}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
