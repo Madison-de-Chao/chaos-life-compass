@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* 3D Card Flip Effects */
 .perspective-1000 {
@@ -123,10 +127,6 @@
   75% { border-color: rgba(16, 185, 129, 0.5); }
   100% { border-color: rgba(251, 191, 36, 0.5); }
 }
-@tailwind components;
-@tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
