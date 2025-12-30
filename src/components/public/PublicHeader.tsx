@@ -115,8 +115,8 @@ const PublicHeader = () => {
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-white/80 hover:bg-white/10">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="text-white/80 hover:bg-white/10 min-h-[44px] min-w-[44px]">
+                <Menu className="h-6 w-6" />
                 <span className="sr-only">開啟選單</span>
               </Button>
             </SheetTrigger>
@@ -137,18 +137,18 @@ const PublicHeader = () => {
                   />
                 </div>
 
-                {/* Mobile Nav Links */}
-                <nav className="flex-1 py-8">
-                  <div className="space-y-2">
+                {/* Mobile Nav Links - Touch Optimized */}
+                <nav className="flex-1 py-6 overflow-y-auto">
+                  <div className="space-y-1">
                     {navLinks.map((link) => (
                       <Link
                         key={link.href}
                         to={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                        className={`flex items-center min-h-[48px] px-4 py-3 rounded-lg text-base font-medium transition-colors active:scale-[0.98] ${
                           isActive(link.href)
                             ? "text-amber-400 bg-amber-500/10"
-                            : "text-white/60 hover:text-white hover:bg-white/5"
+                            : "text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10"
                         }`}
                       >
                         {link.label}
@@ -157,29 +157,29 @@ const PublicHeader = () => {
                   </div>
                 </nav>
 
-                {/* Mobile CTA */}
+                {/* Mobile CTA - Touch Optimized */}
                 <div className="py-4 border-t border-white/10 space-y-3">
                   {loading ? (
-                    <div className="h-10 w-full bg-white/10 rounded animate-pulse" />
+                    <div className="h-12 w-full bg-white/10 rounded animate-pulse" />
                   ) : user ? (
                     <>
-                      <Button asChild className="w-full border-amber-500/30 text-amber-400 hover:bg-amber-500/10" variant="outline">
+                      <Button asChild className="w-full min-h-[48px] border-amber-500/30 text-amber-400 hover:bg-amber-500/10 active:scale-[0.98]" variant="outline">
                         <Link to="/member" onClick={() => setIsOpen(false)}>
-                          <User className="h-4 w-4 mr-2" />
+                          <User className="h-5 w-5 mr-2" />
                           會員專區
                         </Link>
                       </Button>
                       <Button 
                         onClick={handleSignOut} 
                         variant="ghost" 
-                        className="w-full text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        className="w-full min-h-[48px] text-red-400 hover:text-red-300 hover:bg-red-500/10 active:scale-[0.98]"
                       >
-                        <LogOut className="h-4 w-4 mr-2" />
+                        <LogOut className="h-5 w-5 mr-2" />
                         登出
                       </Button>
                     </>
                   ) : (
-                    <Button asChild className="w-full border-white/20 text-white/80 hover:bg-white/10" variant="outline">
+                    <Button asChild className="w-full min-h-[48px] border-white/20 text-white/80 hover:bg-white/10 active:scale-[0.98]" variant="outline">
                       <Link to="/member/auth" onClick={() => setIsOpen(false)}>
                         會員登入
                       </Link>
