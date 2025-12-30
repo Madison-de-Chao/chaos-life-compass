@@ -4,7 +4,12 @@ import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
 import { useMember } from "@/hooks/useMember";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
-import { Sparkles, Moon, Compass, User, ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
+import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
+
+// Brand logos
+import logoHongling from "@/assets/logo-hongling-yusuo.png";
+import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
+import logoYuanyi from "@/assets/logo-yuanyi-universe.png";
 
 const portalItems = [
   {
@@ -12,49 +17,45 @@ const portalItems = [
     subtitle: "Hongling Yusuo",
     description: "看見命盤裡的自己，而非被命運定義",
     cta: "進入虹靈御所",
-    icon: Moon,
+    logo: logoHongling,
     href: "/home",
     glowColor: "rgba(245, 158, 11, 0.4)",
     particleColor: "bg-amber-300",
     borderColor: "border-amber-400/20",
-    iconColor: "text-amber-300",
   },
   {
     title: "超烜創意",
     subtitle: "Maison de Chao",
     description: "讓品牌成為一面鏡子，照見獨特的本質",
     cta: "進入超烜創意",
-    icon: Sparkles,
+    logo: logoChaoxuan,
     href: "/chaoxuan",
     glowColor: "rgba(201, 169, 98, 0.5)",
     particleColor: "bg-[#c9a962]",
     borderColor: "border-[#c9a962]/20",
-    iconColor: "text-[#c9a962]",
   },
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
     description: "在思維的鏡面裡，重新命名自己的世界",
     cta: "進入元壹宇宙",
-    icon: Compass,
+    logo: logoYuanyi,
     href: "/about",
     glowColor: "rgba(168, 85, 247, 0.35)",
     particleColor: "bg-purple-300",
     borderColor: "border-purple-400/20",
-    iconColor: "text-purple-300",
   },
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
     description: "或許，只是另一個正在學會凝視自己的人",
     cta: "認識默默超",
-    icon: User,
+    logo: null, // External link, no logo
     href: "https://im-momochao.manus.space",
     isExternal: true,
     glowColor: "rgba(52, 211, 153, 0.35)",
     particleColor: "bg-emerald-300",
     borderColor: "border-emerald-400/20",
-    iconColor: "text-emerald-300",
   },
 ];
 
@@ -600,8 +601,45 @@ function MemberLoginSection() {
   );
 }
 
-// Content sections with cross-fade
-const introSections = [
+// Content sections with cross-fade - uses logos imported at top of file
+const createIntroSections = () => [
+  {
+    id: 'logos',
+    content: (
+      <div className="space-y-8">
+        <div className="flex items-center justify-center gap-6 md:gap-10">
+          <div className="relative group">
+            <div className="absolute inset-0 blur-2xl bg-amber-400/30 rounded-full animate-pulse" />
+            <img 
+              src={logoHongling} 
+              alt="虹靈御所" 
+              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_infinite]" 
+            />
+          </div>
+          <div className="relative group" style={{ animationDelay: '0.5s' }}>
+            <div className="absolute inset-0 blur-2xl bg-[#c9a962]/30 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <img 
+              src={logoChaoxuan} 
+              alt="超烜創意" 
+              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_0.5s_infinite]" 
+            />
+          </div>
+          <div className="relative group" style={{ animationDelay: '1s' }}>
+            <div className="absolute inset-0 blur-2xl bg-purple-400/30 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+            <img 
+              src={logoYuanyi} 
+              alt="元壹宇宙" 
+              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_1s_infinite]" 
+            />
+          </div>
+        </div>
+        <div className="text-[#c9a962] text-lg md:text-xl tracking-[0.3em] font-light opacity-70">
+          三個入口，一個思維系統
+        </div>
+      </div>
+    ),
+    duration: 5000,
+  },
   {
     id: 'greeting',
     content: (
@@ -655,6 +693,8 @@ const introSections = [
     duration: 7000,
   },
 ];
+
+const introSections = createIntroSections();
 
 export default function PortalPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -905,7 +945,6 @@ export default function PortalPage() {
             {/* Cards grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl w-full">
               {portalItems.map((item, index) => {
-                const Icon = item.icon;
                 const isHovered = hoveredCard === index;
                 const isVisible = cardsVisible[index];
                 const fromLeft = index % 2 === 0;
@@ -937,8 +976,8 @@ export default function PortalPage() {
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
                         <div className="relative flex items-start gap-4">
-                          <div className={`p-3 rounded-xl bg-white/5 ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                            <Icon className="w-6 h-6" />
+                          <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                            <span className="text-emerald-300 text-2xl font-display">默</span>
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
@@ -963,9 +1002,15 @@ export default function PortalPage() {
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
                         <div className="relative flex items-start gap-4">
-                          <div className={`p-3 rounded-xl bg-white/5 ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                            <Icon className="w-6 h-6" />
-                          </div>
+                          {item.logo && (
+                            <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                              <img 
+                                src={item.logo} 
+                                alt={item.title} 
+                                className="w-14 h-14 object-contain"
+                              />
+                            </div>
+                          )}
                           <div className="flex-1">
                             <h3 className="font-display text-xl text-white group-hover:text-[#c9a962] transition-colors mb-1">{item.title}</h3>
                             <p className="text-white/40 text-sm mb-2">{item.subtitle}</p>
@@ -1071,6 +1116,14 @@ export default function PortalPage() {
           50% { 
             opacity: 0.4; 
             transform: scaleY(1);
+          }
+        }
+        @keyframes float {
+          0%, 100% { 
+            transform: translateY(0);
+          }
+          50% { 
+            transform: translateY(-10px);
           }
         }
       `}</style>
