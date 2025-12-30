@@ -18,7 +18,7 @@ import {
   LogIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoChaoxuan from "@/assets/logo-chaoxuan.png";
+import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
 import { useSEO } from "@/hooks/useSEO";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { useMember } from "@/hooks/useMember";

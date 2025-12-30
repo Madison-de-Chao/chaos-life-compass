@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMember } from "@/hooks/useMember";
-import logoMaisonDeChao from "@/assets/logo-maison-de-chao.png";
-import logoHongling from "@/assets/logo-hongling.png";
+import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
+import logoHongling from "@/assets/logo-hongling-yusuo.png";
 
 const navLinks = [
   { label: "超烜創意", href: "/chaoxuan" },

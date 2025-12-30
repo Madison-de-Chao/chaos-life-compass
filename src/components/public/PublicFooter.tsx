@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import logoMaisonDeChao from "@/assets/logo-maison-de-chao.png";
-import logoHongling from "@/assets/logo-hongling.png";
+import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
+import logoHongling from "@/assets/logo-hongling-yusuo.png";
 
 const currentYear = new Date().getFullYear();
 
