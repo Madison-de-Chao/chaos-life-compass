@@ -613,7 +613,7 @@ const createIntroSections = () => [
             <img 
               src={logoHongling} 
               alt="虹靈御所" 
-              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_infinite]" 
+              className="relative w-24 h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_infinite]" 
             />
           </div>
           <div className="relative group" style={{ animationDelay: '0.5s' }}>
@@ -621,7 +621,7 @@ const createIntroSections = () => [
             <img 
               src={logoChaoxuan} 
               alt="超烜創意" 
-              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_0.5s_infinite]" 
+              className="relative w-32 h-32 md:w-44 md:h-44 object-contain animate-[float_4s_ease-in-out_0.5s_infinite]" 
             />
           </div>
           <div className="relative group" style={{ animationDelay: '1s' }}>
@@ -629,7 +629,7 @@ const createIntroSections = () => [
             <img 
               src={logoYuanyi} 
               alt="元壹宇宙" 
-              className="relative w-20 h-20 md:w-28 md:h-28 object-contain animate-[float_4s_ease-in-out_1s_infinite]" 
+              className="relative w-24 h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_1s_infinite]" 
             />
           </div>
         </div>
