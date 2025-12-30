@@ -9,6 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { MemberProtectedRoute } from "@/components/MemberProtectedRoute";
 import PageTransition from "@/components/PageTransition";
 import { MomoChatBot } from "@/components/MomoChatBot";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 
 // Admin Pages
 import Index from "./pages/Index";
@@ -133,6 +134,7 @@ const App = () => (
               </Routes>
             </PageTransition>
             <ChatBotWrapper />
+            <PWAInstallPrompt />
           </BrowserRouter>
         </TooltipProvider>
       </MemberProvider>
