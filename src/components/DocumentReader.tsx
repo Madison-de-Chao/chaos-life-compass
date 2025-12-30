@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
+import DOMPurify from "dompurify";
 
 interface DocumentReaderProps {
   content: {
@@ -38,7 +39,15 @@ function cleanHtmlContent(html: string): string {
 export function DocumentReader({ content, className }: DocumentReaderProps) {
   const cleanedHtml = useMemo(() => {
     if (content.htmlContent) {
-      return cleanHtmlContent(content.htmlContent);
+      const cleaned = cleanHtmlContent(content.htmlContent);
+      // Sanitize HTML to prevent XSS attacks
+      return DOMPurify.sanitize(cleaned, {
+        ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'b', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+                       'table', 'tr', 'td', 'th', 'thead', 'tbody', 'blockquote', 
+                       'ul', 'ol', 'li', 'a', 'span', 'div', 'img', 'figure', 'figcaption'],
+        ALLOWED_ATTR: ['class', 'style', 'href', 'target', 'src', 'alt', 'data-page-break'],
+        ALLOW_DATA_ATTR: true
+      });
     }
     return '';
   }, [content.htmlContent]);
