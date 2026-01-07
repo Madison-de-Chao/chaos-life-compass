@@ -1184,6 +1184,25 @@ export type Database = {
         Args: { doc_share_link: string }
         Returns: boolean
       }
+      get_public_document: {
+        Args: { doc_share_link: string }
+        Returns: {
+          content: Json
+          created_at: string
+          customer_id: string
+          expires_at: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          is_public: boolean
+          original_name: string
+          share_link: string
+          tts_audio_urls: Json
+          updated_at: string
+          view_count: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

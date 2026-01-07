@@ -10,13 +10,14 @@ export interface Document {
   file_size: number;
   content: any;
   share_link: string;
-  password_hash: string | null;
+  password_hash?: string | null; // Only available for admin queries, never exposed publicly
   is_public: boolean;
   view_count: number;
   created_at: string;
   updated_at: string;
   customer_id: string | null;
   expires_at: string | null;
+  tts_audio_urls?: any;
 }
 
 export interface Customer {
@@ -163,37 +164,28 @@ export function useDocuments() {
 }
 
 // Fetch document by share link (for public viewing)
-// Returns document even if is_public=false so caller can show appropriate message
+// Uses secure RPC function that never exposes password_hash
 export async function getDocumentByShareLink(shareLink: string): Promise<Document | null> {
   const { data, error } = await supabase
-    .from("documents")
-    .select("*")
-    .eq("share_link", shareLink)
-    .maybeSingle();
+    .rpc("get_public_document", { doc_share_link: shareLink });
 
   if (error) {
     console.error("Error fetching document:", error);
     return null;
   }
 
-  return data;
+  // RPC returns an array, get first item
+  if (data && data.length > 0) {
+    return data[0] as Document;
+  }
+
+  return null;
 }
 
 // Fetch public document only (for RLS-protected queries)
+// Uses secure RPC function that never exposes password_hash
 export async function getPublicDocumentByShareLink(shareLink: string): Promise<Document | null> {
-  const { data, error } = await supabase
-    .from("documents")
-    .select("*")
-    .eq("share_link", shareLink)
-    .eq("is_public", true)
-    .maybeSingle();
-
-  if (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-
-  return data;
+  return getDocumentByShareLink(shareLink);
 }
 
 // Increment view count
