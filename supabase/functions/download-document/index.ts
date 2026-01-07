@@ -11,7 +11,7 @@ const corsHeaders = {
 
 interface DownloadRequest {
   shareLink: string;
-  sessionToken?: string; // For authenticated admin access
+  password?: string; // Required for password-protected documents
 }
 
 serve(async (req: Request): Promise<Response> => {
@@ -21,7 +21,7 @@ serve(async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { shareLink, sessionToken }: DownloadRequest = await req.json();
+    const { shareLink, password }: DownloadRequest = await req.json();
 
     console.log("Download request received for shareLink:", shareLink);
 
@@ -75,12 +75,34 @@ serve(async (req: Request): Promise<Response> => {
       }
     }
 
-    // Check if document requires password (must have been verified client-side via sessionStorage)
-    // This is an additional layer - the client must have passed password verification
+    // Check if document requires password
     if (!document.password_hash) {
       console.error("Document has no password set - not ready for sharing");
       return new Response(
         JSON.stringify({ error: "此文件尚未設定密碼" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // SECURITY: Verify password before allowing download
+    if (!password) {
+      console.error("Password required but not provided");
+      return new Response(
+        JSON.stringify({ error: "需要密碼才能下載此文件" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Verify password using secure database function
+    const { data: isValidPassword, error: pwdError } = await supabaseAdmin.rpc('verify_document_password', {
+      doc_share_link: shareLink,
+      pwd: password
+    });
+
+    if (pwdError || !isValidPassword) {
+      console.error("Invalid password for download:", pwdError);
+      return new Response(
+        JSON.stringify({ error: "密碼錯誤" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
