@@ -19,6 +19,7 @@ const ViewPage = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
+  const [verifiedPassword, setVerifiedPassword] = useState<string | null>(null);
 
   // Check if user has admin role (not just authenticated)
   useEffect(() => {
@@ -134,6 +135,8 @@ const ViewPage = () => {
         setIsAuthenticated(true);
         setShowPasswordDialog(false);
         setPasswordError("");
+        // Store password for download functionality (not persisted)
+        setVerifiedPassword(password);
         // Store authentication in sessionStorage for print access
         const authKey = `doc_auth_${shareLink}`;
         sessionStorage.setItem(authKey, 'true');
@@ -154,12 +157,16 @@ const ViewPage = () => {
   };
 
   const handleDownload = async () => {
-    if (!shareLink) return;
+    if (!shareLink || !verifiedPassword) {
+      console.error('Missing shareLink or password for download');
+      return;
+    }
     
     try {
       // Use server-side Edge Function for secure signed URL generation
+      // Password is required for security verification
       const { data, error } = await supabase.functions.invoke('download-document', {
-        body: { shareLink }
+        body: { shareLink, password: verifiedPassword }
       });
       
       if (error) {
