@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, User, LogOut } from "lucide-react";
+import { Menu, User, LogOut, ExternalLink, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -10,6 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { useMember } from "@/hooks/useMember";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
@@ -20,9 +28,14 @@ const navLinks = [
   { label: "命理報告", href: "/reports" },
   { label: "超烜遊戲", href: "/games" },
   { label: "元壹筆記", href: "/notes" },
-  { label: "元壹宇宙", href: "/universe" },
   { label: "關於我們", href: "/about" },
   { label: "默默超", href: "/momo" },
+];
+
+const ecosystemLinks = [
+  { label: "默默超思維訓練系統", href: "https://mmclogic.com/", subtitle: "元壹宇宙" },
+  { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", subtitle: "元壹宇宙" },
+  { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", subtitle: "虹靈御所" },
 ];
 
 const PublicHeader = () => {
@@ -72,6 +85,34 @@ const PublicHeader = () => {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Ecosystem Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="px-4 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors inline-flex items-center gap-1">
+                  生態系統
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64 bg-[#1a1a1a] border-white/10">
+                {ecosystemLinks.map((link) => (
+                  <DropdownMenuItem key={link.href} asChild>
+                    <a 
+                      href={link.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="cursor-pointer text-white/80 hover:text-white focus:text-white flex items-center justify-between"
+                    >
+                      <div>
+                        <div className="font-medium">{link.label}</div>
+                        <div className="text-xs text-white/40">{link.subtitle}</div>
+                      </div>
+                      <ExternalLink className="h-3.5 w-3.5 text-white/40" />
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* CTA Button - Desktop */}
@@ -154,6 +195,29 @@ const PublicHeader = () => {
                         {link.label}
                       </Link>
                     ))}
+                  </div>
+                  
+                  {/* Mobile Ecosystem Links */}
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <div className="px-4 py-2 text-xs text-white/40 uppercase tracking-wider">生態系統</div>
+                    <div className="space-y-1">
+                      {ecosystemLinks.map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center justify-between min-h-[48px] px-4 py-3 rounded-lg text-base font-medium text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10 active:scale-[0.98] transition-colors"
+                        >
+                          <div>
+                            <div>{link.label}</div>
+                            <div className="text-xs text-white/40">{link.subtitle}</div>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-white/40" />
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </nav>
 
