@@ -358,7 +358,7 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-xl max-h-[90vh] overflow-y-auto data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit">
+      <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-xl max-h-[90vh] overflow-y-auto data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit p-4 sm:p-6">
         <div className="absolute -inset-px bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 rounded-lg blur-xl opacity-60 animate-pulse" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-lg" />
 
@@ -398,9 +398,9 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                   <button
                     key={idx}
                     onClick={() => handleAnswer(option.dimension, idx)}
-                    className={`w-full p-4 rounded-xl border text-left transition-all duration-300 animate-slide-up opacity-0 ${
+                    className={`w-full min-h-[56px] py-4 px-4 rounded-xl border text-left transition-all duration-300 animate-slide-up opacity-0 active:scale-[0.98] touch-manipulation ${
                       selectedOption === idx
-                        ? "border-amber-500 bg-amber-500/20"
+                        ? "border-amber-500 bg-amber-500/20 scale-[0.98]"
                         : "border-white/10 bg-white/5 hover:border-amber-500/30 hover:bg-white/10"
                     }`}
                     style={{
@@ -408,9 +408,9 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                       animationFillMode: "forwards",
                     }}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 sm:gap-4">
                       <div
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                        className={`w-7 h-7 sm:w-6 sm:h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center transition-all ${
                           selectedOption === idx
                             ? "border-amber-400 bg-amber-400"
                             : "border-white/30"
@@ -420,7 +420,7 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                           <CheckCircle2 className="w-4 h-4 text-black" />
                         )}
                       </div>
-                      <span className="text-white/80">{option.text}</span>
+                      <span className="text-white/80 text-sm sm:text-base leading-relaxed">{option.text}</span>
                     </div>
                   </button>
                 ))}
@@ -433,9 +433,9 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowDiagnosticCard(false)}
-                className="mb-4 text-white/60 hover:text-white"
+                className="mb-4 text-white/60 hover:text-white min-h-[44px] px-3 active:scale-95 touch-manipulation"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-5 h-5 mr-2" />
                 返回結果
               </Button>
 
@@ -586,12 +586,12 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
               })()}
 
               {/* Action buttons */}
-              <div className="flex flex-col gap-2 mt-4">
+              <div className="flex flex-col gap-3 mt-4">
                 <Button
                   onClick={handleDownloadCard}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold gap-2"
+                  className="w-full min-h-[48px] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold gap-2 active:scale-[0.98] touch-manipulation"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-5 h-5" />
                   下載診斷書圖片
                 </Button>
                 
@@ -599,26 +599,26 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                   <Button
                     variant="outline"
                     onClick={() => handleShare("twitter")}
-                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                    className="min-h-[48px] border-white/20 text-white/70 hover:bg-white/10 gap-1.5 text-xs sm:text-sm active:scale-95 touch-manipulation"
                   >
-                    <Twitter className="w-3.5 h-3.5 text-[#1DA1F2]" />
-                    Twitter
+                    <Twitter className="w-4 h-4 text-[#1DA1F2]" />
+                    <span className="hidden sm:inline">Twitter</span>
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => handleShare("facebook")}
-                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                    className="min-h-[48px] border-white/20 text-white/70 hover:bg-white/10 gap-1.5 text-xs sm:text-sm active:scale-95 touch-manipulation"
                   >
-                    <Facebook className="w-3.5 h-3.5 text-[#4267B2]" />
-                    Facebook
+                    <Facebook className="w-4 h-4 text-[#4267B2]" />
+                    <span className="hidden sm:inline">Facebook</span>
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => handleShare("copy")}
-                    className="border-white/20 text-white/70 hover:bg-white/10 gap-1 text-xs"
+                    className="min-h-[48px] border-white/20 text-white/70 hover:bg-white/10 gap-1.5 text-xs sm:text-sm active:scale-95 touch-manipulation"
                   >
-                    <Copy className="w-3.5 h-3.5 text-amber-400" />
-                    複製
+                    <Copy className="w-4 h-4 text-amber-400" />
+                    <span className="hidden sm:inline">複製</span>
                   </Button>
                 </div>
               </div>
@@ -706,9 +706,9 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                   {/* Generate Diagnostic Card Button */}
                   <Button
                     onClick={() => setShowDiagnosticCard(true)}
-                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold gap-2"
+                    className="w-full min-h-[48px] bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold gap-2 active:scale-[0.98] touch-manipulation"
                   >
-                    <Image className="w-4 h-4" />
+                    <Image className="w-5 h-5" />
                     生成診斷書圖片分享
                   </Button>
 
@@ -717,9 +717,9 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                     <Button
                       variant="outline"
                       onClick={() => setShowShareMenu(!showShareMenu)}
-                      className="w-full border-white/20 text-white/70 hover:bg-white/10 gap-2"
+                      className="w-full min-h-[48px] border-white/20 text-white/70 hover:bg-white/10 gap-2 active:scale-[0.98] touch-manipulation"
                     >
-                      <Share2 className="w-4 h-4" />
+                      <Share2 className="w-5 h-5" />
                       文字分享結果
                     </Button>
                     
@@ -727,21 +727,21 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                       <div className="absolute bottom-full left-0 right-0 mb-2 p-2 bg-[#1a1a1a] border border-white/20 rounded-xl shadow-xl animate-slide-up z-50">
                         <button
                           onClick={() => handleShare("twitter")}
-                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                          className="w-full flex items-center gap-3 min-h-[48px] p-3 rounded-lg hover:bg-white/10 active:bg-white/20 transition-colors touch-manipulation"
                         >
                           <Twitter className="w-5 h-5 text-[#1DA1F2]" />
                           <span className="text-white/80">分享到 Twitter</span>
                         </button>
                         <button
                           onClick={() => handleShare("facebook")}
-                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                          className="w-full flex items-center gap-3 min-h-[48px] p-3 rounded-lg hover:bg-white/10 active:bg-white/20 transition-colors touch-manipulation"
                         >
                           <Facebook className="w-5 h-5 text-[#4267B2]" />
                           <span className="text-white/80">分享到 Facebook</span>
                         </button>
                         <button
                           onClick={() => handleShare("copy")}
-                          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
+                          className="w-full flex items-center gap-3 min-h-[48px] p-3 rounded-lg hover:bg-white/10 active:bg-white/20 transition-colors touch-manipulation"
                         >
                           <Copy className="w-5 h-5 text-amber-400" />
                           <span className="text-white/80">複製連結</span>
@@ -750,13 +750,13 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                     )}
                   </div>
 
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       variant="outline"
                       onClick={resetQuiz}
-                      className="flex-1 border-white/20 text-white/70 hover:bg-white/10"
+                      className="flex-1 min-h-[48px] border-white/20 text-white/70 hover:bg-white/10 active:scale-[0.98] touch-manipulation"
                     >
-                      <RotateCcw className="w-4 h-4 mr-2" />
+                      <RotateCcw className="w-5 h-5 mr-2" />
                       重新測驗
                     </Button>
                     <Button
@@ -764,10 +764,10 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                         onOpenChange(false);
                         onComplete?.();
                       }}
-                      className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold"
+                      className="flex-1 min-h-[48px] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold active:scale-[0.98] touch-manipulation"
                     >
                       了解完整報告
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                   </div>
                 </div>
