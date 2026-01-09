@@ -7,9 +7,14 @@ const currentYear = new Date().getFullYear();
 const footerLinks = {
   explore: [
     { label: "命理報告", href: "/reports" },
-    { label: "命理遊戲", href: "/games" },
+    { label: "超烜遊戲", href: "/games" },
     { label: "元壹筆記", href: "/notes" },
     { label: "元壹宇宙", href: "/universe" },
+  ],
+  external: [
+    { label: "默默超思維訓練系統", href: "https://mmclogic.com/", external: true },
+    { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", external: true },
+    { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
   ],
   about: [
     { label: "關於虹靈御所", href: "/about" },
@@ -64,6 +69,28 @@ const PublicFooter = () => {
                   >
                     {link.label}
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* External Links */}
+          <div>
+            <h4 className="font-serif font-bold text-white/90 mb-4">生態系統</h4>
+            <ul className="space-y-3">
+              {footerLinks.external.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/50 hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                  >
+                    {link.label}
+                    <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </li>
               ))}
             </ul>
