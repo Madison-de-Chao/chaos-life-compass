@@ -383,86 +383,7 @@ const testimonials = [
   },
 ];
 
-// Three version positioning
-const threeVersions = [
-  {
-    key: "basic",
-    name: "基本版",
-    subtitle: "認識自己",
-    tagline: "讓你知道「你是誰」＋「有解」",
-    chapters: 5,
-    words: "3,000-4,000",
-    icon: BookOpen,
-    color: "from-slate-400 to-zinc-500",
-    borderColor: "border-white/20",
-    features: [
-      "開場｜你的四系統在說什麼",
-      "基本資料｜四系統命盤總覽",
-      "人生羅盤｜四系統統整導航",
-      "你是誰｜內在個性與外在性格",
-      "結語｜圓滿的你",
-    ],
-    highlights: ["認識自己的第一步", "入門級理解", "點出卡點＋告訴你「有解」"],
-    hookNote: "每章都會告訴你：這個卡點，在進階版有工具可以解。",
-  },
-  {
-    key: "standard",
-    name: "標準版",
-    subtitle: "看懂自己",
-    tagline: "完整八大面向＋「有哪些解」",
-    chapters: 8,
-    words: "6,000-8,000",
-    icon: Eye,
-    color: "from-blue-400 to-cyan-500",
-    borderColor: "border-blue-500/30",
-    features: [
-      "開場｜你的四系統在說什麼",
-      "基本資料｜四系統命盤總覽",
-      "人生羅盤｜四系統統整導航",
-      "你是誰｜內在個性與外在性格",
-      "你怎麼運作｜思考方式與行事風格",
-      "人生三大領域｜事業、愛情、金錢",
-      "特別注意｜盲點與隱藏訊號",
-      "結語｜圓滿的你",
-    ],
-    highlights: ["完整八大人生面向", "列出 3-4 個適合工具", "深度看懂運作模式"],
-    hookNote: "你已經看懂自己，準備好『使用自己』了嗎？旗艦版是下一站。",
-  },
-  {
-    key: "flagship",
-    name: "旗艦版",
-    subtitle: "使用自己",
-    tagline: "完整工具教學＋四時軍團 RPG 敘事",
-    chapters: 10,
-    words: "10,000-12,000",
-    icon: Crown,
-    color: "from-amber-400 to-amber-600",
-    borderColor: "border-amber-500/40",
-    features: [
-      "開場｜你的四系統在說什麼",
-      "基本資料｜四系統命盤總覽",
-      "人生羅盤｜四系統統整導航",
-      "你是誰｜內在個性與外在性格",
-      "你怎麼運作｜思考方式與行事風格",
-      "人生三大領域｜事業、愛情、金錢",
-      "特別注意｜盲點與隱藏訊號",
-      "結語｜圓滿的你",
-      "【旗艦專屬】思維工具箱｜默默超思維系統完整教學",
-      "【旗艦專屬】四時軍團｜你的八字 RPG 人生劇本",
-    ],
-    highlights: ["完整思維工具教學", "四時八字軍團 RPG 敘事", "人生操作系統"],
-    hookNote: null,
-    isRecommended: true,
-  },
-];
-
 // Pricing data - three tiers
-const basicPricing = [
-  { plan: "核心包", price: "1,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "人生羅盤圖 x1"], days: 5 },
-  { plan: "深度吸收包", price: "2,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 7 },
-  { plan: "完整校準包", price: "4,980", features: ["方案2 全部內容", "摘要影片", "一對一對談 30 分鐘"], days: 9 },
-];
-
 const standardPricing = [
   { plan: "核心包", price: "4,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 7 },
   { plan: "深度吸收包", price: "7,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 9 },
@@ -474,13 +395,6 @@ const flagshipPricing = [
   { plan: "深度吸收包", price: "16,800", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 14 },
   { plan: "完整校準包", price: "24,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 18 },
 ];
-
-// Pricing by version
-const allPricing = {
-  basic: basicPricing,
-  standard: standardPricing,
-  flagship: flagshipPricing,
-};
 
 const planIncludes = [
   { icon: FileText, title: "命理報告", desc: "網頁版＋PDF" },
