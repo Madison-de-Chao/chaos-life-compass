@@ -383,7 +383,86 @@ const testimonials = [
   },
 ];
 
-// Pricing data
+// Three version positioning
+const threeVersions = [
+  {
+    key: "basic",
+    name: "基本版",
+    subtitle: "認識自己",
+    tagline: "讓你知道「你是誰」＋「有解」",
+    chapters: 5,
+    words: "3,000-4,000",
+    icon: BookOpen,
+    color: "from-slate-400 to-zinc-500",
+    borderColor: "border-white/20",
+    features: [
+      "開場｜你的四系統在說什麼",
+      "基本資料｜四系統命盤總覽",
+      "人生羅盤｜四系統統整導航",
+      "你是誰｜內在個性與外在性格",
+      "結語｜圓滿的你",
+    ],
+    highlights: ["認識自己的第一步", "入門級理解", "點出卡點＋告訴你「有解」"],
+    hookNote: "每章都會告訴你：這個卡點，在進階版有工具可以解。",
+  },
+  {
+    key: "standard",
+    name: "標準版",
+    subtitle: "看懂自己",
+    tagline: "完整八大面向＋「有哪些解」",
+    chapters: 8,
+    words: "6,000-8,000",
+    icon: Eye,
+    color: "from-blue-400 to-cyan-500",
+    borderColor: "border-blue-500/30",
+    features: [
+      "開場｜你的四系統在說什麼",
+      "基本資料｜四系統命盤總覽",
+      "人生羅盤｜四系統統整導航",
+      "你是誰｜內在個性與外在性格",
+      "你怎麼運作｜思考方式與行事風格",
+      "人生三大領域｜事業、愛情、金錢",
+      "特別注意｜盲點與隱藏訊號",
+      "結語｜圓滿的你",
+    ],
+    highlights: ["完整八大人生面向", "列出 3-4 個適合工具", "深度看懂運作模式"],
+    hookNote: "你已經看懂自己，準備好『使用自己』了嗎？旗艦版是下一站。",
+  },
+  {
+    key: "flagship",
+    name: "旗艦版",
+    subtitle: "使用自己",
+    tagline: "完整工具教學＋四時軍團 RPG 敘事",
+    chapters: 10,
+    words: "10,000-12,000",
+    icon: Crown,
+    color: "from-amber-400 to-amber-600",
+    borderColor: "border-amber-500/40",
+    features: [
+      "開場｜你的四系統在說什麼",
+      "基本資料｜四系統命盤總覽",
+      "人生羅盤｜四系統統整導航",
+      "你是誰｜內在個性與外在性格",
+      "你怎麼運作｜思考方式與行事風格",
+      "人生三大領域｜事業、愛情、金錢",
+      "特別注意｜盲點與隱藏訊號",
+      "結語｜圓滿的你",
+      "【旗艦專屬】思維工具箱｜默默超思維系統完整教學",
+      "【旗艦專屬】四時軍團｜你的八字 RPG 人生劇本",
+    ],
+    highlights: ["完整思維工具教學", "四時八字軍團 RPG 敘事", "人生操作系統"],
+    hookNote: null,
+    isRecommended: true,
+  },
+];
+
+// Pricing data - three tiers
+const basicPricing = [
+  { plan: "核心包", price: "1,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "人生羅盤圖 x1"], days: 5 },
+  { plan: "深度吸收包", price: "2,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 7 },
+  { plan: "完整校準包", price: "4,980", features: ["方案2 全部內容", "摘要影片", "一對一對談 30 分鐘"], days: 9 },
+];
+
 const standardPricing = [
   { plan: "核心包", price: "4,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 7 },
   { plan: "深度吸收包", price: "7,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 9 },
@@ -395,6 +474,13 @@ const flagshipPricing = [
   { plan: "深度吸收包", price: "16,800", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 14 },
   { plan: "完整校準包", price: "24,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 18 },
 ];
+
+// Pricing by version
+const allPricing = {
+  basic: basicPricing,
+  standard: standardPricing,
+  flagship: flagshipPricing,
+};
 
 const planIncludes = [
   { icon: FileText, title: "命理報告", desc: "網頁版＋PDF" },
@@ -538,9 +624,9 @@ const ReportPage = () => {
     ogTitle: "默默超全方位命理解讀報告 - 看見自己，而非被命運定義",
   });
 
-  // Count animations with visibility trigger
-  const wordCount = useCountUp(80000, 2500, 0, heroVisible);
-  const chapterCount = useCountUp(19, 1500, 0, heroVisible);
+  // Count animations with visibility trigger - updated based on SOP
+  const wordCount = useCountUp(12000, 2500, 0, heroVisible);
+  const chapterCount = useCountUp(10, 1500, 0, heroVisible);
   const systemCount = useCountUp(4, 1000, 0, heroVisible);
 
   useEffect(() => {
@@ -1346,109 +1432,148 @@ const ReportPage = () => {
         </div>
       </section>
 
-      {/* Two Versions Section - Mirror vs Script Positioning */}
+      {/* Three Versions Section - Updated for 3 versions */}
       <section 
         id="versions"
         ref={(el) => (observerRefs.current['versions'] = el)}
         className="py-24 px-4 relative"
       >
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-7xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
               您的生命，需要哪種級別的解析？
             </h2>
             <p className="text-white/50 text-lg md:text-xl">
-              我們提供兩種精準方案，分別對應不同階段的生命需求
+              三種版本，對應不同階段的生命需求
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Basic Version */}
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+              <div className="mb-6">
+                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  基本版 Basic
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
+                  【認識自己】
+                </h3>
+                <p className="text-lg text-white/60 mb-3 font-serif">
+                  生命起點說明書
+                </p>
+                <p className="text-white/40 text-sm">
+                  第一次接觸命理、想快速了解自己的基本配置
+                </p>
+              </div>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3 text-white/50 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
+                  <span>5 章核心內容，濃縮精華</span>
+                </div>
+                <div className="flex items-start gap-3 text-white/50 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
+                  <span>讓你知道「你是誰」＋「有解」</span>
+                </div>
+                <div className="flex items-start gap-3 text-white/50 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
+                  <span>約 3,000-4,000 字精煉解讀</span>
+                </div>
+              </div>
+              
+              <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                <p className="text-white/50 italic text-sm">
+                  適合：首次接觸、預算有限、快速入門者
+                </p>
+              </div>
+            </div>
+            
             {/* Standard Version */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[40px] p-10 md:p-12 border border-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.2s' }}>
-              <div className="mb-8">
-                <span className="inline-block px-5 py-2 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-6 tracking-wide">
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+              <div className="mb-6">
+                <span className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-4 tracking-wide">
                   標準版 Standard
                 </span>
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
                   【看懂自己】
                 </h3>
-                <p className="text-2xl text-white/70 mb-4 font-serif">
-                  您的生命高畫質鏡子
+                <p className="text-lg text-blue-300/80 mb-3 font-serif">
+                  生命高畫質鏡子
                 </p>
-                <p className="text-white/50 text-lg mb-6">
-                  迷惘、不知道自己適合什麼、想了解個性與運勢輪廓
+                <p className="text-white/40 text-sm">
+                  想完整理解個性與運作模式，獲得深度自我解析
                 </p>
               </div>
               
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start gap-3 text-white/60">
-                  <CheckCircle2 className="h-5 w-5 text-white/40 mt-1" />
-                  <span>四系統整合解析，完整涵蓋內在、外在、事業、愛情、金錢等七大面向</span>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
+                  <span>8 章完整解析，涵蓋人生八大面向</span>
                 </div>
-                <div className="flex items-start gap-3 text-white/60">
-                  <CheckCircle2 className="h-5 w-5 text-white/40 mt-1" />
-                  <span>七小節落地架構，條理分明的現狀分析與生活建議</span>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
+                  <span>事業、愛情、金錢三大領域深度分析</span>
                 </div>
-                <div className="flex items-start gap-3 text-white/60">
-                  <CheckCircle2 className="h-5 w-5 text-white/40 mt-1" />
-                  <span>獲得一份清晰的「自我說明書」</span>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
+                  <span>約 6,000-8,000 字完整說明書</span>
                 </div>
               </div>
               
-              <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
-                <p className="text-white/70 italic font-serif">
-                  適合：首次接觸命理、追求高CP值解析者
+              <div className="p-4 bg-blue-500/5 rounded-xl border border-blue-500/10">
+                <p className="text-blue-300/70 italic text-sm">
+                  適合：追求完整解析、想深度認識自己者
                 </p>
               </div>
             </div>
             
             {/* Flagship Version */}
-            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[44px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
+            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
               
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[40px] p-10 md:p-12 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full hover:-translate-y-2">
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full hover:-translate-y-2">
                 <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
                 
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
+                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
                     <Star className="w-4 h-4" />
                     推薦
                   </span>
                 </div>
                 
-                <div className="mb-8 pt-4 relative z-10">
-                  <span className="inline-block px-5 py-2 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-6 tracking-wide">
+                <div className="mb-6 pt-4 relative z-10">
+                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
                     旗艦版 Flagship
                   </span>
-                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-                    【駕馭自己】
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
+                    【使用自己】
                   </h3>
-                  <p className="text-2xl text-amber-300/90 mb-4 font-serif">
-                    您的人生操作導航系統
+                  <p className="text-lg text-amber-300/90 mb-3 font-serif">
+                    人生操作導航系統
                   </p>
-                  <p className="text-white/60 text-lg mb-6">
-                    內耗嚴重、高敏感族群、知道問題卻不知如何改變、渴望系統化重組人生
+                  <p className="text-white/50 text-sm">
+                    渴望系統化重組人生、學會駕馭自己的能量
                   </p>
                 </div>
                 
-                <div className="space-y-4 mb-8 relative z-10">
-                  <div className="flex items-start gap-3 text-white/80">
-                    <Sparkles className="h-5 w-5 text-amber-400 mt-1" />
-                    <span>默默超思維系統 (MomoChao Thinking OS)，植入情緒、行動、心智、價值的運作邏輯</span>
+                <div className="space-y-3 mb-6 relative z-10">
+                  <div className="flex items-start gap-3 text-white/70 text-sm">
+                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <span>10 章完整系統，含思維工具箱＋四時軍團</span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
-                    <Sparkles className="h-5 w-5 text-amber-400 mt-1" />
-                    <span>四時八字軍團敘事，將八字結構轉化為史詩般的生命戰略兵法</span>
+                  <div className="flex items-start gap-3 text-white/70 text-sm">
+                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <span>默默超思維系統完整教學（情緒/行動/心智/價值）</span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
-                    <Sparkles className="h-5 w-5 text-amber-400 mt-1" />
-                    <span>獲得一套專屬的「人生決策與能量管理系統」</span>
+                  <div className="flex items-start gap-3 text-white/70 text-sm">
+                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <span>約 10,000-12,000 字人生操作系統</span>
                   </div>
                 </div>
                 
-                <div className="p-6 bg-amber-500/10 rounded-2xl border border-amber-500/20 relative z-10">
-                  <p className="text-amber-300/90 italic font-serif">
-                    適合：創業者、高階主管、創作者、追求靈魂深度進化者
+                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20 relative z-10">
+                  <p className="text-amber-300/90 italic text-sm">
+                    適合：創業者、高敏感族群、追求靈魂進化者
                   </p>
                 </div>
               </div>
@@ -1479,59 +1604,59 @@ const ReportPage = () => {
             <table className="w-full">
               <thead>
                 <tr className="bg-white/5">
-                  <th className="text-left p-6 text-white font-semibold border-b border-white/10">功能項目</th>
-                  <th className="p-6 text-white/70 border-b border-white/10 min-w-[140px]">
-                    <div className="text-center">
-                      <span className="block text-sm">標準版</span>
-                      <span className="block text-xs text-white/40">看懂自己</span>
+                  <th className="text-left p-5 text-white font-semibold border-b border-white/10">章節模組</th>
+                  <th className="p-5 text-white/70 border-b border-white/10 min-w-[100px]">
+                    <div className="text-center text-xs">
+                      <span className="block">基本版</span>
+                      <span className="block text-white/40">認識自己</span>
                     </div>
                   </th>
-                  <th className="p-6 border-b border-amber-500/30 min-w-[140px] bg-amber-500/5">
-                    <div className="text-center">
+                  <th className="p-5 text-blue-300 border-b border-blue-500/20 min-w-[100px]">
+                    <div className="text-center text-xs">
+                      <span className="block">標準版</span>
+                      <span className="block text-blue-300/60">看懂自己</span>
+                    </div>
+                  </th>
+                  <th className="p-5 border-b border-amber-500/30 min-w-[100px] bg-amber-500/5">
+                    <div className="text-center text-xs">
                       <span className="block text-amber-400 font-bold">旗艦版</span>
-                      <span className="block text-xs text-amber-300/60">駕馭自己</span>
+                      <span className="block text-amber-300/60">使用自己</span>
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {[
-                  { feature: "四系統整合分析", desc: "紫微、八字、占星、人類圖", standard: true, flagship: true },
-                  { feature: "基礎章節", desc: "內在、外在、思考、行事風格", standard: true, flagship: true },
-                  { feature: "人生三大領域", desc: "事業、愛情、金錢深度解析", standard: true, flagship: true },
-                  { feature: "人生羅盤總覽圖", desc: "一張看懂四系統定位", standard: true, flagship: true },
-                  { feature: "落地小提醒", desc: "每章可執行建議", standard: true, flagship: true },
-                  { feature: "默默超不負責提醒", desc: "辛辣但溫暖的真心話", standard: true, flagship: true },
-                  { feature: "默默超思維系統", desc: "情緒/行動/心智/價值運作邏輯", standard: false, flagship: true, highlight: true },
-                  { feature: "思維啟動器", desc: "關鍵金句 + 視覺化流程圖", standard: false, flagship: true, highlight: true },
-                  { feature: "四時八字軍團敘事", desc: "命盤化身史詩級戰略故事", standard: false, flagship: true, highlight: true },
-                  { feature: "年齡階段指引", desc: "根據人生階段的專屬建議", standard: false, flagship: true, highlight: true },
-                  { feature: "能量管理SOP", desc: "個人化能量補充與釋放策略", standard: false, flagship: true, highlight: true },
-                  { feature: "預估總字數", desc: "", standard: "約 40,000 字", flagship: "約 80,000+ 字", isText: true },
-                  { feature: "定位", desc: "", standard: "自我說明書", flagship: "人生操作系統", isText: true },
+                  { feature: "01 開場", basic: "精簡", standard: true, flagship: true },
+                  { feature: "02 基本資料", basic: true, standard: true, flagship: true },
+                  { feature: "03 人生羅盤", basic: true, standard: true, flagship: true },
+                  { feature: "04 你是誰", basic: "精簡", standard: true, flagship: true },
+                  { feature: "05 你怎麼運作", basic: false, standard: true, flagship: true },
+                  { feature: "06 人生三大領域", basic: false, standard: true, flagship: true },
+                  { feature: "07 特別注意", basic: false, standard: "精簡", flagship: true },
+                  { feature: "08 結語", basic: "精簡", standard: true, flagship: true },
+                  { feature: "09 思維工具箱", basic: false, standard: false, flagship: true, highlight: true },
+                  { feature: "10 四時軍團", basic: false, standard: false, flagship: true, highlight: true },
+                  { feature: "字數", basic: "3-4千", standard: "6-8千", flagship: "1-1.2萬", isText: true },
                 ].map((row, idx) => (
                   <tr key={idx} className={`${row.highlight ? 'bg-amber-500/5' : ''} hover:bg-white/5 transition-colors`}>
-                    <td className="p-5">
-                      <div className="font-medium text-white">{row.feature}</div>
-                      {row.desc && <div className="text-sm text-white/40 mt-1">{row.desc}</div>}
+                    <td className="p-4 text-white text-sm font-medium">{row.feature}</td>
+                    <td className="p-4 text-center">
+                      {row.isText ? <span className="text-white/50 text-xs">{row.basic}</span> : 
+                       row.basic === true ? <CheckCircle2 className="w-4 h-4 text-green-400 mx-auto" /> :
+                       row.basic === false ? <X className="w-4 h-4 text-white/20 mx-auto" /> :
+                       <span className="text-white/40 text-xs">{row.basic}</span>}
                     </td>
-                    <td className="p-5 text-center">
-                      {row.isText ? (
-                        <span className="text-white/60 text-sm">{row.standard}</span>
-                      ) : row.standard ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-400 mx-auto" />
-                      ) : (
-                        <X className="w-5 h-5 text-white/20 mx-auto" />
-                      )}
+                    <td className="p-4 text-center">
+                      {row.isText ? <span className="text-blue-300/70 text-xs">{row.standard}</span> :
+                       row.standard === true ? <CheckCircle2 className="w-4 h-4 text-blue-400 mx-auto" /> :
+                       row.standard === false ? <X className="w-4 h-4 text-white/20 mx-auto" /> :
+                       <span className="text-blue-300/50 text-xs">{row.standard}</span>}
                     </td>
-                    <td className={`p-5 text-center ${row.highlight ? 'bg-amber-500/5' : ''}`}>
-                      {row.isText ? (
-                        <span className="text-amber-400 font-semibold text-sm">{row.flagship}</span>
-                      ) : row.flagship ? (
-                        <CheckCircle2 className="w-5 h-5 text-amber-400 mx-auto" />
-                      ) : (
-                        <X className="w-5 h-5 text-white/20 mx-auto" />
-                      )}
+                    <td className={`p-4 text-center ${row.highlight ? 'bg-amber-500/5' : ''}`}>
+                      {row.isText ? <span className="text-amber-400 font-bold text-xs">{row.flagship}</span> :
+                       row.flagship ? <CheckCircle2 className="w-4 h-4 text-amber-400 mx-auto" /> :
+                       <X className="w-4 h-4 text-white/20 mx-auto" />}
                     </td>
                   </tr>
                 ))}
@@ -1539,77 +1664,13 @@ const ReportPage = () => {
             </table>
           </div>
           
-          {/* Pricing Comparison */}
-          <div className={`mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 transition-all duration-1000 delay-200 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Standard Pricing */}
-            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-3">標準版</span>
-                <h3 className="font-serif text-xl font-bold text-white">看懂自己</h3>
-              </div>
-              <div className="space-y-3">
-                {standardPricing.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-bold text-white">NT${item.price}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Flagship Pricing */}
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/30 via-amber-400/30 to-amber-500/30 rounded-[28px] blur-lg opacity-50" />
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-3xl p-8 border-2 border-amber-500/30">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-xs font-bold shadow-[0_0_15px_rgba(251,191,36,0.4)]">
-                    <Star className="w-3 h-3" />
-                    推薦
-                  </span>
-                </div>
-                <div className="text-center mb-6 pt-2">
-                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-3">旗艦版</span>
-                  <h3 className="font-serif text-xl font-bold text-white">駕馭自己</h3>
-                </div>
-                <div className="space-y-3">
-                  {flagshipPricing.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 transition-all duration-300">
-                      <div>
-                        <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                        <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xl font-bold text-amber-400">NT${item.price}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          
           {/* Key Difference Callout */}
-          <div className={`mt-10 p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-purple-500 flex items-center justify-center">
-                  <Scale className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <div className="text-center md:text-left">
-                <h3 className="text-xl font-bold text-white mb-2">核心差異一句話</h3>
-                <p className="text-white/70">
-                  <span className="text-white/90 font-medium">標準版</span>是一面清晰的鏡子，讓你「看見」自己的模樣；
-                  <br className="hidden md:block" />
-                  <span className="text-amber-400 font-medium">旗艦版</span>是一套完整的操作系統，教你「如何駕馭」這個自己。
-                </p>
-              </div>
-            </div>
+          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-white/70 text-center">
+              <span className="text-white/90">基本版</span>讓你「認識」自己；
+              <span className="text-blue-300 mx-1">標準版</span>讓你「看懂」自己；
+              <span className="text-amber-400 mx-1">旗艦版</span>教你「使用」自己。
+            </p>
           </div>
         </div>
       </section>
