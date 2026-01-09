@@ -384,6 +384,12 @@ const testimonials = [
 ];
 
 // Pricing data - three tiers
+const basicPricing = [
+  { plan: "核心包", price: "1,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "人生羅盤圖 x1"], days: 5 },
+  { plan: "深度吸收包", price: "2,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 7 },
+  { plan: "完整校準包", price: "4,980", features: ["方案2 全部內容", "摘要影片", "一對一對談 30 分鐘"], days: 9 },
+];
+
 const standardPricing = [
   { plan: "核心包", price: "4,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 7 },
   { plan: "深度吸收包", price: "7,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 9 },
@@ -2058,55 +2064,88 @@ const ReportPage = () => {
             ))}
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Standard Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-white/10 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="text-center mb-8">
-                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-4">標準版</span>
-                <h3 className="font-serif text-2xl font-bold text-white">看懂自己</h3>
+          {/* Pricing Cards - Three Columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Basic Pricing */}
+            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-slate-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-slate-500/10 text-slate-300 rounded-full text-sm font-medium mb-3">基本版</span>
+                <h3 className="font-serif text-xl font-bold text-white">認識自己</h3>
+                <p className="text-white/40 text-xs mt-2">5 章節・3,000-4,000 字</p>
               </div>
-              <div className="space-y-4">
-                {standardPricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300">
+              <div className="space-y-3">
+                {basicPricing.map((item, idx) => (
+                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-slate-500/5 hover:bg-slate-500/10 border border-slate-500/10 hover:border-slate-500/20 transition-all duration-300">
                     <div>
-                      <h4 className="font-bold text-white">{item.plan}</h4>
-                      <p className="text-white/40 text-sm">{item.days} 個工作天</p>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-white">NT${item.price}</p>
+                      <p className="text-lg font-bold text-slate-300">NT${item.price}</p>
                     </div>
                   </div>
                 ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-white/30 text-xs text-center">入門首選・點出方向</p>
+              </div>
+            </div>
+            
+            {/* Standard Pricing */}
+            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-blue-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-300 rounded-full text-sm font-medium mb-3">標準版</span>
+                <h3 className="font-serif text-xl font-bold text-white">看懂自己</h3>
+                <p className="text-white/40 text-xs mt-2">8 章節・6,000-8,000 字</p>
+              </div>
+              <div className="space-y-3">
+                {standardPricing.map((item, idx) => (
+                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
+                    <div>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-lg font-bold text-blue-300">NT${item.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-white/30 text-xs text-center">完整八大面向・深度理解</p>
               </div>
             </div>
             
             {/* Flagship Pricing */}
             <div className={`relative transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/40 via-amber-400/40 to-amber-500/40 rounded-[36px] blur-xl opacity-40 animate-gradient-shift bg-[length:200%_200%]" />
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/30">
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-6 md:p-8 border-2 border-amber-500/30">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="inline-flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-xs font-bold shadow-[0_0_20px_rgba(251,191,36,0.4)] uppercase tracking-wider">
                     <Star className="w-3 h-3" />
                     推薦
                   </span>
                 </div>
-                <div className="text-center mb-8 pt-2">
-                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4">旗艦版</span>
-                  <h3 className="font-serif text-2xl font-bold text-white">駕馭自己</h3>
+                <div className="text-center mb-6 pt-2">
+                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-3">旗艦版</span>
+                  <h3 className="font-serif text-xl font-bold text-white">使用自己</h3>
+                  <p className="text-white/40 text-xs mt-2">10 章節・10,000-12,000 字</p>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {flagshipPricing.map((item, idx) => (
-                    <div key={idx} className="group flex items-center justify-between p-5 rounded-2xl bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300">
+                    <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300">
                       <div>
-                        <h4 className="font-bold text-white">{item.plan}</h4>
-                        <p className="text-white/40 text-sm">{item.days} 個工作天</p>
+                        <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                        <p className="text-white/40 text-xs">{item.days} 個工作天</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-amber-400">NT${item.price}</p>
+                        <p className="text-lg font-bold text-amber-400">NT${item.price}</p>
                       </div>
                     </div>
                   ))}
+                </div>
+                <div className="mt-6 pt-4 border-t border-amber-500/20">
+                  <p className="text-amber-400/50 text-xs text-center">完整思維系統・人生操作手冊</p>
                 </div>
               </div>
             </div>
