@@ -183,7 +183,7 @@ const LifeCompassForm = () => {
         <Button 
           variant="outline"
           size="lg"
-          className="group border-2 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400 rounded-full px-8 py-6 text-lg"
+          className="group border-2 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400 rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg min-h-[52px] active:scale-95"
         >
           <Compass className="w-5 h-5 mr-2 group-hover:rotate-45 transition-transform duration-500" />
           體驗人生羅盤
@@ -191,7 +191,7 @@ const LifeCompassForm = () => {
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="bg-gradient-to-br from-[#0a0a0a] via-[#121212] to-[#0a0a0a] border border-emerald-500/30 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-gradient-to-br from-[#0a0a0a] via-[#121212] to-[#0a0a0a] border border-emerald-500/30 text-white max-w-2xl max-h-[85vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl flex items-center gap-3">
             <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30">
@@ -207,20 +207,20 @@ const LifeCompassForm = () => {
         {!showResults ? (
           <>
             {/* Progress Bar */}
-            <div className="flex items-center gap-2 mb-6">
+            <div className="flex items-center gap-1.5 sm:gap-2 mb-4 sm:mb-6">
               {[1, 2, 3, 4].map((s) => (
                 <div key={s} className="flex-1 flex items-center">
-                  <div className={`flex-1 h-1 rounded-full transition-all duration-300 ${s <= step ? 'bg-emerald-500' : 'bg-white/10'}`} />
+                  <div className={`flex-1 h-1.5 sm:h-1 rounded-full transition-all duration-300 ${s <= step ? 'bg-emerald-500' : 'bg-white/10'}`} />
                 </div>
               ))}
             </div>
             
             {/* Step Labels */}
-            <div className="flex justify-between text-xs text-white/40 mb-8 -mt-4">
-              <span className={step === 1 ? 'text-emerald-400' : ''}>基本資訊</span>
-              <span className={step === 2 ? 'text-emerald-400' : ''}>紫微斗數</span>
-              <span className={step === 3 ? 'text-emerald-400' : ''}>占星</span>
-              <span className={step === 4 ? 'text-emerald-400' : ''}>人類圖</span>
+            <div className="flex justify-between text-[10px] sm:text-xs text-white/40 mb-6 sm:mb-8 -mt-2 sm:-mt-4">
+              <span className={step === 1 ? 'text-emerald-400 font-medium' : ''}>基本資訊</span>
+              <span className={step === 2 ? 'text-emerald-400 font-medium' : ''}>紫微斗數</span>
+              <span className={step === 3 ? 'text-emerald-400 font-medium' : ''}>占星</span>
+              <span className={step === 4 ? 'text-emerald-400 font-medium' : ''}>人類圖</span>
             </div>
 
             {/* Step 1: 基本資訊 */}
@@ -232,7 +232,7 @@ const LifeCompassForm = () => {
                   <span className="text-xs text-white/40">（用於自動計算八字）</span>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
                   <div>
                     <Label className="text-white/60 text-sm">出生年</Label>
                     <Input
@@ -240,18 +240,18 @@ const LifeCompassForm = () => {
                       placeholder="1990"
                       value={formData.birthYear}
                       onChange={(e) => updateFormData("birthYear", e.target.value)}
-                      className="bg-white/5 border-white/10 text-white mt-1"
+                      className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm"
                     />
                   </div>
                   <div>
                     <Label className="text-white/60 text-sm">出生月</Label>
                     <Select value={formData.birthMonth} onValueChange={(v) => updateFormData("birthMonth", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="月" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10">
                         {[...Array(12)].map((_, i) => (
-                          <SelectItem key={i + 1} value={String(i + 1)} className="text-white hover:bg-white/10">
+                          <SelectItem key={i + 1} value={String(i + 1)} className="text-white hover:bg-white/10 min-h-[44px]">
                             {i + 1} 月
                           </SelectItem>
                         ))}
@@ -261,12 +261,12 @@ const LifeCompassForm = () => {
                   <div>
                     <Label className="text-white/60 text-sm">出生日</Label>
                     <Select value={formData.birthDay} onValueChange={(v) => updateFormData("birthDay", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="日" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10 max-h-60">
                         {[...Array(31)].map((_, i) => (
-                          <SelectItem key={i + 1} value={String(i + 1)} className="text-white hover:bg-white/10">
+                          <SelectItem key={i + 1} value={String(i + 1)} className="text-white hover:bg-white/10 min-h-[44px]">
                             {i + 1} 日
                           </SelectItem>
                         ))}
@@ -275,16 +275,16 @@ const LifeCompassForm = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label className="text-white/60 text-sm">出生時辰</Label>
                     <Select value={formData.birthHour} onValueChange={(v) => updateFormData("birthHour", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="選擇時辰" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10 max-h-60">
                         {["子時 (23-01)", "丑時 (01-03)", "寅時 (03-05)", "卯時 (05-07)", "辰時 (07-09)", "巳時 (09-11)", "午時 (11-13)", "未時 (13-15)", "申時 (15-17)", "酉時 (17-19)", "戌時 (19-21)", "亥時 (21-23)"].map((hour) => (
-                          <SelectItem key={hour} value={hour} className="text-white hover:bg-white/10">
+                          <SelectItem key={hour} value={hour} className="text-white hover:bg-white/10 min-h-[44px] text-sm">
                             {hour}
                           </SelectItem>
                         ))}
@@ -294,12 +294,12 @@ const LifeCompassForm = () => {
                   <div>
                     <Label className="text-white/60 text-sm">性別</Label>
                     <Select value={formData.gender} onValueChange={(v) => updateFormData("gender", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="選擇性別" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10">
-                        <SelectItem value="male" className="text-white hover:bg-white/10">男</SelectItem>
-                        <SelectItem value="female" className="text-white hover:bg-white/10">女</SelectItem>
+                        <SelectItem value="male" className="text-white hover:bg-white/10 min-h-[44px]">男</SelectItem>
+                        <SelectItem value="female" className="text-white hover:bg-white/10 min-h-[44px]">女</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -453,16 +453,16 @@ const LifeCompassForm = () => {
                   <h3 className="font-bold text-lg">人類圖配置</h3>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label className="text-white/60 text-sm">類型</Label>
                     <Select value={formData.hdType} onValueChange={(v) => updateFormData("hdType", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="選擇類型" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10">
                         {humanDesignTypes.map((type) => (
-                          <SelectItem key={type} value={type} className="text-white hover:bg-white/10">
+                          <SelectItem key={type} value={type} className="text-white hover:bg-white/10 min-h-[44px] text-base sm:text-sm">
                             {type}
                           </SelectItem>
                         ))}
@@ -472,12 +472,12 @@ const LifeCompassForm = () => {
                   <div>
                     <Label className="text-white/60 text-sm">策略</Label>
                     <Select value={formData.hdStrategy} onValueChange={(v) => updateFormData("hdStrategy", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                         <SelectValue placeholder="選擇策略" />
                       </SelectTrigger>
                       <SelectContent className="bg-[#1a1a1a] border-white/10">
                         {humanDesignStrategies.map((strategy) => (
-                          <SelectItem key={strategy} value={strategy} className="text-white hover:bg-white/10">
+                          <SelectItem key={strategy} value={strategy} className="text-white hover:bg-white/10 min-h-[44px] text-base sm:text-sm">
                             {strategy}
                           </SelectItem>
                         ))}
@@ -489,12 +489,12 @@ const LifeCompassForm = () => {
                 <div>
                   <Label className="text-white/60 text-sm">內在權威</Label>
                   <Select value={formData.hdAuthority} onValueChange={(v) => updateFormData("hdAuthority", v)}>
-                    <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
+                    <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1 min-h-[48px] text-base sm:text-sm">
                       <SelectValue placeholder="選擇內在權威" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#1a1a1a] border-white/10">
                       {humanDesignAuthorities.map((auth) => (
-                        <SelectItem key={auth} value={auth} className="text-white hover:bg-white/10">
+                        <SelectItem key={auth} value={auth} className="text-white hover:bg-white/10 min-h-[44px] text-base sm:text-sm">
                           {auth}
                         </SelectItem>
                       ))}
@@ -504,11 +504,11 @@ const LifeCompassForm = () => {
 
                 <div>
                   <Label className="text-white/60 text-sm mb-2 block">G中心閘門（可多選）</Label>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {gCenterGates.map((gate) => (
                       <label
                         key={gate}
-                        className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all ${
+                        className={`flex items-center gap-2 p-3 sm:p-2 rounded-lg border cursor-pointer transition-all min-h-[48px] active:scale-95 ${
                           formData.hdGCenterGates.includes(gate)
                             ? 'bg-emerald-500/20 border-emerald-500/50'
                             : 'bg-white/5 border-white/10 hover:border-white/20'
@@ -517,9 +517,9 @@ const LifeCompassForm = () => {
                         <Checkbox
                           checked={formData.hdGCenterGates.includes(gate)}
                           onCheckedChange={() => toggleGCenterGate(gate)}
-                          className="border-white/30 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
+                          className="border-white/30 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500 w-5 h-5 sm:w-4 sm:h-4"
                         />
-                        <span className="text-xs text-white/70">{gate}</span>
+                        <span className="text-sm sm:text-xs text-white/70">{gate}</span>
                       </label>
                     ))}
                   </div>
@@ -534,22 +534,22 @@ const LifeCompassForm = () => {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between mt-6 sm:mt-8 gap-3">
               <Button
                 variant="ghost"
                 onClick={handlePrev}
                 disabled={step === 1}
-                className="text-white/60 hover:text-white hover:bg-white/10"
+                className="text-white/60 hover:text-white hover:bg-white/10 min-h-[48px] px-4 sm:px-6 active:scale-95"
               >
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                上一步
+                <ChevronLeft className="w-5 h-5 sm:w-4 sm:h-4 mr-1" />
+                <span className="text-base sm:text-sm">上一步</span>
               </Button>
               <Button
                 onClick={handleNext}
-                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white"
+                className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white min-h-[48px] px-6 sm:px-6 active:scale-95"
               >
-                {step === totalSteps ? '生成羅盤' : '下一步'}
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <span className="text-base sm:text-sm">{step === totalSteps ? '生成羅盤' : '下一步'}</span>
+                <ChevronRight className="w-5 h-5 sm:w-4 sm:h-4 ml-1" />
               </Button>
             </div>
           </>
@@ -646,13 +646,13 @@ const LifeCompassForm = () => {
                 想要完整的四系統深度解析報告？
               </p>
               <Button
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold min-h-[48px] text-base active:scale-95"
                 onClick={() => {
                   setOpen(false);
                   document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <Sparkles className="w-4 h-4 mr-2" />
+                <Sparkles className="w-5 h-5 mr-2" />
                 查看完整報告方案
               </Button>
             </div>
@@ -660,9 +660,9 @@ const LifeCompassForm = () => {
             <Button
               variant="ghost"
               onClick={handleReset}
-              className="w-full text-white/40 hover:text-white/60"
+              className="w-full text-white/40 hover:text-white/60 min-h-[48px] text-base active:scale-95"
             >
-              <RotateCcw className="w-4 h-4 mr-2" />
+              <RotateCcw className="w-5 h-5 mr-2" />
               重新填寫
             </Button>
           </div>

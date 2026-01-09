@@ -504,19 +504,25 @@ const TestimonialsCarousel = ({ testimonials, isVisible }: { testimonials: Testi
         </div>
       </div>
       
-      {/* Pagination Dots */}
-      <div className="flex justify-center gap-2 mt-8">
+      {/* Pagination Dots - Mobile optimized touch targets */}
+      <div className="flex justify-center gap-3 sm:gap-2 mt-8">
         {testimonials.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center transition-all duration-300 ${
               selectedIndex % testimonials.length === index 
-                ? 'bg-amber-400 w-8 shadow-[0_0_10px_rgba(251,191,36,0.5)]' 
-                : 'bg-white/20 hover:bg-white/40'
+                ? '' 
+                : ''
             }`}
             aria-label={`Go to slide ${index + 1}`}
-          />
+          >
+            <span className={`block rounded-full transition-all duration-300 ${
+              selectedIndex % testimonials.length === index 
+                ? 'w-8 h-3 bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]' 
+                : 'w-3 h-3 bg-white/20 hover:bg-white/40'
+            }`} />
+          </button>
         ))}
       </div>
       
@@ -698,20 +704,21 @@ const ReportPage = () => {
           {/* Value-Added Examples - Interactive Click to Open Dialog */}
           <div className="mb-10 animate-slide-up" style={{ animationDelay: '0.7s' }}>
             <p className="text-amber-300/70 text-sm mb-4 tracking-wider uppercase">點擊查看附加價值詳情</p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
               {valueAddedServices.map((item, idx) => (
                 <button 
                   key={idx} 
                   className="group relative"
                   onClick={() => setSelectedService(item)}
                 >
-                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95">
-                    <item.icon className="w-4 h-4 text-amber-400/70 group-hover:text-amber-400 transition-colors" />
+                  {/* Mobile-optimized touch target with minimum 44px height */}
+                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-3 sm:py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 min-h-[44px]">
+                    <item.icon className="w-5 h-5 sm:w-4 sm:h-4 text-amber-400/70 group-hover:text-amber-400 transition-colors" />
                     <span className="text-white/70 text-sm group-hover:text-white transition-colors">{item.label}</span>
-                    <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
+                    <ArrowRight className="w-4 h-4 sm:w-3 sm:h-3 text-white/30 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                   </div>
-                  {/* Tooltip on hover */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-amber-500/30 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-20">
+                  {/* Tooltip on hover - hidden on touch devices */}
+                  <div className="hidden sm:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-amber-500/30 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-20">
                     <p className="text-amber-300 text-xs">{item.desc}</p>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-amber-500/30" />
                   </div>
@@ -780,13 +787,13 @@ const ReportPage = () => {
             融合紫微、八字、占星、人類圖四維運算，為您安裝一套<span className="text-amber-400">人生操作系統</span>。
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-5 justify-center animate-slide-up" style={{ animationDelay: '1s' }}>
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '1s' }}>
             <ReportPreview />
             <LifeCompassForm />
             <Button 
               variant="outline" 
               size="xl" 
-              className="group text-lg px-10 py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300 transform hover:scale-105"
+              className="group text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[52px]"
               onClick={scrollToPlans}
             >
               選擇版本
@@ -1153,9 +1160,9 @@ const ReportPage = () => {
                 <Collapsible key={catIndex} defaultOpen={false} className="group">
                   <div className="bg-[#0a0a0a]/80 rounded-xl border border-white/10 overflow-hidden">
                     <CollapsibleTrigger className="w-full">
-                      <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-3 flex items-center justify-between">
+                      <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-4 flex items-center justify-between min-h-[52px] active:bg-amber-900/50 transition-colors">
                         <h4 className="text-amber-400 font-medium text-sm">{category.dimension}</h4>
-                        <ChevronDown className="w-4 h-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                        <ChevronDown className="w-5 h-5 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
@@ -2004,8 +2011,8 @@ const ReportPage = () => {
               {/* Expandable SOP Details */}
               <Collapsible>
                 <CollapsibleTrigger className="w-full group">
-                  <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors cursor-pointer">
-                    <span className="text-cyan-300 font-medium">查看詳細寫作規範</span>
+                  <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors cursor-pointer min-h-[52px] active:scale-[0.98]">
+                    <span className="text-cyan-300 font-medium text-base">查看詳細寫作規範</span>
                     <ChevronDown className="w-5 h-5 text-cyan-400 group-data-[state=open]:rotate-180 transition-transform" />
                   </div>
                 </CollapsibleTrigger>
@@ -2533,7 +2540,7 @@ const ReportPage = () => {
               <Button
                 size="lg"
                 onClick={() => setShowQuiz(true)}
-                className="group text-lg px-10 py-6 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 hover:from-amber-400 hover:to-purple-400 text-white font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105"
+                className="group text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-6 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 hover:from-amber-400 hover:to-purple-400 text-white font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105 active:scale-95 min-h-[56px]"
               >
                 <Sparkles className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
                 開始測驗
@@ -2636,10 +2643,10 @@ const ReportPage = () => {
             現在就選擇您的版本，啟動這場深度的自我升級之旅。
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center px-4">
             <Button 
               size="xl" 
-              className="group text-lg px-12 py-7 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_80px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105"
+              className="group text-base sm:text-lg px-10 sm:px-12 py-6 sm:py-7 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_80px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105 active:scale-95 min-h-[56px]"
               onClick={scrollToPlans}
             >
               選擇你的方案

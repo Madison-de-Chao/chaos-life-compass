@@ -307,47 +307,50 @@ const ReportPreview = () => {
         <Button 
           variant="outline" 
           size="lg"
-          className="group bg-card/50 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-300"
+          className="group bg-card/50 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-300 min-h-[52px] px-6 sm:px-8 active:scale-95"
         >
           <BookOpen className="h-5 w-5 mr-2 text-primary group-hover:scale-110 transition-transform" />
-          免費試閱報告
+          <span className="text-base sm:text-lg">免費試閱報告</span>
           <ChevronRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="max-w-4xl max-h-[85vh] bg-card border-border/50">
-        <DialogHeader className="pb-4 border-b border-border/30">
-          <DialogTitle className="font-serif text-2xl text-foreground flex items-center gap-3">
-            <Sparkles className="h-6 w-6 text-primary" />
+      <DialogContent className="max-w-4xl max-h-[90vh] sm:max-h-[85vh] bg-card border-border/50 p-4 sm:p-6">
+        <DialogHeader className="pb-3 sm:pb-4 border-b border-border/30">
+          <DialogTitle className="font-serif text-xl sm:text-2xl text-foreground flex items-center gap-2 sm:gap-3">
+            <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
             報告試閱
           </DialogTitle>
-          <p className="text-muted-foreground text-sm mt-2">
-            體驗「默默超全方位命理解讀報告」三種版本的內容風格
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1.5 sm:mt-2">
+            體驗三種版本的內容風格
           </p>
         </DialogHeader>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
-          <TabsList className="grid grid-cols-3 w-full max-w-lg mx-auto bg-muted/30">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-3 sm:mt-4">
+          <TabsList className="grid grid-cols-3 w-full max-w-lg mx-auto bg-muted/30 h-auto p-1">
             <TabsTrigger 
               value="basic" 
-              className="data-[state=active]:bg-slate-600 data-[state=active]:text-white text-xs sm:text-sm"
+              className="data-[state=active]:bg-slate-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
             >
-              <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">基本版</span>「認識」
+              <BookOpen className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+              <span className="hidden xs:inline sm:inline">基本版</span>
+              <span className="xs:hidden sm:hidden">認識</span>
             </TabsTrigger>
             <TabsTrigger 
               value="standard" 
-              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
             >
-              <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">標準版</span>「看懂」
+              <Eye className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+              <span className="hidden xs:inline sm:inline">標準版</span>
+              <span className="xs:hidden sm:hidden">看懂</span>
             </TabsTrigger>
             <TabsTrigger 
               value="flagship"
-              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white text-xs sm:text-sm"
+              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
             >
-              <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">旗艦版</span>「使用」
+              <Crown className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+              <span className="hidden xs:inline sm:inline">旗艦版</span>
+              <span className="xs:hidden sm:hidden">使用</span>
             </TabsTrigger>
           </TabsList>
           
