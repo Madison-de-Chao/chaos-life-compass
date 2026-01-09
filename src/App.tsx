@@ -33,6 +33,7 @@ import MomoPage from "./pages/public/MomoPage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
 import NotePage from "./pages/public/NotePage";
+import GamesPage from "./pages/public/GamesPage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -91,6 +92,7 @@ const App = () => (
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/momo" element={<MomoPage />} />
                 <Route path="/reports" element={<ReportPage />} />
+                <Route path="/games" element={<GamesPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
