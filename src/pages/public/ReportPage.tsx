@@ -51,7 +51,9 @@ import {
   Settings,
   ChevronDown,
   Scale,
-  X
+  X,
+  Briefcase,
+  GraduationCap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -61,6 +63,7 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import ReportPreview from "@/components/public/ReportPreview";
+import LifeCompassForm from "@/components/public/LifeCompassForm";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -779,6 +782,7 @@ const ReportPage = () => {
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center animate-slide-up" style={{ animationDelay: '1s' }}>
             <ReportPreview />
+            <LifeCompassForm />
             <Button 
               variant="outline" 
               size="xl" 
@@ -788,6 +792,78 @@ const ReportPage = () => {
               選擇版本
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
+          </div>
+
+          {/* Three Version Quick Navigation Cards */}
+          <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
+            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">三種版本，對應不同需求</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {/* Basic Version Card */}
+              <button 
+                onClick={scrollToPlans}
+                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 border border-slate-500/30 hover:border-slate-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BookOpen className="w-5 h-5 text-slate-400" />
+                    <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">Basic</span>
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">認識自己</h4>
+                  <p className="text-slate-400 text-sm">5 章・快速入門</p>
+                  <div className="mt-3 flex items-center gap-1 text-slate-300 text-xs group-hover:text-white transition-colors">
+                    <span>NT$ 1,980 起</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </button>
+
+              {/* Standard Version Card */}
+              <button 
+                onClick={scrollToPlans}
+                className="group relative bg-gradient-to-br from-blue-900/30 to-blue-950/30 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Eye className="w-5 h-5 text-blue-400" />
+                    <span className="text-xs text-blue-400 font-medium uppercase tracking-wider">Standard</span>
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">看懂自己</h4>
+                  <p className="text-blue-300/70 text-sm">8 章・完整解析</p>
+                  <div className="mt-3 flex items-center gap-1 text-blue-300 text-xs group-hover:text-white transition-colors">
+                    <span>NT$ 4,980 起</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </button>
+
+              {/* Flagship Version Card */}
+              <button 
+                onClick={scrollToPlans}
+                className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute -top-2 right-4">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-black rounded-full text-[10px] font-bold">
+                    <Star className="w-2.5 h-2.5" />
+                    推薦
+                  </span>
+                </div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Crown className="w-5 h-5 text-amber-400" />
+                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Flagship</span>
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">使用自己</h4>
+                  <p className="text-amber-300/70 text-sm">10 章・人生系統</p>
+                  <div className="mt-3 flex items-center gap-1 text-amber-300 text-xs group-hover:text-white transition-colors">
+                    <span>NT$ 12,800 起</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -1510,73 +1586,105 @@ const ReportPage = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
         
-        <div className="container mx-auto max-w-5xl relative z-10">
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-              內容詳細對比
+              章節內容詳細對比
             </h2>
             <p className="text-white/50 text-lg">
-              一目了然的功能差異
+              三版本完整功能差異一覽
             </p>
           </div>
           
-          <div className={`overflow-x-auto rounded-3xl border border-white/10 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          {/* Desktop Table */}
+          <div className={`hidden md:block overflow-x-auto rounded-3xl border border-white/10 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
             <table className="w-full">
               <thead>
                 <tr className="bg-white/5">
                   <th className="text-left p-5 text-white font-semibold border-b border-white/10">章節模組</th>
-                  <th className="p-5 text-white/70 border-b border-white/10 min-w-[100px]">
-                    <div className="text-center text-xs">
-                      <span className="block">基本版</span>
-                      <span className="block text-white/40">認識自己</span>
+                  <th className="p-5 border-b border-slate-500/20 min-w-[140px] bg-slate-500/5">
+                    <div className="text-center">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-500/20 text-slate-300 text-xs mb-1">
+                        <BookOpen className="w-3 h-3" />
+                        基本版
+                      </span>
+                      <span className="block text-slate-400/80 text-xs">認識自己</span>
                     </div>
                   </th>
-                  <th className="p-5 text-blue-300 border-b border-blue-500/20 min-w-[100px]">
-                    <div className="text-center text-xs">
-                      <span className="block">標準版</span>
-                      <span className="block text-blue-300/60">看懂自己</span>
+                  <th className="p-5 border-b border-blue-500/20 min-w-[140px] bg-blue-500/5">
+                    <div className="text-center">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-xs mb-1">
+                        <Eye className="w-3 h-3" />
+                        標準版
+                      </span>
+                      <span className="block text-blue-300/60 text-xs">看懂自己</span>
                     </div>
                   </th>
-                  <th className="p-5 border-b border-amber-500/30 min-w-[100px] bg-amber-500/5">
-                    <div className="text-center text-xs">
-                      <span className="block text-amber-400 font-bold">旗艦版</span>
-                      <span className="block text-amber-300/60">使用自己</span>
+                  <th className="p-5 border-b border-amber-500/30 min-w-[140px] bg-amber-500/10">
+                    <div className="text-center">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-300 text-xs mb-1">
+                        <Crown className="w-3 h-3" />
+                        旗艦版
+                      </span>
+                      <span className="block text-amber-300/60 text-xs">使用自己</span>
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {[
-                  { feature: "01 開場", basic: "精簡", standard: true, flagship: true },
-                  { feature: "02 基本資料", basic: true, standard: true, flagship: true },
-                  { feature: "03 人生羅盤", basic: true, standard: true, flagship: true },
-                  { feature: "04 你是誰", basic: "精簡", standard: true, flagship: true },
-                  { feature: "05 你怎麼運作", basic: false, standard: true, flagship: true },
-                  { feature: "06 人生三大領域", basic: false, standard: true, flagship: true },
-                  { feature: "07 特別注意", basic: false, standard: "精簡", flagship: true },
-                  { feature: "08 結語", basic: "精簡", standard: true, flagship: true },
-                  { feature: "09 思維工具箱", basic: false, standard: false, flagship: true, highlight: true },
-                  { feature: "10 四時軍團", basic: false, standard: false, flagship: true, highlight: true },
-                  { feature: "字數", basic: "3-4千", standard: "6-8千", flagship: "1-1.2萬", isText: true },
+                  { feature: "Ch.1 開場引言", basic: "✓ 精簡版", standard: "✓ 完整版", flagship: "✓ 完整版", basicDesc: "簡潔破題", standardDesc: "完整情境鋪陳", flagshipDesc: "深度情境引導" },
+                  { feature: "Ch.2 基本資料總覽", basic: "✓", standard: "✓", flagship: "✓", basicDesc: "四系統概覽", standardDesc: "四系統詳解", flagshipDesc: "四系統深度剖析" },
+                  { feature: "Ch.3 人生羅盤圖", basic: "✓ 單圖", standard: "✓ 整合圖", flagship: "✓ 完整導航圖", basicDesc: "基礎定位", standardDesc: "交叉整合", flagshipDesc: "多維導航系統" },
+                  { feature: "Ch.4 你是誰", basic: "✓ 精簡", standard: "✓ 完整", flagship: "✓ 深度", basicDesc: "核心特質速寫", standardDesc: "外在/內在完整分析", flagshipDesc: "多層次人格解構" },
+                  { feature: "Ch.5 你怎麼運作", basic: "—", standard: "✓", flagship: "✓", standardDesc: "情緒/思考模式", flagshipDesc: "運作機制完整拆解" },
+                  { feature: "Ch.6 三大領域", basic: "—", standard: "✓ 事業/愛情/金錢", flagship: "✓ 深度整合", standardDesc: "三領域獨立分析", flagshipDesc: "領域交互影響剖析" },
+                  { feature: "Ch.7 特別注意事項", basic: "—", standard: "✓ 精簡", flagship: "✓ 完整", standardDesc: "重點警示", flagshipDesc: "全方位風險提醒" },
+                  { feature: "Ch.8 結語與祝福", basic: "✓ 精簡", standard: "✓ 完整", flagship: "✓ 深度", basicDesc: "簡短祝福", standardDesc: "完整總結", flagshipDesc: "人生展望與行動呼籲" },
+                  { feature: "Ch.9 思維工具箱", basic: "—", standard: "—", flagship: "✓ 專屬", flagshipDesc: "思維啟動器＋過程圖", highlight: true },
+                  { feature: "Ch.10 四時軍團", basic: "—", standard: "—", flagship: "✓ 專屬", flagshipDesc: "RPG式八字軍團敘事", highlight: true },
+                  { feature: "總字數", basic: "3-4千字", standard: "6-8千字", flagship: "1-1.2萬字", isText: true },
+                  { feature: "製作工時", basic: "5-9 天", standard: "7-12 天", flagship: "12-18 天", isText: true },
                 ].map((row, idx) => (
                   <tr key={idx} className={`${row.highlight ? 'bg-amber-500/5' : ''} hover:bg-white/5 transition-colors`}>
-                    <td className="p-4 text-white text-sm font-medium">{row.feature}</td>
-                    <td className="p-4 text-center">
-                      {row.isText ? <span className="text-white/50 text-xs">{row.basic}</span> : 
-                       row.basic === true ? <CheckCircle2 className="w-4 h-4 text-green-400 mx-auto" /> :
-                       row.basic === false ? <X className="w-4 h-4 text-white/20 mx-auto" /> :
-                       <span className="text-white/40 text-xs">{row.basic}</span>}
+                    <td className="p-4 text-white text-sm font-medium">
+                      {row.feature}
                     </td>
-                    <td className="p-4 text-center">
-                      {row.isText ? <span className="text-blue-300/70 text-xs">{row.standard}</span> :
-                       row.standard === true ? <CheckCircle2 className="w-4 h-4 text-blue-400 mx-auto" /> :
-                       row.standard === false ? <X className="w-4 h-4 text-white/20 mx-auto" /> :
-                       <span className="text-blue-300/50 text-xs">{row.standard}</span>}
+                    <td className={`p-4 text-center ${row.highlight ? '' : 'bg-slate-500/5'}`}>
+                      {row.isText ? (
+                        <span className="text-slate-300 text-sm font-medium">{row.basic}</span>
+                      ) : row.basic === "—" ? (
+                        <X className="w-4 h-4 text-white/20 mx-auto" />
+                      ) : (
+                        <div>
+                          <span className="text-slate-300 text-xs">{row.basic}</span>
+                          {row.basicDesc && <p className="text-white/30 text-[10px] mt-0.5">{row.basicDesc}</p>}
+                        </div>
+                      )}
                     </td>
-                    <td className={`p-4 text-center ${row.highlight ? 'bg-amber-500/5' : ''}`}>
-                      {row.isText ? <span className="text-amber-400 font-bold text-xs">{row.flagship}</span> :
-                       row.flagship ? <CheckCircle2 className="w-4 h-4 text-amber-400 mx-auto" /> :
-                       <X className="w-4 h-4 text-white/20 mx-auto" />}
+                    <td className={`p-4 text-center ${row.highlight ? '' : 'bg-blue-500/5'}`}>
+                      {row.isText ? (
+                        <span className="text-blue-300 text-sm font-medium">{row.standard}</span>
+                      ) : row.standard === "—" ? (
+                        <X className="w-4 h-4 text-white/20 mx-auto" />
+                      ) : (
+                        <div>
+                          <span className="text-blue-300 text-xs">{row.standard}</span>
+                          {row.standardDesc && <p className="text-blue-300/50 text-[10px] mt-0.5">{row.standardDesc}</p>}
+                        </div>
+                      )}
+                    </td>
+                    <td className={`p-4 text-center ${row.highlight ? 'bg-amber-500/10' : 'bg-amber-500/5'}`}>
+                      {row.isText ? (
+                        <span className="text-amber-400 text-sm font-bold">{row.flagship}</span>
+                      ) : row.flagship === "—" ? (
+                        <X className="w-4 h-4 text-white/20 mx-auto" />
+                      ) : (
+                        <div>
+                          <span className="text-amber-300 text-xs font-medium">{row.flagship}</span>
+                          {row.flagshipDesc && <p className="text-amber-300/60 text-[10px] mt-0.5">{row.flagshipDesc}</p>}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -1584,13 +1692,89 @@ const ReportPage = () => {
             </table>
           </div>
           
+          {/* Mobile Card View */}
+          <div className={`md:hidden space-y-6 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Basic Version Card */}
+            <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-slate-500/20">
+              <div className="flex items-center gap-2 mb-4">
+                <BookOpen className="w-5 h-5 text-slate-400" />
+                <span className="font-bold text-white">基本版・認識自己</span>
+                <span className="text-slate-400 text-sm ml-auto">5 章</span>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-white/60">開場引言</span><span className="text-slate-300">精簡版</span></div>
+                <div className="flex justify-between"><span className="text-white/60">基本資料</span><span className="text-slate-300">四系統概覽</span></div>
+                <div className="flex justify-between"><span className="text-white/60">人生羅盤</span><span className="text-slate-300">單圖版</span></div>
+                <div className="flex justify-between"><span className="text-white/60">你是誰</span><span className="text-slate-300">核心速寫</span></div>
+                <div className="flex justify-between"><span className="text-white/60">結語祝福</span><span className="text-slate-300">精簡版</span></div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
+                <span className="text-white/50">字數</span><span className="text-slate-300 font-medium">3,000-4,000 字</span>
+              </div>
+            </div>
+
+            {/* Standard Version Card */}
+            <div className="bg-gradient-to-br from-blue-900/30 to-blue-950/30 rounded-2xl p-5 border border-blue-500/20">
+              <div className="flex items-center gap-2 mb-4">
+                <Eye className="w-5 h-5 text-blue-400" />
+                <span className="font-bold text-white">標準版・看懂自己</span>
+                <span className="text-blue-300 text-sm ml-auto">8 章</span>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-white/60">你怎麼運作</span><span className="text-blue-300">情緒/思考模式</span></div>
+                <div className="flex justify-between"><span className="text-white/60">三大領域</span><span className="text-blue-300">事業/愛情/金錢</span></div>
+                <div className="flex justify-between"><span className="text-white/60">特別注意</span><span className="text-blue-300">重點警示</span></div>
+                <div className="flex justify-between text-white/30"><span>思維工具箱</span><span>—</span></div>
+                <div className="flex justify-between text-white/30"><span>四時軍團</span><span>—</span></div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
+                <span className="text-white/50">字數</span><span className="text-blue-300 font-medium">6,000-8,000 字</span>
+              </div>
+            </div>
+
+            {/* Flagship Version Card */}
+            <div className="bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-5 border border-amber-500/30 relative">
+              <div className="absolute -top-2 right-4">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-black rounded-full text-[10px] font-bold">
+                  <Star className="w-2.5 h-2.5" />
+                  推薦
+                </span>
+              </div>
+              <div className="flex items-center gap-2 mb-4">
+                <Crown className="w-5 h-5 text-amber-400" />
+                <span className="font-bold text-white">旗艦版・使用自己</span>
+                <span className="text-amber-300 text-sm ml-auto">10 章</span>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-white/60">三大領域</span><span className="text-amber-300">深度整合剖析</span></div>
+                <div className="flex justify-between"><span className="text-white/60">特別注意</span><span className="text-amber-300">全方位風險</span></div>
+                <div className="flex justify-between bg-amber-500/10 -mx-2 px-2 py-1 rounded"><span className="text-amber-200">思維工具箱</span><span className="text-amber-300 font-medium">專屬</span></div>
+                <div className="flex justify-between bg-amber-500/10 -mx-2 px-2 py-1 rounded"><span className="text-amber-200">四時軍團</span><span className="text-amber-300 font-medium">專屬</span></div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-amber-500/20 flex justify-between text-sm">
+                <span className="text-white/50">字數</span><span className="text-amber-400 font-bold">10,000-12,000 字</span>
+              </div>
+            </div>
+          </div>
+          
           {/* Key Difference Callout */}
-          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="text-white/70 text-center">
-              <span className="text-white/90">基本版</span>讓你「認識」自己；
-              <span className="text-blue-300 mx-1">標準版</span>讓你「看懂」自己；
-              <span className="text-amber-400 mx-1">旗艦版</span>教你「使用」自己。
-            </p>
+          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-slate-500/10 via-blue-500/10 to-amber-500/10 border border-white/10 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-slate-400" />
+                <span className="text-slate-300 text-sm">基本版讓你「認識」自己</span>
+              </div>
+              <span className="hidden md:block text-white/20">→</span>
+              <div className="flex items-center gap-2">
+                <Eye className="w-4 h-4 text-blue-400" />
+                <span className="text-blue-300 text-sm">標準版讓你「看懂」自己</span>
+              </div>
+              <span className="hidden md:block text-white/20">→</span>
+              <div className="flex items-center gap-2">
+                <Crown className="w-4 h-4 text-amber-400" />
+                <span className="text-amber-300 text-sm font-medium">旗艦版教你「使用」自己</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
