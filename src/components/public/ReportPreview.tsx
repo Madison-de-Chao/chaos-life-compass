@@ -2,8 +2,101 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Crown, Lock, ChevronRight, Sparkles, Brain, Heart, Compass, Zap } from "lucide-react";
+import { BookOpen, Crown, Lock, ChevronRight, Sparkles, Brain, Heart, Compass, Zap, Eye } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+// 基本版試閱內容
+const basicPreviewSections = [
+  {
+    title: "開場｜你的四系統在說什麼",
+    content: `親愛的旅人：
+
+歡迎踏入這趟認識自己的旅程。這份報告是你的第一面鏡子——簡單、直接，讓你看見自己最核心的樣貌。
+
+在這裡，四個命理系統將第一次為你「交叉對話」：
+・紫微斗數告訴你：你的天賦與個性底色
+・八字告訴你：你的能量節奏與行為模式
+・占星告訴你：你的情感需求與表達方式
+・人類圖告訴你：你的決策方式與人生策略
+
+當四個系統同時指向某個特質，那個特質就是你最真實的「底牌」。
+
+準備好認識自己了嗎？`,
+    isLocked: false,
+  },
+  {
+    title: "基本資料｜四系統命盤總覽",
+    content: `【你的命盤快照】
+
+紫微斗數：天機星坐命
+→ 敏銳、善思、腦筋轉得快
+
+八字格局：甲木日主・傷官格
+→ 創意豐富、不按牌理出牌
+
+占星配置：太陽雙子・月亮天蠍
+→ 表面輕鬆、內心深沉
+
+人類圖類型：顯示生產者 5/1
+→ 等待回應、擅長示範與引領
+
+【四系統初步交叉】
+✓ 共同指向：思考活躍、表達能力強
+✓ 共同指向：對「真相」有執念
+✓ 共同注意：容易想太多、耗神`,
+    isLocked: false,
+  },
+  {
+    title: "人生羅盤｜四系統統整導航",
+    content: `【你的核心定位圖】
+
+┌─────────────────────────────────┐
+│        人 生 羅 盤               │
+├─────────────────────────────────┤
+│  核心本質    │  靈活・敏銳・求真 │
+│  情緒模式    │  表面冷靜・內在翻騰│
+│  事業方向    │  溝通・分析・創作 │
+│  關係互動    │  需要深度連結     │
+└─────────────────────────────────┘
+
+【能量分布速覽】
+
+心智能量 ████████░░ 85%
+情緒能量 ███████░░░ 70%
+行動能量 █████░░░░░ 55%
+價值能量 ██████░░░░ 60%
+
+💡 你是心智型主導者——先想清楚，再行動。`,
+    isLocked: false,
+  },
+  {
+    title: "你是誰｜內在個性與外在性格",
+    content: `【你的核心特質】
+
+你像一座隨時運轉的雷達站——對環境的變化極度敏感，能在第一時間捕捉到別人沒注意到的細節...
+
+⚠️ 更多深度分析請參考標準版或旗艦版...
+
+【基本版提示】
+這個卡點，在標準版有完整的八大面向解析。
+想要「看懂自己」，請升級標準版。`,
+    isLocked: true,
+  },
+  {
+    title: "結語｜圓滿的你",
+    content: `【你已經踏出第一步】
+
+認識自己是一趟漫長的旅程，而你已經起步。
+
+基本版讓你看見了「你是誰」的輪廓——
+但如果你想知道「你怎麼運作」...
+如果你想了解事業、愛情、金錢的深度解析...
+如果你想學會「使用自己」而不只是「認識自己」...
+
+⚠️ 標準版與旗艦版，將帶你走得更遠。`,
+    isLocked: true,
+  },
+];
 
 // 標準版試閱內容
 const standardPreviewSections = [
@@ -206,7 +299,7 @@ const flagshipPreviewSections = [
 ];
 
 const ReportPreview = () => {
-  const [activeTab, setActiveTab] = useState("standard");
+  const [activeTab, setActiveTab] = useState("basic");
 
   return (
     <Dialog>
@@ -229,38 +322,71 @@ const ReportPreview = () => {
             報告試閱
           </DialogTitle>
           <p className="text-muted-foreground text-sm mt-2">
-            體驗「默默超全方位命理解讀報告」的寫作風格與內容深度
+            體驗「默默超全方位命理解讀報告」三種版本的內容風格
           </p>
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
-          <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto bg-muted/30">
+          <TabsList className="grid grid-cols-3 w-full max-w-lg mx-auto bg-muted/30">
+            <TabsTrigger 
+              value="basic" 
+              className="data-[state=active]:bg-slate-600 data-[state=active]:text-white text-xs sm:text-sm"
+            >
+              <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">基本版</span>「認識」
+            </TabsTrigger>
             <TabsTrigger 
               value="standard" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <Brain className="h-4 w-4 mr-2" />
-              標準版「看懂自己」
+              <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">標準版</span>「看懂」
             </TabsTrigger>
             <TabsTrigger 
               value="flagship"
-              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <Crown className="h-4 w-4 mr-2" />
-              旗艦版「使用自己」
+              <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">旗艦版</span>「使用」
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="standard" className="mt-6">
-            <div className="mb-4 p-4 rounded-xl bg-primary/5 border border-primary/20">
+          {/* Basic Version */}
+          <TabsContent value="basic" className="mt-6">
+            <div className="mb-4 p-4 rounded-xl bg-slate-500/10 border border-slate-500/20">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Compass className="h-5 w-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-slate-500/20 flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="h-5 w-5 text-slate-400" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-foreground mb-1">基本版特色</h4>
+                  <p className="text-sm text-muted-foreground">
+                    入門首選——讓你知道「你是誰」＋「有解」。5 章節精華，適合第一次接觸命理報告的讀者。
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <ScrollArea className="h-[400px] pr-4">
+              <div className="space-y-6">
+                {basicPreviewSections.map((section, index) => (
+                  <PreviewSection key={index} section={section} index={index} variant="basic" />
+                ))}
+              </div>
+            </ScrollArea>
+          </TabsContent>
+          
+          {/* Standard Version */}
+          <TabsContent value="standard" className="mt-6">
+            <div className="mb-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <Compass className="h-5 w-5 text-blue-400" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground mb-1">標準版特色</h4>
                   <p className="text-sm text-muted-foreground">
-                    四系統交叉參照分析，幫助你「看懂自己」的運作模式。適合第一次接觸命理報告的讀者。
+                    完整八大面向解析，幫助你「看懂自己」的運作模式。列出 3-4 個適合工具，為進階做準備。
                   </p>
                 </div>
               </div>
@@ -269,12 +395,13 @@ const ReportPreview = () => {
             <ScrollArea className="h-[400px] pr-4">
               <div className="space-y-6">
                 {standardPreviewSections.map((section, index) => (
-                  <PreviewSection key={index} section={section} index={index} />
+                  <PreviewSection key={index} section={section} index={index} variant="standard" />
                 ))}
               </div>
             </ScrollArea>
           </TabsContent>
           
+          {/* Flagship Version */}
           <TabsContent value="flagship" className="mt-6">
             <div className="mb-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
               <div className="flex items-start gap-3">
@@ -293,7 +420,7 @@ const ReportPreview = () => {
             <ScrollArea className="h-[400px] pr-4">
               <div className="space-y-6">
                 {flagshipPreviewSections.map((section, index) => (
-                  <PreviewSection key={index} section={section} index={index} isFlagship />
+                  <PreviewSection key={index} section={section} index={index} variant="flagship" />
                 ))}
               </div>
             </ScrollArea>
@@ -303,7 +430,7 @@ const ReportPreview = () => {
         <div className="mt-6 pt-4 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
             <Lock className="h-4 w-4 inline mr-1" />
-            完整報告包含 19+ 章節、80,000+ 字深度解析
+            完整報告：基本版 5 章、標準版 8 章、旗艦版 10 章
           </p>
           <Button 
             className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -325,11 +452,34 @@ interface PreviewSectionProps {
     isLocked: boolean;
   };
   index: number;
-  isFlagship?: boolean;
+  variant?: "basic" | "standard" | "flagship";
 }
 
-const PreviewSection = ({ section, index, isFlagship }: PreviewSectionProps) => {
-  const accentColor = isFlagship ? "amber-500" : "primary";
+const PreviewSection = ({ section, index, variant = "standard" }: PreviewSectionProps) => {
+  const getAccentColors = () => {
+    switch (variant) {
+      case "basic":
+        return {
+          badge: "bg-slate-500/20 text-slate-400",
+          border: "border-slate-500/30",
+          hover: "hover:border-slate-500/40",
+        };
+      case "standard":
+        return {
+          badge: "bg-blue-500/20 text-blue-400",
+          border: "border-blue-500/30",
+          hover: "hover:border-blue-500/40",
+        };
+      case "flagship":
+        return {
+          badge: "bg-amber-500/20 text-amber-600",
+          border: "border-amber-500/30",
+          hover: "hover:border-amber-500/40",
+        };
+    }
+  };
+
+  const colors = getAccentColors();
   
   return (
     <div 
@@ -337,19 +487,13 @@ const PreviewSection = ({ section, index, isFlagship }: PreviewSectionProps) => 
         rounded-xl p-6 transition-all duration-300
         ${section.isLocked 
           ? 'bg-muted/20 border border-dashed border-border/50' 
-          : 'bg-card border border-border/30 shadow-sm'
+          : `bg-card border ${colors.border} ${colors.hover} shadow-sm`
         }
       `}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className={`
-          w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold
-          ${isFlagship 
-            ? 'bg-amber-500/20 text-amber-600' 
-            : 'bg-primary/20 text-primary'
-          }
-        `}>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${colors.badge}`}>
           {index + 1}
         </div>
         <h3 className="font-serif text-lg font-bold text-foreground flex items-center gap-2">
