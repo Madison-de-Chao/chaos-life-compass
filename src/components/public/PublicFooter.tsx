@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Instagram, Youtube, Facebook, Mail, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
 
 const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  { icon: Instagram, href: "https://www.instagram.com/momo_chao_/", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/momochao.tw", label: "Facebook" },
+  { icon: Youtube, href: "https://www.youtube.com/@momochao", label: "YouTube" },
+];
 
 const footerLinks = {
   explore: [
@@ -24,12 +35,30 @@ const footerLinks = {
 };
 
 const PublicFooter = () => {
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("請輸入電子郵件地址");
+      return;
+    }
+    
+    setIsSubscribing(true);
+    // Simulate subscription (can be connected to actual API later)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.success("訂閱成功！感謝您的支持");
+    setEmail("");
+    setIsSubscribing(false);
+  };
+
   return (
     <footer className="bg-[#050505] border-t border-white/10">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand with Logos */}
-          <div className="md:col-span-2">
+          <div className="lg:col-span-2">
             <div className="flex items-center gap-4 mb-6">
               <Link to="/chaoxuan" className="group">
                 <img 
@@ -51,6 +80,23 @@ const PublicFooter = () => {
               鏡子非劇本，真實即命運。<br />
               我們不預測未來，只幫你看清現在。
             </p>
+            
+            {/* Social Media Links */}
+            <div className="flex items-center gap-3 mb-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-amber-400 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+
             <div className="flex items-center gap-4 text-sm text-white/40">
               <span>超烜創意</span>
               <span>×</span>
@@ -97,10 +143,10 @@ const PublicFooter = () => {
             </ul>
           </div>
 
-          {/* About Links */}
+          {/* Newsletter & About */}
           <div>
             <h4 className="font-serif font-bold text-white/90 mb-4">關於</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-6">
               {footerLinks.about.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -112,6 +158,34 @@ const PublicFooter = () => {
                 </li>
               ))}
             </ul>
+
+            {/* Newsletter Subscription */}
+            <div className="mt-6">
+              <h4 className="font-serif font-bold text-white/90 mb-3 flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                訂閱電子報
+              </h4>
+              <p className="text-white/40 text-sm mb-3">
+                獲取最新命理洞見與活動資訊
+              </p>
+              <form onSubmit={handleSubscribe} className="flex gap-2">
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-amber-400/50 h-10"
+                />
+                <Button 
+                  type="submit" 
+                  size="icon"
+                  disabled={isSubscribing}
+                  className="bg-amber-600 hover:bg-amber-500 text-white h-10 w-10 shrink-0"
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
 
