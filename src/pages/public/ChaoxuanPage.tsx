@@ -14,14 +14,13 @@ import {
   Target,
   TrendingUp,
   Award,
-  Diamond,
-  LogIn
+  Diamond
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
 import { useSEO } from "@/hooks/useSEO";
-import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
-import { useMember } from "@/hooks/useMember";
+import PublicHeader from "@/components/public/PublicHeader";
+import PublicFooter from "@/components/public/PublicFooter";
 
 // Custom hook for scroll animations
 const useScrollReveal = () => {
@@ -143,8 +142,6 @@ const clientLogos = [
 
 const ChaoxuanPage = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [showLoginWidget, setShowLoginWidget] = useState(false);
-  const { user } = useMember();
 
   useSEO({
     title: "超烜創意 Maison de Chao | 奢華創意服務平台",
@@ -161,73 +158,7 @@ const ChaoxuanPage = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5f0] overflow-x-hidden">
-      {/* Custom dark header for this page */}
-      <header 
-        className="fixed top-0 z-50 w-full transition-all duration-500"
-        style={{
-          backgroundColor: scrollY > 50 ? "rgba(10, 10, 10, 0.95)" : "transparent",
-          backdropFilter: scrollY > 50 ? "blur(12px)" : "none",
-          borderBottom: scrollY > 50 ? "1px solid rgba(201, 169, 98, 0.2)" : "1px solid transparent",
-        }}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            <Link to="/chaoxuan" className="flex items-center gap-4">
-              <img 
-                src={logoChaoxuan} 
-                alt="超烜創意" 
-                className="h-10 md:h-12 w-auto hover:scale-105 transition-transform duration-300"
-              />
-              <span className="hidden sm:block font-serif text-lg font-medium text-[#c9a962]">
-                Maison de Chao
-              </span>
-            </Link>
-
-            <nav className="hidden lg:flex items-center gap-1">
-              <Link to="/chaoxuan" className="px-4 py-2 text-sm font-medium text-[#c9a962]">
-                超烜創意
-              </Link>
-              <Link to="/home" className="px-4 py-2 text-sm font-medium text-[#f5f5f0]/60 hover:text-[#f5f5f0] transition-colors">
-                虹靈御所
-              </Link>
-              <Link to="/about" className="px-4 py-2 text-sm font-medium text-[#f5f5f0]/60 hover:text-[#f5f5f0] transition-colors">
-                關於我們
-              </Link>
-              <Link to="/momo" className="px-4 py-2 text-sm font-medium text-[#f5f5f0]/60 hover:text-[#f5f5f0] transition-colors">
-                默默超
-              </Link>
-            </nav>
-
-            {user ? (
-              <Button asChild variant="outline" size="sm" className="border-[#c9a962]/50 text-[#c9a962] hover:bg-[#c9a962]/10 hover:text-[#c9a962]">
-                <Link to="/account">會員中心</Link>
-              </Button>
-            ) : (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="border-[#c9a962]/50 text-[#c9a962] hover:bg-[#c9a962]/10 hover:text-[#c9a962]"
-                onClick={() => setShowLoginWidget(true)}
-              >
-                <LogIn className="w-4 h-4 mr-2" />
-                登入
-              </Button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Login Widget Modal */}
-      {showLoginWidget && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-md animate-scale-in">
-            <MemberLoginWidget 
-              onClose={() => setShowLoginWidget(false)}
-              onSuccess={() => setShowLoginWidget(false)}
-            />
-          </div>
-        </div>
-      )}
+      <PublicHeader />
 
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -633,24 +564,7 @@ const ChaoxuanPage = () => {
         </div>
       </section>
 
-      {/* Custom Footer for dark theme */}
-      <footer className="bg-[#050505] border-t border-[#c9a962]/10 py-20">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-8">
-            <div className="flex items-center gap-6">
-              <img src={logoChaoxuan} alt="超烜創意" className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity" />
-              <span className="text-[#c9a962]/30 text-2xl">×</span>
-              <span className="font-serif text-xl text-[#f5f5f0]/40">虹靈御所</span>
-            </div>
-            <p className="text-xs uppercase tracking-[0.2em] text-[#f5f5f0]/25">
-              Maison de Chao
-            </p>
-            <p className="text-sm text-[#f5f5f0]/25">
-              © {new Date().getFullYear()} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
-            </p>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 };
