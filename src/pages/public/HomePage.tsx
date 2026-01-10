@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { 
   FileText, 
@@ -11,7 +11,9 @@ import {
   ChevronDown,
   Crown,
   LogIn,
-  ExternalLink
+  ExternalLink,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { Button } from "@/components/ui/button";
@@ -31,7 +33,7 @@ const sections = [
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
-    iconColor: "text-amber-600",
+    iconColor: "text-amber-400",
   },
   {
     id: 2,
@@ -41,7 +43,7 @@ const sections = [
     icon: Gamepad2,
     href: "/games",
     color: "from-violet-500/20 to-purple-500/20",
-    iconColor: "text-violet-600",
+    iconColor: "text-violet-400",
   },
   {
     id: 3,
@@ -51,7 +53,7 @@ const sections = [
     icon: BookOpen,
     href: "/notes",
     color: "from-emerald-500/20 to-teal-500/20",
-    iconColor: "text-emerald-600",
+    iconColor: "text-emerald-400",
   },
   {
     id: 4,
@@ -61,7 +63,7 @@ const sections = [
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
-    iconColor: "text-sky-600",
+    iconColor: "text-sky-400",
   },
   {
     id: 5,
@@ -72,7 +74,7 @@ const sections = [
     href: "https://main.momo-chao.com/about",
     isExternal: true,
     color: "from-rose-500/20 to-pink-500/20",
-    iconColor: "text-rose-600",
+    iconColor: "text-rose-400",
   },
   {
     id: 6,
@@ -83,13 +85,15 @@ const sections = [
     href: "https://main.momo-chao.com/about",
     isExternal: true,
     color: "from-indigo-500/20 to-violet-500/20",
-    iconColor: "text-indigo-600",
+    iconColor: "text-indigo-400",
   },
 ];
 
 const HomePage = () => {
   const { user, profile } = useMember();
   const [showLoginWidget, setShowLoginWidget] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
   
   useSEO({
     title: "虹靈御所 | 看見命盤裡的自己，而非被命運定義",
@@ -102,59 +106,76 @@ const HomePage = () => {
     document.getElementById('sections')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-parchment">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
       
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background parchment hero effect */}
-        <div className="absolute inset-0 bg-parchment-hero" />
-        {/* Subtle warm glow accents */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-600/5 rounded-full blur-3xl animate-breathe" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/3 rounded-full blur-3xl animate-breathe" style={{ animationDelay: '4s' }} />
+        {/* Background effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500/10 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[150px]" />
+        </div>
         
         <div className="relative z-10 container mx-auto px-4 text-center pt-20">
           {/* Brand Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
-            <span className="text-sm font-medium text-primary">Hongling Yusuo</span>
-            <span className="text-muted-foreground">×</span>
-            <span className="text-sm text-muted-foreground">知行如一的密法</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8 animate-fade-in">
+            <span className="text-sm font-medium text-amber-400">Hongling Yusuo</span>
+            <span className="text-white/40">×</span>
+            <span className="text-sm text-white/60">知行如一的密法</span>
           </div>
 
-          {/* Embedded Video with warm glow frame */}
+          {/* Embedded Video with gold glow frame */}
           <div className="mb-8 animate-fade-in relative mx-auto max-w-xl" style={{ animationDelay: '0.15s' }}>
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 rounded-2xl blur-md opacity-60" />
-            <div className="relative bg-background rounded-xl overflow-hidden border border-primary/30 shadow-[0_0_40px_rgba(var(--primary),0.15)]">
+            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/30 via-amber-400/50 to-amber-500/30 rounded-2xl blur-md opacity-60" />
+            <div className="relative bg-black rounded-xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(217,161,99,0.2)]">
               <video
+                ref={videoRef}
                 autoPlay
                 loop
+                muted
                 playsInline
-                className="w-full h-auto cursor-pointer"
-                onClick={(e) => {
-                  const video = e.currentTarget;
-                  video.muted = !video.muted;
-                }}
-                title="點擊開啟/關閉聲音"
+                className="w-full h-auto"
               >
-                <source src="/videos/hongling-logo.mp4" type="video/mp4" />
+                <source src="/videos/hongling-logo.mp4?v=2" type="video/mp4" />
               </video>
+              {/* Audio Control Button */}
+              <button
+                onClick={toggleMute}
+                className="absolute bottom-3 right-3 z-20 p-2.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white/80 hover:text-white hover:bg-black/70 transition-all duration-300 group"
+                title={isMuted ? "開啟聲音" : "關閉聲音"}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                ) : (
+                  <Volume2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                )}
+              </button>
             </div>
           </div>
           
           {/* Main Title */}
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <span className="text-primary text-5xl md:text-6xl lg:text-7xl">虹</span>靈御所
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent text-5xl md:text-6xl lg:text-7xl">虹</span>
+            <span className="text-white">靈御所</span>
           </h1>
           
           {/* Tagline */}
-          <p className="font-serif text-lg md:text-xl lg:text-2xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <p className="font-serif text-lg md:text-xl lg:text-2xl text-white/60 mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             鏡子非劇本，真實即命運
           </p>
           
           {/* Description */}
-          <p className="max-w-2xl mx-auto text-sm md:text-base text-muted-foreground/80 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
+          <p className="max-w-2xl mx-auto text-sm md:text-base text-white/50 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
             我們不預測未來，只幫你看清現在。<br />
             命盤是一種語言，不是判決。<br />
             你只需要學會聽懂它在對你說什麼。
@@ -162,13 +183,13 @@ const HomePage = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <Button asChild size="lg" className="px-8 shadow-glow">
+            <Button asChild size="lg" className="px-8 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold shadow-[0_0_30px_rgba(217,161,99,0.3)]">
               <Link to="/reports">
                 探索命理報告
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline-light" size="lg" className="px-8">
+            <Button asChild variant="outline" size="lg" className="px-8 border-white/20 text-white hover:bg-white/10 hover:border-white/30">
               <a href="https://main.momo-chao.com/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                 認識虹靈御所
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -181,7 +202,7 @@ const HomePage = () => {
             <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
               <Link 
                 to="/account" 
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-600 hover:from-amber-500/30 hover:to-orange-500/30 transition-all duration-300 group"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 text-amber-400 hover:from-amber-500/30 hover:to-amber-600/30 transition-all duration-300 group"
               >
                 <Crown className="h-5 w-5" />
                 <span className="font-medium">歡迎回來，{profile?.display_name || '會員'}！前往會員專區</span>
@@ -192,7 +213,7 @@ const HomePage = () => {
             <div className="animate-fade-in mb-8" style={{ animationDelay: '0.9s' }}>
               <button 
                 onClick={() => setShowLoginWidget(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary hover:from-primary/20 hover:to-primary/10 transition-all duration-300 group"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white/80 hover:bg-white/10 hover:text-white transition-all duration-300 group"
               >
                 <LogIn className="h-5 w-5" />
                 <span className="font-medium">會員登入 / 註冊</span>
@@ -203,7 +224,7 @@ const HomePage = () => {
           
           {/* Login Widget Modal */}
           {showLoginWidget && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
               <div className="w-full max-w-md animate-scale-in">
                 <MemberLoginWidget 
                   onClose={() => setShowLoginWidget(false)}
@@ -219,20 +240,21 @@ const HomePage = () => {
             className="animate-float cursor-pointer"
             aria-label="捲動到內容區"
           >
-            <ChevronDown className="h-8 w-8 text-primary/50 mx-auto" />
+            <ChevronDown className="h-8 w-8 text-amber-500/50 mx-auto" />
           </button>
         </div>
       </section>
       
       {/* Sections Grid */}
-      <section id="sections" className="py-24 px-4">
-        <div className="container mx-auto">
+      <section id="sections" className="py-24 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="container mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
               探索虹靈御所
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-white/50 max-w-xl mx-auto">
               每一個入口，都通往自我覺醒的旅程
             </p>
           </div>
@@ -248,27 +270,27 @@ const HomePage = () => {
                   {/* Content */}
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-background shadow-soft mb-6 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-white/5 border border-white/10 mb-6 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                       <section.icon className="h-7 w-7" />
                     </div>
                     
                     {/* Title */}
-                    <h3 className="font-serif text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="font-serif text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                       {section.title}
                     </h3>
                     
                     {/* Subtitle */}
-                    <p className="text-sm text-primary/80 mb-4 font-medium">
+                    <p className="text-sm text-amber-400/80 mb-4 font-medium">
                       {section.subtitle}
                     </p>
                     
                     {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    <p className="text-white/50 text-sm leading-relaxed mb-6">
                       {section.description}
                     </p>
                     
                     {/* Arrow */}
-                    <div className="flex items-center text-primary font-medium text-sm">
+                    <div className="flex items-center text-amber-400 font-medium text-sm">
                       <span>{section.isExternal ? '前往了解' : '進入探索'}</span>
                       {section.isExternal ? (
                         <ExternalLink className="ml-2 h-4 w-4" />
@@ -286,7 +308,7 @@ const HomePage = () => {
                   href={section.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden animate-fade-in"
+                  className="group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {cardContent}
@@ -295,7 +317,7 @@ const HomePage = () => {
                 <Link
                   key={section.id}
                   to={section.href}
-                  className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden animate-fade-in"
+                  className="group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {cardContent}
@@ -307,13 +329,14 @@ const HomePage = () => {
       </section>
       
       {/* MomoChao Portrait Section */}
-      <section className="py-24 px-4 relative overflow-hidden bg-gradient-to-b from-transparent via-primary/5 to-transparent">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in">
               誰是默默超
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <p className="text-white/50 max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               一個正在學會凝視自己的人
             </p>
           </div>
@@ -323,13 +346,13 @@ const HomePage = () => {
             {/* Rainbow Portrait */}
             <div className="group relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative overflow-hidden rounded-2xl shadow-elevated border border-border/50 group-hover:border-primary/30 transition-all duration-500">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 group-hover:border-amber-500/30 transition-all duration-500">
                 <img 
                   src={momoPortraitRainbow} 
                   alt="默默超 - 彩虹花田" 
                   className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                   <p className="font-serif text-lg font-medium">彩虹花田中的守護者</p>
                   <p className="text-sm text-white/70">用色彩點亮每一次相遇</p>
@@ -340,13 +363,13 @@ const HomePage = () => {
             {/* Cosmic Portrait */}
             <div className="group relative animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-yellow-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative overflow-hidden rounded-2xl shadow-elevated border border-border/50 group-hover:border-amber-500/30 transition-all duration-500">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 group-hover:border-amber-500/30 transition-all duration-500">
                 <img 
                   src={momoPortraitCosmic} 
                   alt="默默超 - 宇宙建構者" 
                   className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                   <p className="font-serif text-lg font-medium">思維建築師</p>
                   <p className="text-sm text-white/70">在宇宙的軌道中尋找秩序</p>
@@ -361,7 +384,7 @@ const HomePage = () => {
               href="https://main.momo-chao.com/about" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500/20 to-violet-500/20 border border-indigo-500/30 text-indigo-600 hover:from-indigo-500/30 hover:to-violet-500/30 transition-all duration-300 group font-medium"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 text-amber-400 hover:from-amber-500/30 hover:to-amber-600/30 transition-all duration-300 group font-medium"
             >
               認識默默超的故事
               <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -372,15 +395,14 @@ const HomePage = () => {
       
       {/* Quote Section */}
       <section className="py-24 px-4 relative overflow-hidden">
-        {/* Darker parchment edge effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
-        <div className="container mx-auto max-w-4xl text-center">
-          <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-relaxed mb-8">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-8">
             「命運從來不是劇本，<br />
             它只是一面鏡子。<br />
             而你，正在學會誠實地凝視自己。」
           </blockquote>
-          <p className="text-muted-foreground">—— 默默超</p>
+          <p className="text-amber-400/60">—— 默默超</p>
         </div>
       </section>
       
