@@ -130,7 +130,7 @@ const AboutPage = () => {
           >
             <motion.div
               animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, repeatType: "loop" }}
+              transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, repeatType: "loop" }}
             >
               <Sparkles className="w-14 h-14 mx-auto text-amber-400/80" />
             </motion.div>
