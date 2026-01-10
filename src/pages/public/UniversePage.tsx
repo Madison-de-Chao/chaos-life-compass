@@ -123,7 +123,7 @@ const UniversePage = () => {
             playsInline
             className="w-full h-full object-cover opacity-40"
           >
-            <source src="/videos/yuanyi-universe.mp4" type="video/mp4" />
+            <source src="/videos/yuanyi-universe.mp4?v=2" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/60 to-[#0a0a0a]" />
         </div>
