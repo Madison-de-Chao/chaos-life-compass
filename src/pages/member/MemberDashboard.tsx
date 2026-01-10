@@ -29,7 +29,7 @@ interface MemberDocument {
 
 const MemberDashboard = () => {
   const navigate = useNavigate();
-  const { user, profile, loading, isAdmin, signOut } = useMember();
+  const { user, profile, loading, isAdmin, isHelper, signOut } = useMember();
   const [documents, setDocuments] = useState<MemberDocument[]>([]);
   const [loadingDocs, setLoadingDocs] = useState(true);
 
@@ -119,9 +119,9 @@ const MemberDashboard = () => {
           </Link>
 
           <div className="flex items-center gap-3">
-            {isAdmin && (
+            {(isAdmin || isHelper) && (
               <Button variant="outline" size="sm" onClick={() => navigate("/dashboard")}>
-                管理後台
+                {isAdmin ? '管理後台' : '小幫手後台'}
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={() => navigate("/member/profile")}>
