@@ -35,6 +35,7 @@ import ReportPage from "./pages/public/ReportPage";
 import NotePage from "./pages/public/NotePage";
 import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
+import UniversePage from "./pages/public/UniversePage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -95,7 +96,7 @@ const App = () => (
                 <Route path="/reports" element={<ReportPage />} />
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />
-                <Route path="/universe" element={<ComingSoonPage />} />
+                <Route path="/universe" element={<UniversePage />} />
                 <Route path="/notes-public" element={<ComingSoonPage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
