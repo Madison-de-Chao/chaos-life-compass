@@ -422,6 +422,18 @@ const plan3Extras = [
 ];
 
 
+// Blurred price component for mosaic effect
+const BlurredPrice = ({ color = "text-white" }: { color?: string }) => (
+  <span className={`relative inline-flex items-center ${color}`}>
+    <span className="blur-[6px] select-none">NT$ XX,XXX</span>
+    <span className="absolute inset-0 flex items-center justify-center">
+      <span className="text-[10px] text-white/60 bg-black/40 px-2 py-0.5 rounded-full backdrop-blur-sm">
+        即將公佈
+      </span>
+    </span>
+  </span>
+);
+
 // Animated floating orb component
 const FloatingOrb = ({ className, delay = 0, duration = 4 }: { className?: string; delay?: number; duration?: number }) => (
   <div 
@@ -548,7 +560,7 @@ const ReportPage = () => {
 
   useSEO({
     title: "默默超全方位命理解讀報告 | 紫微斗數・八字・占星・人類圖",
-    description: "獨家四系統交叉整合命理報告，80,000+字深度解析。標準版NT$4,980起，旗艦版包含元壹宇宙X默默超思維系統。100%全客製化，不套模板。",
+    description: "獨家四系統交叉整合命理報告，80,000+字深度解析。基本版、標準版、旗艦版三種選擇，旗艦版包含元壹宇宙X默默超思維系統。100%全客製化，不套模板。",
     keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 全方位命理解讀, 命盤分析, 人生羅盤",
     ogTitle: "默默超全方位命理解讀報告 - 看見自己，而非被命運定義",
   });
@@ -819,7 +831,7 @@ const ReportPage = () => {
                   <h4 className="font-serif text-lg font-bold text-white mb-1">認識自己</h4>
                   <p className="text-slate-400 text-sm">5 章・快速入門</p>
                   <div className="mt-3 flex items-center gap-1 text-slate-300 text-xs group-hover:text-white transition-colors">
-                    <span>NT$ 1,980 起</span>
+                    <BlurredPrice color="text-slate-300" />
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -839,7 +851,7 @@ const ReportPage = () => {
                   <h4 className="font-serif text-lg font-bold text-white mb-1">看懂自己</h4>
                   <p className="text-blue-300/70 text-sm">8 章・完整解析</p>
                   <div className="mt-3 flex items-center gap-1 text-blue-300 text-xs group-hover:text-white transition-colors">
-                    <span>NT$ 4,980 起</span>
+                    <BlurredPrice color="text-blue-300" />
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -865,7 +877,7 @@ const ReportPage = () => {
                   <h4 className="font-serif text-lg font-bold text-white mb-1">使用自己</h4>
                   <p className="text-amber-300/70 text-sm">10 章・人生系統</p>
                   <div className="mt-3 flex items-center gap-1 text-amber-300 text-xs group-hover:text-white transition-colors">
-                    <span>NT$ 12,800 起</span>
+                    <BlurredPrice color="text-amber-300" />
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -2272,7 +2284,7 @@ const ReportPage = () => {
                       <p className="text-white/40 text-xs">{item.days} 個工作天</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-slate-300">NT${item.price}</p>
+                      <BlurredPrice color="text-slate-300 text-lg font-bold" />
                     </div>
                   </div>
                 ))}
@@ -2297,7 +2309,7 @@ const ReportPage = () => {
                       <p className="text-white/40 text-xs">{item.days} 個工作天</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-blue-300">NT${item.price}</p>
+                      <BlurredPrice color="text-blue-300 text-lg font-bold" />
                     </div>
                   </div>
                 ))}
@@ -2330,7 +2342,7 @@ const ReportPage = () => {
                         <p className="text-white/40 text-xs">{item.days} 個工作天</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-amber-400">NT${item.price}</p>
+                        <BlurredPrice color="text-amber-400 text-lg font-bold" />
                       </div>
                     </div>
                   ))}
