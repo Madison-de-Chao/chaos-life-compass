@@ -709,10 +709,10 @@ export default function PortalPage() {
   const timeoutRef = useRef<number | null>(null);
 
   useSEO({
-    title: "虹靈御所 × 超烜創意 | 命理報告・品牌創意・生命智慧",
+    title: "默默超的入口網站 | 命理報告・品牌創意・生命智慧",
     description: "虹靈御所與超烜創意的交匯點。探索命理報告、品牌創意服務、元壹宇宙思維系統。",
     keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 虹靈御所, 超烜創意, 默默超",
-    ogTitle: "虹靈御所 × 超烜創意",
+    ogTitle: "默默超的入口網站",
   });
 
   // Start music on first interaction
