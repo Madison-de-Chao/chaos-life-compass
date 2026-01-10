@@ -29,8 +29,7 @@ const footerLinks = {
     { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
   ],
   about: [
-    { label: "關於虹靈御所", href: "/about" },
-    { label: "誰是默默超", href: "/momo" },
+    { label: "關於默默超", href: "/about" },
   ],
 };
 
