@@ -114,15 +114,29 @@ const UniversePage = () => {
       
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20">
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-40"
+          >
+            <source src="/videos/yuanyi-universe.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/60 to-[#0a0a0a]" />
+        </div>
+        
         {/* Background Effects */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 z-[1]">
           <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-amber-500/5 to-transparent rounded-full" />
         </div>
 
         {/* Orbiting circles */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[2]">
           <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] border border-white/5 rounded-full animate-spin" style={{ animationDuration: '60s' }}>
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-amber-500/50 rounded-full" />
           </div>
