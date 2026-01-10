@@ -10,7 +10,8 @@ import {
   ArrowRight,
   ChevronDown,
   Crown,
-  LogIn
+  LogIn,
+  ExternalLink
 } from "lucide-react";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,8 @@ const sections = [
     subtitle: "鏡子的守護者",
     description: "我們不給答案，只給倒影。真理不在預言中，而在誠實地凝視自己。",
     icon: User,
-    href: "/momo",
+    href: "https://main.momo-chao.com/about",
+    isExternal: true,
     color: "from-indigo-500/20 to-violet-500/20",
     iconColor: "text-indigo-600",
   },
@@ -233,46 +235,69 @@ const HomePage = () => {
           
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {sections.map((section, index) => (
-              <Link
-                key={section.id}
-                to={section.href}
-                className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {/* Background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${section.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-background shadow-soft mb-6 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                    <section.icon className="h-7 w-7" />
+            {sections.map((section, index) => {
+              const cardContent = (
+                <>
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${section.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  {/* Content */}
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-background shadow-soft mb-6 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                      <section.icon className="h-7 w-7" />
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="font-serif text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {section.title}
+                    </h3>
+                    
+                    {/* Subtitle */}
+                    <p className="text-sm text-primary/80 mb-4 font-medium">
+                      {section.subtitle}
+                    </p>
+                    
+                    {/* Description */}
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                      {section.description}
+                    </p>
+                    
+                    {/* Arrow */}
+                    <div className="flex items-center text-primary font-medium text-sm">
+                      <span>{section.isExternal ? '前往了解' : '進入探索'}</span>
+                      {section.isExternal ? (
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                      ) : (
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
+                      )}
+                    </div>
                   </div>
-                  
-                  {/* Title */}
-                  <h3 className="font-serif text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {section.title}
-                  </h3>
-                  
-                  {/* Subtitle */}
-                  <p className="text-sm text-primary/80 mb-4 font-medium">
-                    {section.subtitle}
-                  </p>
-                  
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                    {section.description}
-                  </p>
-                  
-                  {/* Arrow */}
-                  <div className="flex items-center text-primary font-medium text-sm">
-                    <span>進入探索</span>
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </>
+              );
+
+              return section.isExternal ? (
+                <a
+                  key={section.id}
+                  href={section.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {cardContent}
+                </a>
+              ) : (
+                <Link
+                  key={section.id}
+                  to={section.href}
+                  className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30 overflow-hidden animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {cardContent}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
