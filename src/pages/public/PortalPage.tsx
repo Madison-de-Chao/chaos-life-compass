@@ -692,6 +692,73 @@ const createIntroSections = () => [
     ),
     duration: 7000,
   },
+  {
+    id: 'four-dimensions',
+    content: (
+      <div className="space-y-8 max-w-3xl mx-auto">
+        <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide mb-4">四維運作系統</h2>
+        <p className="text-white/60 text-base md:text-lg mb-6">默默超思維系統的四個操作維度</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-2xl p-5 text-center">
+            <div className="text-3xl mb-3">💭</div>
+            <h3 className="text-rose-300 text-lg font-display mb-2">情緒</h3>
+            <p className="text-white/50 text-sm">感知・接納・轉化</p>
+          </div>
+          <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-2xl p-5 text-center">
+            <div className="text-3xl mb-3">⚡</div>
+            <h3 className="text-amber-300 text-lg font-display mb-2">行動</h3>
+            <p className="text-white/50 text-sm">覺察・選擇・執行</p>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-5 text-center">
+            <div className="text-3xl mb-3">🧠</div>
+            <h3 className="text-blue-300 text-lg font-display mb-2">心智</h3>
+            <p className="text-white/50 text-sm">整合・建構・穩固</p>
+          </div>
+          <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-2xl p-5 text-center">
+            <div className="text-3xl mb-3">💎</div>
+            <h3 className="text-emerald-300 text-lg font-display mb-2">價值</h3>
+            <p className="text-white/50 text-sm">定位・校準・堅守</p>
+          </div>
+        </div>
+      </div>
+    ),
+    duration: 7000,
+  },
+  {
+    id: 'human-ai-era',
+    content: (
+      <div className="space-y-8 max-w-2xl mx-auto">
+        <div className="text-[#c9a962]/60 text-sm md:text-base tracking-[0.2em] uppercase">人機協作末法時代</div>
+        <h2 className="font-display text-2xl md:text-3xl lg:text-4xl text-white tracking-wide leading-relaxed">
+          當 AI 能回答所有問題，<br />
+          <span className="text-[#c9a962]">你需要的是問對問題的能力。</span>
+        </h2>
+        <p className="text-white/60 text-base md:text-lg leading-relaxed">
+          默默超思維系統提供「堅實穩固的思維能力」，<br />
+          讓你在 AI 時代保持人類主體性，<br />
+          不被資訊淹沒，而是駕馭它。
+        </p>
+      </div>
+    ),
+    duration: 8000,
+  },
+  {
+    id: 'closing',
+    content: (
+      <div className="space-y-8 max-w-2xl mx-auto">
+        <p className="text-white/70 text-xl md:text-2xl font-light leading-relaxed italic">
+          「你不需要被告知你是誰，<br />
+          你只需要一面夠清晰的鏡子。」
+        </p>
+        <div className="pt-4">
+          <div className="inline-block px-6 py-3 border border-[#c9a962]/30 rounded-full">
+            <span className="text-[#c9a962] text-lg tracking-wider">選擇你的入口 ↓</span>
+          </div>
+        </div>
+      </div>
+    ),
+    duration: 5000,
+  },
 ];
 
 const introSections = createIntroSections();
