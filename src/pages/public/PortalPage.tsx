@@ -51,7 +51,7 @@ const portalItems = [
     description: "或許，只是另一個正在學會凝視自己的人",
     cta: "認識默默超",
     logo: null, // External link, no logo
-    href: "https://im-momochao.manus.space",
+    href: "https://main.momo-chao.com/about",
     isExternal: true,
     glowColor: "rgba(52, 211, 153, 0.35)",
     particleColor: "bg-emerald-300",

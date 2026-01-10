@@ -29,7 +29,7 @@ const footerLinks = {
     { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
   ],
   about: [
-    { label: "關於默默超", href: "/about" },
+    { label: "關於默默超", href: "https://main.momo-chao.com/about", isExternal: true },
   ],
 };
 
@@ -148,12 +148,26 @@ const PublicFooter = () => {
             <ul className="space-y-3 mb-6">
               {footerLinks.about.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-white/50 hover:text-amber-400 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.isExternal ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/50 hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                    >
+                      {link.label}
+                      <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-white/50 hover:text-amber-400 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
