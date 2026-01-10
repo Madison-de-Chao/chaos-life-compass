@@ -40,7 +40,7 @@ const portalItems = [
     description: "在思維的鏡面裡，重新命名自己的世界",
     cta: "進入元壹宇宙",
     logo: logoYuanyi,
-    href: "/about",
+    href: "/universe",
     glowColor: "rgba(168, 85, 247, 0.35)",
     particleColor: "bg-purple-300",
     borderColor: "border-purple-400/20",
