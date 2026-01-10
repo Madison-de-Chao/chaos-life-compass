@@ -29,8 +29,7 @@ const navLinks = [
   { label: "超烜遊戲", href: "/games" },
   { label: "元壹筆記", href: "/notes-public" },
   { label: "元壹宇宙", href: "/universe" },
-  { label: "關於我們", href: "/about" },
-  { label: "默默超", href: "/momo" },
+  { label: "關於默默超", href: "/about" },
 ];
 
 const ecosystemLinks = [
