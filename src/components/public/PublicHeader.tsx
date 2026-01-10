@@ -29,7 +29,7 @@ const navLinks = [
   { label: "超烜遊戲", href: "/games" },
   { label: "元壹筆記", href: "/notes-public" },
   { label: "元壹宇宙", href: "/universe" },
-  { label: "關於默默超", href: "https://main.momo-chao.com/about", isExternal: true },
+  { label: "關於默默超", href: "/about" },
 ];
 
 const ecosystemLinks = [
@@ -81,32 +81,19 @@ const PublicHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => 
-              link.isExternal ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                >
-                  {link.label}
-                  <ExternalLink className="h-3 w-3 opacity-60" />
-                </a>
-              ) : (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(link.href)
-                      ? "text-amber-400 bg-amber-500/10"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive(link.href)
+                    ? "text-amber-400 bg-amber-500/10"
+                    : "text-white/60 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             
             {/* Ecosystem Dropdown */}
             <DropdownMenu>
@@ -204,33 +191,19 @@ const PublicHeader = () => {
                 <nav className="flex-1 py-6 overflow-y-auto">
                   <div className="space-y-1">
                     {navLinks.map((link) => (
-                        link.isExternal ? (
-                          <a
-                            key={link.href}
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center justify-between min-h-[48px] px-4 py-3 rounded-lg text-base font-medium text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10 active:scale-[0.98] transition-colors"
-                          >
-                            {link.label}
-                            <ExternalLink className="h-4 w-4 text-white/40" />
-                          </a>
-                        ) : (
-                          <Link
-                            key={link.href}
-                            to={link.href}
-                            onClick={() => setIsOpen(false)}
-                            className={`flex items-center min-h-[48px] px-4 py-3 rounded-lg text-base font-medium transition-colors active:scale-[0.98] ${
-                              isActive(link.href)
-                                ? "text-amber-400 bg-amber-500/10"
-                                : "text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10"
-                            }`}
-                          >
-                            {link.label}
-                          </Link>
-                        )
-                      ))}
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center min-h-[48px] px-4 py-3 rounded-lg text-base font-medium transition-colors active:scale-[0.98] ${
+                          isActive(link.href)
+                            ? "text-amber-400 bg-amber-500/10"
+                            : "text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
                   </div>
                   
                   {/* Mobile Ecosystem Links */}
