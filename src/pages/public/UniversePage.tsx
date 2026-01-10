@@ -185,17 +185,47 @@ const UniversePage = () => {
               href="https://yyuniverse.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(245,158,11,0.4)] min-h-[52px]"
+              className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 min-h-[52px]"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              <span className="relative flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
+              {/* Pulsing glow rings */}
+              <span className="absolute inset-0 rounded-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] bg-amber-400/30" />
+              <span className="absolute inset-0 rounded-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_0.5s] bg-amber-400/20" />
+              <span className="absolute inset-0 rounded-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_1s] bg-amber-400/10" />
+              
+              {/* Outer glow */}
+              <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 opacity-50 blur-lg group-hover:opacity-80 transition-opacity duration-300 animate-pulse" />
+              
+              {/* Button background */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500" />
+              
+              {/* Shimmer effect */}
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+              
+              {/* Floating particles */}
+              <span className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
+                {[...Array(6)].map((_, i) => (
+                  <span
+                    key={i}
+                    className="absolute w-1 h-1 bg-white rounded-full animate-[floatParticle_3s_ease-in-out_infinite]"
+                    style={{
+                      left: `${15 + i * 15}%`,
+                      bottom: '20%',
+                      animationDelay: `${i * 0.4}s`,
+                      opacity: 0.6,
+                    }}
+                  />
+                ))}
+              </span>
+              
+              {/* Content */}
+              <span className="relative flex items-center gap-2 z-10">
+                <Sparkles className="w-5 h-5 animate-[pulse_1.5s_ease-in-out_infinite]" />
                 元壹宇宙學術版
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
               </span>
             </a>
             <div className="flex items-center gap-2 text-amber-400/60">
-              <Orbit className="w-5 h-5" />
+              <Orbit className="w-5 h-5 animate-spin" style={{ animationDuration: '8s' }} />
               <span>整合四大系統 × 默默超思維</span>
             </div>
           </motion.div>
