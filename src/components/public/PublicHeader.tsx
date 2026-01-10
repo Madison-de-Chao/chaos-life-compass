@@ -57,20 +57,28 @@ const PublicHeader = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logos */}
-          <Link to="/chaoxuan" className="flex items-center gap-4 group">
-            <img 
-              src={logoMaisonDeChao} 
-              alt="超烜創意 MAISON DE CHAO" 
-              className="h-12 md:h-14 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
-            />
-            <div className="h-8 w-px bg-white/20" />
-            <img 
-              src={logoHongling} 
-              alt="虹靈御所" 
-              className="h-10 md:h-12 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
-              style={{ animationDelay: "0.1s" }}
-            />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link to="/chaoxuan" className="flex items-center gap-4 group">
+              <img 
+                src={logoMaisonDeChao} 
+                alt="超烜創意 MAISON DE CHAO" 
+                className="h-12 md:h-14 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
+              />
+              <div className="h-8 w-px bg-white/20" />
+              <img 
+                src={logoHongling} 
+                alt="虹靈御所" 
+                className="h-10 md:h-12 w-auto animate-fade-in hover:scale-110 transition-transform duration-300"
+                style={{ animationDelay: "0.1s" }}
+              />
+            </Link>
+            
+            {/* Beta Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/30">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span className="text-xs font-medium text-amber-400">公開測試版</span>
+            </div>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
