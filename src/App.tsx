@@ -29,7 +29,6 @@ import MembersPage from "./pages/MembersPage";
 // Public Pages
 import PortalPage from "./pages/public/PortalPage";
 import HomePage from "./pages/public/HomePage";
-import AboutPage from "./pages/public/AboutPage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
 import NotePage from "./pages/public/NotePage";
@@ -67,7 +66,7 @@ const queryClient = new QueryClient();
 // Component to conditionally render chatbot on public pages
 function ChatBotWrapper() {
   const location = useLocation();
-  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/about", "/reports", "/games", "/universe", "/notes-public"];
+  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/reports", "/games", "/universe", "/notes-public"];
   const isPublicRoute = publicRoutes.some(route => 
     route === "/" ? location.pathname === "/" : location.pathname.startsWith(route)
   );
@@ -92,7 +91,6 @@ const App = () => (
                 <Route path="/portal" element={<PortalPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/chaoxuan" element={<ChaoxuanPage />} />
-                <Route path="/about" element={<AboutPage />} />
                 <Route path="/reports" element={<ReportPage />} />
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />

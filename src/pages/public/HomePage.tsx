@@ -19,6 +19,8 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
 import { useMember } from "@/hooks/useMember";
+import momoPortraitRainbow from "@/assets/momo-portrait-rainbow.jpg";
+import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 
 const sections = [
   {
@@ -67,7 +69,8 @@ const sections = [
     subtitle: "知行如一的密法",
     description: "虹靈御所的使命，不是造出完美的故事，而是讓每個人都能在自己的故事裡醒來。",
     icon: Building2,
-    href: "/about",
+    href: "https://main.momo-chao.com/about",
+    isExternal: true,
     color: "from-rose-500/20 to-pink-500/20",
     iconColor: "text-rose-600",
   },
@@ -166,9 +169,10 @@ const HomePage = () => {
               </Link>
             </Button>
             <Button asChild variant="outline-light" size="lg" className="px-8">
-              <Link to="/about">
+              <a href="https://main.momo-chao.com/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                 認識虹靈御所
-              </Link>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
             </Button>
           </div>
 
@@ -298,6 +302,70 @@ const HomePage = () => {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+      
+      {/* MomoChao Portrait Section */}
+      <section className="py-24 px-4 relative overflow-hidden bg-gradient-to-b from-transparent via-primary/5 to-transparent">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4 animate-fade-in">
+              誰是默默超
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              一個正在學會凝視自己的人
+            </p>
+          </div>
+          
+          {/* Portrait Gallery with Animation */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+            {/* Rainbow Portrait */}
+            <div className="group relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative overflow-hidden rounded-2xl shadow-elevated border border-border/50 group-hover:border-primary/30 transition-all duration-500">
+                <img 
+                  src={momoPortraitRainbow} 
+                  alt="默默超 - 彩虹花田" 
+                  className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                  <p className="font-serif text-lg font-medium">彩虹花田中的守護者</p>
+                  <p className="text-sm text-white/70">用色彩點亮每一次相遇</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Cosmic Portrait */}
+            <div className="group relative animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-yellow-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative overflow-hidden rounded-2xl shadow-elevated border border-border/50 group-hover:border-amber-500/30 transition-all duration-500">
+                <img 
+                  src={momoPortraitCosmic} 
+                  alt="默默超 - 宇宙建構者" 
+                  className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                  <p className="font-serif text-lg font-medium">思維建築師</p>
+                  <p className="text-sm text-white/70">在宇宙的軌道中尋找秩序</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* CTA to external about page */}
+          <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <a 
+              href="https://main.momo-chao.com/about" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500/20 to-violet-500/20 border border-indigo-500/30 text-indigo-600 hover:from-indigo-500/30 hover:to-violet-500/30 transition-all duration-300 group font-medium"
+            >
+              認識默默超的故事
+              <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </section>
