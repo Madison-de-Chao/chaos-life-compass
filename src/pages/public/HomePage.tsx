@@ -163,7 +163,7 @@ const HomePage = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="px-8">
+            <Button asChild variant="outline-light" size="lg" className="px-8">
               <Link to="/about">
                 認識虹靈御所
               </Link>
