@@ -27,7 +27,8 @@ const navLinks = [
   { label: "虹靈御所", href: "/home" },
   { label: "命理報告", href: "/reports" },
   { label: "超烜遊戲", href: "/games" },
-  { label: "元壹筆記", href: "/notes" },
+  { label: "元壹筆記", href: "/notes-public" },
+  { label: "元壹宇宙", href: "/universe" },
   { label: "關於我們", href: "/about" },
   { label: "默默超", href: "/momo" },
 ];
