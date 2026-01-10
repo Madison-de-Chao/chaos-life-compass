@@ -221,7 +221,7 @@ const ChaoxuanPage = () => {
                   }}
                   title="點擊開啟/關閉聲音"
                 >
-                  <source src="/videos/chaoxuan-logo.mp4" type="video/mp4" />
+                  <source src="/videos/chaoxuan-logo.mp4?v=2" type="video/mp4" />
                 </video>
               </div>
             </div>
