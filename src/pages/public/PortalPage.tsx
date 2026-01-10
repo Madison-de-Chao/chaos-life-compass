@@ -14,7 +14,7 @@ import logoYuanyi from "@/assets/logo-yuanyi-universe.png";
 const portalItems = [
   {
     title: "虹靈御所",
-    subtitle: "Hongling Yusuo",
+    subtitle: "Rainbow Sanctuary",
     description: "看見命盤裡的自己，而非被命運定義",
     cta: "進入虹靈御所",
     logo: logoHongling,

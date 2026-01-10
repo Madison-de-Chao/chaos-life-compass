@@ -129,7 +129,7 @@ const HomePage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center pt-20">
           {/* Brand Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8 animate-fade-in">
-            <span className="text-sm font-medium text-amber-400">Hongling Yusuo</span>
+            <span className="text-sm font-medium text-amber-400">Rainbow Sanctuary</span>
             <span className="text-white/40">×</span>
             <span className="text-sm text-white/60">知行如一的密法</span>
           </div>
