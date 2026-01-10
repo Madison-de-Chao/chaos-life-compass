@@ -84,7 +84,7 @@ interface AuthorizedApp {
 
 const UnifiedDashboard = () => {
   const navigate = useNavigate();
-  const { user, profile, loading, isAdmin, signOut, refreshProfile } = useMember();
+  const { user, profile, loading, isAdmin, isHelper, signOut, refreshProfile } = useMember();
   const { data: entitlements = [], isLoading: loadingEntitlements, refetch: refetchEntitlements } = useMyEntitlements();
   const { data: products = [], refetch: refetchProducts } = useProducts();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -272,14 +272,14 @@ const UnifiedDashboard = () => {
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
-            {isAdmin && (
+            {(isAdmin || isHelper) && (
               <Button 
                 variant="default" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
                 className="bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs sm:text-sm px-2.5 sm:px-3"
               >
-                <span className="hidden sm:inline">管理後台</span>
+                <span className="hidden sm:inline">{isAdmin ? '管理後台' : '小幫手後台'}</span>
                 <span className="sm:hidden">後台</span>
               </Button>
             )}
