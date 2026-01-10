@@ -12,6 +12,7 @@ const footerLinks = {
     { label: "元壹宇宙", href: "/universe" },
   ],
   external: [
+    { label: "元壹宇宙", href: "https://www.yyuniverse.com/", external: true },
     { label: "默默超思維訓練系統", href: "https://mmclogic.com/", external: true },
     { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", external: true },
     { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
