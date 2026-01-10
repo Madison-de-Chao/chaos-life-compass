@@ -5,6 +5,11 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Badge } from "@/components/ui/badge";
 
+// Game preview images
+import gameBaziImg from "@/assets/game-bazi.jpg";
+import gameMirrorImg from "@/assets/game-mirror.jpg";
+import gameLogicImg from "@/assets/game-logic.jpg";
+
 type Category = "all" | "divination" | "training";
 
 const categories: { id: Category; label: string; color: string }[] = [
@@ -26,6 +31,7 @@ const games = [
     borderColor: "border-amber-500/30",
     category: "divination" as Category,
     categoryLabel: "命理類",
+    previewImage: gameBaziImg,
   },
   {
     id: "mirror",
@@ -39,6 +45,7 @@ const games = [
     borderColor: "border-purple-500/30",
     category: "divination" as Category,
     categoryLabel: "命理類",
+    previewImage: gameMirrorImg,
   },
   {
     id: "logic",
@@ -52,6 +59,7 @@ const games = [
     borderColor: "border-emerald-500/30",
     category: "training" as Category,
     categoryLabel: "思維訓練類",
+    previewImage: gameLogicImg,
   },
 ];
 
@@ -190,43 +198,53 @@ const GamesPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     variants={itemVariants}
-                    className={`group relative p-6 lg:p-8 rounded-2xl border ${game.borderColor} ${game.bgColor} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 min-h-[280px] flex flex-col`}
+                    className={`group relative rounded-2xl border ${game.borderColor} ${game.bgColor} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 overflow-hidden flex flex-col`}
                     whileHover={{ y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     layout
                   >
-                    {/* Category Badge */}
-                    <Badge
-                      variant="outline"
-                      className={`absolute top-4 right-4 text-xs ${
-                        game.category === "divination"
-                          ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                          : "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                      }`}
-                    >
-                      {game.categoryLabel}
-                    </Badge>
-                    
-                    {/* Icon */}
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center mb-5 shadow-lg`}>
-                      <Icon className="w-7 h-7 text-white" />
+                    {/* Preview Image */}
+                    <div className="relative w-full aspect-video overflow-hidden">
+                      <img 
+                        src={game.previewImage} 
+                        alt={`${game.title} 預覽`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent`} />
+                      
+                      {/* Category Badge on Image */}
+                      <Badge
+                        variant="outline"
+                        className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
+                          game.category === "divination"
+                            ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
+                            : "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
+                        }`}
+                      >
+                        {game.categoryLabel}
+                      </Badge>
+                      
+                      {/* Icon on Image */}
+                      <div className={`absolute bottom-3 left-3 w-12 h-12 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center shadow-lg`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
                     </div>
                     
                     {/* Content */}
-                    <div className="flex-1">
-                      <div className="text-xs text-white/40 mb-2">{game.subtitle}</div>
-                      <h3 className="text-xl lg:text-2xl font-serif font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">
+                    <div className="p-5 lg:p-6 flex-1 flex flex-col">
+                      <div className="text-xs text-white/40 mb-1">{game.subtitle}</div>
+                      <h3 className="text-lg lg:text-xl font-serif font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
                         {game.title}
                       </h3>
-                      <p className="text-sm lg:text-base text-white/60 leading-relaxed">
+                      <p className="text-sm text-white/60 leading-relaxed flex-1">
                         {game.description}
                       </p>
-                    </div>
-                    
-                    {/* Link Indicator */}
-                    <div className="mt-6 flex items-center gap-2 text-sm text-white/40 group-hover:text-amber-400 transition-colors">
-                      <span>立即體驗</span>
-                      <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      
+                      {/* Link Indicator */}
+                      <div className="mt-4 flex items-center gap-2 text-sm text-white/40 group-hover:text-amber-400 transition-colors">
+                        <span>立即體驗</span>
+                        <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      </div>
                     </div>
                     
                     {/* Hover Glow Effect */}
