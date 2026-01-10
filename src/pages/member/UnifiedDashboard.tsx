@@ -304,6 +304,31 @@ const UnifiedDashboard = () => {
       </header>
 
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-6xl">
+        {/* Beta Notice with Countdown */}
+        <div className="mb-5 sm:mb-6 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <p className="text-sm sm:text-base text-amber-400 font-semibold">🎉 公開測試版帳號</p>
+                <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] sm:text-xs">
+                  Beta
+                </Badge>
+              </div>
+              <p className="text-xs sm:text-sm text-amber-400/70 leading-relaxed">
+                您目前享有等同「每月訂閱」的完整權限，免費及付費內容皆可體驗。
+                <span className="block sm:inline sm:ml-1">正式營運後帳號將自動轉正，<strong>但測試期資料將會刪除</strong>。</span>
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-xs text-amber-400/60">
+                <Clock className="w-3.5 h-3.5" />
+                <span>正式營運時間：敬請期待</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Welcome Section */}
         <div className="mb-5 sm:mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-100 mb-2">

@@ -519,7 +519,7 @@ const UnifiedAuthPage = () => {
                   variant="outline"
                   onClick={handleGoogleSignIn}
                   disabled={isGoogleLoading}
-                  className="w-full h-12 bg-white hover:bg-slate-100 text-slate-800 border-slate-300 font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                  className="w-full h-12 bg-slate-800 hover:bg-slate-700 text-slate-100 border-slate-600 font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   {isGoogleLoading ? (
                     <div className="flex items-center gap-2">
