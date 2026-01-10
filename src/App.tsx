@@ -10,6 +10,7 @@ import { MemberProtectedRoute } from "@/components/MemberProtectedRoute";
 import PageTransition from "@/components/PageTransition";
 import { MomoChatBot } from "@/components/MomoChatBot";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 // Admin Pages
 import Index from "./pages/Index";
@@ -23,7 +24,7 @@ import CustomersPage from "./pages/CustomersPage";
 import FeedbacksPage from "./pages/FeedbacksPage";
 import GuidePage from "./pages/GuidePage";
 import MembersPage from "./pages/MembersPage";
-import NotFound from "./pages/NotFound";
+// NotFound removed - using ComingSoonPage for all undefined routes
 
 // Public Pages
 import PortalPage from "./pages/public/PortalPage";
@@ -83,6 +84,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <PageTransition>
               <Routes>
                 {/* Public routes - 虹靈御所前台 */}
@@ -134,7 +136,7 @@ const App = () => (
                 <Route path="/print/:shareLink" element={<PrintViewPage />} />
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<ComingSoonPage />} />
               </Routes>
             </PageTransition>
             <ChatBotWrapper />

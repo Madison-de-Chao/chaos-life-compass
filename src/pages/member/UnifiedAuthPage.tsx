@@ -538,8 +538,23 @@ const UnifiedAuthPage = () => {
           </div>
         </div>
 
+        {/* Beta notice */}
+        <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+            </div>
+            <div className="text-left">
+              <p className="text-sm text-amber-400 font-medium mb-1">🎉 公開測試版福利</p>
+              <p className="text-xs text-amber-400/70 leading-relaxed">
+                現在註冊的帳號為<strong>測試版帳號</strong>，享有等同「每月訂閱」的完整權限，免費及付費內容皆可體驗。正式營運後帳號將自動轉為正式帳號，<strong>但測試期間的所有資料紀錄將會刪除</strong>。
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Product badges */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <p className="text-slate-600 text-xs mb-4">
             一個帳號，暢享所有服務
           </p>

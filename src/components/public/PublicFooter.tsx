@@ -53,7 +53,7 @@ const PublicFooter = () => {
   };
 
   return (
-    <footer className="bg-[#050505] border-t border-white/10">
+    <footer className="border-t border-white/10" style={{ background: "linear-gradient(135deg, rgba(5,5,5,1) 0%, rgba(15,15,15,1) 25%, rgba(8,8,8,1) 50%, rgba(18,18,18,1) 75%, rgba(5,5,5,1) 100%), url(\"data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='marble'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='20' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23080808'/%3E%3Ccircle cx='50' cy='50' r='80' fill='%23151515' opacity='0.3'/%3E%3Ccircle cx='150' cy='150' r='100' fill='%23101010' opacity='0.2'/%3E%3Crect width='100%25' height='100%25' filter='url(%23marble)' opacity='0.1'/%3E%3C/svg%3E\")" }}>
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand with Logos */}

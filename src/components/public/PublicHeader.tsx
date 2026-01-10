@@ -52,7 +52,7 @@ const PublicHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/10">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md border-b border-white/10" style={{ background: "linear-gradient(135deg, rgba(10,10,10,0.95) 0%, rgba(20,20,20,0.95) 50%, rgba(10,10,10,0.95) 100%), url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E\")" }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logos */}
@@ -170,7 +170,7 @@ const PublicHeader = () => {
                 <span className="sr-only">開啟選單</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[350px] bg-[#0a0a0a] border-white/10">
+            <SheetContent side="right" className="w-[300px] sm:w-[350px] border-white/10" style={{ background: "linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(15,15,15,0.98) 100%)" }}>
               <div className="flex flex-col h-full">
                 {/* Mobile Logos */}
                 <div className="flex items-center gap-3 py-4 border-b border-white/10">

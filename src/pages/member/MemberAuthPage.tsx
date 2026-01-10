@@ -219,6 +219,19 @@ const MemberAuthPage = () => {
               </button>
             </p>
           </div>
+
+          {/* Beta notice */}
+          <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+            <div className="flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="text-left">
+                <p className="text-sm text-amber-700 font-medium mb-1">🎉 公開測試版福利</p>
+                <p className="text-xs text-amber-600/80 leading-relaxed">
+                  現在註冊為<strong>測試版帳號</strong>，享有等同「每月訂閱」的完整權限。正式營運後帳號轉為正式帳號，<strong>測試期間資料將會刪除</strong>。
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
