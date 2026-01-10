@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -14,7 +15,9 @@ import {
   Circle,
   Target,
   Puzzle,
-  ExternalLink
+  ExternalLink,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -108,6 +111,16 @@ const aiCollaboration = [
 ];
 
 const UniversePage = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
@@ -117,15 +130,29 @@ const UniversePage = () => {
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-full object-cover opacity-40"
           >
-            <source src="/videos/yuanyi-universe.mp4?v=2" type="video/mp4" />
+            <source src="/videos/yuanyi-universe.mp4?v=3" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/60 to-[#0a0a0a]" />
+          
+          {/* Audio Control Button */}
+          <button
+            onClick={toggleMute}
+            className="absolute bottom-4 right-4 z-20 p-3 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white/80 hover:text-white hover:bg-black/70 transition-all duration-300 group"
+            title={isMuted ? "開啟聲音" : "關閉聲音"}
+          >
+            {isMuted ? (
+              <VolumeX className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            ) : (
+              <Volume2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            )}
+          </button>
         </div>
         
         {/* Background Effects */}
