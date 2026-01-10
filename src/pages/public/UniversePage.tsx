@@ -13,7 +13,8 @@ import {
   Sparkles,
   Circle,
   Target,
-  Puzzle
+  Puzzle,
+  ExternalLink
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -178,10 +179,25 @@ const UniversePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="flex items-center justify-center gap-2 text-amber-400/60"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Orbit className="w-5 h-5" />
-            <span>整合四大系統 × 默默超思維</span>
+            <a
+              href="https://yyuniverse.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black font-bold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(245,158,11,0.4)] min-h-[52px]"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <span className="relative flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                元壹宇宙學術版
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </a>
+            <div className="flex items-center gap-2 text-amber-400/60">
+              <Orbit className="w-5 h-5" />
+              <span>整合四大系統 × 默默超思維</span>
+            </div>
           </motion.div>
         </div>
       </section>
