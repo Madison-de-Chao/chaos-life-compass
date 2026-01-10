@@ -34,6 +34,7 @@ import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
 import NotePage from "./pages/public/NotePage";
 import GamesPage from "./pages/public/GamesPage";
+import ComingSoonPage from "./pages/public/ComingSoonPage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -65,7 +66,7 @@ const queryClient = new QueryClient();
 // Component to conditionally render chatbot on public pages
 function ChatBotWrapper() {
   const location = useLocation();
-  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/about", "/momo", "/reports"];
+  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/about", "/momo", "/reports", "/games", "/universe", "/notes-public"];
   const isPublicRoute = publicRoutes.some(route => 
     route === "/" ? location.pathname === "/" : location.pathname.startsWith(route)
   );
@@ -94,6 +95,8 @@ const App = () => (
                 <Route path="/reports" element={<ReportPage />} />
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />
+                <Route path="/universe" element={<ComingSoonPage />} />
+                <Route path="/notes-public" element={<ComingSoonPage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
                 <Route path="/auth/login" element={<UnifiedAuthPage />} />
