@@ -1,7 +1,17 @@
-import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
+import { Badge } from "@/components/ui/badge";
+
+type Category = "all" | "divination" | "training";
+
+const categories: { id: Category; label: string; color: string }[] = [
+  { id: "all", label: "全部遊戲", color: "bg-white/10 text-white border-white/20 hover:bg-white/20" },
+  { id: "divination", label: "命理類", color: "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20" },
+  { id: "training", label: "思維訓練類", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20" },
+];
 
 const games = [
   {
@@ -14,6 +24,8 @@ const games = [
     color: "from-amber-500 to-orange-600",
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/30",
+    category: "divination" as Category,
+    categoryLabel: "命理類",
   },
   {
     id: "mirror",
@@ -25,6 +37,8 @@ const games = [
     color: "from-purple-500 to-indigo-600",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/30",
+    category: "divination" as Category,
+    categoryLabel: "命理類",
   },
   {
     id: "logic",
@@ -36,6 +50,8 @@ const games = [
     color: "from-emerald-500 to-teal-600",
     bgColor: "bg-emerald-500/10",
     borderColor: "border-emerald-500/30",
+    category: "training" as Category,
+    categoryLabel: "思維訓練類",
   },
 ];
 
@@ -62,6 +78,12 @@ const itemVariants = {
 };
 
 const GamesPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<Category>("all");
+  
+  const filteredGames = games.filter(
+    game => selectedCategory === "all" || game.category === selectedCategory
+  );
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
@@ -113,58 +135,109 @@ const GamesPage = () => {
         </div>
       </section>
       
+      {/* Category Filter */}
+      <section className="py-6 border-b border-white/10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-3"
+          >
+            <div className="flex items-center gap-2 text-white/40 mr-2">
+              <Filter className="w-4 h-4" />
+              <span className="text-sm hidden sm:inline">分類篩選</span>
+            </div>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 min-h-[44px] active:scale-95 ${
+                  selectedCategory === cat.id
+                    ? cat.id === "all"
+                      ? "bg-white text-black border-white"
+                      : cat.id === "divination"
+                      ? "bg-amber-500 text-black border-amber-500"
+                      : "bg-emerald-500 text-black border-emerald-500"
+                    : cat.color
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+      
       {/* Games Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-          >
-            {games.map((game) => {
-              const Icon = game.icon;
-              return (
-                <motion.a
-                  key={game.id}
-                  href={game.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variants={itemVariants}
-                  className={`group relative p-6 lg:p-8 rounded-2xl border ${game.borderColor} ${game.bgColor} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 min-h-[280px] flex flex-col`}
-                  whileHover={{ y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {/* Icon */}
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center mb-5 shadow-lg`}>
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="flex-1">
-                    <div className="text-xs text-white/40 mb-2">{game.subtitle}</div>
-                    <h3 className="text-xl lg:text-2xl font-serif font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">
-                      {game.title}
-                    </h3>
-                    <p className="text-sm lg:text-base text-white/60 leading-relaxed">
-                      {game.description}
-                    </p>
-                  </div>
-                  
-                  {/* Link Indicator */}
-                  <div className="mt-6 flex items-center gap-2 text-sm text-white/40 group-hover:text-amber-400 transition-colors">
-                    <span>立即體驗</span>
-                    <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                  
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${game.color} opacity-5 blur-xl`} />
-                  </div>
-                </motion.a>
-              );
-            })}
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedCategory}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            >
+              {filteredGames.map((game) => {
+                const Icon = game.icon;
+                return (
+                  <motion.a
+                    key={game.id}
+                    href={game.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={itemVariants}
+                    className={`group relative p-6 lg:p-8 rounded-2xl border ${game.borderColor} ${game.bgColor} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10 min-h-[280px] flex flex-col`}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    layout
+                  >
+                    {/* Category Badge */}
+                    <Badge
+                      variant="outline"
+                      className={`absolute top-4 right-4 text-xs ${
+                        game.category === "divination"
+                          ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                          : "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                      }`}
+                    >
+                      {game.categoryLabel}
+                    </Badge>
+                    
+                    {/* Icon */}
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center mb-5 shadow-lg`}>
+                      <Icon className="w-7 h-7 text-white" />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1">
+                      <div className="text-xs text-white/40 mb-2">{game.subtitle}</div>
+                      <h3 className="text-xl lg:text-2xl font-serif font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">
+                        {game.title}
+                      </h3>
+                      <p className="text-sm lg:text-base text-white/60 leading-relaxed">
+                        {game.description}
+                      </p>
+                    </div>
+                    
+                    {/* Link Indicator */}
+                    <div className="mt-6 flex items-center gap-2 text-sm text-white/40 group-hover:text-amber-400 transition-colors">
+                      <span>立即體驗</span>
+                      <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                    
+                    {/* Hover Glow Effect */}
+                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${game.color} opacity-5 blur-xl`} />
+                    </div>
+                  </motion.a>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
       
