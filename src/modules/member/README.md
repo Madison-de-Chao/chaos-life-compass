@@ -13,9 +13,12 @@ src/modules/member/
 │   └── MemberContext.tsx # 認證 Context 和 Provider
 ├── hooks/
 │   └── useEntitlements.ts # 權限相關 Hooks
+├── utils/
+│   └── validation.ts      # 表單驗證邏輯
 └── components/
     ├── MemberProtectedRoute.tsx  # 保護路由元件
-    └── MemberCardSkeleton.tsx    # 載入骨架元件
+    ├── MemberCardSkeleton.tsx    # 載入骨架元件
+    └── MemberLoginWidget.tsx     # 登入小工具元件
 ```
 
 ## 使用方式
@@ -29,7 +32,9 @@ import {
   useMember, 
   useProducts,
   useMyEntitlements,
-  MemberProtectedRoute 
+  MemberProtectedRoute,
+  MemberLoginWidget,
+  validateLoginForm,
 } from '@/modules/member';
 
 // 型別匯入
