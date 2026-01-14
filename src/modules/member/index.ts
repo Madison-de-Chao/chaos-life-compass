@@ -24,6 +24,26 @@ export {
   useActiveProductIds,
 } from './hooks/useEntitlements';
 
+// ==================== Utils ====================
+export {
+  emailSchema,
+  passwordSchema,
+  displayNameSchema,
+  loginFormSchema,
+  signupFormSchema,
+  resetPasswordSchema,
+  validateLoginForm,
+  validateSignupForm,
+  validateEmail,
+  validatePassword,
+} from './utils/validation';
+export type {
+  LoginFormData,
+  SignupFormData,
+  ResetPasswordData,
+  ValidationResult,
+} from './utils/validation';
+
 // ==================== Components ====================
 export { MemberProtectedRoute } from './components/MemberProtectedRoute';
 export { 
@@ -31,3 +51,5 @@ export {
   MemberListSkeleton,
   StatsCardSkeleton,
 } from './components/MemberCardSkeleton';
+export { MemberLoginWidget } from './components/MemberLoginWidget';
+export type { MemberLoginWidgetProps } from './components/MemberLoginWidget';
