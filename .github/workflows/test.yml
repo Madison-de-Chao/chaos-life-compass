@@ -1,4 +1,4 @@
-name: Tests
+name: Member Module & Widget Tests
 
 on:
   push:
