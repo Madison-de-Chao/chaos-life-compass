@@ -1,0 +1,19 @@
+# supabase/config.toml 範本
+# 複製到新專案的 supabase/config.toml
+
+project_id = "your-project-id"
+
+[functions.check-entitlement]
+verify_jwt = false
+
+[functions.entitlements-me]
+verify_jwt = true
+
+[functions.entitlements-lookup]
+verify_jwt = false
+
+[functions.oauth-authorize]
+verify_jwt = false
+
+[functions.admin-get-users]
+verify_jwt = true
