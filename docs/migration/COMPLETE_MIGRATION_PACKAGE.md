@@ -1,6 +1,36 @@
 # 會員中心完整遷移打包指南
 
+> **版本**：v1.2 | **更新日期**：2025-01-14
+
 本文件整合所有必要檔案和步驟，幫助您在新 Lovable 專案中快速建立獨立會員中心。
+
+---
+
+## 📋 文件索引
+
+本遷移包包含以下文件，請依需求查閱：
+
+| 文件 | 說明 | 優先級 |
+|-----|------|-------|
+| **本文件** | 快速開始指南與整體架構 | 必讀 |
+| [schema.sql](./schema.sql) | 完整資料庫結構 | 必須 |
+| [ARCHITECTURE_REVIEW_CHECKLIST.md](./ARCHITECTURE_REVIEW_CHECKLIST.md) | 架構完整性檢核清單 | 必讀 |
+| [MISSING_COMPONENTS_GUIDE.md](./MISSING_COMPONENTS_GUIDE.md) | 高優先級組件補全指南 | 高 |
+| [STYLE_SYNC_CHECKLIST.md](./STYLE_SYNC_CHECKLIST.md) | 視覺風格同步清單 | 高 |
+| [MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md](./MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md) | 中優先級功能實作指南 | 中 |
+| [DATA_MIGRATION.md](./DATA_MIGRATION.md) | 資料遷移詳細指南 | 中 |
+| [MEMBER_CENTER_MIGRATION.md](./MEMBER_CENTER_MIGRATION.md) | 會員中心遷移規劃 | 參考 |
+| [config.toml.example](./config.toml.example) | Supabase 配置範本 | 參考 |
+
+### 上層文件
+
+| 文件 | 說明 |
+|-----|------|
+| [MEMBER_CENTER_ARCHITECTURE.md](../MEMBER_CENTER_ARCHITECTURE.md) | 會員中心整體架構設計 |
+| [MEMBER_SYSTEM_SPECIFICATION.md](../MEMBER_SYSTEM_SPECIFICATION.md) | 會員系統功能規格書 |
+| [UNIFIED_MEMBER_SDK.md](../UNIFIED_MEMBER_SDK.md) | 統一會員 SDK 使用文檔 |
+| [ENTITLEMENTS_API.md](../ENTITLEMENTS_API.md) | 權限 API 參考文檔 |
+| [API_ENTITLEMENTS.md](../API_ENTITLEMENTS.md) | 權限 API 詳細規格 |
 
 ---
 
@@ -381,8 +411,63 @@ curl -H "Authorization: Bearer <jwt_token>" \
 
 ## 📚 相關文件
 
-- [完整資料庫 Schema](./schema.sql)
-- [資料遷移指南](./DATA_MIGRATION.md)
-- [SDK 使用文檔](../UNIFIED_MEMBER_SDK.md)
-- [API 參考](../ENTITLEMENTS_API.md)
-- [會員中心架構](../MEMBER_CENTER_ARCHITECTURE.md)
+### 遷移文件（docs/migration/）
+
+| 文件 | 說明 | 狀態 |
+|-----|------|------|
+| [schema.sql](./schema.sql) | 完整資料庫結構定義 | ✅ 完成 |
+| [ARCHITECTURE_REVIEW_CHECKLIST.md](./ARCHITECTURE_REVIEW_CHECKLIST.md) | 架構完整性檢核（v1.1） | ✅ 100% |
+| [MISSING_COMPONENTS_GUIDE.md](./MISSING_COMPONENTS_GUIDE.md) | 高優先級組件補全指南 | ✅ 完成 |
+| [STYLE_SYNC_CHECKLIST.md](./STYLE_SYNC_CHECKLIST.md) | 黑金奢華風格同步清單 | ✅ 完成 |
+| [MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md](./MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md) | 中優先級功能實作指南 | 🔄 待實作 |
+| [DATA_MIGRATION.md](./DATA_MIGRATION.md) | 資料遷移詳細指南 | ✅ 完成 |
+| [MEMBER_CENTER_MIGRATION.md](./MEMBER_CENTER_MIGRATION.md) | 會員中心遷移規劃 | ✅ 完成 |
+| [config.toml.example](./config.toml.example) | Supabase 配置範本 | ✅ 完成 |
+
+### 架構文件（docs/）
+
+| 文件 | 說明 |
+|-----|------|
+| [MEMBER_CENTER_ARCHITECTURE.md](../MEMBER_CENTER_ARCHITECTURE.md) | 會員中心整體架構設計 |
+| [MEMBER_SYSTEM_SPECIFICATION.md](../MEMBER_SYSTEM_SPECIFICATION.md) | 會員系統功能規格書 |
+| [UNIFIED_MEMBER_SDK.md](../UNIFIED_MEMBER_SDK.md) | 統一會員 SDK 使用文檔 |
+| [ENTITLEMENTS_API.md](../ENTITLEMENTS_API.md) | 權限 API 參考文檔 |
+| [API_ENTITLEMENTS.md](../API_ENTITLEMENTS.md) | 權限 API 詳細規格 |
+
+### SDK 與 NPM 套件
+
+| 目錄 | 說明 |
+|-----|------|
+| [docs/sdk/member-login-widget/](../sdk/member-login-widget/) | MemberLoginWidget NPM 套件 |
+| [docs/sdk/unified-member-sdk.ts](../sdk/unified-member-sdk.ts) | 統一會員 SDK 參考實作 |
+| [docs/sdk/unified-member-react.tsx](../sdk/unified-member-react.tsx) | React 整合範例 |
+| [docs/sdk/entitlements-sdk.ts](../sdk/entitlements-sdk.ts) | 權限 SDK 參考實作 |
+
+---
+
+## 🗺️ 遷移進度總覽
+
+```
+Phase 1: 模組化 ✅ 完成
+Phase 2: 遷移包 ✅ 完成  
+Phase 3: SDK 開發 ✅ 完成
+Phase 4: 獨立專案部署 🔄 進行中
+  ├── 資料庫結構 ✅ 100%
+  ├── Edge Functions ✅ 100%
+  ├── 前端模組 ✅ 100%
+  ├── OAuth 2.0 基礎 ✅ 100%
+  ├── OAuth Refresh Token 📋 待實作
+  └── 管理後台 📋 待實作
+Phase 5: 生態系整合 📋 待開始
+```
+
+### 中優先級待辦項目
+
+詳細實作指南請參考 [MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md](./MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md)：
+
+| 功能 | 預估工時 | 說明 |
+|-----|---------|------|
+| OAuth Refresh Token | 3-4 小時 | 支援長期 Session |
+| 管理後台 Dashboard | 4-6 小時 | 統計與概覽 |
+| 會員管理介面 | 4-6 小時 | CRUD 操作 |
+| 增強版 Rate Limiting | 2-3 小時 | 分層限流 |
