@@ -8,7 +8,7 @@
 
 | 模組 | 狀態 | 完成度 |
 |------|------|--------|
-| 資料庫結構 | ✅ 完成 | 95% |
+| 資料庫結構 | ✅ 完成 | 100% |
 | Edge Functions API | ✅ 完成 | 80% |
 | 前端會員模組 | ✅ 完成 | 90% |
 | OAuth 2.0 流程 | ⚠️ 部分完成 | 70% |
@@ -32,7 +32,7 @@
 | `oauth_authorization_codes` | OAuth 授權碼 | ✅ | ✅ 完成 |
 | `oauth_access_tokens` | OAuth 存取令牌 | ✅ | ✅ 完成 |
 | `api_keys` | API 金鑰管理 | ✅ | ✅ 完成 |
-| `admin_logs` | 管理操作日誌 | - | ❌ 未建立 |
+| `admin_logs` | 管理操作日誌 | ✅ | ✅ 完成 |
 
 ### 已建立的 Enum 類型
 
@@ -48,9 +48,11 @@
 
 | 函數名稱 | 用途 | 狀態 |
 |----------|------|------|
-| `verify_api_key(key)` | 驗證 API Key | ⚠️ 需確認 |
-| `verify_oauth_secret(client_id, secret)` | 驗證 OAuth Secret | ⚠️ 需確認 |
-| `has_role(_role, _user_id)` | 檢查用戶角色 | ✅ 已存在 |
+| `verify_api_key(key)` | 驗證 API Key | ✅ 已完成 |
+| `verify_oauth_secret(client_id, secret)` | 驗證 OAuth Secret | ✅ 已完成 |
+| `hash_secret(secret)` | 雜湊密鑰 | ✅ 已完成 |
+| `has_role(_role, _user_id)` | 檢查用戶角色 | ✅ 已完成 |
+| `is_admin_or_helper(user_id)` | 檢查管理員/協助者權限 | ✅ 已完成 |
 
 ---
 
@@ -220,11 +222,13 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 
 ### 高優先級
 
-| 項目 | 說明 | 預估工時 |
-|------|------|----------|
-| `verify_api_key` 函數 | 資料庫函數，驗證 API Key | 0.5h |
-| `verify_oauth_secret` 函數 | 資料庫函數，驗證 OAuth Secret | 0.5h |
-| `admin_logs` 資料表 | 管理操作日誌 | 1h |
+| 項目 | 說明 | 狀態 |
+|------|------|------|
+| `verify_api_key` 函數 | 資料庫函數，驗證 API Key | ✅ 已完成 |
+| `verify_oauth_secret` 函數 | 資料庫函數，驗證 OAuth Secret | ✅ 已完成 |
+| `hash_secret` 函數 | 資料庫函數，雜湊密鑰 | ✅ 已完成 |
+| `is_admin_or_helper` 函數 | 資料庫函數，檢查管理權限 | ✅ 已完成 |
+| `admin_logs` 資料表 | 管理操作日誌 | ✅ 已完成 |
 
 ### 中優先級
 
@@ -290,11 +294,13 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 
 ## 📎 相關文件
 
-- [完整架構文件](./MEMBER_CENTER_ARCHITECTURE.md)
+- [完整架構文件](../MEMBER_CENTER_ARCHITECTURE.md)
 - [資料遷移指南](./DATA_MIGRATION.md)
 - [完整遷移打包](./COMPLETE_MIGRATION_PACKAGE.md)
-- [資料庫 Schema](./migration/schema.sql)
+- [資料庫 Schema](./schema.sql)
+- [缺少組件指南](./MISSING_COMPONENTS_GUIDE.md)
+- [樣式同步清單](./STYLE_SYNC_CHECKLIST.md)
 
 ---
 
-*文件版本：v1.0 | 更新日期：2026-01-14*
+*文件版本：v1.1 | 更新日期：2026-01-14*
