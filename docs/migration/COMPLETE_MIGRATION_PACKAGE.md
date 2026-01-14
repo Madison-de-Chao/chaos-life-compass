@@ -66,6 +66,8 @@ src/modules/member/
 │   ├── MemberProtectedRoute.tsx
 │   ├── MemberCardSkeleton.tsx
 │   ├── MemberLoginWidget.tsx
+│   ├── MemberAuthHeader.tsx      # 🆕 可共享認證表頭
+│   ├── MemberAuthHeader.stories.md
 │   └── OAuthAuthorizePage.tsx
 └── pages/
     ├── index.ts
@@ -73,6 +75,133 @@ src/modules/member/
     ├── UnifiedDashboard.tsx
     └── UnifiedProfilePage.tsx
 ```
+
+### 3.2 MemberAuthHeader 組件
+
+`MemberAuthHeader` 是可換膚的認證表頭組件，讓所有生態系統專案共用一致的認證 UI。
+
+#### 基本使用
+
+```tsx
+import { MemberAuthHeader } from '@/modules/member';
+
+// 使用預設配置
+<MemberAuthHeader />
+
+// 放入您的表頭
+<header className="flex justify-between items-center">
+  <Logo />
+  <Navigation />
+  <MemberAuthHeader />
+</header>
+```
+
+#### 主題配置
+
+```tsx
+import { MemberAuthHeader, MemberAuthHeaderTheme } from '@/modules/member';
+
+// 黑金奢華主題（推薦）
+const luxuryBlackGoldTheme: MemberAuthHeaderTheme = {
+  background: 'bg-transparent',
+  textColor: 'text-white',
+  buttonVariant: 'outline',
+  avatarBorder: 'ring-2 ring-amber-500/30',
+  dropdownBackground: 'bg-[#1a1a1a] border-white/10',
+};
+
+// 淺色主題
+const lightTheme: MemberAuthHeaderTheme = {
+  background: 'bg-white',
+  textColor: 'text-gray-900',
+  buttonVariant: 'default',
+  avatarBorder: 'ring-2 ring-primary/20',
+  dropdownBackground: 'bg-white',
+};
+
+<MemberAuthHeader theme={luxuryBlackGoldTheme} />
+```
+
+#### 路由配置
+
+```tsx
+import { MemberAuthHeader, MemberAuthHeaderConfig } from '@/modules/member';
+
+const customConfig: MemberAuthHeaderConfig = {
+  loginPath: '/auth/login',      // 登入頁路徑
+  dashboardPath: '/account',      // 會員中心路徑
+  profilePath: '/account/profile', // 個人資料路徑
+  logoutRedirect: '/',            // 登出後重導向
+  showAdminEntry: true,           // 顯示管理員入口
+  adminPath: '/dashboard',        // 管理後台路徑
+};
+
+<MemberAuthHeader config={customConfig} />
+```
+
+#### 完整範例
+
+```tsx
+import { MemberAuthHeader } from '@/modules/member';
+import Logo from '@/components/Logo';
+
+const Header = () => {
+  return (
+    <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <Logo />
+        
+        {/* 導航 */}
+        <nav className="hidden lg:flex gap-4">
+          <Link to="/products">產品</Link>
+          <Link to="/about">關於</Link>
+        </nav>
+        
+        {/* 認證區塊 - 使用 MemberAuthHeader */}
+        <MemberAuthHeader 
+          theme={{
+            background: 'bg-transparent',
+            textColor: 'text-white',
+            buttonVariant: 'outline',
+            avatarBorder: 'ring-2 ring-amber-500/30',
+            dropdownBackground: 'bg-[#1a1a1a] border-white/10',
+          }}
+          config={{
+            loginPath: '/auth/login',
+            dashboardPath: '/account',
+            profilePath: '/account/profile',
+            logoutRedirect: '/',
+            showAdminEntry: true,
+            adminPath: '/admin',
+          }}
+        />
+      </div>
+    </header>
+  );
+};
+```
+
+#### 主題配置參考表
+
+| 屬性 | 類型 | 預設值 | 說明 |
+|-----|------|-------|------|
+| `background` | string | `'bg-background/95 backdrop-blur-sm'` | 背景樣式 |
+| `textColor` | string | `'text-foreground'` | 文字顏色 |
+| `buttonVariant` | `'default' \| 'outline' \| 'ghost' \| 'secondary'` | `'outline'` | 按鈕樣式 |
+| `avatarBorder` | string | `'ring-2 ring-primary/20'` | 頭像邊框 |
+| `dropdownBackground` | string | `'bg-popover'` | 下拉選單背景 |
+
+#### 路由配置參考表
+
+| 屬性 | 類型 | 預設值 | 說明 |
+|-----|------|-------|------|
+| `loginPath` | string | `'/auth/login'` | 登入頁路徑 |
+| `dashboardPath` | string | `'/account'` | 會員中心路徑 |
+| `profilePath` | string | `'/account/profile'` | 個人資料路徑 |
+| `logoutRedirect` | string | `'/'` | 登出後重導向 |
+| `showAdminEntry` | boolean | `true` | 是否顯示管理員入口 |
+| `adminPath` | string | `'/dashboard'` | 管理後台路徑 |
 
 ### Step 4: 設置路由
 
