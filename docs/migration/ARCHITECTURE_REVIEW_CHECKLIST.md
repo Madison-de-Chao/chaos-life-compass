@@ -9,9 +9,10 @@
 | 模組 | 狀態 | 完成度 |
 |------|------|--------|
 | 資料庫結構 | ✅ 完成 | 100% |
-| Edge Functions API | ✅ 完成 | 80% |
+| Edge Functions API | ✅ 完成 | 100% |
 | 前端會員模組 | ✅ 完成 | 90% |
-| OAuth 2.0 流程 | ⚠️ 部分完成 | 70% |
+| OAuth 2.0 流程 | ✅ 完成 | 100% |
+| Rate Limiting | ✅ 完成 | 100% |
 | 管理後台 | ⚠️ 基礎完成 | 50% |
 
 ---
@@ -33,6 +34,8 @@
 | `oauth_access_tokens` | OAuth 存取令牌 | ✅ | ✅ 完成 |
 | `api_keys` | API 金鑰管理 | ✅ | ✅ 完成 |
 | `admin_logs` | 管理操作日誌 | ✅ | ✅ 完成 |
+| `rate_limits` | API 速率限制記錄 | ✅ | ✅ 完成 |
+| `oauth_refresh_tokens` | OAuth Refresh Token | ✅ | ✅ 完成 |
 
 ### 已建立的 Enum 類型
 
@@ -53,6 +56,9 @@
 | `hash_secret(secret)` | 雜湊密鑰 | ✅ 已完成 |
 | `has_role(_role, _user_id)` | 檢查用戶角色 | ✅ 已完成 |
 | `is_admin_or_helper(user_id)` | 檢查管理員/協助者權限 | ✅ 已完成 |
+| `check_rate_limit_v2(...)` | 速率限制檢查 | ✅ 已完成 |
+| `verify_refresh_token(token)` | 驗證 Refresh Token | ✅ 已完成 |
+| `revoke_user_refresh_tokens(...)` | 撤銷用戶 Refresh Token | ✅ 已完成 |
 
 ---
 
@@ -152,8 +158,8 @@ src/modules/member/
 ### 支援的 Grant Type
 
 - ✅ Authorization Code Flow
+- ✅ Refresh Token Flow (Token Rotation)
 - ❌ Client Credentials (未實作)
-- ❌ Refresh Token (未實作)
 
 ### OAuth 流程說明
 
@@ -220,7 +226,7 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 
 ## 6️⃣ 待完成項目
 
-### 高優先級
+### 高優先級（全部完成 ✅）
 
 | 項目 | 說明 | 狀態 |
 |------|------|------|
@@ -229,14 +235,17 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 | `hash_secret` 函數 | 資料庫函數，雜湊密鑰 | ✅ 已完成 |
 | `is_admin_or_helper` 函數 | 資料庫函數，檢查管理權限 | ✅ 已完成 |
 | `admin_logs` 資料表 | 管理操作日誌 | ✅ 已完成 |
+| Rate Limiting | API 速率限制機制 | ✅ 已完成 |
+| Refresh Token 支援 | OAuth refresh_token 流程 | ✅ 已完成 |
 
 ### 中優先級
 
-| 項目 | 說明 | 預估工時 |
-|------|------|----------|
-| Refresh Token 支援 | OAuth refresh_token 流程 | 2h |
-| 管理後台 - 用戶管理 | 查看/編輯用戶權限 | 4h |
-| 管理後台 - API Key 管理 | 生成/撤銷 API Key | 2h |
+| 項目 | 說明 | 預估工時 | 狀態 |
+|------|------|----------|------|
+| 管理後台 - AdminSidebar | 管理側邊欄導航 | 1h | ⏳ 待實作 |
+| 管理後台 - 用戶管理 | 查看/編輯用戶權限 | 4h | ⏳ 待實作 |
+| 管理後台 - 權益管理 | 權益 CRUD 介面 | 3h | ⏳ 待實作 |
+| 管理後台 - API Key 管理 | 生成/撤銷 API Key | 2h | ⏳ 待實作 |
 
 ### 低優先級
 
@@ -288,7 +297,7 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 
 - [ ] RLS 政策是否足夠嚴謹？
 - [ ] API Key 是否需要 IP 白名單？
-- [ ] 是否需要 Rate Limiting？
+- [x] ~~是否需要 Rate Limiting？~~ ✅ 已實作多層速率限制
 
 ---
 
@@ -300,7 +309,24 @@ window.location.href = `${MEMBER_CENTER_URL}/member/oauth/authorize?` +
 - [資料庫 Schema](./schema.sql)
 - [缺少組件指南](./MISSING_COMPONENTS_GUIDE.md)
 - [樣式同步清單](./STYLE_SYNC_CHECKLIST.md)
+- [中優先級實作指南](./MEDIUM_PRIORITY_IMPLEMENTATION_GUIDE.md)
 
 ---
 
-*文件版本：v1.1 | 更新日期：2026-01-14*
+*文件版本：v1.2 | 更新日期：2025-01-14*
+
+---
+
+## 📝 最新更新記錄
+
+### v1.2 (2025-01-14)
+- ✅ **Rate Limiting 機制**：已在所有 Edge Functions 實作多層速率限制
+  - IP 層級限制（100 req/min）
+  - API Key 層級限制（50 req/min）
+  - User 層級限制（100 req/min）
+  - 建立 `rate_limits` 資料表與 `check_rate_limit_v2` 函數
+- ✅ **OAuth Refresh Token 機制**：完整實作 Token Rotation
+  - 建立 `oauth_refresh_tokens` 資料表
+  - 實作 `verify_refresh_token` 與 `revoke_user_refresh_tokens` 函數
+  - Access Token 有效期 1 小時，Refresh Token 有效期 30 天
+  - 支援 `grant_type=refresh_token` 流程
