@@ -75,10 +75,57 @@ export const mockAdminRoles = [
 export function createMockSupabaseClient() {
   let authStateCallback: ((event: string, session: Session | null) => void) | null = null;
 
+  const createQueryBuilder = (tableName: string) => {
+    const builder: Record<string, ReturnType<typeof vi.fn>> = {
+      select: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+      upsert: vi.fn().mockReturnThis(),
+      delete: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      neq: vi.fn().mockReturnThis(),
+      gt: vi.fn().mockReturnThis(),
+      gte: vi.fn().mockReturnThis(),
+      lt: vi.fn().mockReturnThis(),
+      lte: vi.fn().mockReturnThis(),
+      like: vi.fn().mockReturnThis(),
+      ilike: vi.fn().mockReturnThis(),
+      is: vi.fn().mockReturnThis(),
+      in: vi.fn().mockReturnThis(),
+      contains: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnThis(),
+      limit: vi.fn().mockReturnThis(),
+      range: vi.fn().mockReturnThis(),
+      single: vi.fn().mockResolvedValue({
+        data: tableName === 'profiles' ? mockProfile : null,
+        error: null,
+      }),
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: tableName === 'profiles' ? mockProfile : null,
+        error: null,
+      }),
+      then: vi.fn().mockResolvedValue({
+        data: tableName === 'user_roles' ? mockUserRoles : [],
+        error: null,
+      }),
+    };
+    
+    // Make all methods return the builder for chaining
+    Object.values(builder).forEach(fn => {
+      fn.mockReturnThis();
+    });
+    
+    return builder;
+  };
+
   const mockClient = {
     auth: {
       getSession: vi.fn().mockResolvedValue({
         data: { session: null },
+        error: null,
+      }),
+      getUser: vi.fn().mockResolvedValue({
+        data: { user: null },
         error: null,
       }),
       signInWithPassword: vi.fn().mockResolvedValue({
@@ -111,38 +158,7 @@ export function createMockSupabaseClient() {
         };
       }),
     },
-    from: vi.fn((tableName: string) => ({
-      select: vi.fn().mockReturnThis(),
-      insert: vi.fn().mockReturnThis(),
-      update: vi.fn().mockReturnThis(),
-      delete: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
-      neq: vi.fn().mockReturnThis(),
-      gt: vi.fn().mockReturnThis(),
-      gte: vi.fn().mockReturnThis(),
-      lt: vi.fn().mockReturnThis(),
-      lte: vi.fn().mockReturnThis(),
-      like: vi.fn().mockReturnThis(),
-      ilike: vi.fn().mockReturnThis(),
-      is: vi.fn().mockReturnThis(),
-      in: vi.fn().mockReturnThis(),
-      contains: vi.fn().mockReturnThis(),
-      order: vi.fn().mockReturnThis(),
-      limit: vi.fn().mockReturnThis(),
-      range: vi.fn().mockReturnThis(),
-      single: vi.fn().mockResolvedValue({
-        data: tableName === 'profiles' ? mockProfile : null,
-        error: null,
-      }),
-      maybeSingle: vi.fn().mockResolvedValue({
-        data: tableName === 'profiles' ? mockProfile : null,
-        error: null,
-      }),
-      then: vi.fn().mockResolvedValue({
-        data: tableName === 'user_roles' ? mockUserRoles : [],
-        error: null,
-      }),
-    })),
+    from: vi.fn((tableName: string) => createQueryBuilder(tableName)),
     // 測試輔助方法
     _triggerAuthStateChange: (event: string, session: Session | null) => {
       if (authStateCallback) {
