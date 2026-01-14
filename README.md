@@ -521,6 +521,14 @@ chaos-life-compass/
 │   │   ├── FileUploadZone.tsx  # File upload zone
 │   │   ├── PagedDocumentReader.tsx  # Document reader
 │   │   └── ...
+│   ├── modules/            # Feature modules (independently migratable)
+│   │   └── member/         # Member module
+│   │       ├── types/      # Type definitions
+│   │       ├── context/    # Auth Context
+│   │       ├── hooks/      # Entitlement Hooks
+│   │       ├── utils/      # Validation logic
+│   │       ├── components/ # UI components
+│   │       └── pages/      # Member pages
 │   ├── pages/              # Page components
 │   │   ├── Index.tsx       # Homepage (upload)
 │   │   ├── FilesPage.tsx   # File management
@@ -541,8 +549,15 @@ chaos-life-compass/
 │   ├── App.tsx             # Main app component
 │   └── main.tsx            # Application entry point
 ├── supabase/               # Supabase config & migrations
+│   ├── functions/          # Edge Functions
 │   ├── migrations/         # Database migration files
 │   └── config.toml         # Supabase configuration
+├── docs/                   # Technical documentation
+│   ├── migration/          # Member center migration resources
+│   ├── sdk/                # SDK documentation & examples
+│   ├── MEMBER_CENTER_ARCHITECTURE.md
+│   ├── UNIFIED_MEMBER_SDK.md
+│   └── ENTITLEMENTS_API.md
 ├── public/                 # Static assets
 ├── index.html              # HTML template
 ├── package.json            # Project dependencies
@@ -576,15 +591,141 @@ Main Tables:
 - `documents` - Document data
 - `customers` - Customer data
 - `feedbacks` - User feedback
-- `document_views` - Document view records
+- `profiles` - Member profiles
+- `user_roles` - User roles
+- `products` - Product definitions
+- `plans` - Plan definitions
+- `entitlements` - Entitlement records
+- `oauth_clients` - OAuth clients
+- `api_keys` - API keys
 
 ### 🔒 Security Considerations
 
 - Supabase Row Level Security (RLS) for data protection
-- Encrypted password storage
+- Encrypted password storage (pgcrypto)
 - Unique share link validation
 - File upload size limits
 - XSS protection (using DOMPurify)
+- API Key authentication mechanism
+- OAuth 2.0 authorization flow
+
+### 👤 Member Module Architecture
+
+The member system is designed with a modular architecture located at `src/modules/member/`, supporting future migration to an independent member center project.
+
+#### Module Structure
+
+```
+src/modules/member/
+├── index.ts              # Unified export entry
+├── README.md             # Module usage guide
+├── types/
+│   └── index.ts          # Profile, Entitlement, OAuth types
+├── context/
+│   └── MemberContext.tsx # Auth state management Provider
+├── hooks/
+│   └── useEntitlements.ts # Entitlement query & management Hooks
+├── utils/
+│   └── validation.ts      # Zod form validation logic
+├── components/
+│   ├── MemberProtectedRoute.tsx  # Protected routes
+│   ├── MemberCardSkeleton.tsx    # Loading skeleton
+│   ├── MemberLoginWidget.tsx     # Login widget
+│   └── OAuthAuthorizePage.tsx    # OAuth authorization page
+└── pages/
+    ├── UnifiedAuthPage.tsx       # Unified login page
+    ├── UnifiedDashboard.tsx      # Member dashboard
+    └── UnifiedProfilePage.tsx    # Profile page
+```
+
+#### Usage
+
+```tsx
+// Import from module root
+import { 
+  MemberProvider, 
+  useMember, 
+  useProducts,
+  useMyEntitlements,
+  MemberProtectedRoute,
+  validateLoginForm,
+} from '@/modules/member';
+
+// Type imports
+import type { Profile, Entitlement, Product } from '@/modules/member';
+```
+
+#### Core Features
+
+| Feature | Description |
+|---------|-------------|
+| Auth Management | Email/Google login, password reset |
+| Entitlement System | Multi-product entitlements, time-based access, management UI |
+| OAuth Provider | Provides authorization for external projects |
+| API Authentication | API Key mechanism for external project calls |
+
+### 🔮 Member Center Migration Plan
+
+The member module is designed to be independently migrated to a dedicated Member Center project, enabling unified identity authentication across the brand ecosystem.
+
+#### Architecture Vision
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                 Member Center (Independent Project)      │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │
+│  │    Auth     │  │ Entitlement │  │  OAuth 2.0  │      │
+│  │   System    │  │   System    │  │             │      │
+│  └─────────────┘  └─────────────┘  └─────────────┘      │
+│                         │                                │
+│                    REST API                              │
+└─────────────────────────────────────────────────────────┘
+          │                    │                    │
+          ▼                    ▼                    ▼
+    ┌──────────┐        ┌──────────┐        ┌──────────┐
+    │ Main Site│        │  Games   │        │Divination│
+    │ DocShow  │        │  Site    │        │  Site    │
+    └──────────┘        └──────────┘        └──────────┘
+```
+
+#### Migration Resources
+
+| Document | Description |
+|----------|-------------|
+| `docs/MEMBER_CENTER_ARCHITECTURE.md` | Complete architecture design |
+| `docs/migration/MEMBER_CENTER_MIGRATION.md` | Migration steps guide |
+| `docs/migration/schema.sql` | Database schema |
+| `docs/migration/edge-functions/` | Edge Functions code |
+| `docs/migration/DATA_MIGRATION.md` | Data migration guide |
+| `docs/UNIFIED_MEMBER_SDK.md` | SDK integration documentation |
+| `docs/ENTITLEMENTS_API.md` | API reference documentation |
+
+#### Migration Phases
+
+1. **Preparation Phase** (Completed)
+   - ✅ Member module refactoring
+   - ✅ API endpoint design
+   - ✅ Migration documentation
+
+2. **Setup Phase**
+   - Create new project in Lovable
+   - Deploy database schema
+   - Deploy Edge Functions
+
+3. **Migration Phase**
+   - Export existing member data
+   - Create user mapping table
+   - Import to new member center
+
+4. **Integration Phase**
+   - Switch main site to API authentication
+   - Update external project integrations
+   - Dual-write mode transition
+
+5. **Cutover Phase**
+   - Fully switch to new member center
+   - Remove member-related tables from main site
+   - Monitoring & optimization
 
 ### 🤝 Contributing
 
