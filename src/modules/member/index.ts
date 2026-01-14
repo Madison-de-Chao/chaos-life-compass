@@ -54,3 +54,6 @@ export {
 export { MemberLoginWidget } from './components/MemberLoginWidget';
 export type { MemberLoginWidgetProps } from './components/MemberLoginWidget';
 export { default as OAuthAuthorizePage } from './components/OAuthAuthorizePage';
+
+// ==================== Pages ====================
+export { UnifiedAuthPage, UnifiedDashboard, UnifiedProfilePage } from './pages';
