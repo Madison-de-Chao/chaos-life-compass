@@ -155,6 +155,14 @@ chaos-life-compass/
 │   │   ├── FileUploadZone.tsx  # 檔案上傳區
 │   │   ├── PagedDocumentReader.tsx  # 文件閱讀器
 │   │   └── ...
+│   ├── modules/            # 功能模組（可獨立遷移）
+│   │   └── member/         # 會員模組
+│   │       ├── types/      # 型別定義
+│   │       ├── context/    # 認證 Context
+│   │       ├── hooks/      # 權限 Hooks
+│   │       ├── utils/      # 驗證邏輯
+│   │       ├── components/ # UI 元件
+│   │       └── pages/      # 會員頁面
 │   ├── pages/              # 頁面元件
 │   │   ├── Index.tsx       # 首頁（上傳）
 │   │   ├── FilesPage.tsx   # 檔案管理
@@ -175,8 +183,15 @@ chaos-life-compass/
 │   ├── App.tsx             # 主應用元件
 │   └── main.tsx            # 應用入口點
 ├── supabase/               # Supabase 設定與遷移
+│   ├── functions/          # Edge Functions
 │   ├── migrations/         # 資料庫遷移檔案
 │   └── config.toml         # Supabase 設定
+├── docs/                   # 技術文檔
+│   ├── migration/          # 會員中心遷移資源
+│   ├── sdk/                # SDK 文檔與範例
+│   ├── MEMBER_CENTER_ARCHITECTURE.md
+│   ├── UNIFIED_MEMBER_SDK.md
+│   └── ENTITLEMENTS_API.md
 ├── public/                 # 靜態資源
 ├── index.html              # HTML 範本
 ├── package.json            # 專案依賴
@@ -210,15 +225,140 @@ npm run preview
 - `documents` - 文件資料
 - `customers` - 客戶資料
 - `feedbacks` - 意見回饋
-- `document_views` - 文件檢視記錄
+- `profiles` - 會員資料
+- `user_roles` - 用戶角色
+- `products` - 產品定義
+- `plans` - 方案定義
+- `entitlements` - 權限記錄
+- `oauth_clients` - OAuth 客戶端
+- `api_keys` - API 金鑰
 
 ### 🔒 安全性考量
 
 - 使用 Supabase Row Level Security (RLS) 保護資料
-- 密碼加密儲存
+- 密碼加密儲存（pgcrypto）
 - 分享連結唯一性驗證
 - 檔案上傳大小限制
 - XSS 防護（使用 DOMPurify）
+- API Key 驗證機制
+- OAuth 2.0 授權流程
+
+### 👤 會員模組架構
+
+會員系統採用模組化設計，位於 `src/modules/member/`，支援未來獨立遷移至專屬會員中心專案。
+
+#### 模組結構
+
+```
+src/modules/member/
+├── index.ts              # 統一匯出入口
+├── README.md             # 模組使用說明
+├── types/
+│   └── index.ts          # Profile、Entitlement、OAuth 等型別
+├── context/
+│   └── MemberContext.tsx # 認證狀態管理 Provider
+├── hooks/
+│   └── useEntitlements.ts # 權限查詢與管理 Hooks
+├── utils/
+│   └── validation.ts      # Zod 表單驗證邏輯
+├── components/
+│   ├── MemberProtectedRoute.tsx  # 保護路由
+│   ├── MemberCardSkeleton.tsx    # 載入骨架
+│   ├── MemberLoginWidget.tsx     # 登入元件
+│   └── OAuthAuthorizePage.tsx    # OAuth 授權頁
+└── pages/
+    ├── UnifiedAuthPage.tsx       # 統一登入頁
+    ├── UnifiedDashboard.tsx      # 會員儀表板
+    └── UnifiedProfilePage.tsx    # 個人資料頁
+```
+
+#### 使用方式
+
+```tsx
+// 從模組根目錄匯入
+import { 
+  MemberProvider, 
+  useMember, 
+  useProducts,
+  useMyEntitlements,
+  MemberProtectedRoute,
+  validateLoginForm,
+} from '@/modules/member';
+
+// 型別匯入
+import type { Profile, Entitlement, Product } from '@/modules/member';
+```
+
+#### 核心功能
+
+| 功能 | 說明 |
+|------|------|
+| 認證管理 | Email/Google 登入、密碼重設 |
+| 權限系統 | 多產品權限、時效控制、管理介面 |
+| OAuth Provider | 提供外部專案授權登入 |
+| API 驗證 | API Key 機制供外部專案呼叫 |
+
+### 🔮 會員中心遷移計畫
+
+會員模組設計為可獨立遷移至專屬會員中心專案，實現品牌生態系的統一身份認證。
+
+#### 架構願景
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    會員中心 (獨立專案)                    │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │
+│  │   認證系統   │  │   權限系統   │  │  OAuth 2.0  │      │
+│  └─────────────┘  └─────────────┘  └─────────────┘      │
+│                         │                                │
+│                    REST API                              │
+└─────────────────────────────────────────────────────────┘
+          │                    │                    │
+          ▼                    ▼                    ▼
+    ┌──────────┐        ┌──────────┐        ┌──────────┐
+    │  主站     │        │  遊戲站   │        │  卜卦站   │
+    │ DocShow  │        │ 命理遊戲  │        │ 元壹宇宙  │
+    └──────────┘        └──────────┘        └──────────┘
+```
+
+#### 遷移資源
+
+| 文件 | 說明 |
+|------|------|
+| `docs/MEMBER_CENTER_ARCHITECTURE.md` | 完整架構設計文檔 |
+| `docs/migration/MEMBER_CENTER_MIGRATION.md` | 遷移步驟指南 |
+| `docs/migration/schema.sql` | 資料庫 Schema |
+| `docs/migration/edge-functions/` | Edge Functions 程式碼 |
+| `docs/migration/DATA_MIGRATION.md` | 資料遷移指南 |
+| `docs/UNIFIED_MEMBER_SDK.md` | SDK 整合文檔 |
+| `docs/ENTITLEMENTS_API.md` | API 參考文檔 |
+
+#### 遷移階段
+
+1. **準備階段**（已完成）
+   - ✅ 會員模組化重構
+   - ✅ API 端點設計
+   - ✅ 遷移文檔準備
+
+2. **建立階段**
+   - 在 Lovable 建立新專案
+   - 部署資料庫 Schema
+   - 部署 Edge Functions
+
+3. **遷移階段**
+   - 匯出現有會員資料
+   - 建立用戶對照表
+   - 匯入至新會員中心
+
+4. **整合階段**
+   - 主站改用 API 驗證
+   - 更新外部專案整合
+   - 雙寫模式過渡
+
+5. **切換階段**
+   - 完全切換至新會員中心
+   - 移除主站會員相關表
+   - 監控與優化
 
 ### 🤝 貢獻指南
 
