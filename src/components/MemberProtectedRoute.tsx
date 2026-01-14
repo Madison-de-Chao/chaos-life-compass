@@ -1,24 +1,6 @@
-import { Navigate } from "react-router-dom";
-import { useMember } from "@/hooks/useMember";
+/**
+ * @deprecated 請改用 '@/modules/member' 模組中的 MemberProtectedRoute
+ * 此檔案為向後兼容層，將在未來版本移除
+ */
 
-interface MemberProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-export function MemberProtectedRoute({ children }: MemberProtectedRouteProps) {
-  const { user, loading } = useMember();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-parchment flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">載入中...</div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/member/auth" replace />;
-  }
-
-  return <>{children}</>;
-}
+export { MemberProtectedRoute } from '@/modules/member';

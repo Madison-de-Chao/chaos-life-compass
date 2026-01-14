@@ -1,0 +1,33 @@
+/**
+ * 會員模組主要匯出入口
+ * 此模組包含所有會員相關功能，設計為可獨立遷移至會員中心專案
+ */
+
+// ==================== Types ====================
+export * from './types';
+
+// ==================== Context ====================
+export { MemberProvider, useMember, MemberContext } from './context/MemberContext';
+export type { MemberProviderProps } from './context/MemberContext';
+
+// ==================== Hooks ====================
+export {
+  useProducts,
+  usePlans,
+  useMyEntitlements,
+  useAllEntitlements,
+  useCreateEntitlement,
+  useUpdateEntitlement,
+  useDeleteEntitlement,
+  useSearchUsers,
+  useProductAccess,
+  useActiveProductIds,
+} from './hooks/useEntitlements';
+
+// ==================== Components ====================
+export { MemberProtectedRoute } from './components/MemberProtectedRoute';
+export { 
+  MemberCardSkeleton,
+  MemberListSkeleton,
+  StatsCardSkeleton,
+} from './components/MemberCardSkeleton';
