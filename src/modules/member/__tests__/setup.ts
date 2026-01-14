@@ -6,6 +6,10 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
+// Re-export testing utilities for consistent imports across test files
+export { render, cleanup } from '@testing-library/react';
+export { screen, fireEvent, waitFor, within } from '@testing-library/dom';
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
