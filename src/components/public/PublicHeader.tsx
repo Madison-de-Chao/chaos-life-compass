@@ -1,26 +1,37 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, User, LogOut, ExternalLink, ChevronDown } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, ExternalLink, ChevronDown, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { MemberAuthHeader } from "@/modules/member";
 import { useMember } from "@/hooks/useMember";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
+
+/** 黑金奢華主題配置 - 與 PublicHeader 風格一致 */
+const luxuryBlackGoldTheme = {
+  background: 'bg-transparent',
+  textColor: 'text-white',
+  buttonVariant: 'outline' as const,
+  avatarBorder: 'ring-2 ring-amber-500/30',
+  dropdownBackground: 'bg-[#1a1a1a] border-white/10',
+};
+
+/** 路由配置 - 對應主站路徑 */
+const publicHeaderAuthConfig = {
+  loginPath: '/member/auth',
+  dashboardPath: '/member',
+  profilePath: '/member/profile',
+  logoutRedirect: '/',
+  showAdminEntry: true,
+  adminPath: '/dashboard',
+};
 
 const navLinks = [
   { label: "超烜創意", href: "/chaoxuan" },
@@ -42,6 +53,7 @@ const ecosystemLinks = [
 const PublicHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, profile, signOut, loading } = useMember();
 
   const isActive = (href: string) => location.pathname === href;
@@ -124,42 +136,12 @@ const PublicHeader = () => {
             </DropdownMenu>
           </nav>
 
-          {/* CTA Button - Desktop */}
-          <div className="hidden lg:flex items-center gap-4">
-            {loading ? (
-              <div className="h-9 w-20 bg-white/10 rounded animate-pulse" />
-            ) : user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:text-amber-300">
-                    <User className="h-4 w-4 mr-2" />
-                    {profile?.display_name || '會員'}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-[#1a1a1a] border-white/10">
-                  <DropdownMenuItem asChild>
-                    <Link to="/member" className="cursor-pointer text-white/80 hover:text-white focus:text-white">
-                      <User className="h-4 w-4 mr-2" />
-                      會員專區
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/member/profile" className="cursor-pointer text-white/80 hover:text-white focus:text-white">
-                      個人資料
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-white/10" />
-                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-400 hover:text-red-300 focus:text-red-300">
-                    <LogOut className="h-4 w-4 mr-2" />
-                    登出
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button asChild variant="outline" size="sm" className="border-white/20 text-white/80 hover:bg-white/10 hover:text-white">
-                <Link to="/member/auth">會員登入</Link>
-              </Button>
-            )}
+          {/* Desktop Auth - 使用 MemberAuthHeader 組件 */}
+          <div className="hidden lg:flex items-center">
+            <MemberAuthHeader 
+              theme={luxuryBlackGoldTheme}
+              config={publicHeaderAuthConfig}
+            />
           </div>
 
           {/* Mobile Menu */}
