@@ -53,6 +53,12 @@ export {
 } from './components/MemberCardSkeleton';
 export { MemberLoginWidget } from './components/MemberLoginWidget';
 export type { MemberLoginWidgetProps } from './components/MemberLoginWidget';
+export { MemberAuthHeader } from './components/MemberAuthHeader';
+export type { 
+  MemberAuthHeaderProps, 
+  MemberAuthHeaderTheme, 
+  MemberAuthHeaderConfig 
+} from './components/MemberAuthHeader';
 export { default as OAuthAuthorizePage } from './components/OAuthAuthorizePage';
 
 // ==================== Pages ====================
