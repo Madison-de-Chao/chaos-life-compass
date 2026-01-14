@@ -146,6 +146,19 @@ export interface OAuthAuthorizationCode {
   created_at: string;
 }
 
+/**
+ * OAuth 授權請求（用於授權頁面）
+ */
+export interface OAuthAuthorizationRequest {
+  client_id: string;
+  client_name: string;
+  client_description?: string;
+  redirect_uri: string;
+  scope: string;
+  state?: string;
+  allowed_products: string[];
+}
+
 // ==================== API Types ====================
 
 export interface ApiKey {
