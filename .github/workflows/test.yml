@@ -1,20 +1,49 @@
-name: Member Login Widget Tests
+name: Tests
 
 on:
   push:
     branches: [main, develop]
-    paths:
-      - 'docs/sdk/member-login-widget/**'
-      - '.github/workflows/test.yml'
   pull_request:
     branches: [main, develop]
-    paths:
-      - 'docs/sdk/member-login-widget/**'
-      - '.github/workflows/test.yml'
 
 jobs:
-  test:
-    name: Run Tests
+  # 主專案 Member 模組測試
+  member-module-tests:
+    name: Member Module Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run member module tests
+        run: npx vitest run --coverage
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: matrix.node-version == '20.x'
+        with:
+          file: coverage/coverage-final.json
+          flags: member-module
+          name: member-module-coverage
+          fail_ci_if_error: false
+
+  # Member Login Widget NPM 套件測試
+  widget-tests:
+    name: Widget Package Tests
     runs-on: ubuntu-latest
     
     defaults:
@@ -54,10 +83,11 @@ jobs:
           name: member-login-widget-coverage
           fail_ci_if_error: false
 
-  build:
-    name: Build Package
+  # Widget 套件建置
+  widget-build:
+    name: Build Widget Package
     runs-on: ubuntu-latest
-    needs: test
+    needs: widget-tests
     
     defaults:
       run:
