@@ -315,63 +315,60 @@ const ReportPreview = () => {
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="max-w-4xl max-h-[90vh] sm:max-h-[85vh] bg-card border-border/50 p-4 sm:p-6">
-        <DialogHeader className="pb-3 sm:pb-4 border-b border-border/30">
-          <DialogTitle className="font-serif text-xl sm:text-2xl text-foreground flex items-center gap-2 sm:gap-3">
-            <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+      <DialogContent className="max-w-4xl max-h-[95vh] sm:max-h-[85vh] bg-card border-border/50 p-3 sm:p-6 mx-2 sm:mx-auto w-[calc(100vw-16px)] sm:w-auto">
+        <DialogHeader className="pb-2 sm:pb-4 border-b border-border/30">
+          <DialogTitle className="font-serif text-lg sm:text-2xl text-foreground flex items-center gap-2">
+            <Sparkles className="h-4 w-4 sm:h-6 sm:w-6 text-primary flex-shrink-0" />
             報告試閱
           </DialogTitle>
-          <p className="text-muted-foreground text-xs sm:text-sm mt-1.5 sm:mt-2">
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1">
             體驗三種版本的內容風格
           </p>
         </DialogHeader>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-3 sm:mt-4">
-          <TabsList className="grid grid-cols-3 w-full max-w-lg mx-auto bg-muted/30 h-auto p-1">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-2 sm:mt-4">
+          <TabsList className="grid grid-cols-3 w-full bg-muted/30 h-auto p-1 gap-1">
             <TabsTrigger 
               value="basic" 
-              className="data-[state=active]:bg-slate-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
+              className="data-[state=active]:bg-slate-600 data-[state=active]:text-white text-xs sm:text-sm py-2 sm:py-2.5 min-h-[44px] px-2 sm:px-4 touch-manipulation active:scale-95 transition-transform"
             >
-              <BookOpen className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-              <span className="hidden xs:inline sm:inline">基本版</span>
-              <span className="xs:hidden sm:hidden">認識</span>
+              <BookOpen className="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="truncate">認識自己</span>
             </TabsTrigger>
             <TabsTrigger 
               value="standard" 
-              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm py-2 sm:py-2.5 min-h-[44px] px-2 sm:px-4 touch-manipulation active:scale-95 transition-transform"
             >
-              <Eye className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-              <span className="hidden xs:inline sm:inline">標準版</span>
-              <span className="xs:hidden sm:hidden">看懂</span>
+              <Eye className="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="truncate">看懂自己</span>
             </TabsTrigger>
             <TabsTrigger 
               value="flagship"
-              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white text-xs sm:text-sm py-2.5 sm:py-2 min-h-[44px] sm:min-h-0"
+              className="data-[state=active]:bg-amber-600 data-[state=active]:text-white text-xs sm:text-sm py-2 sm:py-2.5 min-h-[44px] px-2 sm:px-4 touch-manipulation active:scale-95 transition-transform"
             >
-              <Crown className="h-4 w-4 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-              <span className="hidden xs:inline sm:inline">旗艦版</span>
-              <span className="xs:hidden sm:hidden">使用</span>
+              <Crown className="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="truncate">使用自己</span>
             </TabsTrigger>
           </TabsList>
           
           {/* Basic Version */}
-          <TabsContent value="basic" className="mt-6">
-            <div className="mb-4 p-4 rounded-xl bg-slate-500/10 border border-slate-500/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-500/20 flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="h-5 w-5 text-slate-400" />
+          <TabsContent value="basic" className="mt-3 sm:mt-6">
+            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-slate-500/10 border border-slate-500/20">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-slate-500/20 flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                 </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1">基本版特色</h4>
-                  <p className="text-sm text-muted-foreground">
-                    入門首選——讓你知道「你是誰」＋「有解」。5 章節精華，適合第一次接觸命理報告的讀者。
+                <div className="min-w-0">
+                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">基本版特色</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    入門首選——讓你知道「你是誰」＋「有解」。5 章節精華。
                   </p>
                 </div>
               </div>
             </div>
             
-            <ScrollArea className="h-[400px] pr-4">
-              <div className="space-y-6">
+            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+              <div className="space-y-4 sm:space-y-6 pb-4">
                 {basicPreviewSections.map((section, index) => (
                   <PreviewSection key={index} section={section} index={index} variant="basic" />
                 ))}
@@ -380,23 +377,23 @@ const ReportPreview = () => {
           </TabsContent>
           
           {/* Standard Version */}
-          <TabsContent value="standard" className="mt-6">
-            <div className="mb-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <Compass className="h-5 w-5 text-blue-400" />
+          <TabsContent value="standard" className="mt-3 sm:mt-6">
+            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <Compass className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                 </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1">標準版特色</h4>
-                  <p className="text-sm text-muted-foreground">
-                    完整八大面向解析，幫助你「看懂自己」的運作模式。列出 3-4 個適合工具，為進階做準備。
+                <div className="min-w-0">
+                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">標準版特色</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    完整八大面向解析，幫助你「看懂自己」的運作模式。
                   </p>
                 </div>
               </div>
             </div>
             
-            <ScrollArea className="h-[400px] pr-4">
-              <div className="space-y-6">
+            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+              <div className="space-y-4 sm:space-y-6 pb-4">
                 {standardPreviewSections.map((section, index) => (
                   <PreviewSection key={index} section={section} index={index} variant="standard" />
                 ))}
@@ -405,23 +402,23 @@ const ReportPreview = () => {
           </TabsContent>
           
           {/* Flagship Version */}
-          <TabsContent value="flagship" className="mt-6">
-            <div className="mb-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <Crown className="h-5 w-5 text-amber-600" />
+          <TabsContent value="flagship" className="mt-3 sm:mt-6">
+            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <Crown className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
                 </div>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1">旗艦版特色</h4>
-                  <p className="text-sm text-muted-foreground">
-                    整合「默默超思維系統」，不只看懂自己，更學會「使用自己」。包含專屬思維啟動器與四時八字軍團敘事。
+                <div className="min-w-0">
+                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">旗艦版特色</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    整合「默默超思維系統」，學會「使用自己」。
                   </p>
                 </div>
               </div>
             </div>
             
-            <ScrollArea className="h-[400px] pr-4">
-              <div className="space-y-6">
+            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+              <div className="space-y-4 sm:space-y-6 pb-4">
                 {flagshipPreviewSections.map((section, index) => (
                   <PreviewSection key={index} section={section} index={index} variant="flagship" />
                 ))}
@@ -430,13 +427,13 @@ const ReportPreview = () => {
           </TabsContent>
         </Tabs>
         
-        <div className="mt-6 pt-4 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground text-center sm:text-left">
-            <Lock className="h-4 w-4 inline mr-1" />
-            完整報告：基本版 5 章、標準版 8 章、旗艦版 10 章
+        <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+          <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left flex items-center gap-1">
+            <Lock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+            <span>完整報告：基本版 5 章、標準版 8 章、旗艦版 10 章</span>
           </p>
           <Button 
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-95 transition-transform"
             onClick={() => window.location.href = '/report'}
           >
             <Zap className="h-4 w-4 mr-2" />
@@ -487,7 +484,7 @@ const PreviewSection = ({ section, index, variant = "standard" }: PreviewSection
   return (
     <div 
       className={`
-        rounded-xl p-6 transition-all duration-300
+        rounded-lg sm:rounded-xl p-4 sm:p-6 transition-all duration-300
         ${section.isLocked 
           ? 'bg-muted/20 border border-dashed border-border/50' 
           : `bg-card border ${colors.border} ${colors.hover} shadow-sm`
@@ -495,26 +492,28 @@ const PreviewSection = ({ section, index, variant = "standard" }: PreviewSection
       `}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="flex items-center gap-3 mb-4">
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${colors.badge}`}>
+      <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+        <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0 ${colors.badge}`}>
           {index + 1}
         </div>
-        <h3 className="font-serif text-lg font-bold text-foreground flex items-center gap-2">
-          {section.title}
-          {section.isLocked && <Lock className="h-4 w-4 text-muted-foreground" />}
+        <h3 className="font-serif text-base sm:text-lg font-bold text-foreground flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          <span className="break-words">{section.title}</span>
+          {section.isLocked && <Lock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />}
         </h3>
       </div>
       
       <div className={`
-        font-serif text-sm leading-relaxed whitespace-pre-line
+        font-serif text-xs sm:text-sm leading-relaxed whitespace-pre-line overflow-x-auto
         ${section.isLocked ? 'text-muted-foreground' : 'text-foreground/90'}
       `}>
-        {section.content}
+        <div className="min-w-0 break-words">
+          {section.content}
+        </div>
       </div>
       
       {section.isLocked && (
-        <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-          <Lock className="h-3 w-3" />
+        <div className="mt-3 sm:mt-4 flex items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground">
+          <Lock className="h-3 w-3 flex-shrink-0" />
           <span>此內容需購買完整報告後解鎖</span>
         </div>
       )}
