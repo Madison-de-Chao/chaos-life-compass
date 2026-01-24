@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Crown, Lock, ChevronRight, Sparkles, Brain, Heart, Compass, Zap, Eye } from "lucide-react";
+import { BookOpen, Crown, Lock, ChevronRight, Sparkles, Brain, Heart, Compass, Zap, Eye, ChevronLeft } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useDrag } from "@use-gesture/react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // 基本版試閱內容
 const basicPreviewSections = [
@@ -300,6 +302,40 @@ const flagshipPreviewSections = [
 
 const ReportPreview = () => {
   const [activeTab, setActiveTab] = useState("basic");
+  const isMobile = useIsMobile();
+  
+  const tabs = ["basic", "standard", "flagship"] as const;
+  
+  const handleSwipe = useCallback((direction: "left" | "right") => {
+    const currentIndex = tabs.indexOf(activeTab as typeof tabs[number]);
+    if (direction === "left" && currentIndex < tabs.length - 1) {
+      setActiveTab(tabs[currentIndex + 1]);
+    } else if (direction === "right" && currentIndex > 0) {
+      setActiveTab(tabs[currentIndex - 1]);
+    }
+  }, [activeTab]);
+  
+  const bind = useDrag(
+    ({ swipe: [swipeX], direction: [dirX], velocity: [vx], movement: [mx], cancel }) => {
+      // Only handle horizontal swipes with sufficient velocity
+      if (Math.abs(vx) > 0.3 || Math.abs(mx) > 50) {
+        if (swipeX !== 0) {
+          handleSwipe(swipeX > 0 ? "right" : "left");
+        } else if (Math.abs(mx) > 50) {
+          handleSwipe(mx > 0 ? "right" : "left");
+          cancel();
+        }
+      }
+    },
+    { 
+      axis: "x",
+      filterTaps: true,
+      threshold: 10,
+      swipe: { velocity: 0.3, distance: 50 }
+    }
+  );
+
+  const currentIndex = tabs.indexOf(activeTab as typeof tabs[number]);
 
   return (
     <Dialog>
@@ -351,80 +387,92 @@ const ReportPreview = () => {
             </TabsTrigger>
           </TabsList>
           
-          {/* Basic Version */}
-          <TabsContent value="basic" className="mt-3 sm:mt-6">
-            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-slate-500/10 border border-slate-500/20">
-              <div className="flex items-start gap-2 sm:gap-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-slate-500/20 flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">基本版特色</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    入門首選——讓你知道「你是誰」＋「有解」。5 章節精華。
-                  </p>
-                </div>
-              </div>
+          {/* Swipe hint for mobile */}
+          {isMobile && (
+            <div className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground">
+              <ChevronLeft className="h-3 w-3" />
+              <span>左右滑動切換版本</span>
+              <ChevronRight className="h-3 w-3" />
             </div>
-            
-            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
-              <div className="space-y-4 sm:space-y-6 pb-4">
-                {basicPreviewSections.map((section, index) => (
-                  <PreviewSection key={index} section={section} index={index} variant="basic" />
-                ))}
-              </div>
-            </ScrollArea>
-          </TabsContent>
+          )}
           
-          {/* Standard Version */}
-          <TabsContent value="standard" className="mt-3 sm:mt-6">
-            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <div className="flex items-start gap-2 sm:gap-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <Compass className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">標準版特色</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    完整八大面向解析，幫助你「看懂自己」的運作模式。
-                  </p>
+          {/* Swipeable content area */}
+          <div {...(isMobile ? bind() : {})} className="touch-pan-y">
+            {/* Basic Version */}
+            <TabsContent value="basic" className="mt-3 sm:mt-6">
+              <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-slate-500/10 border border-slate-500/20">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-slate-500/20 flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">基本版特色</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      入門首選——讓你知道「你是誰」＋「有解」。5 章節精華。
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
-              <div className="space-y-4 sm:space-y-6 pb-4">
-                {standardPreviewSections.map((section, index) => (
-                  <PreviewSection key={index} section={section} index={index} variant="standard" />
-                ))}
-              </div>
-            </ScrollArea>
-          </TabsContent>
+              
+              <ScrollArea className="h-[calc(100vh-420px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+                <div className="space-y-4 sm:space-y-6 pb-4">
+                  {basicPreviewSections.map((section, index) => (
+                    <PreviewSection key={index} section={section} index={index} variant="basic" />
+                  ))}
+                </div>
+              </ScrollArea>
+            </TabsContent>
           
-          {/* Flagship Version */}
-          <TabsContent value="flagship" className="mt-3 sm:mt-6">
-            <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <div className="flex items-start gap-2 sm:gap-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <Crown className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">旗艦版特色</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    整合「默默超思維系統」，學會「使用自己」。
-                  </p>
+            {/* Standard Version */}
+            <TabsContent value="standard" className="mt-3 sm:mt-6">
+              <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                    <Compass className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">標準版特色</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      完整八大面向解析，幫助你「看懂自己」的運作模式。
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+              
+              <ScrollArea className="h-[calc(100vh-420px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+                <div className="space-y-4 sm:space-y-6 pb-4">
+                  {standardPreviewSections.map((section, index) => (
+                    <PreviewSection key={index} section={section} index={index} variant="standard" />
+                  ))}
+                </div>
+              </ScrollArea>
+            </TabsContent>
             
-            <ScrollArea className="h-[calc(100vh-380px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
-              <div className="space-y-4 sm:space-y-6 pb-4">
-                {flagshipPreviewSections.map((section, index) => (
-                  <PreviewSection key={index} section={section} index={index} variant="flagship" />
-                ))}
+            {/* Flagship Version */}
+            <TabsContent value="flagship" className="mt-3 sm:mt-6">
+              <div className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <Crown className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-medium text-foreground text-sm sm:text-base mb-0.5 sm:mb-1">旗艦版特色</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      整合「默默超思維系統」，學會「使用自己」。
+                    </p>
+                  </div>
+                </div>
               </div>
-            </ScrollArea>
-          </TabsContent>
+              
+              <ScrollArea className="h-[calc(100vh-420px)] sm:h-[400px] -mx-3 px-3 sm:mx-0 sm:px-0 sm:pr-4">
+                <div className="space-y-4 sm:space-y-6 pb-4">
+                  {flagshipPreviewSections.map((section, index) => (
+                    <PreviewSection key={index} section={section} index={index} variant="flagship" />
+                  ))}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+          </div>
         </Tabs>
         
         <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
