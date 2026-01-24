@@ -1111,6 +1111,111 @@ const ReportPage = () => {
         </div>
       </section>
 
+      {/* Price Anchoring Section */}
+      <section 
+        id="price-anchoring"
+        ref={(el) => (observerRefs.current['price-anchoring'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
+        
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-6">
+              <Scale className="w-4 h-4 text-emerald-400" />
+              <span className="text-emerald-300 text-sm font-medium">價值對比</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              傳統服務 vs <span className="text-amber-400">默默超報告</span>
+            </h2>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto">
+              同樣的深度理解，截然不同的價值與便利性
+            </p>
+          </div>
+          
+          {/* Comparison Grid */}
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Traditional Side */}
+            <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
+                <span className="text-white/60 text-sm font-medium">傳統算命服務</span>
+              </div>
+              
+              <div className="pt-4 space-y-6">
+                {[
+                  { label: "知名老師面相/八字諮詢", price: "NT$ 3,000-8,000", note: "單次・30-60分鐘" },
+                  { label: "紫微斗數詳批", price: "NT$ 5,000-15,000", note: "單次・僅文字" },
+                  { label: "西洋占星流年解讀", price: "NT$ 3,500-6,000", note: "單次・口述為主" },
+                  { label: "人類圖完整解讀", price: "NT$ 4,000-8,000", note: "單次・基礎版" },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
+                    <div>
+                      <p className="text-white/80 font-medium">{item.label}</p>
+                      <p className="text-white/40 text-sm">{item.note}</p>
+                    </div>
+                    <p className="text-white/60 font-mono text-lg">{item.price}</p>
+                  </div>
+                ))}
+                
+                <div className="pt-4 border-t border-white/20">
+                  <div className="flex items-center justify-between">
+                    <p className="text-white/60">若要四系統都做...</p>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-rose-400 line-through">NT$ 15,500-37,000</p>
+                      <p className="text-white/40 text-sm">需 4 次預約・無法交叉對照</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* MomoChao Side */}
+            <div className="relative bg-gradient-to-br from-amber-900/20 to-[#0d0d0d] rounded-3xl p-8 border border-amber-500/30 shadow-[0_0_40px_rgba(251,191,36,0.15)]">
+              <div className="absolute -top-3 left-6 px-4 py-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full">
+                <span className="text-black text-sm font-bold">默默超全方位報告</span>
+              </div>
+              
+              <div className="pt-4 space-y-4">
+                {[
+                  { icon: CheckCircle2, text: "四大系統交叉整合（紫微、八字、占星、人類圖）" },
+                  { icon: CheckCircle2, text: "12,000+ 字深度分析・永久保存" },
+                  { icon: CheckCircle2, text: "可反覆閱讀的網頁版 + PDF 下載" },
+                  { icon: CheckCircle2, text: "專業語音導讀（深度吸收包）" },
+                  { icon: CheckCircle2, text: "1對1 諮詢時間（完整校準包）" },
+                  { icon: CheckCircle2, text: "10+ 章節覆蓋人格、關係、事業、財運" },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <item.icon className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-white/80">{item.text}</p>
+                  </div>
+                ))}
+                
+                <div className="pt-6 mt-6 border-t border-amber-500/30">
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className="text-amber-300 text-sm mb-1">核心包起</p>
+                      <p className="text-white/40 text-sm">即將公佈正式售價</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-3xl font-black text-amber-400">即將公佈</p>
+                      <p className="text-emerald-400 text-sm font-medium">✓ 四系統合一・終身可查閱</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Bottom Note */}
+          <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-white/40 text-sm max-w-2xl mx-auto">
+              * 傳統服務價格為市場調查參考值，實際依各老師收費為準。<br/>
+              默默超報告提供的不是「預測」，而是可反覆對照的「自我認知地圖」。
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* About System - Core Philosophy Section */}
       <section 
         id="about-system"
