@@ -247,9 +247,67 @@ const valueAddedServices = [
 const targetAudience = [
   "你很努力，但常覺得「力氣用錯地方」",
   "你理性很強，卻也敏感，容易被人事物牽動節奏",
-  "你不想聽好聽話，你想要可驗證、可落地的解釋",
+  "你不想聽好聯話，你想要可驗證、可落地的解釋",
   "你在關係、事業或金錢上，總有同一種卡點重複出現",
   "你想要的是「更懂自己」而不是「被定義」",
+];
+
+// Pain points data - competitor-inspired but aligned with "Mirror not Script" positioning
+const painPoints = [
+  {
+    icon: Compass,
+    title: "人生迷茫",
+    description: "不知道自己的天賦和方向，感覺在原地打轉",
+    detail: "缺乏對自己運作模式的清晰認知，優勢與盲點混在一起，無法有效發揮",
+    percentage: 78,
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    icon: Heart,
+    title: "關係困擾",
+    description: "總是遇到相似的關係模式，不知道問題出在哪",
+    detail: "不了解自己在關係中的需求與投射，重複相同的互動劇本",
+    percentage: 65,
+    color: "from-rose-500 to-pink-500"
+  },
+  {
+    icon: Briefcase,
+    title: "事業瓶頸",
+    description: "工作不順利，不知道什麼環境真正適合自己",
+    detail: "職涯發展停滯，缺乏對自身能量類型與適合策略的認知",
+    percentage: 72,
+    color: "from-amber-500 to-orange-500"
+  },
+  {
+    icon: TrendingUp,
+    title: "決策困難",
+    description: "重要抉擇時猶豫不決，事後常感後悔",
+    detail: "缺乏清晰的內在權威與決策機制，容易被外界聲音干擾",
+    percentage: 83,
+    color: "from-purple-500 to-violet-500"
+  },
+];
+
+// Simple 3-step process for conversion
+const simpleSteps = [
+  {
+    step: "1",
+    title: "提供出生資料",
+    description: "準確的出生年月日、時間、地點",
+    icon: FileText,
+  },
+  {
+    step: "2",
+    title: "專業四系統分析",
+    description: "紫微斗數 × 八字 × 占星 × 人類圖 交叉驗證",
+    icon: Brain,
+  },
+  {
+    step: "3",
+    title: "收到專屬報告",
+    description: "網頁版 + PDF，終身可查閱的人生參考書",
+    icon: CheckCircle2,
+  },
 ];
 
 const reportFeatures = [
@@ -353,15 +411,27 @@ const processSteps = [
 const faqs = [
   {
     q: "我不懂命理也能看懂嗎？",
-    a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」。",
+    a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。",
+  },
+  {
+    q: "多久可以收到報告？",
+    a: "依版本而定：基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。每份報告皆為人工精密解讀，確保品質。",
   },
   {
     q: "你會不會寫得很玄，或很像算命？",
-    a: "不會。我們的核心是鏡子，不是劇本。拒絕預言式的結論。",
+    a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。",
+  },
+  {
+    q: "報告的準確度如何？",
+    a: "我們使用四系統交叉驗證（紫微、八字、占星、人類圖），避免單一系統偏誤。報告呈現的是你「如何運作」的模式，可用過去經驗驗證。",
   },
   {
     q: "神煞會不會很可怕？",
-    a: "不會。神煞只在事業、愛情、金錢三章使用，並且一律用兵符/心理語言翻譯，不恐嚇。",
+    a: "不會。神煞只在事業、愛情、金錢三章使用，並且一律用「兵符效果」或心理語言翻譯，絕不恐嚇。",
+  },
+  {
+    q: "與傳統算命有什麼不同？",
+    a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。你可以終身保存、反覆閱讀。",
   },
 ];
 
@@ -913,6 +983,130 @@ const ReportPage = () => {
                 </div>
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pain Points Section - Competitor-inspired but "Mirror" aligned */}
+      <section 
+        id="pain-points"
+        ref={(el) => (observerRefs.current['pain-points'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#080808] to-[#0a0a0a]" />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['pain-points'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              你是否也有這些<span className="text-amber-400">困擾</span>？
+            </h2>
+            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
+              這些問題的根源，往往來自對自己運作模式的不理解
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {painPoints.map((point, index) => (
+              <div
+                key={index}
+                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-1 ${isVisible['pain-points'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                style={{ transitionDelay: `${0.1 + index * 0.1}s` }}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${point.color} opacity-0 group-hover:opacity-5 rounded-3xl transition-opacity duration-500`} />
+                
+                <div className="flex items-start gap-4">
+                  <div className={`p-3 rounded-2xl bg-gradient-to-br ${point.color} flex-shrink-0`}>
+                    <point.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-serif text-xl font-bold text-white">{point.title}</h3>
+                      <span className="text-2xl font-black text-white/20">{point.percentage}%</span>
+                    </div>
+                    <p className="text-white/80 mb-2">{point.description}</p>
+                    <p className="text-white/50 text-sm">{point.detail}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Solution Bridge */}
+          <div className={`text-center p-8 md:p-12 bg-gradient-to-r from-amber-900/20 via-amber-800/10 to-amber-900/20 rounded-3xl border border-amber-500/20 transition-all duration-1000 delay-500 ${isVisible['pain-points'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <Sparkles className="w-12 h-12 text-amber-400 mx-auto mb-4" />
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
+              這些問題的解答，藏在你的「出廠設定」裡
+            </h3>
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">
+              我們不預測你的命運，而是幫你讀懂自己的<span className="text-amber-400">使用說明書</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Simple 3-Step Process Section */}
+      <section 
+        id="simple-steps"
+        ref={(el) => (observerRefs.current['simple-steps'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['simple-steps'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <Zap className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">簡單三步驟</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              獲得你的<span className="text-amber-400">專屬報告</span>
+            </h2>
+            <p className="text-white/50 text-lg">100% 客製化・不套模板・人工精密解讀</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {simpleSteps.map((step, index) => (
+              <div
+                key={index}
+                className={`group relative transition-all duration-700 ${isVisible['simple-steps'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+                style={{ transitionDelay: `${0.2 + index * 0.15}s` }}
+              >
+                <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 text-center h-full">
+                  {/* Step Number */}
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)]">
+                    <span className="text-black font-bold text-lg">{step.step}</span>
+                  </div>
+                  
+                  <div className="pt-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500/10 mb-6 group-hover:scale-110 transition-transform">
+                      <step.icon className="w-8 h-8 text-amber-400" />
+                    </div>
+                    <h3 className="font-serif text-xl font-bold text-white mb-3">{step.title}</h3>
+                    <p className="text-white/60">{step.description}</p>
+                  </div>
+                  
+                  {/* Arrow connector - only on desktop */}
+                  {index < simpleSteps.length - 1 && (
+                    <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                      <ArrowRight className="w-6 h-6 text-amber-500/50" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Stats Row */}
+          <div className={`mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-1000 delay-500 ${isVisible['simple-steps'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {[
+              { label: "字深度分析", value: "12,000+", suffix: "" },
+              { label: "章節架構", value: "10+", suffix: "" },
+              { label: "系統整合", value: "4", suffix: "" },
+              { label: "終身可查閱", value: "∞", suffix: "" },
+            ].map((stat, i) => (
+              <div key={i} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                <p className="text-2xl md:text-3xl font-black text-amber-400">{stat.value}</p>
+                <p className="text-white/50 text-sm">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
