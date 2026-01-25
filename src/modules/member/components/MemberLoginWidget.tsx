@@ -169,11 +169,13 @@ export function MemberLoginWidget({
         <h3 className="text-lg font-semibold text-slate-100 mb-2">您已登入</h3>
         <p className="text-sm text-slate-400 mb-4">歡迎回來！</p>
         <Button 
-          onClick={() => navigate("/account")}
+          asChild
           className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
         >
-          前往會員中心
-          <ArrowRight className="w-4 h-4 ml-2" />
+          <a href="https://member.momo-chao.com" target="_blank" rel="noopener noreferrer">
+            前往會員中心
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </a>
         </Button>
       </div>
     );
