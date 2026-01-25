@@ -30,6 +30,8 @@ const footerLinks = {
   ],
   about: [
     { label: "關於默默超", href: "/about" },
+    { label: "隱私政策", href: "/privacy" },
+    { label: "使用條款", href: "/terms" },
   ],
 };
 
@@ -194,9 +196,15 @@ const PublicFooter = () => {
             <p className="text-sm text-white/40 text-center md:text-left">
               © {currentYear} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
             </p>
-            <p className="text-sm text-white/40">
-              Based on MomoChao Thinking
-            </p>
+            <div className="flex items-center gap-4 text-sm text-white/40">
+              <Link to="/privacy" className="hover:text-amber-400 transition-colors">
+                隱私政策
+              </Link>
+              <span>|</span>
+              <Link to="/terms" className="hover:text-amber-400 transition-colors">
+                使用條款
+              </Link>
+            </div>
           </div>
         </div>
       </div>
