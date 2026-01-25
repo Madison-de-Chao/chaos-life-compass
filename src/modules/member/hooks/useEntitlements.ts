@@ -1,6 +1,6 @@
 /**
  * 權限管理 Hooks
- * 使用外部會員中心 API 進行權限查詢
+ * 使用外部會員中心 API 進行權限查詢（含本地快取機制）
  * 管理操作仍使用本地 Supabase
  */
 
@@ -9,8 +9,73 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type { Product, Plan, Entitlement } from "../types";
 
-// 外部會員中心 API 配置
-const MEMBER_CENTER_PRODUCT_ID = "11111111-1111-1111-1111-111111111111"; // report_platform
+// ==================== 快取配置 ====================
+const CACHE_KEY_PREFIX = 'entitlements_cache_';
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 分鐘快取有效期
+const STALE_TTL_MS = 30 * 60 * 1000; // 30 分鐘內可用 stale 資料
+
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+  email: string;
+}
+
+function getCacheKey(type: string, email: string): string {
+  return `${CACHE_KEY_PREFIX}${type}_${email}`;
+}
+
+function setCache<T>(type: string, email: string, data: T): void {
+  try {
+    const entry: CacheEntry<T> = {
+      data,
+      timestamp: Date.now(),
+      email,
+    };
+    localStorage.setItem(getCacheKey(type, email), JSON.stringify(entry));
+  } catch (e) {
+    console.warn('Failed to cache entitlements:', e);
+  }
+}
+
+function getCache<T>(type: string, email: string): { data: T | null; isStale: boolean; isExpired: boolean } {
+  try {
+    const cached = localStorage.getItem(getCacheKey(type, email));
+    if (!cached) return { data: null, isStale: false, isExpired: true };
+    
+    const entry: CacheEntry<T> = JSON.parse(cached);
+    const age = Date.now() - entry.timestamp;
+    
+    // 檢查是否為同一用戶的快取
+    if (entry.email !== email) {
+      return { data: null, isStale: false, isExpired: true };
+    }
+    
+    return {
+      data: entry.data,
+      isStale: age > CACHE_TTL_MS,
+      isExpired: age > STALE_TTL_MS,
+    };
+  } catch (e) {
+    return { data: null, isStale: false, isExpired: true };
+  }
+}
+
+function clearUserCache(email: string): void {
+  try {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(CACHE_KEY_PREFIX) && key.endsWith(`_${email}`)) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+  } catch (e) {
+    console.warn('Failed to clear entitlements cache:', e);
+  }
+}
+
+// ==================== 類型定義 ====================
 
 interface MemberCenterEntitlement {
   id: string;
@@ -105,7 +170,7 @@ export function usePlans() {
 }
 
 /**
- * 從外部會員中心查詢當前用戶的權限
+ * 從外部會員中心查詢當前用戶的權限（含快取）
  */
 export function useMyEntitlements() {
   return useQuery({
@@ -114,6 +179,14 @@ export function useMyEntitlements() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user?.email) return [];
 
+      const cacheType = 'lookup';
+      const { data: cachedData, isStale, isExpired } = getCache<Entitlement[]>(cacheType, user.email);
+
+      // 如果快取有效且未過期，直接返回
+      if (cachedData && !isStale) {
+        return cachedData;
+      }
+
       try {
         const response: MemberCenterLookupResponse = await callMemberCenterProxy(
           'entitlements-lookup',
@@ -121,7 +194,7 @@ export function useMyEntitlements() {
         );
         
         // Convert to local Entitlement format
-        return response.entitlements?.map(e => ({
+        const entitlements = response.entitlements?.map(e => ({
           id: e.id,
           user_id: response.userId || user.id,
           product_id: e.product_id,
@@ -134,8 +207,19 @@ export function useMyEntitlements() {
           created_at: e.starts_at,
           updated_at: e.starts_at,
         })) || [];
+
+        // 快取成功的結果
+        setCache(cacheType, user.email, entitlements);
+        return entitlements;
       } catch (error) {
         console.error('Failed to fetch entitlements from member center:', error);
+        
+        // 如果有 stale 快取，在 API 失敗時使用
+        if (cachedData && !isExpired) {
+          console.log('Using stale cache due to API failure');
+          return cachedData;
+        }
+        
         // Fallback to local entitlements
         const { data, error: dbError } = await supabase
           .from('entitlements')
@@ -146,6 +230,9 @@ export function useMyEntitlements() {
         return data as Entitlement[];
       }
     },
+    // React Query 自帶的 stale/cache 設定
+    staleTime: CACHE_TTL_MS,
+    gcTime: STALE_TTL_MS,
   });
 }
 
@@ -281,7 +368,7 @@ export function useSearchUsers(email: string) {
 }
 
 /**
- * 從外部會員中心檢查當前用戶對特定產品的權限
+ * 從外部會員中心檢查當前用戶對特定產品的權限（含快取）
  */
 export function useProductAccess(productId: string) {
   return useQuery({
@@ -289,6 +376,14 @@ export function useProductAccess(productId: string) {
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user?.email) return { hasAccess: false, entitlement: null };
+
+      const cacheType = `check_${productId}`;
+      const { data: cachedData, isStale, isExpired } = getCache<{ hasAccess: boolean; entitlement: Entitlement | null }>(cacheType, user.email);
+
+      // 如果快取有效且未過期，直接返回
+      if (cachedData && !isStale) {
+        return cachedData;
+      }
 
       try {
         const response: MemberCenterCheckResponse = await callMemberCenterProxy(
@@ -299,8 +394,10 @@ export function useProductAccess(productId: string) {
           }
         );
         
+        let result: { hasAccess: boolean; entitlement: Entitlement | null };
+        
         if (response.hasAccess && response.entitlement) {
-          return {
+          result = {
             hasAccess: true,
             entitlement: {
               id: response.entitlement.id,
@@ -316,11 +413,21 @@ export function useProductAccess(productId: string) {
               updated_at: response.entitlement.starts_at,
             } as Entitlement
           };
+        } else {
+          result = { hasAccess: false, entitlement: null };
         }
         
-        return { hasAccess: false, entitlement: null };
+        // 快取成功的結果
+        setCache(cacheType, user.email, result);
+        return result;
       } catch (error) {
         console.error('Failed to check product access from member center:', error);
+        
+        // 如果有 stale 快取，在 API 失敗時使用
+        if (cachedData && !isExpired) {
+          console.log('Using stale cache due to API failure');
+          return cachedData;
+        }
         
         // Fallback to local check
         const { data, error: dbError } = await supabase
@@ -347,11 +454,13 @@ export function useProductAccess(productId: string) {
       }
     },
     enabled: !!productId,
+    staleTime: CACHE_TTL_MS,
+    gcTime: STALE_TTL_MS,
   });
 }
 
 /**
- * 從外部會員中心獲取當前用戶的所有有效產品 ID
+ * 從外部會員中心獲取當前用戶的所有有效產品 ID（含快取）
  */
 export function useActiveProductIds() {
   return useQuery({
@@ -360,6 +469,14 @@ export function useActiveProductIds() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user?.email) return [];
 
+      const cacheType = 'active_products';
+      const { data: cachedData, isStale, isExpired } = getCache<string[]>(cacheType, user.email);
+
+      // 如果快取有效且未過期，直接返回
+      if (cachedData && !isStale) {
+        return cachedData;
+      }
+
       try {
         const response: MemberCenterLookupResponse = await callMemberCenterProxy(
           'entitlements-lookup',
@@ -367,11 +484,21 @@ export function useActiveProductIds() {
         );
         
         const now = new Date();
-        return response.entitlements
+        const activeProductIds = response.entitlements
           ?.filter(e => e.status === 'active' && (!e.ends_at || new Date(e.ends_at) > now))
           .map(e => e.product_id) || [];
+
+        // 快取成功的結果
+        setCache(cacheType, user.email, activeProductIds);
+        return activeProductIds;
       } catch (error) {
         console.error('Failed to fetch active product IDs from member center:', error);
+        
+        // 如果有 stale 快取，在 API 失敗時使用
+        if (cachedData && !isExpired) {
+          console.log('Using stale cache due to API failure');
+          return cachedData;
+        }
         
         // Fallback to local
         const { data, error: dbError } = await supabase
@@ -388,5 +515,25 @@ export function useActiveProductIds() {
           .map(e => e.product_id);
       }
     },
+    staleTime: CACHE_TTL_MS,
+    gcTime: STALE_TTL_MS,
   });
+}
+
+/**
+ * 清除當前用戶的權限快取（用於登出或權限變更時）
+ */
+export function useClearEntitlementsCache() {
+  const queryClient = useQueryClient();
+  
+  return async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email) {
+      clearUserCache(user.email);
+    }
+    // 同時清除 React Query 快取
+    queryClient.invalidateQueries({ queryKey: ['my-entitlements'] });
+    queryClient.invalidateQueries({ queryKey: ['product-access'] });
+    queryClient.invalidateQueries({ queryKey: ['active-product-ids'] });
+  };
 }

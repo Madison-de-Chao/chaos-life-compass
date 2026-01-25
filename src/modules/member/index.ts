@@ -22,6 +22,7 @@ export {
   useSearchUsers,
   useProductAccess,
   useActiveProductIds,
+  useClearEntitlementsCache,
 } from './hooks/useEntitlements';
 
 // ==================== Utils ====================
