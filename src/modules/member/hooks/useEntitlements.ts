@@ -50,14 +50,6 @@ async function callMemberCenterProxy(action: string, params: Record<string, stri
   const { data: { session } } = await supabase.auth.getSession();
   
   const queryParams = new URLSearchParams({ action, ...params });
-  
-  const response = await supabase.functions.invoke('member-center-proxy', {
-    headers: session ? { Authorization: `Bearer ${session.access_token}` } : undefined,
-    body: null,
-    method: 'GET',
-  });
-
-  // Use fetch directly for GET with query params
   const baseUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/member-center-proxy`;
   const url = `${baseUrl}?${queryParams.toString()}`;
   
