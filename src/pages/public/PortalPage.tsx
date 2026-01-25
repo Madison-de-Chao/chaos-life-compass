@@ -916,33 +916,33 @@ export default function PortalPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
       </div>
 
-      {/* Controls */}
-      <div className="fixed top-6 right-6 z-50 flex gap-3">
+      {/* Controls - optimized for mobile touch */}
+      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex gap-2 md:gap-3">
         <button
           onClick={toggleMusic}
-          className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+          className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 md:w-10 md:h-10 bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm touch-manipulation active:scale-95"
         >
-          {isPlaying ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          {isPlaying ? <Volume2 className="w-5 h-5 md:w-4 md:h-4" /> : <VolumeX className="w-5 h-5 md:w-4 md:h-4" />}
         </button>
 
         {isInIntro && (
           <>
             <button
               onClick={toggleSpeed}
-              className={`group flex items-center gap-2 px-4 py-2 border rounded-full transition-all duration-300 backdrop-blur-sm ${
+              className={`group flex items-center gap-1.5 md:gap-2 px-3 md:px-4 min-h-[44px] border rounded-full transition-all duration-300 backdrop-blur-sm touch-manipulation active:scale-95 ${
                 speedMultiplier > 1 
                   ? 'bg-[#c9a962]/20 border-[#c9a962]/40 text-[#c9a962]' 
-                  : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-[#c9a962]/30 text-white/60 hover:text-white'
+                  : 'bg-white/5 hover:bg-white/10 active:bg-white/15 border-white/10 hover:border-[#c9a962]/30 text-white/60 hover:text-white'
               }`}
             >
               <FastForward className="w-4 h-4" />
-              <span className="text-sm">{speedMultiplier}x</span>
+              <span className="text-sm font-medium">{speedMultiplier}x</span>
             </button>
             <button
               onClick={skipToEnd}
-              className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+              className="group flex items-center gap-1.5 md:gap-2 px-3 md:px-4 min-h-[44px] bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm touch-manipulation active:scale-95"
             >
-              <span className="text-sm">跳過</span>
+              <span className="text-sm font-medium">跳過</span>
               <SkipForward className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </>
@@ -951,10 +951,10 @@ export default function PortalPage() {
         {!isInIntro && (
           <button
             onClick={replay}
-            className="group flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm"
+            className="group flex items-center gap-1.5 md:gap-2 px-3 md:px-4 min-h-[44px] bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/60 hover:text-white transition-all duration-300 backdrop-blur-sm touch-manipulation active:scale-95"
           >
             <RotateCcw className="w-4 h-4 group-hover:-rotate-180 transition-transform duration-500" />
-            <span className="text-sm">重播</span>
+            <span className="text-sm font-medium">重播</span>
           </button>
         )}
       </div>
@@ -999,18 +999,18 @@ export default function PortalPage() {
             style={{ transitionDuration: '1000ms' }}
           >
             {/* Greeting */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6 md:mb-8 px-4">
               <h2 
-                className="font-display text-2xl md:text-3xl text-white mb-3"
+                className="font-display text-xl sm:text-2xl md:text-3xl text-white mb-2 md:mb-3"
                 style={{ textShadow: '0 0 40px rgba(201,169,98,0.4)' }}
               >
                 你好！我是默默超！
               </h2>
-              <p className="text-white/50 text-lg">想從哪裡開始呢？</p>
+              <p className="text-white/50 text-base md:text-lg">想從哪裡開始呢？</p>
             </div>
 
-            {/* Cards grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl w-full">
+            {/* Cards grid - optimized for mobile touch */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 max-w-4xl w-full px-4 sm:px-6">
               {portalItems.map((item, index) => {
                 const isHovered = hoveredCard === index;
                 const isVisible = cardsVisible[index];
@@ -1033,55 +1033,63 @@ export default function PortalPage() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group relative block p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:bg-white/[0.05] overflow-hidden`}
+                        className={`group relative block p-4 sm:p-5 md:p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] active:bg-white/[0.08] overflow-hidden touch-manipulation active:scale-[0.98] min-h-[88px]`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
+                        onTouchStart={() => setHoveredCard(index)}
+                        onTouchEnd={() => setTimeout(() => setHoveredCard(null), 150)}
                       >
                         <HoverParticles isHovered={isHovered} color={item.particleColor} />
                         <div 
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                          className={`absolute inset-0 transition-opacity duration-500 rounded-2xl ${isHovered ? 'opacity-100' : 'opacity-0'}`}
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
-                        <div className="relative flex items-start gap-4">
-                          <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                            <span className="text-emerald-300 text-2xl font-display">默</span>
+                        <div className="relative flex items-center gap-3 sm:gap-4">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
+                            <span className="text-emerald-300 text-xl sm:text-2xl font-display">默</span>
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-display text-xl text-white group-hover:text-[#c9a962] transition-colors">{item.title}</h3>
-                              <ExternalLink className="w-4 h-4 text-white/30 group-hover:text-white/60 transition-colors" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+                              <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors truncate">{item.title}</h3>
+                              <ExternalLink className="w-4 h-4 flex-shrink-0 text-white/30 group-hover:text-white/60 transition-colors" />
                             </div>
-                            <p className="text-white/40 text-sm mb-2">{item.subtitle}</p>
-                            <p className="text-white/60 text-sm">{item.description}</p>
+                            <p className="text-white/40 text-xs sm:text-sm mb-1 sm:mb-2 truncate">{item.subtitle}</p>
+                            <p className="text-white/60 text-xs sm:text-sm line-clamp-2">{item.description}</p>
                           </div>
                         </div>
                       </a>
                     ) : (
                       <Link
                         to={item.href}
-                        className={`group relative block p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:bg-white/[0.05] overflow-hidden`}
+                        className={`group relative block p-4 sm:p-5 md:p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] active:bg-white/[0.08] overflow-hidden touch-manipulation active:scale-[0.98] min-h-[88px]`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
+                        onTouchStart={() => setHoveredCard(index)}
+                        onTouchEnd={() => setTimeout(() => setHoveredCard(null), 150)}
                       >
                         <HoverParticles isHovered={isHovered} color={item.particleColor} />
                         <div 
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                          className={`absolute inset-0 transition-opacity duration-500 rounded-2xl ${isHovered ? 'opacity-100' : 'opacity-0'}`}
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
-                        <div className="relative flex items-start gap-4">
-                          {item.logo && (
-                            <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                        <div className="relative flex items-center gap-3 sm:gap-4">
+                          {item.logo ? (
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
                               <img 
                                 src={item.logo} 
                                 alt={item.title} 
-                                className="w-14 h-14 object-contain"
+                                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain"
                               />
                             </div>
+                          ) : (
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
+                              <span className="text-emerald-300 text-xl sm:text-2xl font-display">默</span>
+                            </div>
                           )}
-                          <div className="flex-1">
-                            <h3 className="font-display text-xl text-white group-hover:text-[#c9a962] transition-colors mb-1">{item.title}</h3>
-                            <p className="text-white/40 text-sm mb-2">{item.subtitle}</p>
-                            <p className="text-white/60 text-sm">{item.description}</p>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors mb-0.5 sm:mb-1 truncate">{item.title}</h3>
+                            <p className="text-white/40 text-xs sm:text-sm mb-1 sm:mb-2 truncate">{item.subtitle}</p>
+                            <p className="text-white/60 text-xs sm:text-sm line-clamp-2">{item.description}</p>
                           </div>
                         </div>
                       </Link>
@@ -1095,7 +1103,7 @@ export default function PortalPage() {
             <MemberLoginSection />
 
             {/* Footer */}
-            <p className="text-white/30 text-sm mt-8">
+            <p className="text-white/30 text-xs sm:text-sm mt-6 md:mt-8 px-4 text-center">
               此刻的你，已在途中。
             </p>
           </div>
