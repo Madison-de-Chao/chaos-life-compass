@@ -196,13 +196,15 @@ export function MemberAuthHeader({
 
               {/* 會員中心 */}
               <DropdownMenuItem asChild>
-                <Link 
-                  to={mergedConfig.dashboardPath || '/account'}
+                <a 
+                  href="https://member.momo-chao.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <LayoutDashboard className="h-4 w-4" />
                   會員中心
-                </Link>
+                </a>
               </DropdownMenuItem>
 
               {/* 個人資料 */}
