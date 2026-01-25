@@ -24,6 +24,8 @@ export {
   useActiveProductIds,
   useClearEntitlementsCache,
 } from './hooks/useEntitlements';
+export { useLocalDocumentStats } from './hooks/useLocalDocumentStats';
+export type { LocalDocumentStats } from './hooks/useLocalDocumentStats';
 
 // ==================== Utils ====================
 export {
