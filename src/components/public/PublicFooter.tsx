@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Instagram, Youtube, Facebook, Mail, Send } from "lucide-react";
+import { Instagram, Youtube, Facebook, Mail, Send, Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { openCookieSettings } from "@/components/CookieConsentBanner";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
 
@@ -204,6 +205,14 @@ const PublicFooter = () => {
               <Link to="/terms" className="hover:text-amber-400 transition-colors">
                 使用條款
               </Link>
+              <span>|</span>
+              <button 
+                onClick={openCookieSettings}
+                className="hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+              >
+                <Cookie className="w-3.5 h-3.5" />
+                Cookie 設定
+              </button>
             </div>
           </div>
         </div>

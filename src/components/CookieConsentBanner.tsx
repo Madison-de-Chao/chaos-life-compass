@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Cookie, X, Settings, Check, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { motion, AnimatePresence } from "framer-motion";
 
 const COOKIE_CONSENT_KEY = "cookie-consent-preferences";
+const COOKIE_BANNER_EVENT = "open-cookie-settings";
 
 export interface CookiePreferences {
   necessary: boolean; // Always true, cannot be disabled
@@ -42,10 +43,38 @@ const cookieTypes = [
   },
 ];
 
+// Helper function to open cookie settings from anywhere
+export const openCookieSettings = () => {
+  window.dispatchEvent(new CustomEvent(COOKIE_BANNER_EVENT));
+};
+
 export const CookieConsentBanner = () => {
-  const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences);
+  const [preferences, setPreferences] = useState<CookiePreferences>(() => {
+    const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return defaultPreferences;
+      }
+    }
+    return defaultPreferences;
+  });
   const [isVisible, setIsVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+
+  // Listen for external open events
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+    setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener(COOKIE_BANNER_EVENT, handleOpenSettings);
+    return () => {
+      window.removeEventListener(COOKIE_BANNER_EVENT, handleOpenSettings);
+    };
+  }, [handleOpenSettings]);
 
   useEffect(() => {
     const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
@@ -65,6 +94,7 @@ export const CookieConsentBanner = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(newPrefs));
     setPreferences(newPrefs);
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   const handleRejectAll = () => {
@@ -77,6 +107,7 @@ export const CookieConsentBanner = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(newPrefs));
     setPreferences(newPrefs);
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   const handleSavePreferences = () => {
@@ -86,6 +117,7 @@ export const CookieConsentBanner = () => {
     };
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(newPrefs));
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   const togglePreference = (key: keyof Omit<CookiePreferences, "timestamp" | "necessary">) => {
@@ -97,6 +129,7 @@ export const CookieConsentBanner = () => {
 
   const handleClose = () => {
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   return (
@@ -172,10 +205,10 @@ export const CookieConsentBanner = () => {
                     </Button>
                   </div>
 
-                  {/* Close button - mobile only */}
+                  {/* Close button */}
                   <button
                     onClick={handleClose}
-                    className="absolute top-3 right-3 p-1.5 rounded-full text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors md:hidden"
+                    className="absolute top-3 right-3 p-1.5 rounded-full text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors"
                     aria-label="關閉"
                   >
                     <X className="h-4 w-4" />
@@ -292,6 +325,7 @@ export const useCookieConsent = () => {
     allowsMarketing: preferences?.marketing ?? false,
     updatePreferences,
     resetPreferences,
+    openSettings: openCookieSettings,
   };
 };
 
