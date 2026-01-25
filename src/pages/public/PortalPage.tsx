@@ -50,9 +50,9 @@ const portalItems = [
     subtitle: "Who is MomoChao",
     description: "或許，只是另一個正在學會凝視自己的人",
     cta: "認識默默超",
-    logo: null, // External link, no logo
-    href: "https://main.momo-chao.com/about",
-    isExternal: true,
+    logo: null,
+    href: "/about",
+    isExternal: false,
     glowColor: "rgba(52, 211, 153, 0.35)",
     particleColor: "bg-emerald-300",
     borderColor: "border-emerald-400/20",
