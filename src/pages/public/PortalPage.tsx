@@ -606,14 +606,14 @@ const createIntroSections = () => [
   {
     id: 'logos',
     content: (
-      <div className="space-y-8">
-        <div className="flex items-center justify-center gap-6 md:gap-10">
+      <div className="space-y-6 sm:space-y-8 px-4">
+        <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-10">
           <div className="relative group">
             <div className="absolute inset-0 blur-2xl bg-amber-400/30 rounded-full animate-pulse" />
             <img 
               src={logoHongling} 
               alt="虹靈御所" 
-              className="relative w-24 h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_infinite]" 
+              className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_infinite]" 
             />
           </div>
           <div className="relative group" style={{ animationDelay: '0.5s' }}>
@@ -621,7 +621,7 @@ const createIntroSections = () => [
             <img 
               src={logoChaoxuan} 
               alt="超烜創意" 
-              className="relative w-32 h-32 md:w-44 md:h-44 object-contain animate-[float_4s_ease-in-out_0.5s_infinite]" 
+              className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 object-contain animate-[float_4s_ease-in-out_0.5s_infinite]" 
             />
           </div>
           <div className="relative group" style={{ animationDelay: '1s' }}>
@@ -629,11 +629,11 @@ const createIntroSections = () => [
             <img 
               src={logoYuanyi} 
               alt="元壹宇宙" 
-              className="relative w-24 h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_1s_infinite]" 
+              className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 object-contain animate-[float_4s_ease-in-out_1s_infinite]" 
             />
           </div>
         </div>
-        <div className="text-[#c9a962] text-lg md:text-xl tracking-[0.3em] font-light opacity-70">
+        <div className="text-[#c9a962] text-sm sm:text-lg md:text-xl tracking-[0.2em] sm:tracking-[0.3em] font-light opacity-70">
           三個入口，一個思維系統
         </div>
       </div>
@@ -643,17 +643,17 @@ const createIntroSections = () => [
   {
     id: 'greeting',
     content: (
-      <div className="space-y-6">
-        <div className="text-[#c9a962] text-xl md:text-2xl tracking-[0.3em] font-light opacity-80">
+      <div className="space-y-4 sm:space-y-6 px-4">
+        <div className="text-[#c9a962] text-base sm:text-xl md:text-2xl tracking-[0.2em] sm:tracking-[0.3em] font-light opacity-80">
           照見・回望・前行
         </div>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-wide">
+        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide">
           <span className="relative inline-block">
             <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#c9a962] via-amber-400 to-[#c9a962] opacity-40" />
             <span className="relative text-[#c9a962]">MomoChao</span>
           </span>
         </h1>
-        <p className="text-white/70 text-xl md:text-2xl font-light italic">
+        <p className="text-white/70 text-base sm:text-xl md:text-2xl font-light italic">
           「我們不預測未來，只幫你看清現在。」
         </p>
       </div>
@@ -663,9 +663,9 @@ const createIntroSections = () => [
   {
     id: 'intro',
     content: (
-      <div className="space-y-8 text-white/80 text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto">
-        <p>默默超不是一個人名，<br />而是一種思維方式的代稱。</p>
-        <p>不急著評判，不急著給答案，<br />而是先安靜地看見。</p>
+      <div className="space-y-5 sm:space-y-8 text-white/80 text-base sm:text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto px-6">
+        <p>默默超不是一個人名，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是一種思維方式的代稱。</p>
+        <p>不急著評判，不急著給答案，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是先安靜地看見。</p>
         <p>「默默」是方法，「超」是目標。<br />
           <span className="text-[#c9a962]">在沉默中觀察，在理解中超越。</span>
         </p>
@@ -676,16 +676,16 @@ const createIntroSections = () => [
   {
     id: 'philosophy',
     content: (
-      <div className="space-y-8 max-w-2xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide mb-8">默默超思維</h2>
-        <div className="grid gap-6">
-          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-2xl p-6 text-left">
-            <h3 className="text-[#c9a962] text-xl font-display mb-3">鏡子非劇本</h3>
-            <p className="text-white/60 text-base leading-relaxed">命運從來不是劇本，它只是一面鏡子。我們不給答案，只給倒影。</p>
+      <div className="space-y-5 sm:space-y-8 max-w-2xl mx-auto px-4">
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-4 sm:mb-8">默默超思維</h2>
+        <div className="grid gap-4 sm:gap-6">
+          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">鏡子非劇本</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">命運從來不是劇本，它只是一面鏡子。我們不給答案，只給倒影。</p>
           </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-2xl p-6 text-left">
-            <h3 className="text-[#c9a962] text-xl font-display mb-3">完整性哲學</h3>
-            <p className="text-white/60 text-base leading-relaxed">世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。</p>
+          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">完整性哲學</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。</p>
           </div>
         </div>
       </div>
@@ -695,29 +695,29 @@ const createIntroSections = () => [
   {
     id: 'four-dimensions',
     content: (
-      <div className="space-y-8 max-w-3xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-white tracking-wide mb-4">四維運作系統</h2>
-        <p className="text-white/60 text-base md:text-lg mb-6">默默超思維系統的四個操作維度</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-2xl p-5 text-center">
-            <div className="text-3xl mb-3">💭</div>
-            <h3 className="text-rose-300 text-lg font-display mb-2">情緒</h3>
-            <p className="text-white/50 text-sm">感知・接納・轉化</p>
+      <div className="space-y-5 sm:space-y-8 max-w-3xl mx-auto px-4">
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-2 sm:mb-4">四維運作系統</h2>
+        <p className="text-white/60 text-sm sm:text-base md:text-lg mb-4 sm:mb-6">默默超思維系統的四個操作維度</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
+            <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💭</div>
+            <h3 className="text-rose-300 text-base sm:text-lg font-display mb-1 sm:mb-2">情緒</h3>
+            <p className="text-white/50 text-xs sm:text-sm">感知・接納・轉化</p>
           </div>
-          <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-2xl p-5 text-center">
-            <div className="text-3xl mb-3">⚡</div>
-            <h3 className="text-amber-300 text-lg font-display mb-2">行動</h3>
-            <p className="text-white/50 text-sm">覺察・選擇・執行</p>
+          <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
+            <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">⚡</div>
+            <h3 className="text-amber-300 text-base sm:text-lg font-display mb-1 sm:mb-2">行動</h3>
+            <p className="text-white/50 text-xs sm:text-sm">覺察・選擇・執行</p>
           </div>
-          <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-5 text-center">
-            <div className="text-3xl mb-3">🧠</div>
-            <h3 className="text-blue-300 text-lg font-display mb-2">心智</h3>
-            <p className="text-white/50 text-sm">整合・建構・穩固</p>
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
+            <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🧠</div>
+            <h3 className="text-blue-300 text-base sm:text-lg font-display mb-1 sm:mb-2">心智</h3>
+            <p className="text-white/50 text-xs sm:text-sm">整合・建構・穩固</p>
           </div>
-          <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-2xl p-5 text-center">
-            <div className="text-3xl mb-3">💎</div>
-            <h3 className="text-emerald-300 text-lg font-display mb-2">價值</h3>
-            <p className="text-white/50 text-sm">定位・校準・堅守</p>
+          <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
+            <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💎</div>
+            <h3 className="text-emerald-300 text-base sm:text-lg font-display mb-1 sm:mb-2">價值</h3>
+            <p className="text-white/50 text-xs sm:text-sm">定位・校準・堅守</p>
           </div>
         </div>
       </div>
@@ -727,16 +727,16 @@ const createIntroSections = () => [
   {
     id: 'human-ai-era',
     content: (
-      <div className="space-y-8 max-w-2xl mx-auto">
-        <div className="text-[#c9a962]/60 text-sm md:text-base tracking-[0.2em] uppercase">人機協作末法時代</div>
-        <h2 className="font-display text-2xl md:text-3xl lg:text-4xl text-white tracking-wide leading-relaxed">
+      <div className="space-y-5 sm:space-y-8 max-w-2xl mx-auto px-5">
+        <div className="text-[#c9a962]/60 text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] uppercase">人機協作末法時代</div>
+        <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-wide leading-relaxed">
           當 AI 能回答所有問題，<br />
           <span className="text-[#c9a962]">你需要的是問對問題的能力。</span>
         </h2>
-        <p className="text-white/60 text-base md:text-lg leading-relaxed">
-          默默超思維系統提供「堅實穩固的思維能力」，<br />
-          讓你在 AI 時代保持人類主體性，<br />
-          不被資訊淹沒，而是駕馭它。
+        <p className="text-white/60 text-sm sm:text-base md:text-lg leading-relaxed">
+          默默超思維系統提供「堅實穩固的思維能力」，<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>讓你在 AI 時代保持人類主體性，<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>不被資訊淹沒，而是駕馭它。
         </p>
       </div>
     ),
@@ -745,14 +745,14 @@ const createIntroSections = () => [
   {
     id: 'closing',
     content: (
-      <div className="space-y-8 max-w-2xl mx-auto">
-        <p className="text-white/70 text-xl md:text-2xl font-light leading-relaxed italic">
+      <div className="space-y-6 sm:space-y-8 max-w-2xl mx-auto px-5">
+        <p className="text-white/70 text-lg sm:text-xl md:text-2xl font-light leading-relaxed italic">
           「你不需要被告知你是誰，<br />
           你只需要一面夠清晰的鏡子。」
         </p>
-        <div className="pt-4">
-          <div className="inline-block px-6 py-3 border border-[#c9a962]/30 rounded-full">
-            <span className="text-[#c9a962] text-lg tracking-wider">選擇你的入口 ↓</span>
+        <div className="pt-2 sm:pt-4">
+          <div className="inline-block px-5 sm:px-6 py-2.5 sm:py-3 border border-[#c9a962]/30 rounded-full">
+            <span className="text-[#c9a962] text-base sm:text-lg tracking-wider">選擇你的入口 ↓</span>
           </div>
         </div>
       </div>
