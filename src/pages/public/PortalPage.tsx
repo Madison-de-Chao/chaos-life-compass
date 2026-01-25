@@ -568,13 +568,15 @@ function MemberLoginSection() {
   if (user) {
     return (
       <div className="mt-8 flex justify-center">
-        <Link
-          to="/account"
+        <a
+          href="https://member.momo-chao.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c9a962]/30 rounded-full text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm"
         >
           <UserCircle2 className="w-5 h-5 text-[#c9a962]" />
           <span>前往會員中心</span>
-        </Link>
+        </a>
       </div>
     );
   }
