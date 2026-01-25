@@ -12,6 +12,7 @@ import { MomoChatBot } from "@/components/MomoChatBot";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 // Admin Pages
 import Index from "./pages/Index";
@@ -147,6 +148,7 @@ const App = () => (
             <ChatBotWrapper />
             <PWAInstallPrompt />
             <CookieConsentBanner />
+            <GoogleAnalytics />
           </BrowserRouter>
         </TooltipProvider>
       </MemberProvider>
