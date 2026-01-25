@@ -11,6 +11,7 @@ import PageTransition from "@/components/PageTransition";
 import { MomoChatBot } from "@/components/MomoChatBot";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 
 // Admin Pages
 import Index from "./pages/Index";
@@ -145,6 +146,7 @@ const App = () => (
             </PageTransition>
             <ChatBotWrapper />
             <PWAInstallPrompt />
+            <CookieConsentBanner />
           </BrowserRouter>
         </TooltipProvider>
       </MemberProvider>
