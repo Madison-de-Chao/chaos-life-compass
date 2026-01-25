@@ -36,6 +36,8 @@ import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
 import UniversePage from "./pages/public/UniversePage";
 import AboutPage from "./pages/public/AboutPage";
+import PrivacyPolicyPage from "./pages/public/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/public/TermsOfServicePage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -97,6 +99,8 @@ const App = () => (
                 <Route path="/notes/:shareLink" element={<NotePage />} />
                 <Route path="/universe" element={<UniversePage />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/notes-public" element={<ComingSoonPage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
