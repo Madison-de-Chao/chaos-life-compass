@@ -60,6 +60,8 @@ export type {
   MemberAuthHeaderTheme, 
   MemberAuthHeaderConfig 
 } from './components/MemberAuthHeader';
+export { MemberStatusBar } from './components/MemberStatusBar';
+export type { MemberStatusBarProps } from './components/MemberStatusBar';
 export { default as OAuthAuthorizePage } from './components/OAuthAuthorizePage';
 
 // ==================== Pages ====================

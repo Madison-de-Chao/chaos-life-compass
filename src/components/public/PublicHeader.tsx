@@ -31,6 +31,8 @@ const publicHeaderAuthConfig = {
   logoutRedirect: '/',
   showAdminEntry: true,
   adminPath: '/dashboard',
+  showStatusBar: true,
+  statusBarCompact: false,
 };
 
 const navLinks = [

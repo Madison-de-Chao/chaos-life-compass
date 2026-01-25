@@ -7,6 +7,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, User, Settings, Shield, LayoutDashboard } from 'lucide-react';
 import { useMember } from '../context/MemberContext';
+import { MemberStatusBar } from './MemberStatusBar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -44,6 +45,10 @@ export interface MemberAuthHeaderConfig {
   showAdminEntry?: boolean;
   /** 管理後台路徑 */
   adminPath?: string;
+  /** 是否顯示會員狀態列 */
+  showStatusBar?: boolean;
+  /** 狀態列是否使用收合模式 */
+  statusBarCompact?: boolean;
 }
 
 export interface MemberAuthHeaderProps {
@@ -74,6 +79,8 @@ const defaultConfig: MemberAuthHeaderConfig = {
   logoutRedirect: '/',
   showAdminEntry: true,
   adminPath: '/dashboard',
+  showStatusBar: true,
+  statusBarCompact: false,
 };
 
 /**
@@ -150,7 +157,17 @@ export function MemberAuthHeader({
       {loading ? (
         <div className="h-10 w-10 rounded-full bg-muted animate-pulse" />
       ) : user ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* 會員狀態導航列 */}
+          {mergedConfig.showStatusBar && (
+            <div className="hidden md:block">
+              <MemberStatusBar 
+                compact={mergedConfig.statusBarCompact}
+                showQuickLinks={false}  // 避免與下拉選單重複
+              />
+            </div>
+          )}
+
           {/* 管理員/小幫手快捷入口 */}
           {showAdminButton && (
             <Button
