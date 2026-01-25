@@ -1,6 +1,6 @@
 /**
  * 會員狀態導航列組件
- * 顯示訂閱狀態、權限徽章、快速入口和消費積分
+ * 顯示訂閱狀態、權限徽章、快速入口、消費積分和本地文件統計
  */
 
 import React from 'react';
@@ -15,10 +15,13 @@ import {
   Wallet,
   ChevronRight,
   Star,
-  Clock
+  Clock,
+  FolderOpen,
+  History
 } from 'lucide-react';
 import { useMember } from '../context/MemberContext';
 import { useMyEntitlements, useActiveProductIds } from '../hooks/useEntitlements';
+import { useLocalDocumentStats } from '../hooks/useLocalDocumentStats';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -28,7 +31,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
 
 // 產品配置
@@ -79,6 +82,8 @@ export interface MemberStatusBarProps {
   showSpending?: boolean;
   /** 是否顯示權限徽章 */
   showEntitlements?: boolean;
+  /** 是否顯示本地文件統計 */
+  showDocumentStats?: boolean;
   /** 是否收合模式（僅顯示圖標） */
   compact?: boolean;
   /** 自定義類名 */
@@ -89,14 +94,16 @@ export function MemberStatusBar({
   showQuickLinks = true,
   showSpending = true,
   showEntitlements = true,
+  showDocumentStats = true,
   compact = false,
   className,
 }: MemberStatusBarProps) {
   const { user, profile, loading: memberLoading } = useMember();
   const { data: activeProductIds = [], isLoading: productsLoading } = useActiveProductIds();
   const { data: entitlements = [], isLoading: entitlementsLoading } = useMyEntitlements();
+  const { data: docStats, isLoading: docStatsLoading } = useLocalDocumentStats();
 
-  const isLoading = memberLoading || productsLoading || entitlementsLoading;
+  const isLoading = memberLoading || productsLoading || entitlementsLoading || docStatsLoading;
 
   // 未登入時不顯示
   if (!user) return null;
@@ -223,6 +230,60 @@ export function MemberStatusBar({
             <TooltipContent side="bottom" className="text-xs">
               <p className="font-medium">累計消費</p>
               <p className="text-emerald-400">NT$ {totalSpent.toLocaleString()}</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        {/* 分隔符 */}
+        {showDocumentStats && docStats && docStats.totalDocuments > 0 && (
+          <div className="w-px h-4 bg-amber-500/30" />
+        )}
+
+        {/* 本地文件統計 */}
+        {showDocumentStats && docStats && docStats.totalDocuments > 0 && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/member/dashboard"
+                className={cn(
+                  "flex items-center gap-1 px-2 py-0.5 rounded-full",
+                  "bg-blue-500/10 hover:bg-blue-500/20 transition-colors",
+                  "text-blue-400 hover:text-blue-300"
+                )}
+              >
+                <FolderOpen className="h-3.5 w-3.5" />
+                {!compact && (
+                  <span className="text-xs font-medium">
+                    {docStats.totalDocuments} 份
+                  </span>
+                )}
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="text-xs max-w-[200px]">
+              <p className="font-medium">本地授權文件</p>
+              <p className="text-blue-400">{docStats.totalDocuments} 份文件</p>
+              <p className="text-muted-foreground">
+                總閱讀 {docStats.totalViews} 次
+              </p>
+              {docStats.recentDocument && (
+                <div className="mt-1 pt-1 border-t border-border/50">
+                  <p className="flex items-center gap-1 text-muted-foreground">
+                    <History className="h-3 w-3" />
+                    最近閱讀
+                  </p>
+                  <p className="text-foreground truncate">
+                    {docStats.recentDocument.fileName}
+                  </p>
+                  <p className="text-muted-foreground text-[10px]">
+                    {docStats.recentDocument.lastViewedAt 
+                      ? formatDistanceToNow(new Date(docStats.recentDocument.lastViewedAt), { 
+                          addSuffix: true, 
+                          locale: zhTW 
+                        })
+                      : '尚未閱讀'}
+                  </p>
+                </div>
+              )}
             </TooltipContent>
           </Tooltip>
         )}
