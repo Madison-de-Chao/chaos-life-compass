@@ -113,15 +113,15 @@ const PublicFooter = () => {
               我們不預測未來，只幫你看清現在。
             </p>
             
-            {/* Social Media Links */}
-            <div className="flex items-center gap-3 mb-6">
+            {/* Social Media Links - Touch Optimized */}
+            <div className="flex items-center gap-2 mb-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-amber-400 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300"
+                  className="w-12 h-12 min-w-[48px] min-h-[48px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-amber-400 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-200 active:scale-95 active:bg-amber-400/20 touch-manipulation"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -136,15 +136,15 @@ const PublicFooter = () => {
             </div>
           </div>
 
-          {/* Explore Links */}
+          {/* Explore Links - Touch Optimized */}
           <div>
             <h4 className="font-serif font-bold text-white/90 mb-4">探索</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-1">
               {footerLinks.explore.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-white/50 hover:text-amber-400 transition-colors"
+                    className="block py-2 min-h-[44px] flex items-center text-white/50 hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation"
                   >
                     {link.label}
                   </Link>
@@ -153,17 +153,17 @@ const PublicFooter = () => {
             </ul>
           </div>
 
-          {/* External Links */}
+          {/* External Links - Touch Optimized */}
           <div>
             <h4 className="font-serif font-bold text-white/90 mb-4">生態系統</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-1">
               {footerLinks.external.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/50 hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                    className="py-2 min-h-[44px] flex items-center gap-1 text-white/50 hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation"
                   >
                     {link.label}
                     <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,15 +175,15 @@ const PublicFooter = () => {
             </ul>
           </div>
 
-          {/* Newsletter & About */}
+          {/* Newsletter & About - Touch Optimized */}
           <div>
             <h4 className="font-serif font-bold text-white/90 mb-4">關於</h4>
-            <ul className="space-y-3 mb-6">
+            <ul className="space-y-1 mb-6">
               {footerLinks.about.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-white/50 hover:text-amber-400 transition-colors"
+                    className="block py-2 min-h-[44px] flex items-center text-white/50 hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation"
                   >
                     {link.label}
                   </Link>
@@ -206,13 +206,13 @@ const PublicFooter = () => {
                   placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-amber-400/50 h-10"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-amber-400/50 h-12 min-h-[48px] text-base"
                 />
                 <Button 
                   type="submit" 
                   size="icon"
                   disabled={isSubscribing}
-                  className="bg-amber-600 hover:bg-amber-500 text-white h-10 w-10 shrink-0"
+                  className="bg-amber-600 hover:bg-amber-500 active:bg-amber-700 active:scale-95 text-white h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 touch-manipulation"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
@@ -221,27 +221,28 @@ const PublicFooter = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10">
+        {/* Bottom Bar - Touch Optimized */}
+        <div className="mt-12 pt-8 border-t border-white/10 safe-area-inset-bottom">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-white/40 text-center md:text-left">
               © {currentYear} MOMO CHAO / 超烜創意 / 虹靈御所 版權所有
             </p>
-            <div className="flex items-center gap-4 text-sm text-white/40">
-              <Link to="/privacy" className="hover:text-amber-400 transition-colors">
+            <div className="flex items-center gap-1 sm:gap-4 text-sm text-white/40">
+              <Link to="/privacy" className="py-2 px-2 min-h-[44px] flex items-center hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation">
                 隱私政策
               </Link>
-              <span>|</span>
-              <Link to="/terms" className="hover:text-amber-400 transition-colors">
+              <span className="hidden sm:inline">|</span>
+              <Link to="/terms" className="py-2 px-2 min-h-[44px] flex items-center hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation">
                 使用條款
               </Link>
-              <span>|</span>
+              <span className="hidden sm:inline">|</span>
               <button 
                 onClick={openCookieSettings}
-                className="hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+                className="py-2 px-2 min-h-[44px] flex items-center gap-1 hover:text-amber-400 active:text-amber-300 transition-colors touch-manipulation"
               >
                 <Cookie className="w-3.5 h-3.5" />
-                Cookie 設定
+                <span className="hidden sm:inline">Cookie 設定</span>
+                <span className="sm:hidden">Cookie</span>
               </button>
             </div>
           </div>
