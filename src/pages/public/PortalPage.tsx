@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
 import { useMember } from "@/hooks/useMember";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
 
@@ -253,10 +254,10 @@ function useAmbientMusic() {
   return { isPlaying, startMusic, toggleMusic };
 }
 
-// Floating particles
-function FloatingParticles() {
-  const particles = useRef(
-    [...Array(40)].map(() => ({
+// Floating particles - optimized for mobile
+function FloatingParticles({ isMobile }: { isMobile: boolean }) {
+  const particles = useMemo(() => 
+    [...Array(isMobile ? 12 : 40)].map(() => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 1 + Math.random() * 3,
@@ -264,7 +265,7 @@ function FloatingParticles() {
       delay: Math.random() * 10,
       opacity: 0.1 + Math.random() * 0.3,
     }))
-  ).current;
+  , [isMobile]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -278,7 +279,7 @@ function FloatingParticles() {
             width: particle.size,
             height: particle.size,
             opacity: particle.opacity,
-            animation: `floatParticle ${particle.duration}s ease-in-out ${particle.delay}s infinite`,
+            animation: isMobile ? undefined : `floatParticle ${particle.duration}s ease-in-out ${particle.delay}s infinite`,
           }}
         />
       ))}
@@ -286,18 +287,18 @@ function FloatingParticles() {
   );
 }
 
-// Shooting stars
-function ShootingStars() {
-  const stars = useRef(
-    [...Array(6)].map(() => ({
+// Shooting stars - optimized for mobile (fewer stars, simpler animation)
+function ShootingStars({ isMobile }: { isMobile: boolean }) {
+  const stars = useMemo(() => 
+    [...Array(isMobile ? 2 : 6)].map(() => ({
       startX: Math.random() * 100,
       startY: Math.random() * 30,
       angle: 20 + Math.random() * 40,
       duration: 1.5 + Math.random() * 2,
       delay: Math.random() * 12,
-      length: 80 + Math.random() * 100,
+      length: isMobile ? 60 : 80 + Math.random() * 100,
     }))
-  ).current;
+  , [isMobile]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -314,7 +315,7 @@ function ShootingStars() {
             transform: `rotate(${star.angle}deg)`,
             animation: `shootingStar ${star.duration}s ease-out ${star.delay}s infinite`,
             opacity: 0,
-            boxShadow: '0 0 8px #c9a962',
+            boxShadow: isMobile ? undefined : '0 0 8px #c9a962',
           }}
         />
       ))}
@@ -322,14 +323,16 @@ function ShootingStars() {
   );
 }
 
-// Glowing orbs
-function GlowingOrbs() {
-  const orbs = [
+// Glowing orbs - optimized for mobile (fewer orbs, no animation on mobile)
+function GlowingOrbs({ isMobile }: { isMobile: boolean }) {
+  const orbs = useMemo(() => isMobile ? [
+    { x: 50, y: 40, size: 100, color: 'rgba(201, 169, 98, 0.15)', delay: 0 },
+  ] : [
     { x: 20, y: 30, size: 80, color: 'rgba(201, 169, 98, 0.2)', delay: 0 },
     { x: 80, y: 20, size: 60, color: 'rgba(168, 85, 247, 0.15)', delay: 1 },
     { x: 70, y: 70, size: 90, color: 'rgba(245, 158, 11, 0.15)', delay: 2 },
     { x: 30, y: 75, size: 70, color: 'rgba(52, 211, 153, 0.15)', delay: 0.5 },
-  ];
+  ], [isMobile]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -343,7 +346,7 @@ function GlowingOrbs() {
             width: orb.size,
             height: orb.size,
             background: orb.color,
-            animation: `orbFloat 12s ease-in-out ${orb.delay}s infinite`,
+            animation: isMobile ? undefined : `orbFloat 12s ease-in-out ${orb.delay}s infinite`,
             transform: 'translate(-50%, -50%)',
           }}
         />
@@ -352,10 +355,10 @@ function GlowingOrbs() {
   );
 }
 
-// Cosmic dust swirl
-function CosmicDust() {
-  const dust = useRef(
-    [...Array(60)].map(() => ({
+// Cosmic dust swirl - disabled on mobile for performance
+function CosmicDust({ isMobile }: { isMobile: boolean }) {
+  const dust = useMemo(() => 
+    isMobile ? [] : [...Array(60)].map(() => ({
       orbitRadius: 150 + Math.random() * 350,
       duration: 30 + Math.random() * 50,
       delay: Math.random() * 30,
@@ -363,7 +366,9 @@ function CosmicDust() {
       opacity: 0.1 + Math.random() * 0.2,
       startAngle: Math.random() * 360,
     }))
-  ).current;
+  , [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -387,11 +392,13 @@ function CosmicDust() {
   );
 }
 
-// Lightning bolts
-function LightningBolts() {
+// Lightning bolts - disabled on mobile for performance
+function LightningBolts({ isMobile }: { isMobile: boolean }) {
   const [bolts, setBolts] = useState<{ id: number; x: number; path: string; delay: number }[]>([]);
   
   useEffect(() => {
+    if (isMobile) return;
+    
     const generateBolt = () => {
       const x = 10 + Math.random() * 80;
       let path = `M ${x} 0`;
@@ -411,7 +418,9 @@ function LightningBolts() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -449,11 +458,13 @@ function LightningBolts() {
   );
 }
 
-// Energy ripples
-function EnergyRipples() {
+// Energy ripples - disabled on mobile for performance
+function EnergyRipples({ isMobile }: { isMobile: boolean }) {
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
 
   useEffect(() => {
+    if (isMobile) return;
+    
     const interval = setInterval(() => {
       if (Math.random() > 0.5) {
         setRipples(prev => [
@@ -463,7 +474,9 @@ function EnergyRipples() {
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -495,17 +508,19 @@ function EnergyRipples() {
   );
 }
 
-// Light pillars
-function LightPillars() {
-  const pillars = useRef(
-    [...Array(5)].map(() => ({
+// Light pillars - simplified on mobile
+function LightPillars({ isMobile }: { isMobile: boolean }) {
+  const pillars = useMemo(() => 
+    isMobile ? [
+      { x: 50, width: 3, delay: 0, duration: 6, opacity: 0.1 },
+    ] : [...Array(5)].map(() => ({
       x: 10 + Math.random() * 80,
       width: 2 + Math.random() * 4,
       delay: Math.random() * 8,
       duration: 4 + Math.random() * 4,
       opacity: 0.1 + Math.random() * 0.2,
     }))
-  ).current;
+  , [isMobile]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -517,8 +532,9 @@ function LightPillars() {
             left: `${pillar.x}%`,
             width: pillar.width,
             background: `linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, ${pillar.opacity}) 20%, rgba(201, 169, 98, ${pillar.opacity * 1.5}) 50%, rgba(201, 169, 98, ${pillar.opacity}) 80%, transparent 100%)`,
-            animation: `pillarGlow ${pillar.duration}s ease-in-out ${pillar.delay}s infinite`,
-            filter: 'blur(2px)',
+            animation: isMobile ? undefined : `pillarGlow ${pillar.duration}s ease-in-out ${pillar.delay}s infinite`,
+            filter: isMobile ? undefined : 'blur(2px)',
+            opacity: isMobile ? 0.15 : undefined,
           }}
         />
       ))}
@@ -526,17 +542,20 @@ function LightPillars() {
   );
 }
 
-// Hover particles for cards
-function HoverParticles({ isHovered, color }: { isHovered: boolean; color: string }) {
-  const particles = useRef(
-    [...Array(12)].map(() => ({
+// Hover particles for cards - simplified on mobile
+function HoverParticles({ isHovered, color, isMobile }: { isHovered: boolean; color: string; isMobile: boolean }) {
+  const particles = useMemo(() => 
+    [...Array(isMobile ? 4 : 12)].map(() => ({
       x: 20 + Math.random() * 60,
       y: 20 + Math.random() * 60,
       size: 2 + Math.random() * 3,
       delay: Math.random() * 0.3,
       duration: 0.5 + Math.random() * 0.3,
     }))
-  ).current;
+  , [isMobile]);
+
+  // Skip rendering on mobile for better performance
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
@@ -766,6 +785,7 @@ const createIntroSections = () => [
 const introSections = createIntroSections();
 
 export default function PortalPage() {
+  const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(true);
   const [currentSection, setCurrentSection] = useState(0);
   const [isFading, setIsFading] = useState(false);
@@ -906,13 +926,13 @@ export default function PortalPage() {
           />
         </div>
 
-        <FloatingParticles />
-        <ShootingStars />
-        <GlowingOrbs />
-        <CosmicDust />
-        <LightningBolts />
-        <EnergyRipples />
-        <LightPillars />
+        <FloatingParticles isMobile={isMobile} />
+        <ShootingStars isMobile={isMobile} />
+        <GlowingOrbs isMobile={isMobile} />
+        <CosmicDust isMobile={isMobile} />
+        <LightningBolts isMobile={isMobile} />
+        <EnergyRipples isMobile={isMobile} />
+        <LightPillars isMobile={isMobile} />
         
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
@@ -1041,7 +1061,7 @@ export default function PortalPage() {
                         onTouchStart={() => setHoveredCard(index)}
                         onTouchEnd={() => setTimeout(() => setHoveredCard(null), 150)}
                       >
-                        <HoverParticles isHovered={isHovered} color={item.particleColor} />
+                        <HoverParticles isHovered={isHovered} color={item.particleColor} isMobile={isMobile} />
                         <div 
                           className={`absolute inset-0 transition-opacity duration-500 rounded-2xl ${isHovered ? 'opacity-100' : 'opacity-0'}`}
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
@@ -1069,7 +1089,7 @@ export default function PortalPage() {
                         onTouchStart={() => setHoveredCard(index)}
                         onTouchEnd={() => setTimeout(() => setHoveredCard(null), 150)}
                       >
-                        <HoverParticles isHovered={isHovered} color={item.particleColor} />
+                        <HoverParticles isHovered={isHovered} color={item.particleColor} isMobile={isMobile} />
                         <div 
                           className={`absolute inset-0 transition-opacity duration-500 rounded-2xl ${isHovered ? 'opacity-100' : 'opacity-0'}`}
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
