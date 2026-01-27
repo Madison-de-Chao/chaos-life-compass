@@ -64,6 +64,7 @@ import PublicFooter from "@/components/public/PublicFooter";
 import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import ReportPreview from "@/components/public/ReportPreview";
 import LifeCompassForm from "@/components/public/LifeCompassForm";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -2187,10 +2188,10 @@ const ReportPage = () => {
             
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
-                <img 
+                <OptimizedImage 
                   src={yuanYiLogo} 
                   alt="元壹宇宙" 
-                  className="w-28 h-28 object-contain rounded-2xl animate-glow-pulse"
+                  className="w-28 h-28 rounded-2xl animate-glow-pulse"
                 />
               </div>
               <div className="text-center md:text-left">

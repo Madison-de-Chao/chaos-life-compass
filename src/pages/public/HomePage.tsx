@@ -21,6 +21,7 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
 import { useMember } from "@/hooks/useMember";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import momoPortraitRainbow from "@/assets/momo-portrait-rainbow.jpg";
 import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 
@@ -347,10 +348,11 @@ const HomePage = () => {
             <div className="group relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="relative overflow-hidden rounded-2xl border border-white/10 group-hover:border-amber-500/30 transition-all duration-500">
-                <img 
+                <OptimizedImage 
                   src={momoPortraitRainbow} 
                   alt="默默超 - 彩虹花田" 
-                  className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-64 h-80 md:w-72 md:h-96 transition-transform duration-700 group-hover:scale-105"
+                  aspectRatio="3/4"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
@@ -364,10 +366,11 @@ const HomePage = () => {
             <div className="group relative animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-yellow-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="relative overflow-hidden rounded-2xl border border-white/10 group-hover:border-amber-500/30 transition-all duration-500">
-                <img 
+                <OptimizedImage 
                   src={momoPortraitCosmic} 
                   alt="默默超 - 宇宙建構者" 
-                  className="w-64 h-80 md:w-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-64 h-80 md:w-72 md:h-96 transition-transform duration-700 group-hover:scale-105"
+                  aspectRatio="3/4"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">

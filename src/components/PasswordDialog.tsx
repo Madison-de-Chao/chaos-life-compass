@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
@@ -39,17 +40,17 @@ export function PasswordDialog({
         <DialogHeader className="text-center">
           {/* Dual Logos with Animation */}
           <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4 sm:mb-6">
-            <img 
+            <OptimizedImage 
               src={logoChaoxuan} 
               alt="超烜創意" 
-              className="h-12 sm:h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
-              style={{ animationDelay: '0.1s' }}
+              className="h-12 sm:h-16 w-auto animate-fade-in hover:scale-105 transition-transform duration-300"
+              priority
             />
-            <img 
+            <OptimizedImage 
               src={logoHongling} 
               alt="虹靈御所" 
-              className="h-12 sm:h-16 w-auto object-contain animate-fade-in hover:scale-105 transition-transform duration-300"
-              style={{ animationDelay: '0.2s' }}
+              className="h-12 sm:h-16 w-auto animate-fade-in hover:scale-105 transition-transform duration-300"
+              priority
             />
           </div>
           <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-2xl bg-accent flex items-center justify-center animate-scale-in">

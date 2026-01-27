@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Badge } from "@/components/ui/badge";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 // Game preview images
 import gameBaziImg from "@/assets/game-bazi.jpg";
@@ -205,10 +206,11 @@ const GamesPage = () => {
                   >
                     {/* Preview Image */}
                     <div className="relative w-full aspect-video overflow-hidden">
-                      <img 
+                      <OptimizedImage 
                         src={game.previewImage} 
                         alt={`${game.title} 預覽`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full transition-transform duration-500 group-hover:scale-110"
+                        placeholderColor="bg-white/5"
                       />
                       <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent`} />
                       
