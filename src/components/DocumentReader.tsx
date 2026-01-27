@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 interface DocumentReaderProps {
   content: {
@@ -137,10 +138,12 @@ export function DocumentReader({ content, className }: DocumentReaderProps) {
             className={cn("my-8", baseClass)}
             style={style}
           >
-            <img
-              src={section.imageUrl}
-              alt={section.content}
+            <OptimizedImage
+              src={section.imageUrl || ''}
+              alt={section.content || '文件圖片'}
               className="w-full rounded-xl shadow-soft"
+              aspectRatio="16/9"
+              fadeIn={true}
             />
             {section.content && (
               <figcaption className="text-center text-muted-foreground mt-3 text-sm">

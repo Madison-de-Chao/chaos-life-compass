@@ -7,6 +7,7 @@ import { Plus, Trash2, Save, Eye, SeparatorHorizontal, ChevronUp, ChevronDown, I
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 export interface DocumentSection {
   id: string;
@@ -312,10 +313,12 @@ export function DocumentEditor({
                     <div className="flex-1">
                       {section.imageUrl ? (
                         <div className="relative">
-                          <img 
+                          <OptimizedImage 
                             src={section.imageUrl} 
                             alt={section.content || "上傳的圖片"}
                             className="max-h-48 rounded-lg object-contain"
+                            priority={true}
+                            fadeIn={true}
                           />
                           <button
                             onClick={() => triggerImageUpload(section.id)}
