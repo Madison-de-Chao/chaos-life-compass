@@ -1,16 +1,88 @@
-import { useState, useCallback } from "react";
-import { Upload, FileText, X } from "lucide-react";
+import { useState, useCallback, useMemo } from "react";
+import { Upload, FileText, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface FileUploadZoneProps {
   onFileSelect: (file: File) => void;
   isLoading?: boolean;
+  accept?: string;
+  maxSizeKB?: number;
 }
 
-export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps) {
+/**
+ * FileUploadZone - 優化的文件上傳區域組件
+ * 
+ * 功能:
+ * - 拖放上傳
+ * - 點擊選擇
+ * - 文件預覽
+ * - 文件類型檢查
+ * - 文件大小檢查
+ */
+export function FileUploadZone({ 
+  onFileSelect, 
+  isLoading,
+  accept = ".docx",
+  maxSizeKB = 10240 // 預設 10MB
+}: FileUploadZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isGeneratingPreview, setIsGeneratingPreview] = useState(false);
+
+  // 格式化文件大小
+  const formattedSize = useMemo(() => {
+    if (!selectedFile) return '';
+    const bytes = selectedFile.size;
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }, [selectedFile?.size]);
+
+  // 驗證文件
+  const validateFile = useCallback((file: File): boolean => {
+    // 檢查文件類型
+    const acceptedTypes = accept.split(',').map(t => t.trim().toLowerCase());
+    const fileExtension = `.${file.name.split('.').pop()?.toLowerCase()}`;
+    
+    if (!acceptedTypes.some(type => 
+      type === fileExtension || 
+      (type.includes('*') && file.type.startsWith(type.replace('*', '')))
+    )) {
+      return false;
+    }
+
+    // 檢查文件大小
+    if (file.size > maxSizeKB * 1024) {
+      return false;
+    }
+
+    return true;
+  }, [accept, maxSizeKB]);
+
+  // 生成圖片預覽 (如果是圖片文件)
+  const generatePreview = useCallback((file: File) => {
+    if (!file.type.startsWith('image/')) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    setIsGeneratingPreview(true);
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      setPreviewUrl(e.target?.result as string);
+      setIsGeneratingPreview(false);
+    };
+    
+    reader.onerror = () => {
+      setPreviewUrl(null);
+      setIsGeneratingPreview(false);
+    };
+
+    reader.readAsDataURL(file);
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -27,21 +99,23 @@ export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps)
       e.preventDefault();
       setIsDragOver(false);
       const file = e.dataTransfer.files[0];
-      if (file && file.name.endsWith(".docx")) {
+      if (file && validateFile(file)) {
         setSelectedFile(file);
+        generatePreview(file);
       }
     },
-    []
+    [validateFile, generatePreview]
   );
 
   const handleFileInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (file) {
+      if (file && validateFile(file)) {
         setSelectedFile(file);
+        generatePreview(file);
       }
     },
-    []
+    [validateFile, generatePreview]
   );
 
   const handleUpload = () => {
@@ -52,6 +126,7 @@ export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps)
 
   const clearFile = () => {
     setSelectedFile(null);
+    setPreviewUrl(null);
   };
 
   return (
@@ -70,7 +145,7 @@ export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps)
       >
         <input
           type="file"
-          accept=".docx"
+          accept={accept}
           onChange={handleFileInput}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
@@ -100,17 +175,36 @@ export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps)
       {selectedFile && (
         <div className="mt-6 p-4 bg-card rounded-xl shadow-soft border border-border animate-scale-in">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-              <FileText className="w-6 h-6 text-primary" />
+            {/* 文件預覽 */}
+            <div className={cn(
+              "w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden shrink-0",
+              previewUrl ? "bg-transparent" : "bg-primary/10"
+            )}>
+              {isGeneratingPreview ? (
+                <Loader2 className="w-5 h-5 text-primary animate-spin" />
+              ) : previewUrl ? (
+                <img 
+                  src={previewUrl} 
+                  alt={selectedFile.name}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+              ) : (
+                <FileText className="w-6 h-6 text-primary" />
+              )}
             </div>
+            
+            {/* 文件信息 */}
             <div className="flex-1 min-w-0">
               <p className="font-medium text-foreground truncate">
                 {selectedFile.name}
               </p>
               <p className="text-sm text-muted-foreground">
-                {(selectedFile.size / 1024).toFixed(1)} KB
+                {formattedSize}
               </p>
             </div>
+            
+            {/* 移除按鈕 */}
             <Button
               variant="ghost"
               size="icon"
@@ -128,7 +222,14 @@ export function FileUploadZone({ onFileSelect, isLoading }: FileUploadZoneProps)
             variant="hero"
             size="lg"
           >
-            {isLoading ? "處理中..." : "上傳並轉換"}
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                處理中...
+              </>
+            ) : (
+              "上傳並轉換"
+            )}
           </Button>
         </div>
       )}
