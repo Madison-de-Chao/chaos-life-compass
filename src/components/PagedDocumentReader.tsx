@@ -12,6 +12,7 @@ import { supabase, FunctionsHttpError } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useDrag } from "@use-gesture/react";
 import { TypewriterText } from "@/components/TypewriterText";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 import reportLogo from "@/assets/report-logo.png";
@@ -684,10 +685,11 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
       <div className="fixed top-3 sm:top-6 left-3 sm:left-6 right-3 sm:right-6 z-50 flex items-center justify-between pointer-events-none">
         {/* Left Logo - 超烜創意 */}
         <div className="pointer-events-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <img 
+          <OptimizedImage 
             src={logoChaoxuan} 
             alt="超烜創意" 
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            className="h-8 sm:h-10 md:h-12 w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            priority
           />
         </div>
         
@@ -700,10 +702,11 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
         
         {/* Right Logo - 虹靈御所 */}
         <div className="pointer-events-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <img 
+          <OptimizedImage 
             src={logoHongling} 
             alt="虹靈御所" 
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            className="h-8 sm:h-10 md:h-12 w-auto hover:scale-105 transition-transform duration-300 drop-shadow-md"
+            priority
           />
         </div>
       </div>
@@ -895,13 +898,11 @@ export function PagedDocumentReader({ content, className, documentId, shareLink,
               />
               
               {/* Main image with float animation */}
-              <img 
+              <OptimizedImage 
                 src={reportLogo} 
                 alt="報告標誌" 
-                className="relative z-10 w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl animate-float"
-                style={{
-                  filter: 'drop-shadow(0 25px 50px hsl(var(--primary) / 0.3))',
-                }}
+                className="relative z-10 w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96 drop-shadow-2xl animate-float"
+                priority
               />
             </div>
           </div>

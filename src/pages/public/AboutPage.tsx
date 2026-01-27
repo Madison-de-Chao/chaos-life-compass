@@ -14,6 +14,7 @@ import {
   CircleDot
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 import momoPortraitRainbow from "@/assets/momo-portrait-rainbow.jpg";
 
@@ -210,10 +211,11 @@ const AboutPage = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
-                <img 
+                <OptimizedImage 
                   src={momoPortraitCosmic} 
                   alt="MomoChao" 
-                  className="w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full aspect-[3/4] transition-transform duration-700 group-hover:scale-105"
+                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-60" />
               </motion.div>
@@ -487,10 +489,10 @@ const AboutPage = () => {
               className="relative order-1 md:order-2"
             >
               <div className="relative rounded-xl md:rounded-2xl overflow-hidden border border-white/10 max-w-xs md:max-w-sm mx-auto">
-                <img 
+                <OptimizedImage 
                   src={momoPortraitRainbow} 
                   alt="MomoChao Rainbow" 
-                  className="w-full aspect-square object-cover"
+                  className="w-full aspect-square"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-40" />
               </div>

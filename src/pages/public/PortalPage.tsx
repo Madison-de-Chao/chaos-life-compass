@@ -5,6 +5,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useMember } from "@/hooks/useMember";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
 
 // Brand logos

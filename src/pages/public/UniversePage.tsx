@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logoYuanyi from "@/assets/logo-yuanyi-horizontal.png";
 
 // 四維運作框架
@@ -179,10 +180,11 @@ const UniversePage = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="mb-8"
           >
-            <img 
+            <OptimizedImage 
               src={logoYuanyi} 
               alt="元壹宇宙" 
               className="h-16 md:h-20 mx-auto mb-6 opacity-90"
+              priority
             />
           </motion.div>
 

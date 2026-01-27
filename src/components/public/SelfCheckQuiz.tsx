@@ -25,6 +25,7 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import logoChaoxuan from "@/assets/logo-chaoxuan.png";
 import logoHongling from "@/assets/logo-hongling.png";
 
@@ -505,8 +506,8 @@ export const SelfCheckQuiz = ({ open, onOpenChange, onComplete }: SelfCheckQuizP
                     <div className="relative h-full flex flex-col z-10">
                       {/* Header with logos */}
                       <div className="flex items-center justify-between mb-4">
-                        <img src={logoChaoxuan} alt="超烜創意" className="h-6 object-contain" />
-                        <img src={logoHongling} alt="虹靈御所" className="h-6 object-contain" />
+                        <OptimizedImage src={logoChaoxuan} alt="超烜創意" className="h-6" priority />
+                        <OptimizedImage src={logoHongling} alt="虹靈御所" className="h-6" priority />
                       </div>
 
                       {/* Title */}
