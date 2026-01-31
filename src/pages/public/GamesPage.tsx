@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter } from "lucide-react";
+import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter, Swords, Stars, GraduationCap, Recycle, Building2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -11,19 +11,23 @@ import gameBaziImg from "@/assets/game-bazi.jpg";
 import gameMirrorImg from "@/assets/game-mirror.jpg";
 import gameLogicImg from "@/assets/game-logic.jpg";
 
-type Category = "all" | "divination" | "training";
+type Category = "all" | "divination" | "training" | "healing" | "enterprise";
 
 const categories: { id: Category; label: string; color: string }[] = [
-  { id: "all", label: "全部遊戲", color: "bg-white/10 text-white border-white/20 hover:bg-white/20" },
+  { id: "all", label: "全部站點", color: "bg-white/10 text-white border-white/20 hover:bg-white/20" },
   { id: "divination", label: "命理類", color: "bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20" },
-  { id: "training", label: "思維訓練類", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20" },
+  { id: "training", label: "思維訓練類", color: "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20" },
+  { id: "healing", label: "療癒類", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20" },
+  { id: "enterprise", label: "企業應用", color: "bg-slate-500/10 text-slate-400 border-slate-500/30 hover:bg-slate-500/20" },
 ];
 
 const games = [
   {
     id: "yyds",
+    station: 1,
     title: "元壹占卜系統 YYDS",
     subtitle: "決策分流器",
+    philosophy: "鏡子非劇本，真實即命運",
     description: "當你站在岔路口不知道該往哪走，元壹占卜幫你看清「現在的狀態」和「下一步的方向」。順勢與反噬並存於每一卦，真正決定走向的是你的覺察與選擇。",
     href: "https://yyds.rainbow-sanctuary.com/",
     icon: Compass,
@@ -36,30 +40,82 @@ const games = [
   },
   {
     id: "bazi",
+    station: 2,
     title: "四時八字人生兵法 RSBZS",
     subtitle: "戰略盤點器",
+    philosophy: "將軍是你，軍團也是你",
     description: "八字不是命定的枷鎖，而是你的四支軍團。你是統御全局的將軍，學會調度才能打贏人生戰役。盤點資源、預判風險、規劃節奏。",
     href: "https://bazi.rainbow-sanctuary.com/",
-    icon: Target,
-    color: "from-amber-500 to-orange-600",
-    bgColor: "bg-amber-500/10",
-    borderColor: "border-amber-500/30",
+    icon: Swords,
+    color: "from-red-500 to-orange-600",
+    bgColor: "bg-red-500/10",
+    borderColor: "border-red-500/30",
     category: "divination" as Category,
     categoryLabel: "命理類",
     previewImage: gameBaziImg,
   },
   {
+    id: "star",
+    station: 3,
+    title: "元壹宇宙神話占星系統",
+    subtitle: "身分映射器",
+    philosophy: "命運是起點，選擇是終點",
+    description: "把你的星盤轉化成一個「宇宙身分證」——你的職階、職能、守護神、侍神、六維能力值。星盤不是判決書，是導航系統。",
+    href: "https://star.rainbow-sanctuary.com/",
+    icon: Stars,
+    color: "from-amber-500 to-yellow-600",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/30",
+    category: "divination" as Category,
+    categoryLabel: "命理類",
+    previewImage: gameMirrorImg,
+  },
+  {
     id: "mmcls",
+    station: 4,
     title: "默默超思維訓練系統 MMCLS",
     subtitle: "能力訓練器",
+    philosophy: "思維工具箱：八階思維循環",
     description: "知道自己是誰之後，接下來是「練出來」。透過結構化的思維訓練與九位導師系統，把洞察轉化成能力，累積「成就證據」。",
     href: "https://mmclogic.com/",
-    icon: Brain,
+    icon: GraduationCap,
+    color: "from-blue-500 to-cyan-600",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/30",
+    category: "training" as Category,
+    categoryLabel: "思維訓練類",
+    previewImage: gameLogicImg,
+  },
+  {
+    id: "atzo",
+    station: 5,
+    title: "弧度歸零 Arc Zero",
+    subtitle: "體驗修復器",
+    philosophy: "完整不是沒有缺口，完整是不再害怕缺口",
+    description: "當你遇到深層的情緒困境、自我否定、習得性無助，需要的不是更多分析，而是一場療癒體驗。透過互動小說學習面對陰影。",
+    href: "https://atzo.rainbow-sanctuary.com/",
+    icon: Recycle,
     color: "from-emerald-500 to-teal-600",
     bgColor: "bg-emerald-500/10",
     borderColor: "border-emerald-500/30",
-    category: "training" as Category,
-    categoryLabel: "思維訓練類",
+    category: "healing" as Category,
+    categoryLabel: "療癒類",
+    previewImage: gameMirrorImg,
+  },
+  {
+    id: "ehfis",
+    station: 6,
+    title: "東方人因洞察系統 EHFIS",
+    subtitle: "企業應用器",
+    philosophy: "行為洞察工具，不是命運審判工具",
+    description: "將個人探索工具轉化為團隊協作工具，用於人才發展與團隊動態分析。只做行為假設，不做命運定論。",
+    href: "https://ehfis.rainbow-sanctuary.com/",
+    icon: Building2,
+    color: "from-slate-500 to-zinc-600",
+    bgColor: "bg-slate-500/10",
+    borderColor: "border-slate-500/30",
+    category: "enterprise" as Category,
+    categoryLabel: "企業應用",
     previewImage: gameLogicImg,
   },
 ];
@@ -69,7 +125,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.1,
     },
   },
 };
@@ -80,7 +136,7 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.5,
       ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
@@ -92,6 +148,18 @@ const GamesPage = () => {
   const filteredGames = games.filter(
     game => selectedCategory === "all" || game.category === selectedCategory
   );
+
+  const getCategoryButtonStyle = (catId: Category) => {
+    if (selectedCategory !== catId) return categories.find(c => c.id === catId)?.color || "";
+    switch (catId) {
+      case "all": return "bg-white text-black border-white";
+      case "divination": return "bg-amber-500 text-black border-amber-500";
+      case "training": return "bg-blue-500 text-white border-blue-500";
+      case "healing": return "bg-emerald-500 text-white border-emerald-500";
+      case "enterprise": return "bg-slate-500 text-white border-slate-500";
+      default: return "";
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
@@ -161,15 +229,7 @@ const GamesPage = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 min-h-[44px] active:scale-95 ${
-                  selectedCategory === cat.id
-                    ? cat.id === "all"
-                      ? "bg-white text-black border-white"
-                      : cat.id === "divination"
-                      ? "bg-amber-500 text-black border-amber-500"
-                      : "bg-emerald-500 text-black border-emerald-500"
-                    : cat.color
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 min-h-[44px] active:scale-95 ${getCategoryButtonStyle(cat.id)}`}
               >
                 {cat.label}
               </button>
@@ -214,13 +274,22 @@ const GamesPage = () => {
                       />
                       <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent`} />
                       
+                      {/* Station Badge */}
+                      <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                        <span className="text-white/80 text-sm font-bold">{game.station}</span>
+                      </div>
+                      
                       {/* Category Badge on Image */}
                       <Badge
                         variant="outline"
                         className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
                           game.category === "divination"
                             ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
-                            : "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
+                            : game.category === "training"
+                            ? "bg-blue-500/30 text-blue-200 border-blue-400/50"
+                            : game.category === "healing"
+                            ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
+                            : "bg-slate-500/30 text-slate-200 border-slate-400/50"
                         }`}
                       >
                         {game.categoryLabel}
@@ -238,6 +307,12 @@ const GamesPage = () => {
                       <h3 className="text-lg lg:text-xl font-serif font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
                         {game.title}
                       </h3>
+                      
+                      {/* Philosophy Quote */}
+                      <div className="bg-white/5 rounded-lg p-2 mb-3 border-l-2 border-amber-400/50">
+                        <p className="text-amber-400/70 text-xs italic">「{game.philosophy}」</p>
+                      </div>
+                      
                       <p className="text-sm text-white/60 leading-relaxed flex-1">
                         {game.description}
                       </p>
@@ -258,6 +333,17 @@ const GamesPage = () => {
               })}
             </motion.div>
           </AnimatePresence>
+          
+          {/* Empty State */}
+          {filteredGames.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-16"
+            >
+              <p className="text-white/40">此分類暫無站點</p>
+            </motion.div>
+          )}
         </div>
       </section>
       
