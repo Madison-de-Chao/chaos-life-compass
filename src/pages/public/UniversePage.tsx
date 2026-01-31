@@ -17,7 +17,13 @@ import {
   Puzzle,
   ExternalLink,
   Volume2,
-  VolumeX
+  VolumeX,
+  Dices,
+  Swords,
+  Stars,
+  GraduationCap,
+  Recycle,
+  Building2
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -108,6 +114,94 @@ const aiCollaboration = [
     icon: Heart,
     title: "保持人性核心",
     content: "科技是工具，不是主人。元壹宇宙的思維系統讓你在人機協作中保持主體性，讓 AI 服務於你的價值，而非相反。",
+  },
+];
+
+// 旅程六站 - 產品矩陣
+const journeyStations = [
+  {
+    station: 1,
+    icon: Dices,
+    title: "元壹占卜系統",
+    subtitle: "YYDS — Yuan-Yi Divination System",
+    role: "決策分流器",
+    philosophy: "鏡子非劇本，真實即命運",
+    description: "當你站在岔路口不知道該往哪走，元壹占卜幫你看清「現在的狀態」和「下一步的方向」。提供誠實的自我反映，而非預測性占卜。",
+    features: ["卦象結構解析", "順勢面與反噬面雙面呈現", "完整度分數與元壹提示", "具體可執行行動建議"],
+    link: "https://yyds.rainbow-sanctuary.com/",
+    color: "from-purple-500 to-indigo-500",
+    bgColor: "bg-purple-500/10",
+    textColor: "text-purple-400",
+  },
+  {
+    station: 2,
+    icon: Swords,
+    title: "四時八字人生兵法",
+    subtitle: "RSBZS — Rainbow Sanctuary BaZi System",
+    role: "戰略盤點器",
+    philosophy: "將軍是你，軍團也是你",
+    description: "在你決定要往某個方向走之前，先盤點你手上有什麼資源、可能遇到什麼風險。八字不是命定的枷鎖，而是你的四支軍團。",
+    features: ["四柱軍團架構分析", "十神配置與能量分布", "大運流年互動預測", "依週期建議行動時機"],
+    link: "https://bazi.rainbow-sanctuary.com/",
+    color: "from-red-500 to-orange-500",
+    bgColor: "bg-red-500/10",
+    textColor: "text-red-400",
+  },
+  {
+    station: 3,
+    icon: Stars,
+    title: "元壹宇宙神話占星系統",
+    subtitle: "Mythic Astrology System",
+    role: "身分映射器",
+    philosophy: "命運是起點，選擇是終點",
+    description: "把你的星盤轉化成一個「宇宙身分證」——你的職階、職能、守護神、侍神、六維能力值。星盤不是判決書，是導航系統。",
+    features: ["三重守護神架構", "六維能力值 Stat Sheet", "冒險者公會卡輸出", "7日任務指派"],
+    link: "https://star.rainbow-sanctuary.com/",
+    color: "from-amber-500 to-yellow-500",
+    bgColor: "bg-amber-500/10",
+    textColor: "text-amber-400",
+  },
+  {
+    station: 4,
+    icon: GraduationCap,
+    title: "默默超思維訓練系統",
+    subtitle: "MMCLS — MomoChao Logic System",
+    role: "能力訓練器",
+    philosophy: "思維工具箱：八階思維循環",
+    description: "知道自己是誰之後，接下來是「練出來」。透過結構化的思維訓練，把洞察轉化成能力。每位導師對應不同能力向度。",
+    features: ["八階思維循環訓練", "九位導師系統", "任務線累積成就證據", "精準拆解複雜問題"],
+    link: "https://mmclogic.com/",
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-blue-500/10",
+    textColor: "text-blue-400",
+  },
+  {
+    station: 5,
+    icon: Recycle,
+    title: "弧度歸零",
+    subtitle: "Arc Zero",
+    role: "體驗修復器",
+    philosophy: "完整不是沒有缺口，完整是不再害怕缺口",
+    description: "當你遇到深層的情緒困境、自我否定、習得性無助，需要的不是更多分析，而是一場療癒體驗。透過互動小說學習面對陰影。",
+    features: ["《弧度歸零：伊》實踐篇", "《弧度歸零：壹》哲學篇", "分歧選擇影響結局", "40-60分鐘沉浸體驗"],
+    link: "https://atzo.rainbow-sanctuary.com/",
+    color: "from-emerald-500 to-teal-500",
+    bgColor: "bg-emerald-500/10",
+    textColor: "text-emerald-400",
+  },
+  {
+    station: 6,
+    icon: Building2,
+    title: "東方人因洞察系統",
+    subtitle: "EHFIS — Eastern Human Factors Insight System",
+    role: "企業應用器",
+    philosophy: "行為洞察工具，不是命運審判工具",
+    description: "將個人探索工具轉化為團隊協作工具，用於人才發展與團隊動態分析。只做行為假設，不做命運定論。",
+    features: ["機會命運卡個人報告", "團隊矩陣分析", "RBH 行為假設報告", "團隊發展輔助工具"],
+    link: "https://ehfis.rainbow-sanctuary.com/",
+    color: "from-slate-500 to-zinc-500",
+    bgColor: "bg-slate-500/10",
+    textColor: "text-slate-400",
   },
 ];
 
@@ -449,6 +543,152 @@ const UniversePage = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Journey Six Stations - 旅程六站 */}
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
+        
+        {/* Decorative Elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 border border-amber-500/10 rounded-full animate-spin" style={{ animationDuration: '30s' }} />
+        <div className="absolute bottom-20 right-10 w-24 h-24 border border-purple-500/10 rounded-full animate-spin" style={{ animationDuration: '25s', animationDirection: 'reverse' }} />
+        
+        <div className="container mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 text-amber-400 text-sm mb-6">
+              <Orbit className="w-4 h-4 animate-spin" style={{ animationDuration: '8s' }} />
+              <span>產品矩陣</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">
+              <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
+                旅程六站
+              </span>
+            </h2>
+            <p className="text-white/50 max-w-2xl mx-auto text-lg">
+              多站不是分散，是分工。每一站只解決一個特定階段的問題。
+            </p>
+          </motion.div>
+
+          {/* Stations Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {journeyStations.map((station, index) => (
+              <motion.div
+                key={station.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group relative bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden"
+              >
+                {/* Gradient overlay on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${station.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                
+                {/* Station Number Badge */}
+                <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <span className="text-white/40 text-sm font-bold">{station.station}</span>
+                </div>
+                
+                <div className="relative z-10 p-8">
+                  {/* Icon & Role */}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className={`w-14 h-14 rounded-xl ${station.bgColor} flex items-center justify-center flex-shrink-0`}>
+                      <station.icon className={`h-7 w-7 ${station.textColor}`} />
+                    </div>
+                    <div>
+                      <span className={`text-xs font-medium ${station.textColor} bg-white/5 px-2 py-1 rounded-full`}>
+                        {station.role}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="font-serif text-xl font-bold text-white mb-1">
+                    {station.title}
+                  </h3>
+                  <p className="text-white/40 text-sm mb-4">{station.subtitle}</p>
+                  
+                  {/* Philosophy */}
+                  <div className="bg-white/5 rounded-lg p-3 mb-4 border-l-2 border-amber-400/50">
+                    <p className="text-amber-400/80 text-sm italic">「{station.philosophy}」</p>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="text-white/60 text-sm leading-relaxed mb-6">
+                    {station.description}
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="space-y-2 mb-6">
+                    {station.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-2 text-white/50 text-sm">
+                        <div className={`w-1.5 h-1.5 rounded-full ${station.textColor.replace('text-', 'bg-')}`} />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* CTA Button */}
+                  <a
+                    href={station.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group/btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${station.color} text-white text-sm font-medium hover:opacity-90 transition-all duration-300 min-h-[44px]`}
+                  >
+                    進入站點
+                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Summary */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="mt-16 text-center"
+          >
+            <div className="inline-flex items-center gap-4 px-6 py-4 bg-white/5 rounded-2xl border border-white/10">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-purple-500" />
+                <span className="text-white/60 text-sm">占卜分流</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/30" />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <span className="text-white/60 text-sm">戰略盤點</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/30" />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-amber-500" />
+                <span className="text-white/60 text-sm">身分映射</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/30" />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-blue-500" />
+                <span className="text-white/60 text-sm">能力訓練</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/30" />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                <span className="text-white/60 text-sm">體驗修復</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/30" />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-slate-500" />
+                <span className="text-white/60 text-sm">企業應用</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
