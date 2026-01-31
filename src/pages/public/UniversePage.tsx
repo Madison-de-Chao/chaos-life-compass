@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { 
-  Orbit, 
+  Orbit,
   Infinity, 
   Brain, 
   Heart, 
@@ -132,6 +132,12 @@ const journeyStations = [
     color: "from-purple-500 to-indigo-500",
     bgColor: "bg-purple-500/10",
     textColor: "text-purple-400",
+    detailedPhilosophy: {
+      core: "元壹系統是結構化自我覺察工具，提供誠實的自我反映，而非預測性占卜。順勢與反噬並存於每一卦，真正決定走向的是你的覺察與選擇。",
+      mechanism: "透過 64 卦象結構（上卦 × 下卦）呈現雙面：順勢面（機會）與反噬面（風險），並給出元壹提示（一句話行動）。",
+      output: "完整度分數 + 歸壹/歸伊數 + R 值(反轉壓力) + G 值(方向性) + 具體可執行步驟",
+      useCase: "當你面臨抉擇、需要分流方向時使用。不是告訴你「該選什麼」，而是讓你看見「選擇背後的脈絡」。",
+    },
   },
   {
     station: 2,
@@ -146,6 +152,12 @@ const journeyStations = [
     color: "from-red-500 to-orange-500",
     bgColor: "bg-red-500/10",
     textColor: "text-red-400",
+    detailedPhilosophy: {
+      core: "八字不是命定的枷鎖，而是你的四支軍團——家族兵團(年柱)、成長兵團(月柱)、本我兵團(日柱)、未來兵團(時柱)。你是統御全局的將軍，學會調度才能打贏人生戰役。",
+      mechanism: "天干地支組合 → 十神配置 → 能量分布圖，並標記沖刑破害 + 大運流年互動。",
+      output: "資源盤點報告 + 風險提示 + 節奏規劃（依十年大運週期建議行動時機）+ 具體策略調整方向",
+      useCase: "當你需要長期規劃、盤點人生資源、理解自己的時間節奏時使用。",
+    },
   },
   {
     station: 3,
@@ -160,6 +172,12 @@ const journeyStations = [
     color: "from-amber-500 to-yellow-500",
     bgColor: "bg-amber-500/10",
     textColor: "text-amber-400",
+    detailedPhilosophy: {
+      core: "星盤不是判決書，是導航系統。你本來就是好的，只需要找到正確的渲染方式。",
+      mechanism: "五層架構：職階 + 職能 + 三重守護神（A級靈魂/B級職涯/C級價值）+ 侍靈 + 六維能力值(INT/WIS/CHA/STR/CON/DEX)。",
+      output: "冒險者公會卡（含職階、守護神、侍靈、六維能力值、最強行星）+ 7日任務指派",
+      useCase: "當你想要深度理解自己的核心身分、天賦配置、以及職涯發展方向時使用。",
+    },
   },
   {
     station: 4,
@@ -174,6 +192,12 @@ const journeyStations = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-400",
+    detailedPhilosophy: {
+      core: "A precision algorithm for deconstructing complex problems and avoiding emotional misjudgment. 透過八階思維循環，將複雜問題拆解成可被處理的單元。",
+      mechanism: "八階循環訓練 + 九位導師系統（每位導師對應不同能力向度），透過任務線累積「成就證據」。",
+      output: "思維能力報告 + 任務完成記錄 + 成就證據累積 + 個人化訓練路徑",
+      useCase: "當你想要強化決策能力、避免情緒化判斷、建立系統性思維時使用。",
+    },
   },
   {
     station: 5,
@@ -188,6 +212,12 @@ const journeyStations = [
     color: "from-emerald-500 to-teal-500",
     bgColor: "bg-emerald-500/10",
     textColor: "text-emerald-400",
+    detailedPhilosophy: {
+      core: "核心思想：成就律——「明暗相成，非為相照」。光明與黑暗不是對立的，而是彼此成就的。人生不是為了追求完美（切除壞的），而是追求完整（接納所有面向）。",
+      mechanism: "兩部互動小說：《伊》現代職場療癒篇 + 《壹》奇幻寓言哲學篇。分歧選擇影響「弧度值」與「陰影值」，導向不同結局。",
+      output: "40-60分鐘沉浸體驗 + 漸進式圖片載入 + 觸覺回饋 + 個人化結局",
+      useCase: "當你遭遇深層情緒困境、自我否定、習得性無助，需要療癒而非分析時使用。",
+    },
   },
   {
     station: 6,
@@ -202,11 +232,18 @@ const journeyStations = [
     color: "from-slate-500 to-zinc-500",
     bgColor: "bg-slate-500/10",
     textColor: "text-slate-400",
+    detailedPhilosophy: {
+      core: "EHFIS 是行為洞察工具，不是命運審判工具。我們只做行為假設，不做命運定論。",
+      mechanism: "將個人探索工具轉化為團隊協作工具，分析成員互動動態與潛在衝突點。",
+      output: "機會命運卡（個人行為傾向假設報告）+ 團隊矩陣分析 + RBH 報告（Role-Based Hypothesis 行為假設報告）",
+      useCase: "用於團隊發展與自我覺察的輔助工具。⛔ 不得用於人員甄選、解僱、升遷調薪決策。",
+    },
   },
 ];
 
 const UniversePage = () => {
   const [isMuted, setIsMuted] = useState(true);
+  const [expandedStation, setExpandedStation] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggleMute = () => {
@@ -214,6 +251,10 @@ const UniversePage = () => {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(!isMuted);
     }
+  };
+
+  const toggleStation = (station: number) => {
+    setExpandedStation(expandedStation === station ? null : station);
   };
 
   return (
@@ -585,6 +626,7 @@ const UniversePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                layout
                 className="group relative bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden"
               >
                 {/* Gradient overlay on hover */}
@@ -633,17 +675,79 @@ const UniversePage = () => {
                       </div>
                     ))}
                   </div>
-                  
-                  {/* CTA Button */}
-                  <a
-                    href={station.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`group/btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${station.color} text-white text-sm font-medium hover:opacity-90 transition-all duration-300 min-h-[44px]`}
-                  >
-                    進入站點
-                    <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  </a>
+
+                  {/* Expandable Detailed Philosophy */}
+                  <AnimatePresence>
+                    {expandedStation === station.station && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mb-6 overflow-hidden"
+                      >
+                        <div className="bg-white/5 rounded-xl p-4 space-y-4 border border-white/10">
+                          <div>
+                            <h4 className="text-xs font-bold text-white/80 mb-2 flex items-center gap-2">
+                              <Sparkles className="w-3 h-3 text-amber-400" />
+                              核心理念
+                            </h4>
+                            <p className="text-white/60 text-xs leading-relaxed">{station.detailedPhilosophy.core}</p>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold text-white/80 mb-2 flex items-center gap-2">
+                              <Layers className="w-3 h-3 text-amber-400" />
+                              運作機制
+                            </h4>
+                            <p className="text-white/60 text-xs leading-relaxed">{station.detailedPhilosophy.mechanism}</p>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold text-white/80 mb-2 flex items-center gap-2">
+                              <Target className="w-3 h-3 text-amber-400" />
+                              輸出規格
+                            </h4>
+                            <p className="text-white/60 text-xs leading-relaxed">{station.detailedPhilosophy.output}</p>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold text-white/80 mb-2 flex items-center gap-2">
+                              <Compass className="w-3 h-3 text-amber-400" />
+                              使用時機
+                            </h4>
+                            <p className="text-white/60 text-xs leading-relaxed">{station.detailedPhilosophy.useCase}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <button
+                      onClick={() => toggleStation(station.station)}
+                      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all duration-300 min-h-[44px] ${
+                        expandedStation === station.station
+                          ? `${station.bgColor} ${station.textColor} border-current`
+                          : "border-white/20 text-white/60 hover:border-white/40 hover:text-white"
+                      }`}
+                    >
+                      {expandedStation === station.station ? "收合詳情" : "查看詳情"}
+                      <motion.div
+                        animate={{ rotate: expandedStation === station.station ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ArrowRight className="w-3.5 h-3.5 rotate-90" />
+                      </motion.div>
+                    </button>
+                    <a
+                      href={station.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`group/btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${station.color} text-white text-sm font-medium hover:opacity-90 transition-all duration-300 min-h-[44px]`}
+                    >
+                      進入站點
+                      <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             ))}
