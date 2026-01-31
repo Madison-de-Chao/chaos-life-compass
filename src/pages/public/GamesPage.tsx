@@ -21,10 +21,24 @@ const categories: { id: Category; label: string; color: string }[] = [
 
 const games = [
   {
+    id: "yyds",
+    title: "元壹占卜系統 YYDS",
+    subtitle: "決策分流器",
+    description: "當你站在岔路口不知道該往哪走，元壹占卜幫你看清「現在的狀態」和「下一步的方向」。順勢與反噬並存於每一卦，真正決定走向的是你的覺察與選擇。",
+    href: "https://yyds.rainbow-sanctuary.com/",
+    icon: Compass,
+    color: "from-purple-500 to-indigo-600",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/30",
+    category: "divination" as Category,
+    categoryLabel: "命理類",
+    previewImage: gameMirrorImg,
+  },
+  {
     id: "bazi",
-    title: "四時八字人生兵法",
-    subtitle: "虹靈御所",
-    description: "以八字命理為基礎的策略遊戲，將你的命盤轉化為人生戰場上的兵符與戰略。探索四季能量如何影響你的決策與行動。",
+    title: "四時八字人生兵法 RSBZS",
+    subtitle: "戰略盤點器",
+    description: "八字不是命定的枷鎖，而是你的四支軍團。你是統御全局的將軍，學會調度才能打贏人生戰役。盤點資源、預判風險、規劃節奏。",
     href: "https://bazi.rainbow-sanctuary.com/",
     icon: Target,
     color: "from-amber-500 to-orange-600",
@@ -35,24 +49,10 @@ const games = [
     previewImage: gameBaziImg,
   },
   {
-    id: "mirror",
-    title: "元壹占卜系統",
-    subtitle: "元壹宇宙",
-    description: "結合多元占卜系統的互動式體驗，讓你透過不同的鏡子看見自己的不同面向。每次占卜都是一次自我對話。",
-    href: "https://mirror.yyuniverse.com/",
-    icon: Compass,
-    color: "from-purple-500 to-indigo-600",
-    bgColor: "bg-purple-500/10",
-    borderColor: "border-purple-500/30",
-    category: "divination" as Category,
-    categoryLabel: "命理類",
-    previewImage: gameMirrorImg,
-  },
-  {
-    id: "logic",
-    title: "默默超思維訓練系統",
-    subtitle: "元壹宇宙",
-    description: "透過遊戲化的方式鍛鍊你的思維能力，培養情緒、行動、心智、價值四大維度的整合能力。",
+    id: "mmcls",
+    title: "默默超思維訓練系統 MMCLS",
+    subtitle: "能力訓練器",
+    description: "知道自己是誰之後，接下來是「練出來」。透過結構化的思維訓練與九位導師系統，把洞察轉化成能力，累積「成就證據」。",
     href: "https://mmclogic.com/",
     icon: Brain,
     color: "from-emerald-500 to-teal-600",
@@ -114,30 +114,30 @@ const GamesPage = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6">
               <Gamepad2 className="w-4 h-4 text-amber-400" />
-              <span className="text-sm text-amber-400 font-medium">超烜遊戲生態系統</span>
+              <span className="text-sm text-amber-400 font-medium">元壹系統生態・旅程六站</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                超烜遊戲
+                互動式自我探索
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-white/60 leading-relaxed mb-8">
-              探索我們的互動式命理遊戲系列，透過遊戲化的方式
+              多站不是分散，是分工。每一站只解決一個特定階段的問題。
               <br className="hidden md:block" />
-              深入了解自己、訓練思維、發現人生的更多可能性
+              你不需要用全部，只用你需要的。
             </p>
             
             <div className="flex items-center justify-center gap-6 text-sm text-white/40">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4" />
-                <span>3 款互動遊戲</span>
+                <span>可驗證的下一步</span>
               </div>
               <div className="h-4 w-px bg-white/20" />
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4" />
-                <span>多元系統整合</span>
+                <span>可回看的機制</span>
               </div>
             </div>
           </motion.div>
