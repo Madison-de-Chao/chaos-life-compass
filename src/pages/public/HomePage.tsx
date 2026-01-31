@@ -29,8 +29,8 @@ const sections = [
   {
     id: 1,
     title: "默默超全方位命理報告",
-    subtitle: "看見自己，是最深的修行",
-    description: "一份為你量身打造的命理報告，不是預言，而是一面鏡子——幫助你看清現在，自由選擇未來。",
+    subtitle: "可驗證、可回看、可落地",
+    description: "不是「你是什麼人」的定論，而是「你可以怎麼做」的可執行路徑。四系統交叉驗證，每個判斷都有回驗機制。",
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
@@ -38,9 +38,9 @@ const sections = [
   },
   {
     id: 2,
-    title: "創新命理遊戲網站",
-    subtitle: "在遊戲中遇見真實的自己",
-    description: "四時八字人生兵法、紫薇戀愛遊戲等，用互動體驗的方式，探索命理的奧秘。",
+    title: "元壹系統生態",
+    subtitle: "旅程六站・各司其職",
+    description: "占卜決策、八字戰略、神話占星、思維訓練、療癒體驗、企業應用——你不需要用全部，只用你需要的。",
     icon: Gamepad2,
     href: "/games",
     color: "from-violet-500/20 to-purple-500/20",
@@ -50,7 +50,7 @@ const sections = [
     id: 3,
     title: "默默超的元壹筆記",
     subtitle: "有關命理，有關做人",
-    description: "命盤是一種語言，不是判決。這裡記錄著我對命理與人生的思考與觀察。",
+    description: "命盤是一種語言，不是判決。這裡記錄著對命理與人生的思考與觀察。",
     icon: BookOpen,
     href: "/notes",
     color: "from-emerald-500/20 to-teal-500/20",
@@ -59,8 +59,8 @@ const sections = [
   {
     id: 4,
     title: "元壹宇宙 × 默默超思維",
-    subtitle: "一套改變世界的文明級生活方法",
-    description: "完整性哲學——世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。",
+    subtitle: "四維運作系統",
+    description: "情緒、行動、心智、價值——錯誤是材料，不是懲罰。完整不是沒有缺口，完整是不再害怕缺口。",
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
@@ -69,8 +69,8 @@ const sections = [
   {
     id: 5,
     title: "關於虹靈御所",
-    subtitle: "知行如一的密法",
-    description: "虹靈御所的使命，不是造出完美的故事，而是讓每個人都能在自己的故事裡醒來。",
+    subtitle: "Care & Truth",
+    description: "Care 給予溫度，Truth 給予方向。前者讓品牌有靈魂，後者讓品牌有脊椎。",
     icon: Building2,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -80,8 +80,8 @@ const sections = [
   {
     id: 6,
     title: "誰是默默超",
-    subtitle: "鏡子的守護者",
-    description: "我們不給答案，只給倒影。真理不在預言中，而在誠實地凝視自己。",
+    subtitle: "一個把思考做成工具的人",
+    description: "我不是學霸，也不是天選之人。我只是比較固執：做事要有交代，做人要有底線。",
     icon: User,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -172,14 +172,14 @@ const HomePage = () => {
           
           {/* Tagline */}
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-white/60 mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            鏡子非劇本，真實即命運
+            可驗證、可回看、可落地的自我探索
           </p>
           
           {/* Description */}
           <p className="max-w-2xl mx-auto text-sm md:text-base text-white/50 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
-            我們不預測未來，只幫你看清現在。<br />
-            命盤是一種語言，不是判決。<br />
-            你只需要學會聽懂它在對你說什麼。
+            不是算命，不是心靈雞湯，不是課程推銷。<br />
+            我們提供的不是「你是什麼人」的定論，<br />
+            而是「你可以怎麼做」的可執行路徑。
           </p>
           
           {/* CTA Buttons */}

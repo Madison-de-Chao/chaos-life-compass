@@ -243,8 +243,8 @@ const AboutPage = () => {
                 </h2>
                 <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Mirror, Not Script</p>
                 <p className="text-white/70 leading-relaxed text-base md:text-lg">
-                  命運從來不是寫好的劇本，而是一面等待你凝視的鏡子。
-                  你在其中看見什麼，取決於你願意承認什麼。
+                  我們不提供「命定結論」，我們提供「可驗證的下一步」。
+                  每個判斷都標註依據，區分事實/推導/假設。
                 </p>
               </motion.div>
 
@@ -254,9 +254,9 @@ const AboutPage = () => {
               >
                 <Quote className="w-6 h-6 md:w-8 md:h-8 text-amber-400/40 mb-3 md:mb-4" />
                 <p className="text-white/60 font-serif text-base md:text-lg leading-relaxed italic relative z-10">
-                  「我不給答案，只給倒影。真理不在預言中，而在誠實地凝視自己。」
+                  「默默超思維一句話：把話說清楚，把事做完整；自由不是有選擇權，而是可以選擇不選。」
                 </p>
-                <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 默默超</p>
+                <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人故事</p>
               </motion.div>
             </motion.div>
           </div>
@@ -324,7 +324,7 @@ const AboutPage = () => {
             transition={{ delay: 0.3 }}
             className="text-center text-white/40 mt-6 md:mt-8 text-xs md:text-sm px-4"
           >
-            「錯誤是材料，不是懲罰。」— 思維系統核心理念
+            「錯誤是材料，不是懲罰。」— 元壹系統核心理念
           </motion.p>
         </div>
       </section>
@@ -347,10 +347,10 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              核心理念
+              三大方法論
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              這不是算命，是一場與自己的深度對話
+              喚醒 Awaken・篩選 Filter・賦能 Empower
             </p>
           </motion.div>
 
@@ -364,21 +364,21 @@ const AboutPage = () => {
             {[
               {
                 icon: Eye,
-                title: "看見",
-                subtitle: "See",
-                content: "看見你真正的運作方式，而非社會期待的樣子。"
+                title: "喚醒",
+                subtitle: "Awaken",
+                content: "提醒你本來就有，請別放棄相信自己。"
               },
               {
                 icon: Heart,
-                title: "整合",
-                subtitle: "Integrate",
-                content: "納入一切經歷——包括錯誤——作為成長的材料。"
+                title: "篩選",
+                subtitle: "Filter",
+                content: "分辨對自己真正有用的東西，而非盲從價值標籤。"
               },
               {
                 icon: CircleDot,
-                title: "完整",
-                subtitle: "Wholeness",
-                content: "追求的不是完美，而是完整。接受全部的自己。"
+                title: "賦能",
+                subtitle: "Empower",
+                content: "幫你拿回你原本的權力，最終選擇權永遠在你手裡。"
               }
             ].map((value) => (
               <motion.div

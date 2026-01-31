@@ -17,7 +17,7 @@ const portalItems = [
   {
     title: "虹靈御所",
     subtitle: "Rainbow Sanctuary",
-    description: "看見命盤裡的自己，而非被命運定義",
+    description: "可驗證、可回看、可落地的自我探索工具鏈",
     cta: "進入虹靈御所",
     logo: logoHongling,
     href: "/home",
@@ -28,7 +28,7 @@ const portalItems = [
   {
     title: "超烜創意",
     subtitle: "Maison de Chao",
-    description: "讓品牌成為一面鏡子，照見獨特的本質",
+    description: "品牌策略與創意服務，讓你的獨特被看見",
     cta: "進入超烜創意",
     logo: logoChaoxuan,
     href: "/chaoxuan",
@@ -39,7 +39,7 @@ const portalItems = [
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
-    description: "在思維的鏡面裡，重新命名自己的世界",
+    description: "結合東方命理與決策邏輯的自我探索系統",
     cta: "進入元壹宇宙",
     logo: logoYuanyi,
     href: "/universe",
@@ -50,7 +50,7 @@ const portalItems = [
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
-    description: "或許，只是另一個正在學會凝視自己的人",
+    description: "一個把思考做成工具的人",
     cta: "認識默默超",
     logo: null,
     href: "/about",
@@ -667,16 +667,16 @@ const createIntroSections = () => [
     content: (
       <div className="space-y-4 sm:space-y-6 px-4">
         <div className="text-[#c9a962] text-base sm:text-xl md:text-2xl tracking-[0.2em] sm:tracking-[0.3em] font-light opacity-80">
-          照見・回望・前行
+          Care & Truth — 永恆不息的關懷與真誠
         </div>
         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide">
           <span className="relative inline-block">
             <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#c9a962] via-amber-400 to-[#c9a962] opacity-40" />
-            <span className="relative text-[#c9a962]">MomoChao</span>
+            <span className="relative text-[#c9a962]">默默超元壹體系</span>
           </span>
         </h1>
         <p className="text-white/70 text-base sm:text-xl md:text-2xl font-light italic">
-          「我們不預測未來，只幫你看清現在。」
+          「可驗證、可回看、可落地的自我探索工具鏈」
         </p>
       </div>
     ),
@@ -686,10 +686,10 @@ const createIntroSections = () => [
     id: 'intro',
     content: (
       <div className="space-y-5 sm:space-y-8 text-white/80 text-base sm:text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto px-6">
-        <p>默默超不是一個人名，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是一種思維方式的代稱。</p>
-        <p>不急著評判，不急著給答案，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是先安靜地看見。</p>
-        <p>「默默」是方法，「超」是目標。<br />
-          <span className="text-[#c9a962]">在沉默中觀察，在理解中超越。</span>
+        <p>我們提供的不是「你是什麼人」的定論，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是「你可以怎麼做」的可執行路徑。</p>
+        <p>每個產出都有：可追溯來源、可回看機制、可行動建議。</p>
+        <p><span className="text-[#c9a962]">不是算命，不是心靈雞湯，不是課程推銷。</span><br />
+          是工具，是鏡子，是你的操作手冊。
         </p>
       </div>
     ),
@@ -699,15 +699,19 @@ const createIntroSections = () => [
     id: 'philosophy',
     content: (
       <div className="space-y-5 sm:space-y-8 max-w-2xl mx-auto px-4">
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-4 sm:mb-8">默默超思維</h2>
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-4 sm:mb-8">三大方法論</h2>
         <div className="grid gap-4 sm:gap-6">
           <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
-            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">鏡子非劇本</h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">命運從來不是劇本，它只是一面鏡子。我們不給答案，只給倒影。</p>
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">喚醒 Awaken</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">提醒你本來就有，請別放棄相信自己。</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
-            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">完整性哲學</h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。</p>
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">篩選 Filter</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">分辨對自己真正有用的東西，而非盲從價值標籤。</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">賦能 Empower</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">幫你拿回你原本的權力，最終選擇權永遠在你手裡。</p>
           </div>
         </div>
       </div>
@@ -769,8 +773,11 @@ const createIntroSections = () => [
     content: (
       <div className="space-y-6 sm:space-y-8 max-w-2xl mx-auto px-5">
         <p className="text-white/70 text-lg sm:text-xl md:text-2xl font-light leading-relaxed italic">
-          「你不需要被告知你是誰，<br />
-          你只需要一面夠清晰的鏡子。」
+          「命運是起點，選擇是終點。」
+        </p>
+        <p className="text-white/50 text-sm sm:text-base md:text-lg">
+          你問準不準？重點是：它能不能讓你看見更合適的方向，<br className="hidden sm:block" />
+          然後把選擇權拿回來。事在人為。
         </p>
         <div className="pt-2 sm:pt-4">
           <div className="inline-block px-5 sm:px-6 py-2.5 sm:py-3 border border-[#c9a962]/30 rounded-full">
@@ -799,10 +806,10 @@ export default function PortalPage() {
   const timeoutRef = useRef<number | null>(null);
 
   useSEO({
-    title: "默默超的入口網站 | 命理報告・品牌創意・生命智慧",
-    description: "這裡不預言你的命運，而是讓你看見自己如何運作。虹靈御所的命理報告、超烜創意的品牌服務、元壹宇宙的思維系統——三條路徑，同一個起點：成為你自己的鏡子。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 虹靈御所, 超烜創意, 默默超, 鏡子非劇本",
-    ogTitle: "默默超的入口網站",
+    title: "默默超元壹體系 | 可驗證、可回看、可落地的自我探索工具鏈",
+    description: "結合東方命理與決策邏輯的自我探索系統。我們不是算命，不是心靈雞湯，不是課程推銷，不是宗教。我們是工具，是鏡子，是你的操作手冊。",
+    keywords: "默默超, 元壹宇宙, 虹靈御所, 超烜創意, 命理報告, 自我探索, 決策邏輯, 鏡子非劇本",
+    ogTitle: "默默超元壹體系 - 可驗證的自我探索工具鏈",
   });
 
   // Start music on first interaction

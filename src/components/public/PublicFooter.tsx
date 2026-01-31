@@ -109,8 +109,8 @@ const PublicFooter = () => {
               </Link>
             </div>
             <p className="text-white/50 mb-6 max-w-sm leading-relaxed font-serif text-lg">
-              鏡子非劇本，真實即命運。<br />
-              我們不預測未來，只幫你看清現在。
+              Care & Truth — 永恆不息的關懷與真誠。<br />
+              可驗證、可回看、可落地的自我探索工具鏈。
             </p>
             
             {/* Social Media Links - Touch Optimized */}
