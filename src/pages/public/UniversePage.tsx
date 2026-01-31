@@ -502,7 +502,7 @@ const UniversePage = () => {
                 variant="outline"
                 className="border-white/20 text-white/80 hover:bg-white/10 min-h-[48px] px-8"
               >
-                <Link to="/momo">
+                <Link to="/about">
                   認識默默超
                 </Link>
               </Button>
