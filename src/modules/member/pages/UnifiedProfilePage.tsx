@@ -3,8 +3,9 @@
  */
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Calendar, Clock, MapPin, Save, Shield } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowLeft, User, Calendar, Clock, MapPin, Save } from "lucide-react";
+import logoHongling from "@/assets/logo-hongling.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,23 +87,26 @@ const UnifiedProfilePage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={() => navigate("/account")}
-              className="text-slate-400 hover:text-slate-200"
+              className="text-slate-400 hover:text-slate-200 px-2"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              返回
+              <ArrowLeft className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">返回</span>
             </Button>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
-                <Shield className="w-4 h-4 text-amber-500" />
-              </div>
-              <span className="font-semibold text-slate-100">編輯個人資料</span>
-            </div>
+            <div className="h-6 w-px bg-slate-700/50" />
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
+              <img 
+                src={logoHongling} 
+                alt="虹靈御所" 
+                className="h-7 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+              />
+              <span className="font-semibold text-sm sm:text-base text-slate-100 group-hover:text-amber-400 transition-colors">編輯個人資料</span>
+            </Link>
           </div>
         </div>
       </header>
