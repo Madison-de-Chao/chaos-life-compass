@@ -53,7 +53,7 @@ export interface MemberLoginWidgetProps {
 export function MemberLoginWidget({ 
   onClose, 
   onSuccess,
-  redirectTo = "/account",
+  redirectTo = "/",
   showTitle = true,
   compact = false,
   showFullPageLink = true,

@@ -8,7 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { 
   FileText, Settings, LogOut, Sparkles, Zap, Star, Compass,
   Calendar, CreditCard, ChevronRight, Shield, User, ExternalLink,
-  Clock, CheckCircle, XCircle, AlertCircle, KeyRound, Unlink, Loader2
+  Clock, CheckCircle, XCircle, AlertCircle, KeyRound, Unlink, Loader2, Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -278,6 +278,15 @@ const UnifiedDashboard = () => {
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => navigate("/")}
+              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
+              title="回首頁"
+            >
+              <Home className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Button>
             {(isAdmin || isHelper) && (
               <Button 
                 variant="default" 
