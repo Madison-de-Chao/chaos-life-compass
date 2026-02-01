@@ -90,7 +90,7 @@ const UnifiedAuthPage = () => {
   const [activeProductIndex, setActiveProductIndex] = useState(0);
 
   // Get redirect URL from search params
-  const redirectTo = searchParams.get("redirect") || "/account";
+  const redirectTo = searchParams.get("redirect") || "/";
   const isPasswordReset = searchParams.get("reset") === "true";
   const fromProduct = searchParams.get("from");
 
