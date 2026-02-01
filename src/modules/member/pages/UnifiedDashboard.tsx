@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState, useCallback } from "react";
+import logoHongling from "@/assets/logo-hongling.png";
 import { useNavigate, Link } from "react-router-dom";
 import { 
   FileText, Settings, LogOut, Sparkles, Zap, Star, Compass,
@@ -270,11 +271,14 @@ const UnifiedDashboard = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50">
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
-              <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
-            </div>
-            <span className="font-bold text-base sm:text-lg text-slate-100">會員中心</span>
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
+            <img 
+              src={logoHongling} 
+              alt="虹靈御所" 
+              className="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            />
+            <div className="hidden sm:block h-6 w-px bg-slate-700/50" />
+            <span className="font-bold text-base sm:text-lg text-slate-100 group-hover:text-amber-400 transition-colors">會員中心</span>
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
