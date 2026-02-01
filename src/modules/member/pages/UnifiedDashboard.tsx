@@ -4,7 +4,6 @@
  */
 
 import { useEffect, useState, useCallback } from "react";
-import logoHongling from "@/assets/logo-hongling.png";
 import { useNavigate, Link } from "react-router-dom";
 import { 
   FileText, Settings, LogOut, Sparkles, Zap, Star, Compass,
@@ -24,6 +23,7 @@ import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { PullToRefreshIndicator } from "@/components/PullToRefresh";
+import { MemberPageHeader } from "../components/MemberPageHeader";
 
 // Product display info
 const PRODUCT_INFO: Record<string, { 
@@ -269,28 +269,11 @@ const UnifiedDashboard = () => {
       />
       
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50">
-        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
-            <img 
-              src={logoHongling} 
-              alt="虹靈御所" 
-              className="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
-            />
-            <div className="hidden sm:block h-6 w-px bg-slate-700/50" />
-            <span className="font-bold text-base sm:text-lg text-slate-100 group-hover:text-amber-400 transition-colors">會員中心</span>
-          </Link>
-
-          <div className="flex items-center gap-1.5 sm:gap-3">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => navigate("/")}
-              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
-              title="回首頁"
-            >
-              <Home className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
+      <MemberPageHeader 
+        title="會員中心"
+        showHomeButton
+        rightContent={
+          <>
             {(isAdmin || isHelper) && (
               <Button 
                 variant="default" 
@@ -318,9 +301,9 @@ const UnifiedDashboard = () => {
             >
               <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
-          </div>
-        </div>
-      </header>
+          </>
+        }
+      />
 
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-6xl">
         {/* Beta Notice with Countdown */}
