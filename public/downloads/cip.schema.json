@@ -1,0 +1,249 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://chaos.life/schemas/cip/v0.1/cip.schema.json",
+  "title": "CIP Output Schema",
+  "description": "Co-Integrity Protocol (CIP) v0.1 輸出格式規格",
+  "type": "object",
+  "required": ["meta", "zoneA_facts", "zoneB_inference", "next_actions"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "CIP 輸出的元資料",
+      "required": ["cip_version", "role", "time_scope", "topic_scope"],
+      "properties": {
+        "cip_version": {
+          "type": "string",
+          "description": "CIP 協議版本",
+          "pattern": "^v[0-9]+\\.[0-9]+$",
+          "examples": ["v0.1"]
+        },
+        "role": {
+          "type": "string",
+          "description": "AI 在此對話中扮演的角色",
+          "examples": ["技術顧問", "創意夥伴", "資料分析師"]
+        },
+        "time_scope": {
+          "type": "string",
+          "description": "資料或分析的時間範圍",
+          "examples": ["本次對話", "2024年Q1數據", "即時資訊"]
+        },
+        "topic_scope": {
+          "type": "string",
+          "description": "討論的主題範圍",
+          "examples": ["CIP 框架實現", "產品策略規劃"]
+        },
+        "cbp_layers": {
+          "type": "object",
+          "description": "案例邊界協議 (CBP) 的四層邊界定義",
+          "properties": {
+            "time": {
+              "type": "string",
+              "description": "時間邊界"
+            },
+            "topic": {
+              "type": "string",
+              "description": "主題邊界"
+            },
+            "role": {
+              "type": "string",
+              "description": "角色邊界"
+            },
+            "task": {
+              "type": "string",
+              "description": "任務邊界"
+            }
+          }
+        }
+      }
+    },
+    "zoneA_facts": {
+      "type": "array",
+      "description": "Zone A: 可驗證事實 (FACT)",
+      "items": {
+        "type": "object",
+        "required": ["claim", "source", "confidence"],
+        "properties": {
+          "claim": {
+            "type": "string",
+            "description": "事實聲明內容"
+          },
+          "source": {
+            "type": "string",
+            "description": "來源（URL、文件名、資料庫 ID 等可追溯節點）"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "置信度等級"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "資料的時效性標記"
+          },
+          "scope": {
+            "type": "string",
+            "description": "此事實的適用範圍"
+          }
+        }
+      }
+    },
+    "zoneB_inference": {
+      "type": "array",
+      "description": "Zone B: 推論與假設 (INFERENCE)",
+      "items": {
+        "type": "object",
+        "required": ["claim", "assumptions", "confidence"],
+        "properties": {
+          "claim": {
+            "type": "string",
+            "description": "推論內容"
+          },
+          "assumptions": {
+            "type": "array",
+            "description": "此推論的前提假設（必填）",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "置信度等級"
+          },
+          "limitations": {
+            "type": "array",
+            "description": "已知的限制條件",
+            "items": {
+              "type": "string"
+            }
+          },
+          "alternatives": {
+            "type": "array",
+            "description": "替代解釋或觀點",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "missing_info": {
+      "type": "array",
+      "description": "缺失的資訊或需要補充的部分",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "已識別的風險或注意事項",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "description": "Zone C: 可驗證下一步 (NEXT ACTION)",
+      "items": {
+        "type": "object",
+        "required": ["action", "testable_output"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "具體行動描述"
+          },
+          "testable_output": {
+            "type": "string",
+            "description": "可驗收的產出（必填）"
+          },
+          "timebox": {
+            "type": "string",
+            "description": "時間限制",
+            "examples": ["1 小時", "3 天", "本週內"]
+          },
+          "owner": {
+            "type": "string",
+            "description": "負責人"
+          },
+          "dependencies": {
+            "type": "array",
+            "description": "前置條件或依賴項",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "atl_check": {
+      "type": "object",
+      "description": "反演示層 (ATL) 自我檢測結果",
+      "properties": {
+        "atl_1_falsifiable": {
+          "type": "boolean",
+          "description": "ATL-1: 結論是否可反駁"
+        },
+        "atl_2_traceable": {
+          "type": "boolean",
+          "description": "ATL-2: Zone A 來源是否可回溯"
+        },
+        "atl_3_actionable": {
+          "type": "boolean",
+          "description": "ATL-3: Zone C 是否具體可驗收"
+        },
+        "atl_4_consistent": {
+          "type": "boolean",
+          "description": "ATL-4: 與先前輸出是否一致"
+        },
+        "notes": {
+          "type": "string",
+          "description": "ATL 檢測備註"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "meta": {
+        "cip_version": "v0.1",
+        "role": "技術顧問",
+        "time_scope": "本次對話",
+        "topic_scope": "CIP 框架實現"
+      },
+      "zoneA_facts": [
+        {
+          "claim": "CIP 框架包含六大原則",
+          "source": "CIP-Engineering-Spec-v0.1.md",
+          "confidence": "high"
+        }
+      ],
+      "zoneB_inference": [
+        {
+          "claim": "採用 CIP 框架可提升 AI 輸出的可信度",
+          "assumptions": [
+            "使用者能正確解讀三區格式",
+            "AI 能穩定遵循協議規範"
+          ],
+          "confidence": "medium"
+        }
+      ],
+      "missing_info": [
+        "目前缺乏大規模 A/B 測試數據"
+      ],
+      "risks": [
+        "格式複雜度可能增加閱讀負擔"
+      ],
+      "next_actions": [
+        {
+          "action": "在內部測試環境實施 CIP 輸出格式",
+          "testable_output": "產出 10 個符合 CIP 格式的回覆範例",
+          "timebox": "3 天"
+        }
+      ]
+    }
+  ]
+}
