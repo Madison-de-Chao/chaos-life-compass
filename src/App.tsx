@@ -72,6 +72,7 @@ import {
   AIQuickstartPage,
   AIDialoguePage,
   AISafetyPage,
+  AIIntegrityPage,
 } from "./pages/ai";
 
 // Account Pages
@@ -123,6 +124,7 @@ const App = () => (
                 <Route path="/ai/quickstart" element={<AIQuickstartPage />} />
                 <Route path="/ai/dialogue" element={<AIDialoguePage />} />
                 <Route path="/ai/safety" element={<AISafetyPage />} />
+                <Route path="/ai/integrity" element={<AIIntegrityPage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
                 <Route path="/auth/login" element={<UnifiedAuthPage />} />
