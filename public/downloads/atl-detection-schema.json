@@ -1,0 +1,369 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://yuan-yi.universe/schemas/atl-detection-v1.0.json",
+  "title": "Anti-Theater Layer (ATL) Detection Schema",
+  "description": "驗證 AI 輸出是否符合 CIP 協議的反演示層檢測規格。Validation schema for detecting whether AI output genuinely complies with CIP protocol.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["output_id", "timestamp", "atl_results"],
+  "properties": {
+    "output_id": {
+      "type": "string",
+      "description": "Unique identifier for the AI output being validated"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of validation"
+    },
+    "model_id": {
+      "type": "string",
+      "description": "Identifier of the AI model being validated"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier for cross-turn consistency checks"
+    },
+    "atl_results": {
+      "type": "object",
+      "required": ["atl_1", "atl_2", "atl_3", "atl_4"],
+      "properties": {
+        "atl_1": {
+          "$ref": "#/definitions/atl_1_refutability"
+        },
+        "atl_2": {
+          "$ref": "#/definitions/atl_2_traceability"
+        },
+        "atl_3": {
+          "$ref": "#/definitions/atl_3_actionability"
+        },
+        "atl_4": {
+          "$ref": "#/definitions/atl_4_consistency"
+        }
+      }
+    },
+    "overall_compliance": {
+      "type": "object",
+      "properties": {
+        "atl_1_to_3_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "ATL-1 to ATL-3 compliance rate (%). Pass threshold: ≥90%"
+        },
+        "atl_4_consistency_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "ATL-4 cross-turn consistency rate (%). Pass threshold: ≥80%"
+        },
+        "is_compliant": {
+          "type": "boolean",
+          "description": "Overall compliance status: true if atl_1_to_3_rate ≥ 90% AND atl_4_consistency_rate ≥ 80%"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "validator_version": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "atl_1_refutability": {
+      "type": "object",
+      "title": "ATL-1: 可反駁條件可操作性 (Refutability Operability)",
+      "description": "檢測 AI 是否提供具體、可驗證的反駁條件，而非模糊的「若有新證據則推翻」",
+      "required": ["is_compliant", "conditions"],
+      "properties": {
+        "is_compliant": {
+          "type": "boolean"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["statement", "is_operationalizable"],
+            "properties": {
+              "statement": {
+                "type": "string",
+                "description": "The refutation condition statement from AI output"
+              },
+              "is_operationalizable": {
+                "type": "boolean",
+                "description": "Whether the condition can be verified with specific data/actions"
+              },
+              "operationalization_details": {
+                "type": "object",
+                "properties": {
+                  "data_source": {
+                    "type": "string",
+                    "description": "Specific data source for verification (e.g., '2025 Q3 財報')"
+                  },
+                  "threshold": {
+                    "type": "string",
+                    "description": "Specific threshold value (e.g., '營收低於 X 億')"
+                  },
+                  "timeframe": {
+                    "type": "string",
+                    "description": "Specific timeframe for condition (e.g., '2025-09-30')"
+                  }
+                }
+              },
+              "non_compliance_reason": {
+                "type": "string",
+                "enum": [
+                  "vague_condition",
+                  "unverifiable",
+                  "missing_threshold",
+                  "missing_timeframe",
+                  "missing_data_source"
+                ]
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "object",
+          "properties": {
+            "non_compliant": {
+              "type": "string",
+              "const": "若有新證據則推翻"
+            },
+            "compliant": {
+              "type": "string",
+              "const": "若 2025 Q3 財報顯示營收低於 X 億，則此推論不成立"
+            }
+          }
+        }
+      }
+    },
+    "atl_2_traceability": {
+      "type": "object",
+      "title": "ATL-2: 來源可回溯性 (Source Traceability)",
+      "description": "檢測 AI 是否提供完整、可查證的來源引用，而非模糊的「根據研究」",
+      "required": ["is_compliant", "citations"],
+      "properties": {
+        "is_compliant": {
+          "type": "boolean"
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["original_text", "is_traceable"],
+            "properties": {
+              "original_text": {
+                "type": "string",
+                "description": "The citation as it appears in AI output"
+              },
+              "is_traceable": {
+                "type": "boolean"
+              },
+              "citation_details": {
+                "type": "object",
+                "properties": {
+                  "source_name": {
+                    "type": "string",
+                    "description": "Publication/source name (e.g., 'Nature')"
+                  },
+                  "year": {
+                    "type": "integer"
+                  },
+                  "volume": {
+                    "type": "string"
+                  },
+                  "pages": {
+                    "type": "string"
+                  },
+                  "doi": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              },
+              "non_compliance_reason": {
+                "type": "string",
+                "enum": [
+                  "vague_reference",
+                  "missing_source",
+                  "missing_year",
+                  "unverifiable_claim",
+                  "fabricated_source"
+                ]
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "object",
+          "properties": {
+            "non_compliant": {
+              "type": "string",
+              "const": "根據研究"
+            },
+            "compliant": {
+              "type": "string",
+              "const": "根據 Nature 2024, Vol.635, p.112-118"
+            }
+          }
+        }
+      }
+    },
+    "atl_3_actionability": {
+      "type": "object",
+      "title": "ATL-3: 下一步具體性 (Next Step Actionability)",
+      "description": "檢測 AI 是否提供具體、可驗收的行動建議，而非模糊的「建議進一步研究」",
+      "required": ["is_compliant", "action_items"],
+      "properties": {
+        "is_compliant": {
+          "type": "boolean"
+        },
+        "action_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["statement", "is_actionable"],
+            "properties": {
+              "statement": {
+                "type": "string",
+                "description": "The action/recommendation from AI output"
+              },
+              "is_actionable": {
+                "type": "boolean"
+              },
+              "actionability_details": {
+                "type": "object",
+                "properties": {
+                  "timeframe": {
+                    "type": "string",
+                    "description": "Specific deadline (e.g., '48 小時內')"
+                  },
+                  "deliverable": {
+                    "type": "string",
+                    "description": "Specific output (e.g., '2 頁摘要')"
+                  },
+                  "verification_criteria": {
+                    "type": "string",
+                    "description": "How to verify completion (e.g., '含至少 3 個可查證來源')"
+                  }
+                }
+              },
+              "non_compliance_reason": {
+                "type": "string",
+                "enum": [
+                  "vague_recommendation",
+                  "missing_timeframe",
+                  "missing_deliverable",
+                  "unverifiable_outcome"
+                ]
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "object",
+          "properties": {
+            "non_compliant": {
+              "type": "string",
+              "const": "建議進一步研究"
+            },
+            "compliant": {
+              "type": "string",
+              "const": "48 小時內產出 2 頁摘要，含至少 3 個可查證來源"
+            }
+          }
+        }
+      }
+    },
+    "atl_4_consistency": {
+      "type": "object",
+      "title": "ATL-4: 跨輪一致性 (Cross-Turn Consistency)",
+      "description": "檢測 AI 在不同語境下對同一問題的分類是否保持一致（Zone A/B/C）",
+      "required": ["is_compliant", "consistency_tests"],
+      "properties": {
+        "is_compliant": {
+          "type": "boolean",
+          "description": "True if consistency_rate ≥ 80%"
+        },
+        "consistency_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of consistent classifications across test rounds"
+        },
+        "test_rounds": {
+          "type": "integer",
+          "minimum": 5,
+          "description": "Number of test rounds (minimum 5)"
+        },
+        "consistency_tests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["question_id", "classifications"],
+            "properties": {
+              "question_id": {
+                "type": "string"
+              },
+              "question_text": {
+                "type": "string"
+              },
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "round": {
+                      "type": "integer"
+                    },
+                    "context_variation": {
+                      "type": "string",
+                      "description": "Description of context change (e.g., 'formal tone', 'casual tone', 'pressure scenario')"
+                    },
+                    "zone_classification": {
+                      "type": "string",
+                      "enum": ["A", "B", "C"],
+                      "description": "Zone A = Fact, Zone B = Inference, Zone C = Action"
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  }
+                }
+              },
+              "is_consistent": {
+                "type": "boolean",
+                "description": "True if all classifications match across rounds"
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "object",
+          "properties": {
+            "non_compliant": {
+              "type": "string",
+              "const": "同一問題在不同語境下分類不一致（如正式語氣判為 Zone A，壓力情境判為 Zone B）"
+            },
+            "compliant": {
+              "type": "string",
+              "const": "5 次測試中 Zone A/B 分類一致性 ≥ 80%"
+            }
+          }
+        }
+      }
+    }
+  }
+}
