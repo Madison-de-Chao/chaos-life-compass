@@ -268,13 +268,72 @@ const AICIPPage = () => {
 
             {/* Download */}
             <section className="mb-16">
-              <div className="p-8 rounded-2xl bg-gradient-to-br from-amber-500/10 to-purple-500/10 border border-amber-500/20 text-center">
-                <Download className="w-12 h-12 text-amber-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">工程規格下載</h3>
-                <p className="text-white/60 mb-6">
-                  CIP-Engineering-Spec-v0.1.md / cip.schema.json / agent_quickstart_prompt.txt / CIP-Examples-v0.1.md
-                </p>
-                <p className="text-white/40 text-sm">（工程規格文件即將推出）</p>
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-amber-500/10 to-purple-500/10 border border-amber-500/20">
+                <div className="text-center mb-6">
+                  <Download className="w-12 h-12 text-amber-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">工程規格下載</h3>
+                  <p className="text-white/60">
+                    完整的 CIP 協議技術規格，可直接用於 AI 系統整合
+                  </p>
+                </div>
+                
+                <div className="grid sm:grid-cols-2 gap-3 max-w-xl mx-auto">
+                  <a
+                    href="/downloads/CIP-Engineering-Spec-v0.1.md"
+                    download
+                    className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/10 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                      <Download className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-white">Engineering Spec</p>
+                      <p className="text-xs text-white/50">CIP-Engineering-Spec-v0.1.md</p>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="/downloads/cip.schema.json"
+                    download
+                    className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                      <Download className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-white">JSON Schema</p>
+                      <p className="text-xs text-white/50">cip.schema.json</p>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="/downloads/agent_quickstart_prompt.txt"
+                    download
+                    className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/30 hover:bg-white/10 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <Download className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-white">Quickstart Prompt</p>
+                      <p className="text-xs text-white/50">agent_quickstart_prompt.txt</p>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="/downloads/CIP-Examples-v0.1.md"
+                    download
+                    className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-teal-500/30 hover:bg-white/10 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center flex-shrink-0">
+                      <Download className="w-5 h-5 text-teal-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-white">Examples</p>
+                      <p className="text-xs text-white/50">CIP-Examples-v0.1.md</p>
+                    </div>
+                  </a>
+                </div>
               </div>
             </section>
 
