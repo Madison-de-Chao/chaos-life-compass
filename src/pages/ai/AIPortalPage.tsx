@@ -29,6 +29,13 @@ const AIPortalPage = () => {
       description: "六大原則 + 三區輸出 + 工程規格",
     },
     {
+      to: "/ai/integrity",
+      icon: Shield,
+      title: "誠壹教育系統",
+      subtitle: "Co-Integrity Protocol",
+      description: "AI 與人類雙向誠實教育框架",
+    },
+    {
       to: "/ai/quickstart",
       icon: Zap,
       title: "Quickstart",
