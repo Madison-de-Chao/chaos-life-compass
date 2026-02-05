@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Zap, CheckCircle2, User, Tag, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, CheckCircle2, User, Tag, Play, MessageCircle } from "lucide-react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
+import ScenarioSimulator from "@/components/ai/ScenarioSimulator";
 
 const AIQuickstartPage = () => {
   useSEO({
@@ -138,6 +139,27 @@ const AIQuickstartPage = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Scenario Simulator */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <MessageCircle className="w-6 h-6 text-amber-400" />
+                <h2 className="text-2xl font-serif text-center">
+                  <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">
+                    情境模擬：誠實 AI vs 不誠實 AI
+                  </span>
+                </h2>
+              </div>
+              <p className="text-center text-white/60 mb-8">
+                切換體驗兩種 AI 在相同問題下的回應差異
+              </p>
+              <ScenarioSimulator />
+            </motion.section>
 
             {/* Summary */}
             <motion.div
