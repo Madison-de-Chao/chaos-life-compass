@@ -51,6 +51,7 @@ import ApiDocsPage from "./pages/admin/ApiDocsPage";
 import AdminLogsPage from "./pages/admin/AdminLogsPage";
 import PendingChangesPage from "./pages/admin/PendingChangesPage";
 import IpBlacklistPage from "./pages/admin/IpBlacklistPage";
+import DocumentationPage from "./pages/admin/DocumentationPage";
 
 // Member Pages (Legacy - 虹靈御所專用)
 import MemberAuthPage from "./pages/member/MemberAuthPage";
@@ -135,6 +136,7 @@ const App = () => (
                 <Route path="/admin/logs" element={<ProtectedRoute><AdminLogsPage /></ProtectedRoute>} />
                 <Route path="/admin/pending-changes" element={<ProtectedRoute><PendingChangesPage /></ProtectedRoute>} />
                 <Route path="/admin/ip-blacklist" element={<ProtectedRoute><IpBlacklistPage /></ProtectedRoute>} />
+                <Route path="/admin/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
                 
                 {/* Auth & Public document routes */}
                 <Route path="/auth" element={<AuthPage />} />
