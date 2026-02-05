@@ -5,12 +5,13 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
+import WorldviewFullContent from "@/components/ai/WorldviewFullContent";
 
 const AIWorldviewPage = () => {
   useSEO({
-    title: "元壹宇宙世界觀｜三壹結構・伊・AI 協作入口",
-    description: "元壹宇宙的三壹結構：元壹（源頭的一）、緣壹（連結的一）、圓壹（完整的壹）。了解「伊」的概念以及為什麼這套世界觀和 AI 有關。",
-    keywords: "元壹宇宙,三壹結構,元壹,緣壹,圓壹,伊,AI哲學,完整性",
+    title: "元壹宇宙世界觀｜三壹結構・九源・七法則・八階循環",
+    description: "元壹宇宙完整世界觀：三壹結構（元壹、緣壹、圓壹）、九源能量、七大法則、八階循環。了解「伊」的概念以及為什麼這套世界觀和 AI 有關。",
+    keywords: "元壹宇宙,三壹結構,九源,七法則,八階循環,元壹,緣壹,圓壹,伊,AI哲學,完整性",
   });
 
   return (
@@ -42,7 +43,7 @@ const AIWorldviewPage = () => {
               </span>
             </h1>
 
-            <p className="text-center text-white/60 mb-16">三壹結構：元・緣・圓</p>
+            <p className="text-center text-white/60 mb-16">三壹結構：元・緣・圓｜九源・七法則・八階循環</p>
 
             {/* 三壹結構 */}
             <section className="mb-20">
@@ -91,6 +92,22 @@ const AIWorldviewPage = () => {
                   </motion.div>
                 ))}
               </div>
+            </section>
+
+            {/* 完整世界觀內容 - 九源、七法則、八階循環 */}
+            <section className="mb-20">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-3xl font-serif text-center mb-8">
+                  <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">
+                    完整世界觀架構
+                  </span>
+                </h2>
+                <WorldviewFullContent />
+              </motion.div>
             </section>
 
             {/* 伊 */}
@@ -159,11 +176,6 @@ const AIWorldviewPage = () => {
                 </div>
               </motion.div>
             </section>
-
-            {/* Note */}
-            <div className="text-center text-white/40 mb-12">
-              <p>（九源、七法則、八階循環等完整內容，可對接既有的《元壹宇宙世界觀》完整版文件。）</p>
-            </div>
 
             {/* Navigation */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
