@@ -59,7 +59,7 @@ export function useSEO({
     setMetaTag("twitter:description", ogDescription || description);
 
     return () => {
-      document.title = "虹靈御所 × 超烜創意";
+      document.title = "默默超完整性哲學官方入口網站";
     };
   }, [title, description, keywords, ogTitle, ogDescription, ogType, ogImage]);
 }
