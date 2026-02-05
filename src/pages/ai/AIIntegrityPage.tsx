@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import DeepSeekCaseStudy from "@/components/ai/DeepSeekCaseStudy";
 
 const AIIntegrityPage = () => {
   useSEO({
@@ -403,6 +404,11 @@ const AIIntegrityPage = () => {
                           </TableBody>
                         </Table>
                       </div>
+                    </div>
+
+                    {/* DeepSeek 案例展示 */}
+                    <div className="p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/5 border border-blue-500/20">
+                      <DeepSeekCaseStudy />
                     </div>
 
                     <div className="text-center">
