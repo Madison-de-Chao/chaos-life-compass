@@ -214,7 +214,7 @@ const AIIntegrityPage = () => {
                     size="lg"
                     className="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold hover:from-amber-400 hover:to-amber-500"
                   >
-                    <a href="#download">
+                    <a href="/downloads/co-integrity-protocol-whitepaper-v1.1.docx" download>
                       <Download className="w-5 h-5 mr-2" />
                       下載完整白皮書
                     </a>
@@ -426,6 +426,20 @@ const AIIntegrityPage = () => {
                         </li>
                       </ul>
                     </div>
+
+                    {/* ATL Schema 下載 */}
+                    <div className="text-center pt-4">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10"
+                      >
+                        <a href="/downloads/atl-detection-schema.json" download>
+                          <Download className="w-4 h-4 mr-2" />
+                          下載 ATL 檢測規格 JSON Schema
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -622,9 +636,9 @@ const AIIntegrityPage = () => {
                   size="lg"
                   className="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold hover:from-amber-400 hover:to-amber-500 w-full"
                 >
-                  <a href="#" onClick={(e) => { e.preventDefault(); alert('白皮書下載即將開放'); }}>
+                  <a href="/downloads/co-integrity-protocol-whitepaper-v1.1.docx" download>
                     <Download className="w-5 h-5 mr-2" />
-                    完整白皮書下載（docx / pdf）
+                    完整白皮書下載（docx）
                   </a>
                 </Button>
                 <Button
