@@ -109,7 +109,7 @@ export default function TermsOfServicePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
       
       <main className="pt-24 pb-16">
