@@ -117,6 +117,34 @@ const AIIntegrityPage = () => {
     },
   ];
 
+  // AI 生態系分層應用
+  const aiEcosystemLayers = [
+    {
+      role: "教育者 AI（導師層）",
+      function: "訓練、校準其他 AI 的誠實人格",
+      cipDepth: "全框架內建 + 反演示層監控",
+      metaphor: "免疫系統",
+    },
+    {
+      role: "約束者 AI（監管層）",
+      function: "即時檢測並糾偏其他 AI 的輸出",
+      cipDepth: "專注反演示層檢測與預警",
+      metaphor: "防火牆 + 審計員",
+    },
+    {
+      role: "協作型 AI（夥伴層）",
+      function: "與人類進行高信任任務",
+      cipDepth: "完整 ABC 層 + CIP 輸出",
+      metaphor: "白盒協作體",
+    },
+    {
+      role: "服務型 AI（工具層）",
+      function: "日常互動、情感支持、創意激發",
+      cipDepth: "可選 CIP 標註，但不強制",
+      metaphor: "友善介面",
+    },
+  ];
+
   // AI 不誠實的四個結構性成因
   const dishonestyCauses = [
     {
@@ -340,6 +368,40 @@ const AIIntegrityPage = () => {
                             <span className="text-white/80">{test}</span>
                           </div>
                         ))}
+                      </div>
+                    </div>
+
+                    {/* 進階區塊：AI 生態系分層應用 */}
+                    <div className="p-6 rounded-xl bg-gradient-to-br from-purple-500/10 to-amber-500/5 border border-purple-500/20">
+                      <div className="flex items-center gap-2 mb-4">
+                        <Sparkles className="w-5 h-5 text-purple-400" />
+                        <h3 className="text-lg font-semibold text-white">進階｜AI 生態系分層應用</h3>
+                      </div>
+                      <p className="text-white/60 text-sm mb-6">
+                        CIP 框架不要求所有 AI 都以「智者模式」運作。不同角色的 AI 需要不同深度的誠實紀律。
+                        <span className="text-purple-400/80">（源自框架應用討論）</span>
+                      </p>
+                      <div className="overflow-x-auto -mx-2 px-2">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="border-white/10">
+                              <TableHead className="text-purple-400 min-w-[140px]">角色</TableHead>
+                              <TableHead className="text-purple-400 min-w-[180px]">功能定位</TableHead>
+                              <TableHead className="text-purple-400 min-w-[180px]">CIP 應用深度</TableHead>
+                              <TableHead className="text-purple-400 min-w-[100px]">比喻</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {aiEcosystemLayers.map((layer) => (
+                              <TableRow key={layer.role} className="border-white/10">
+                                <TableCell className="font-semibold text-white text-sm">{layer.role}</TableCell>
+                                <TableCell className="text-white/70 text-sm">{layer.function}</TableCell>
+                                <TableCell className="text-white/70 text-sm">{layer.cipDepth}</TableCell>
+                                <TableCell className="text-purple-400/80 text-sm font-mono">{layer.metaphor}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
                       </div>
                     </div>
 
