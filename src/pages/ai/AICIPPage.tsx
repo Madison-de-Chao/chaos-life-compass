@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Shield, Download, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Shield, Download, CheckCircle2, PlayCircle } from "lucide-react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
+import BeforeAfterDemo from "@/components/ai/BeforeAfterDemo";
 
 const AICIPPage = () => {
   useSEO({
@@ -250,6 +251,19 @@ const AICIPPage = () => {
 }`}
                 </pre>
               </div>
+            </section>
+
+            {/* Interactive Demo */}
+            <section className="mb-20">
+              <h2 className="text-3xl font-serif text-center mb-4">
+                <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">
+                  實際演示：Before / After
+                </span>
+              </h2>
+              <p className="text-center text-white/60 mb-8">
+                點擊切換，感受 CIP 協議帶來的差異
+              </p>
+              <BeforeAfterDemo />
             </section>
 
             {/* Download */}
