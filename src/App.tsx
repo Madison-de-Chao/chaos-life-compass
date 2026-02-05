@@ -64,6 +64,16 @@ import UnifiedDashboard from "./pages/member/UnifiedDashboard";
 import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
 import OAuthAuthorizePage from "./pages/member/OAuthAuthorizePage";
 
+// AI Portal Pages (AI 協作入口)
+import {
+  AIPortalPage,
+  AIWorldviewPage,
+  AICIPPage,
+  AIQuickstartPage,
+  AIDialoguePage,
+  AISafetyPage,
+} from "./pages/ai";
+
 // Account Pages
 import ProductsPage from "./pages/account/ProductsPage";
 
@@ -105,6 +115,14 @@ const App = () => (
                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/notes-public" element={<ComingSoonPage />} />
+                
+                {/* AI Portal routes - AI 協作入口 */}
+                <Route path="/ai" element={<AIPortalPage />} />
+                <Route path="/ai/worldview" element={<AIWorldviewPage />} />
+                <Route path="/ai/cip" element={<AICIPPage />} />
+                <Route path="/ai/quickstart" element={<AIQuickstartPage />} />
+                <Route path="/ai/dialogue" element={<AIDialoguePage />} />
+                <Route path="/ai/safety" element={<AISafetyPage />} />
                 
                 {/* Unified Auth routes - 統一會員系統 */}
                 <Route path="/auth/login" element={<UnifiedAuthPage />} />
