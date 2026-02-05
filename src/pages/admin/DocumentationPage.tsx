@@ -10,6 +10,8 @@
    AboutPageContent,
    ReportPageContent,
    GamesPageContent,
+  PrivacyPolicyPageContent,
+  TermsOfServicePageContent,
  } from "./documentation/PageContentSection";
  
  const DocumentationPage = () => {
@@ -59,6 +61,7 @@
                <li><a href="#overview" className="hover:text-primary">網站總覽</a></li>
                <li><a href="#public" className="hover:text-primary">公開頁面</a></li>
                <li><a href="#page-content" className="hover:text-primary">公開頁面詳細文字內容</a></li>
+                <li><a href="#legal-content" className="hover:text-primary">法律頁面詳細內容</a></li>
                <li><a href="#member" className="hover:text-primary">會員系統</a></li>
                <li><a href="#admin" className="hover:text-primary">管理後台</a></li>
                <li><a href="#documents" className="hover:text-primary">文件分享系統</a></li>
@@ -265,6 +268,42 @@
              </div>
            </section>
  
+          {/* 法律頁面詳細內容 */}
+          <section id="legal-content" className="mb-12 print:break-before-page">
+            <h2 className="text-2xl font-bold text-foreground print:text-black border-b border-border pb-2 mb-6">
+              法律頁面詳細內容
+            </h2>
+            <p className="text-muted-foreground print:text-gray-600 mb-6 text-sm">
+              以下為隱私政策和使用條款頁面的完整文字內容。
+            </p>
+            
+            <div className="space-y-8">
+              {/* 隱私政策 */}
+              <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200">
+                <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                  🔒 隱私政策 (PrivacyPolicyPage)
+                </h3>
+                <code className="text-xs text-primary/80 print:text-amber-600">/privacy</code>
+                <p className="text-sm text-muted-foreground mt-2">最後更新：2026年1月25日</p>
+                <div className="mt-4">
+                  <PrivacyPolicyPageContent />
+                </div>
+              </div>
+
+              {/* 使用條款 */}
+              <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                  📜 使用條款 (TermsOfServicePage)
+                </h3>
+                <code className="text-xs text-primary/80 print:text-amber-600">/terms</code>
+                <p className="text-sm text-muted-foreground mt-2">最後更新：2026年1月25日</p>
+                <div className="mt-4">
+                  <TermsOfServicePageContent />
+                </div>
+              </div>
+            </div>
+          </section>
+
            {/* 會員系統 */}
            <section id="member" className="mb-12 print:break-before-page">
              <h2 className="text-2xl font-bold text-foreground print:text-black border-b border-border pb-2 mb-6">
