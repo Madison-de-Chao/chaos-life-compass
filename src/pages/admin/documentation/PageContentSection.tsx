@@ -663,3 +663,156 @@
      </div>
    );
  }
+
+// 隱私政策頁面 (PrivacyPolicyPage) 內容
+export function PrivacyPolicyPageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="頁面開場">
+        <p className="text-muted-foreground italic">
+          「我們尊重您的隱私，並致力於保護您的個人資料。本隱私政策說明我們如何收集、使用、儲存和保護您的資訊。」
+        </p>
+      </ContentBlock>
+      
+      <ContentBlock title="資料收集">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>我們收集您主動提供的資訊，包括：姓名、電子郵件、出生資料（用於命理分析）。</li>
+          <li>我們自動收集的技術資訊包括：IP 位址、瀏覽器類型、裝置資訊、頁面瀏覽記錄。</li>
+          <li>我們使用 Cookie 和類似技術來改善您的使用體驗和網站功能。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="資料使用">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>提供、維護和改進我們的服務。</li>
+          <li>處理您的訂單和付款。</li>
+          <li>發送服務相關的通知和更新。</li>
+          <li>回應您的查詢和提供客戶支援。</li>
+          <li>進行數據分析以改善服務品質。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="資料保護">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>我們採用業界標準的加密技術保護您的資料傳輸。</li>
+          <li>敏感資料（如密碼）經過雜湊處理後儲存，我們無法還原。</li>
+          <li>我們實施嚴格的存取控制，僅授權人員可存取您的資料。</li>
+          <li>我們定期進行安全審計和漏洞掃描。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="資料分享">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>我們不會出售您的個人資料給第三方。</li>
+          <li>我們可能與以下對象分享資料：提供服務的合作夥伴（如付款處理商）、法律要求時的政府機關。</li>
+          <li>所有第三方合作夥伴均受嚴格的資料保護協議約束。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="您的權利">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>存取權：您可以要求查看我們持有的您的個人資料。</li>
+          <li>更正權：您可以要求更正不正確的資料。</li>
+          <li>刪除權：您可以要求刪除您的帳戶和相關資料。</li>
+          <li>可攜權：您可以要求以電子格式取得您的資料副本。</li>
+          <li>如需行使上述權利，請透過下方聯繫方式與我們聯繫。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="聯繫方式">
+        <p className="text-muted-foreground">電子郵件：privacy@momo-chao.com</p>
+        <p className="text-muted-foreground">服務時間：週一至週五 10:00 - 18:00（台灣時間）</p>
+      </ContentBlock>
+    </div>
+  );
+}
+
+// 使用條款頁面 (TermsOfServicePage) 內容
+export function TermsOfServicePageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="品牌哲學引言">
+        <div className="p-3 bg-muted/30 rounded print:bg-gray-100">
+          <p className="italic font-serif text-lg">「你不需要被告知你是誰，你只需要一面夠清晰的鏡子。」</p>
+          <p className="text-muted-foreground text-sm mt-1">我們的服務理念是幫助您認識自己，而非替您做決定。</p>
+        </div>
+      </ContentBlock>
+      
+      <ContentBlock title="服務條款接受">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>使用本網站及相關服務即表示您同意遵守本使用條款。</li>
+          <li>如果您不同意本條款的任何部分，請勿使用我們的服務。</li>
+          <li>我們保留隨時修改本條款的權利，修改後的條款將在本頁面公布。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="服務說明">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>我們提供命理報告、占卜分析、互動遊戲等數位內容服務。</li>
+          <li>所有命理相關內容僅供參考，不構成專業建議（醫療、法律、財務等）。</li>
+          <li>我們的服務是「照鏡子」而非「看劇本」——我們協助您認識自己，但最終決定權在您手中。</li>
+          <li>服務內容可能會不時更新或變更，恕不另行通知。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="帳戶責任">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>您須提供真實、準確的註冊資訊。</li>
+          <li>您有責任保護您的帳戶密碼安全。</li>
+          <li>您須為帳戶下發生的所有活動負責。</li>
+          <li>如發現未經授權的帳戶使用，請立即通知我們。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="禁止行為">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>未經授權複製、散布或轉售我們的內容。</li>
+          <li>企圖規避任何安全措施或存取控制。</li>
+          <li>使用自動化工具（爬蟲、機器人等）大量存取服務。</li>
+          <li>冒充他人或提供虛假身份資訊。</li>
+          <li>進行任何可能損害服務運作的行為。</li>
+          <li>將服務用於任何非法目的。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="智慧財產權">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>本網站的所有內容（文字、圖像、設計、程式碼等）均受著作權保護。</li>
+          <li>「默默超」、「超烜創意」、「虹靈御所」等商標為本公司所有。</li>
+          <li>未經書面授權，不得使用我們的商標或品牌素材。</li>
+          <li>您購買的報告僅供個人使用，不得轉售或公開分享。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="免責聲明">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>命理報告內容僅供參考，不保證預測準確性。</li>
+          <li>我們不對您基於服務內容所做的任何決定負責。</li>
+          <li>服務以「現狀」提供，不提供任何明示或暗示的保證。</li>
+          <li>對於因服務中斷、資料遺失等造成的損失，我們不承擔責任。</li>
+          <li>我們的責任以您支付的服務費用為上限。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="退款政策">
+        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+          <li>數位內容（報告、遊戲存取權等）一經交付即不可退款。</li>
+          <li>如服務存在重大技術問題導致無法使用，可申請退款或重新交付。</li>
+          <li>退款申請須在購買後 7 日內提出。</li>
+          <li>退款將以原付款方式退還。</li>
+        </ul>
+      </ContentBlock>
+      
+      <ContentBlock title="準據法與管轄">
+        <p className="text-muted-foreground">
+          本條款受中華民國法律管轄。因本條款引起的任何爭議，雙方同意以台灣台北地方法院為第一審管轄法院。
+        </p>
+      </ContentBlock>
+      
+      <ContentBlock title="聯繫方式">
+        <p className="text-muted-foreground">電子郵件：legal@momo-chao.com</p>
+        <p className="text-muted-foreground">服務時間：週一至週五 10:00 - 18:00（台灣時間）</p>
+      </ContentBlock>
+    </div>
+  );
+}
