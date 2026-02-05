@@ -2,6 +2,15 @@
  import { Button } from "@/components/ui/button";
  import { ArrowLeft, Printer, FileDown } from "lucide-react";
  import { Link } from "react-router-dom";
+ import {
+   PortalPageContent,
+   HomePageContent,
+   ChaoxuanPageContent,
+   UniversePageContent,
+   AboutPageContent,
+   ReportPageContent,
+   GamesPageContent,
+ } from "./documentation/PageContentSection";
  
  const DocumentationPage = () => {
    useEffect(() => {
@@ -49,6 +58,7 @@
              <ol className="list-decimal list-inside space-y-1 text-muted-foreground print:text-gray-700">
                <li><a href="#overview" className="hover:text-primary">網站總覽</a></li>
                <li><a href="#public" className="hover:text-primary">公開頁面</a></li>
+               <li><a href="#page-content" className="hover:text-primary">公開頁面詳細文字內容</a></li>
                <li><a href="#member" className="hover:text-primary">會員系統</a></li>
                <li><a href="#admin" className="hover:text-primary">管理後台</a></li>
                <li><a href="#documents" className="hover:text-primary">文件分享系統</a></li>
@@ -162,6 +172,96 @@
                  path="/privacy、/terms"
                  description="隱私政策：資料收集說明、隱私保護政策、Cookie 使用說明。服務條款：使用條款、服務範圍說明、責任限制。"
                />
+             </div>
+           </section>
+ 
+           {/* 會員系統 */}
+           {/* 公開頁面詳細文字內容 */}
+           <section id="page-content" className="mb-12 print:break-before-page">
+             <h2 className="text-2xl font-bold text-foreground print:text-black border-b border-border pb-2 mb-6">
+               公開頁面詳細文字內容
+             </h2>
+             <p className="text-muted-foreground print:text-gray-600 mb-8 text-sm">
+               以下為各頁面上實際呈現的主要文字內容收錄：
+             </p>
+             
+             <div className="space-y-10">
+               {/* 入口網站 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 入口網站 (PortalPage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/ 或 /portal</code>
+                 <div className="mt-4">
+                   <PortalPageContent />
+                 </div>
+               </div>
+ 
+               {/* 虹靈御所首頁 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 虹靈御所首頁 (HomePage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/home</code>
+                 <div className="mt-4">
+                   <HomePageContent />
+                 </div>
+               </div>
+ 
+               {/* 超烜創意 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 超烜創意 (ChaoxuanPage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/chaoxuan</code>
+                 <div className="mt-4">
+                   <ChaoxuanPageContent />
+                 </div>
+               </div>
+ 
+               {/* 元壹宇宙 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 元壹宇宙 (UniversePage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/universe</code>
+                 <div className="mt-4">
+                   <UniversePageContent />
+                 </div>
+               </div>
+ 
+               {/* 關於默默超 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 關於默默超 (AboutPage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/about</code>
+                 <div className="mt-4">
+                   <AboutPageContent />
+                 </div>
+               </div>
+ 
+               {/* 命理報告 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 命理報告 (ReportPage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/reports</code>
+                 <div className="mt-4">
+                   <ReportPageContent />
+                 </div>
+               </div>
+ 
+               {/* 超烜遊戲 */}
+               <div className="p-5 bg-muted/10 rounded-lg border border-border/50 print:bg-gray-50 print:border-gray-200 print:break-before-page">
+                 <h3 className="text-lg font-semibold text-foreground print:text-black mb-1">
+                   📍 超烜遊戲 (GamesPage)
+                 </h3>
+                 <code className="text-xs text-primary/80 print:text-amber-600">/games</code>
+                 <div className="mt-4">
+                   <GamesPageContent />
+                 </div>
+               </div>
              </div>
            </section>
  
