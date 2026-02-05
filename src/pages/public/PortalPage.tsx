@@ -59,6 +59,18 @@ const portalItems = [
     particleColor: "bg-emerald-300",
     borderColor: "border-emerald-400/20",
   },
+  {
+    title: "AI 專屬｜元壹宇宙 × CIP",
+    subtitle: "AI Collaboration Portal",
+    description: "人機協作時代的共誠協定，建立你與 AI 的專屬互動框架",
+    cta: "進入 AI 協作入口",
+    logo: null,
+    href: "/ai",
+    isExternal: false,
+    glowColor: "rgba(59, 130, 246, 0.35)",
+    particleColor: "bg-blue-300",
+    borderColor: "border-blue-400/20",
+  },
 ];
 
 // Gentle ambient music
@@ -798,7 +810,7 @@ export default function PortalPage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false]);
+  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
@@ -896,7 +908,7 @@ export default function PortalPage() {
 
   const replay = useCallback(() => {
     setShowPortal(false);
-    setCardsVisible([false, false, false, false]);
+    setCardsVisible([false, false, false, false, false]);
     setCurrentSection(0);
     setIsFading(false);
     setSpeedMultiplier(1);
