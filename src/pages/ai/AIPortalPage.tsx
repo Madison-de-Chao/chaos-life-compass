@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Compass, Shield, Zap, BookOpen, MessageSquare, Sparkles } from "lucide-react";
+import { ArrowRight, Compass, Shield, Zap, BookOpen, MessageSquare, Sparkles, FileText } from "lucide-react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,13 @@ const AIPortalPage = () => {
       title: "CIP 協議",
       subtitle: "共同完整性協議",
       description: "六大原則 + 三區輸出 + 工程規格",
+    },
+    {
+      to: "/ai/language",
+      icon: FileText,
+      title: "核心語言章",
+      subtitle: "賽博玄哲學 TRBC + C/D/H",
+      description: "四階層語言結構與資訊分級系統",
     },
     {
       to: "/ai/integrity",

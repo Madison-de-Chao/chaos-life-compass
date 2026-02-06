@@ -69,6 +69,7 @@ import {
   AIPortalPage,
   AIWorldviewPage,
   AICIPPage,
+  AILanguagePage,
   AIQuickstartPage,
   AIDialoguePage,
   AISafetyPage,
@@ -121,6 +122,7 @@ const App = () => (
                 <Route path="/ai" element={<AIPortalPage />} />
                 <Route path="/ai/worldview" element={<AIWorldviewPage />} />
                 <Route path="/ai/cip" element={<AICIPPage />} />
+                <Route path="/ai/language" element={<AILanguagePage />} />
                 <Route path="/ai/quickstart" element={<AIQuickstartPage />} />
                 <Route path="/ai/dialogue" element={<AIDialoguePage />} />
                 <Route path="/ai/safety" element={<AISafetyPage />} />
