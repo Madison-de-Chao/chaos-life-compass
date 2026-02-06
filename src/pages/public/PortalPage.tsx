@@ -17,7 +17,7 @@ const portalItems = [
   {
     title: "虹靈御所",
     subtitle: "Rainbow Sanctuary",
-    description: "可驗證、可回看、可落地的自我探索工具鏈",
+    description: "可驗證、可回看、可落地的自我探索工具鏈。玄可說清楚，選擇可回看。",
     cta: "進入虹靈御所",
     logo: logoHongling,
     href: "/home",
@@ -39,7 +39,7 @@ const portalItems = [
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
-    description: "結合東方命理與決策邏輯的自我探索系統",
+    description: "賽博玄哲學——用科技手段把東方玄學說清楚的自我探索系統",
     cta: "進入元壹宇宙",
     logo: logoYuanyi,
     href: "/universe",
@@ -50,7 +50,7 @@ const portalItems = [
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
-    description: "一個把思考做成工具的人",
+    description: "一個打工人把思考做成工具的故事",
     cta: "認識默默超",
     logo: null,
     href: "/about",

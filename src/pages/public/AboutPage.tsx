@@ -170,9 +170,9 @@ const AboutPage = () => {
             className="max-w-2xl mx-auto px-2"
           >
             <p className="text-white/40 text-base md:text-lg leading-relaxed">
-              在人機協作的末法時代，你不需要被告知你是誰，
+              可驗證、可回看、可落地的自我探索工具鏈。
               <span className="hidden md:inline"><br /></span>
-              你只需要一面夠清晰的鏡子。
+              玄可說清楚，選擇可回看。
             </p>
           </motion.div>
 
@@ -244,7 +244,7 @@ const AboutPage = () => {
                 <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Mirror, Not Script</p>
                 <p className="text-white/70 leading-relaxed text-base md:text-lg">
                   我們不提供「命定結論」，我們提供「可驗證的下一步」。
-                  每個判斷都標註依據，區分事實/推導/假設。
+                  每個判斷都標註依據（C/D/H 分級），區分文獻共識、系統推導與設計假設。
                 </p>
               </motion.div>
 
@@ -256,7 +256,7 @@ const AboutPage = () => {
                 <p className="text-white/60 font-serif text-base md:text-lg leading-relaxed italic relative z-10">
                   「默默超思維一句話：把話說清楚，把事做完整；自由不是有選擇權，而是可以選擇不選。」
                 </p>
-                <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人故事</p>
+                <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人 MOMO CHAO</p>
               </motion.div>
             </motion.div>
           </div>
@@ -324,7 +324,7 @@ const AboutPage = () => {
             transition={{ delay: 0.3 }}
             className="text-center text-white/40 mt-6 md:mt-8 text-xs md:text-sm px-4"
           >
-            「錯誤是材料，不是懲罰。」— 元壹系統核心理念
+            「錯誤不是廢棄物，是通往完整的材料。」— 完整性哲學 L0
           </motion.p>
         </div>
       </section>
@@ -352,6 +352,9 @@ const AboutPage = () => {
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
               喚醒 Awaken・篩選 Filter・賦能 Empower
             </p>
+            <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
+              Care &amp; Truth — 永恆不息的關懷與真誠
+            </p>
           </motion.div>
 
           <motion.div
@@ -366,7 +369,7 @@ const AboutPage = () => {
                 icon: Eye,
                 title: "喚醒",
                 subtitle: "Awaken",
-                content: "提醒你本來就有，請別放棄相信自己。"
+                content: "提醒你本來就有，請別放棄相信自己。不是要改變你，是要喚醒你本來就有的東西。"
               },
               {
                 icon: Heart,
@@ -445,13 +448,14 @@ const AboutPage = () => {
                 但默默超相信：<span className="text-amber-400/80">真正的力量不在於知道未來，而在於理解自己。</span>
               </motion.p>
               <motion.p variants={itemVariants}>
-                當你理解自己的運作方式——情緒如何流動、行動如何驅動、心智如何建構、價值如何選擇——
-                你就不再需要別人告訴你該怎麼做。
+                元壹宇宙是這套體系的作業系統，所有站點都建立在「賽博玄哲學」框架上——
+                用科技手段，把東方玄學說清楚的哲學系統。
+                <span className="text-white/50">玄不是說不清楚，玄是還沒被說清楚；我們的工作就是把它說清楚。</span>
               </motion.p>
               <motion.p variants={itemVariants} className="text-white/50 text-sm md:text-base">
-                這就是虹靈御所存在的意義：
+                虹靈御所存在的意義：
                 <span className="hidden md:inline"><br /></span>
-                不是給你劇本，而是幫你擦亮那面鏡子。
+                不是給你劇本，只給可回驗路徑。
               </motion.p>
             </motion.div>
           </motion.div>

@@ -340,7 +340,7 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-white/60 mb-4 font-serif"
           >
-            Yuan-Yi Universe — A Civilization-Level Living Methodology
+            賽博玄哲學 — 用科技手段，把東方玄學說清楚
           </motion.p>
 
           <motion.p
@@ -349,8 +349,8 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            不是一套知識，而是一種活法。<br />
-            在複雜世界中，找到屬於自己的運作方式。
+            可驗證、可回看、可落地的自我探索工具鏈。<br />
+            玄不是說不清楚，玄是還沒被說清楚。
           </motion.p>
 
           <motion.div
@@ -426,17 +426,42 @@ const UniversePage = () => {
             </div>
             <div className="font-serif text-lg md:text-xl leading-relaxed text-white/80 text-center space-y-6">
               <p>
-                元壹宇宙是一套<span className="text-amber-400">文明級的生活方法論</span>。
+                元壹宇宙是默默超元壹體系的<span className="text-amber-400">作業系統</span>，
+                所有站點都建立在這個哲學框架上。
               </p>
               <p className="text-white/60">
-                它不教你如何成功，<br />
-                而是教你如何在任何處境中，都能保持清醒與整合。
+                我們稱它為「賽博玄哲學」——<br />
+                用科技手段，把東方玄學說清楚的哲學系統。
               </p>
               <p className="text-white/50">
-                成功是結果，而非目標。<br />
-                當你真正理解自己的運作方式，<br />
-                成功只是副產品。
+                三大支柱：<span className="text-amber-400/80">完整性</span>（看見全部的完整）・
+                <span className="text-amber-400/80">弧度</span>（彎路是抵達完整的必要路徑）・
+                <span className="text-amber-400/80">成就律</span>（明暗相成，非為相照）
               </p>
+            </div>
+
+            {/* Seven Layer Architecture */}
+            <div className="mt-10 pt-8 border-t border-white/10">
+              <h3 className="text-xl font-serif font-bold text-center text-amber-400 mb-6">七層架構</h3>
+              <div className="space-y-3">
+                {[
+                  { layer: "L0", name: "完整性哲學", desc: "錯誤不是廢棄物，是通往完整的材料" },
+                  { layer: "L1", name: "九源歸一", desc: "人類提供關懷，AI 提供清晰，協作才是新文明" },
+                  { layer: "L2", name: "元壹宇宙世界觀", desc: "元壹（同源）、緣壹（連結）、圓壹（完整）" },
+                  { layer: "L3", name: "七大無二法則", desc: "萬物本無二，所有弧度終將歸一" },
+                  { layer: "L4", name: "默默超思維系統", desc: "把哲學變成可操作的工具與方法論" },
+                  { layer: "L5", name: "虹靈御所", desc: "理論落地的場域，六大站點的實作層" },
+                  { layer: "L6", name: "CIP 創造完整性協定", desc: "對齊事，不裁人——AI 時代的協作規範" },
+                ].map((item) => (
+                  <div key={item.layer} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+                    <span className="text-amber-400 font-mono font-bold text-sm w-8 flex-shrink-0 pt-0.5">{item.layer}</span>
+                    <div>
+                      <span className="text-white/80 font-medium text-sm">{item.name}</span>
+                      <span className="text-white/40 text-sm ml-2">— {item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
