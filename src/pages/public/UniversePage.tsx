@@ -455,9 +455,9 @@ const UniversePage = () => {
                 ].map((item) => (
                   <div key={item.layer} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
                     <span className="text-amber-400 font-mono font-bold text-sm w-8 flex-shrink-0 pt-0.5">{item.layer}</span>
-                    <div>
-                      <span className="text-white/80 font-medium text-sm">{item.name}</span>
-                      <span className="text-white/40 text-sm ml-2">— {item.desc}</span>
+                    <div className="min-w-0">
+                      <span className="text-white/80 font-medium text-sm block">{item.name}</span>
+                      <span className="text-white/40 text-xs md:text-sm block mt-0.5">{item.desc}</span>
                     </div>
                   </div>
                 ))}
