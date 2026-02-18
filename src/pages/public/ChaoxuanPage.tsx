@@ -259,15 +259,15 @@ const ChaoxuanPage = () => {
                 transform: `translateY(${scrollY * 0.05}px)`,
               }}
             >
-              品牌設計、行銷策略、IP 開發、命理定位、企業培訓<br className="hidden md:block" />
-              六個場域，各司其職，只做能落地的事
+              品牌整合、行銷策略、IP 開發、命理定位、企業培訓<br className="hidden md:block" />
+              六個場域各司其職——你不需要用全部，只用你需要的
             </p>
 
             <p 
               className="text-sm text-[#f5f5f0]/40 mb-10 max-w-2xl mx-auto animate-fade-in"
               style={{ animationDelay: "0.55s" }}
             >
-              不賣夢想、不灌雞湯。你帶著問題來，我們給結構、給選項、給代價評估。決定權在你。
+              不賣夢想、不灌雞湯、不做場面話。你帶著問題來，我們先評估能不能幫、怎麼幫、代價是什麼，再決定要不要開始。
             </p>
 
             <div 
@@ -319,10 +319,10 @@ const ChaoxuanPage = () => {
             <RevealSection delay={200}>
               <div className="space-y-8 text-lg text-[#f5f5f0]/55 leading-[2]">
                 <p>
-                  超烜創意做的事很簡單：幫你把品牌的核心價值翻譯成市場聽得懂的語言。不是「幫你找到靈魂」這種說法——你的品牌有什麼、缺什麼，我們會直接講。
+                  超烜創意做的事：幫你把品牌的核心價值翻譯成市場聽得懂的語言，然後落地。不是「幫你找到品牌靈魂」——你的品牌有什麼、缺什麼、哪裡會翻車，我們直接講。
                 </p>
                 <p>
-                  四個支柱：<span className="text-[#c9a962] font-medium">美學設計</span>負責讓人記住你；<span className="text-[#c9a962] font-medium">策略行銷</span>負責讓對的人找到你；<span className="text-[#c9a962] font-medium">原創 IP</span> 負責讓你有可延伸的資產；<span className="text-[#c9a962] font-medium">命理定位</span>負責讓你在做重大決策前看清結構。四個都可以單獨用，不需要綁在一起。
+                  四個支柱：<span className="text-[#c9a962] font-medium">美學設計</span>負責讓人三秒記住你；<span className="text-[#c9a962] font-medium">策略行銷</span>負責讓對的人願意留下來；<span className="text-[#c9a962] font-medium">原創 IP</span> 負責讓你有可延伸的品牌資產；<span className="text-[#c9a962] font-medium">命理定位</span>負責在重大決策前把結構翻出來看。四個獨立運作，不綁套餐。
                 </p>
               </div>
             </RevealSection>
@@ -442,10 +442,10 @@ const ChaoxuanPage = () => {
             <RevealSection delay={200}>
               <div className="space-y-8 text-[#f5f5f0]/55 leading-[2] text-lg">
                 <p>
-                  16 年品牌行銷、公關策略與策展實戰。不是理論派，是每個案子都親手做過的人。擅長的事：把模糊的品牌概念翻譯成可執行的策略，然後落地。
+                  16 年品牌行銷、公關策略與策展實戰，外加命理系統的深度研究與實務應用。不是理論派，是每個案子都親手做過、每份報告都親自寫的人。擅長的事：把模糊的問題翻譯成可操作的選項，然後落地執行。
                 </p>
                 <p>
-                  合作過的品牌包括 Samsung、LINE、MediaTek、SEIKO、DIOR、COACH、晶華酒店、文華東方、台灣啤酒等。這些名字放在這裡不是炫耀——是讓你知道我們處理過什麼量級的問題。
+                  合作過的品牌包括 Samsung、LINE、MediaTek、SEIKO、DIOR、COACH、晶華酒店、文華東方、台灣啤酒等。這些名字放在這裡不是炫耀——是讓你知道我們處理過什麼量級的問題，以及我們對「交付標準」的定義。
                 </p>
               </div>
             </RevealSection>
