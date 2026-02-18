@@ -416,7 +416,7 @@ const faqs = [
   },
   {
     q: "多久可以收到報告？",
-    a: "基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。合盤報告另計。每份都是人工逐字寫的，不套模板，所以快不了。",
+    a: "旗艦版個人報告 12-18 個工作天。合盤報告 10-15 個工作天。每份都是人工逐字寫的，不套模板，所以快不了。",
   },
   {
     q: "這跟算命有什麼不同？",
@@ -431,8 +431,12 @@ const faqs = [
     a: "不會。所有神煞一律翻譯成心理狀態、能量模式或「兵符效果」。不恐嚇。如果一個東西只能拿來嚇人，那它就沒有用處。",
   },
   {
-    q: "合盤報告是什麼？",
-    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提是主要測算人須先完成個人旗艦版報告。",
+    q: "合盤報告是什麼？需要什麼前提？",
+    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提：主要測算人須先完成個人旗艦版報告。",
+  },
+  {
+    q: "為什麼個人報告只有旗艦版？",
+    a: "因為命盤分析如果只做一半，不如不做。淺層解讀容易被誤解、被斷章取義。旗艦版是我認為能完整交付的最低標準——包含思維系統、四時軍團、全方位風險提醒。少了這些，報告只是「認識自己」，做不到「使用自己」。",
   },
 ];
 
@@ -442,12 +446,6 @@ const testimonials = [
     name: "子謙",
     title: "創意總監 / 旗艦版用戶",
     content: "我以前算過很多次命，老師都說我『想太多』。只有這份旗艦版報告，精準地拆解了我的『想太多』其實是『多維度運算』。它提供的『情緒權威SOP』救了我的決策焦慮。這份報告不是給我心靈雞湯，而是給了我一套能駕馭我這台複雜機器的操作手冊。",
-  },
-  {
-    quote: "像是在看自己的原廠設定集，準到起雞皮疙瘩。",
-    name: "雅婷",
-    title: "行銷經理 / 標準版用戶",
-    content: "標準版的內容就已經讓我非常驚艷！它把我的紫微和人類圖結合得天衣無縫，特別是『外在性格』與『內在個性』的反差分析，完全說中了我一直以來的矛盾感。現在我知道在職場上該如何運用我的優勢了，CP值極高！",
   },
   {
     quote: "終於有人用邏輯說服了我。",
@@ -462,22 +460,10 @@ const testimonials = [
     content: "作為專業助人工作者，我對這類服務一直抱持懷疑態度。但這份報告讓我驚艷——它用系統化的語言精準描述了我在親密關係中的盲點。『投射者策略』的解讀幫助我調整了與個案互動的節奏，連帶影響了我的職業發展。這是一份專業級的自我理解工具。",
   },
   {
-    quote: "比任何職涯顧問都更懂我的困境。",
-    name: "俊宏",
-    title: "金融業主管 / 標準版用戶",
-    content: "我卡在升遷瓶頸好幾年，找了很多教練、上了很多課，都沒能突破。這份報告點出我『過度依賴外在肯定』的根本原因，並給了我具體的『內在權威』練習方法。三個月後我不再焦慮升遷問題，反而因為狀態改變，機會自己找上門了。",
-  },
-  {
-    quote: "給我的不是答案，是一面看清自己的鏡子。",
-    name: "思涵",
-    title: "自由接案者 / 精簡版用戶",
-    content: "精簡版雖然字數較少，但精準度一點都沒打折！它幫助我理解為什麼我總是接到不適合的案子，並教會我如何設定界線。現在我的案源品質提升，收入反而更穩定了。這份報告的CP值超高，大推薦給預算有限的朋友！",
-  },
-  {
-    quote: "八年婚姻的謎題，在報告裡找到解答。",
+    quote: "合盤報告讓我們八年的僵局有了突破口。",
     name: "宜珊",
-    title: "全職媽媽 / 旗艦版用戶",
-    content: "我和先生結婚八年，總覺得彼此溝通有一道看不見的牆。這份報告讓我理解我們的『能量類型』完全不同，需要不同的相處策略。我把報告中關於關係的章節整理給先生看，我們的互動品質有了明顯改善。這錢花得太值得了！",
+    title: "全職媽媽 / 感情合盤用戶",
+    content: "我和先生結婚八年，總覺得彼此溝通有一道看不見的牆。合盤報告讓我理解我們的『能量類型』完全不同，需要不同的相處策略。它不是告訴我們配不配，而是攤開結構讓我們自己看——哪裡共振、哪裡碰撞。互動品質明顯改善。",
   },
   {
     quote: "創業路上的戰略地圖，少走三年彎路。",
@@ -485,25 +471,37 @@ const testimonials = [
     title: "新創創辦人 / 旗艦版用戶",
     content: "創業前夕看到這份報告，簡直是天降甘霖。它精準分析了我的『財運結構』和『事業節奏』，讓我避開了幾個重大決策失誤。特別是『神煞兵符』的解讀，把原本聽起來很可怕的『劫財』變成我的競爭優勢運用指南。這是創業者必備的自我說明書。",
   },
+  {
+    quote: "商業合盤讓我看清楚合夥人的互補和風險。",
+    name: "俊宏",
+    title: "金融業主管 / 商業合盤用戶",
+    content: "跟合夥人卡在決策模式不同已經很久了。商業合盤不是告訴我們誰對誰錯，而是把兩個人的決策結構、溝通模式和風險偏好全部攤開來對照。看完之後我們調整了分工方式，效率直接提升。這錢花得太值。",
+  },
 ];
 
-// Pricing data - three tiers
-const basicPricing = [
-  { plan: "核心包", price: "1,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "人生羅盤圖 x1"], days: 5 },
-  { plan: "深度吸收包", price: "2,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 7 },
-  { plan: "完整校準包", price: "4,980", features: ["方案2 全部內容", "摘要影片", "一對一對談 30 分鐘"], days: 9 },
-];
-
-const standardPricing = [
-  { plan: "核心包", price: "4,980", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 7 },
-  { plan: "深度吸收包", price: "7,980", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 9 },
-  { plan: "完整校準包", price: "12,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 12 },
-];
-
+// Pricing data - flagship only + 合盤 products
 const flagshipPricing = [
   { plan: "核心包", price: "12,800", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 12 },
   { plan: "深度吸收包", price: "16,800", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 14 },
   { plan: "完整校準包", price: "24,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 18 },
+];
+
+const lovePricing = [
+  { plan: "核心包", price: "8,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "關係結構圖 x1"], days: 10 },
+  { plan: "深度吸收包", price: "12,800", features: ["方案1 全部內容", "語音摘要", "雙人簡報（PDF）"], days: 12 },
+  { plan: "完整校準包", price: "18,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
+];
+
+const businessPricing = [
+  { plan: "核心包", price: "9,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "合作結構圖 x1"], days: 10 },
+  { plan: "深度吸收包", price: "14,800", features: ["方案1 全部內容", "語音摘要", "商業策略簡報（PDF）"], days: 12 },
+  { plan: "完整校準包", price: "19,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
+];
+
+const parentChildPricing = [
+  { plan: "核心包", price: "7,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "親子結構圖 x1"], days: 10 },
+  { plan: "深度吸收包", price: "11,800", features: ["方案1 全部內容", "語音摘要", "教養策略簡報（PDF）"], days: 12 },
+  { plan: "完整校準包", price: "16,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
 ];
 
 const planIncludes = [
@@ -660,8 +658,8 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超命理解讀報告 | 個人報告・感情合盤・商業合盤・親子合盤",
-    description: "四系統交叉驗證命理報告，翻結構、問問題、給選項。個人報告三版本＋三種合盤解讀。100% 客製化，不套模板，不預測命運。",
+    title: "默默超命理解讀報告 | 旗艦版個人報告・感情合盤・商業合盤・親子合盤",
+    description: "四系統交叉驗證命理報告，翻結構、問問題、給選項。旗艦版個人報告＋三種合盤解讀。100% 客製化，不套模板，不預測命運。",
     keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超",
     ogTitle: "默默超命理解讀報告 - 翻結構、問問題、給選項",
   });
@@ -1777,7 +1775,7 @@ const ReportPage = () => {
         </div>
       </section>
 
-      {/* Three Versions Section - Updated for 3 versions */}
+      {/* Products Section - Flagship + 合盤 */}
       <section 
         id="versions"
         ref={(el) => (observerRefs.current['versions'] = el)}
@@ -1786,148 +1784,185 @@ const ReportPage = () => {
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              您的生命，需要哪種級別的解析？
+              產品線總覽
             </h2>
             <p className="text-white/50 text-lg md:text-xl">
-              三種版本，對應不同階段的生命需求
+              一份個人旗艦版，三種合盤解讀
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Basic Version */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Flagship Version */}
+            <div className={`group relative lg:col-span-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
+              
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden">
+                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
+                
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
+                    <Crown className="w-4 h-4" />
+                    個人報告
+                  </span>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8 pt-4 relative z-10">
+                  <div>
+                    <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
+                      旗艦版 Flagship
+                    </span>
+                    <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
+                      【使用自己】
+                    </h3>
+                    <p className="text-lg text-amber-300/90 mb-3 font-serif">
+                      人生操作導航系統
+                    </p>
+                    <p className="text-white/50 text-sm mb-6">
+                      不是「認識自己」就夠了。旗艦版是我認為能完整交付的最低標準——包含思維系統、四時軍團、全方位風險提醒。少了這些，報告只是一面鏡子，做不到「教你怎麼用自己」。
+                    </p>
+                  </div>
+                  <div>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-start gap-3 text-white/70 text-sm">
+                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <span>10 章完整系統，含思維工具箱＋四時軍團</span>
+                      </div>
+                      <div className="flex items-start gap-3 text-white/70 text-sm">
+                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <span>默默超思維系統完整教學（情緒/行動/心智/價值）</span>
+                      </div>
+                      <div className="flex items-start gap-3 text-white/70 text-sm">
+                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <span>約 10,000-12,000 字人生操作系統</span>
+                      </div>
+                      <div className="flex items-start gap-3 text-white/70 text-sm">
+                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <span>12-18 個工作天交付</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                      <p className="text-amber-300/90 italic text-sm">
+                        適合：想搞清楚自己怎麼運作、怎麼用的人。不分職業、不分年齡。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* 感情合盤 */}
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
               <div className="mb-6">
-                <span className="inline-block px-4 py-1.5 bg-white/10 text-white/70 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  基本版 Basic
+                <span className="inline-block px-4 py-1.5 bg-rose-500/20 text-rose-300 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  感情合盤
                 </span>
                 <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                  【認識自己】
+                  關係結構解讀
                 </h3>
-                <p className="text-lg text-white/60 mb-3 font-serif">
-                  生命起點說明書
-                </p>
-                <p className="text-white/40 text-sm">
-                  第一次接觸命理、想快速了解自己的基本配置
+                <p className="text-white/50 text-sm">
+                  不是算你們配不配。是把兩個人的能量結構攤開來，看哪裡共振、哪裡碰撞、怎麼相處最省力。誰該先讓步不是道德問題，是結構問題。
                 </p>
               </div>
               
               <div className="space-y-3 mb-6">
-                <div className="flex items-start gap-3 text-white/50 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
-                  <span>5 章核心內容，濃縮精華</span>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
+                  <span>雙方四系統交叉比對</span>
                 </div>
-                <div className="flex items-start gap-3 text-white/50 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
-                  <span>讓你知道「你是誰」＋「有解」</span>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
+                  <span>溝通模式、依附風格、衝突觸發點分析</span>
                 </div>
-                <div className="flex items-start gap-3 text-white/50 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-white/40 mt-0.5 flex-shrink-0" />
-                  <span>約 3,000-4,000 字精煉解讀</span>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
+                  <span>具體相處策略與底線設定建議</span>
                 </div>
               </div>
               
-              <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                <p className="text-white/50 italic text-sm">
-                  適合：首次接觸、預算有限、快速入門者
+              <div className="p-4 bg-rose-500/5 rounded-xl border border-rose-500/10">
+                <p className="text-rose-300/70 italic text-sm">
+                  前提：主要測算人須先完成個人旗艦版報告
                 </p>
               </div>
             </div>
             
-            {/* Standard Version */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+            {/* 商業合盤 */}
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
               <div className="mb-6">
                 <span className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  標準版 Standard
+                  商業合盤
                 </span>
                 <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                  【看懂自己】
+                  合作結構解讀
                 </h3>
-                <p className="text-lg text-blue-300/80 mb-3 font-serif">
-                  生命高畫質鏡子
-                </p>
-                <p className="text-white/40 text-sm">
-                  想完整理解個性與運作模式，獲得深度自我解析
+                <p className="text-white/50 text-sm">
+                  合夥、僱傭、師徒——任何商業關係都有結構。這份報告拆解雙方的決策模式、風險偏好、領導風格，然後告訴你們怎麼分工最不容易翻車。
                 </p>
               </div>
               
               <div className="space-y-3 mb-6">
                 <div className="flex items-start gap-3 text-white/60 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>8 章完整解析，涵蓋人生八大面向</span>
+                  <span>決策模式與風險偏好比對</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/60 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>事業、愛情、金錢三大領域深度分析</span>
+                  <span>最佳分工結構與溝通策略</span>
                 </div>
                 <div className="flex items-start gap-3 text-white/60 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>約 6,000-8,000 字完整說明書</span>
+                  <span>潛在衝突預警與止損機制</span>
                 </div>
               </div>
               
               <div className="p-4 bg-blue-500/5 rounded-xl border border-blue-500/10">
                 <p className="text-blue-300/70 italic text-sm">
-                  適合：追求完整解析、想深度認識自己者
+                  前提：主要測算人須先完成個人旗艦版報告
                 </p>
               </div>
             </div>
             
-            {/* Flagship Version */}
-            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
+            {/* 親子合盤 */}
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-500 hover:-translate-y-2 lg:col-span-2 lg:max-w-[50%] lg:mx-auto ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
+              <div className="mb-6">
+                <span className="inline-block px-4 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  親子合盤
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
+                  教養結構解讀
+                </h3>
+                <p className="text-white/50 text-sm">
+                  你的教養方式和孩子的接收方式是不是同一個頻道？這份報告拆解親子之間的能量匹配度、溝通斷層，以及「你以為對孩子好但其實在消耗他」的盲點。
+                </p>
+              </div>
               
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full hover:-translate-y-2">
-                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
-                
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
-                    <Star className="w-4 h-4" />
-                    推薦
-                  </span>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
+                  <span>親子能量類型匹配度分析</span>
                 </div>
-                
-                <div className="mb-6 pt-4 relative z-10">
-                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
-                    旗艦版 Flagship
-                  </span>
-                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                    【使用自己】
-                  </h3>
-                  <p className="text-lg text-amber-300/90 mb-3 font-serif">
-                    人生操作導航系統
-                  </p>
-                  <p className="text-white/50 text-sm">
-                    渴望系統化重組人生、學會駕馭自己的能量
-                  </p>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
+                  <span>教養盲點辨識與調整建議</span>
                 </div>
-                
-                <div className="space-y-3 mb-6 relative z-10">
-                  <div className="flex items-start gap-3 text-white/70 text-sm">
-                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span>10 章完整系統，含思維工具箱＋四時軍團</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-white/70 text-sm">
-                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span>默默超思維系統完整教學（情緒/行動/心智/價值）</span>
-                  </div>
-                  <div className="flex items-start gap-3 text-white/70 text-sm">
-                    <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <span>約 10,000-12,000 字人生操作系統</span>
-                  </div>
+                <div className="flex items-start gap-3 text-white/60 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
+                  <span>適齡溝通策略（依孩子發展階段）</span>
                 </div>
-                
-                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20 relative z-10">
-                  <p className="text-amber-300/90 italic text-sm">
-                    適合：創業者、高敏感族群、追求靈魂進化者
-                  </p>
-                </div>
+              </div>
+              
+              <div className="p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
+                <p className="text-emerald-300/70 italic text-sm">
+                  前提：主要測算人（家長）須先完成個人旗艦版報告
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Detailed Version Comparison Table */}
+      {/* Flagship Chapter Overview */}
       <section 
         id="version-comparison"
         ref={(el) => (observerRefs.current['version-comparison'] = el)}
@@ -1935,194 +1970,57 @@ const ReportPage = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
         
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-5xl relative z-10">
           <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-              章節內容詳細對比
+              旗艦版章節內容
             </h2>
             <p className="text-white/50 text-lg">
-              三版本完整功能差異一覽
+              10 章完整系統・10,000-12,000 字
             </p>
           </div>
           
-          {/* Desktop Table */}
-          <div className={`hidden md:block overflow-x-auto rounded-3xl border border-white/10 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <table className="w-full">
-              <thead>
-                <tr className="bg-white/5">
-                  <th className="text-left p-5 text-white font-semibold border-b border-white/10">章節模組</th>
-                  <th className="p-5 border-b border-slate-500/20 min-w-[140px] bg-slate-500/5">
-                    <div className="text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-500/20 text-slate-300 text-xs mb-1">
-                        <BookOpen className="w-3 h-3" />
-                        基本版
-                      </span>
-                      <span className="block text-slate-400/80 text-xs">認識自己</span>
-                    </div>
-                  </th>
-                  <th className="p-5 border-b border-blue-500/20 min-w-[140px] bg-blue-500/5">
-                    <div className="text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-xs mb-1">
-                        <Eye className="w-3 h-3" />
-                        標準版
-                      </span>
-                      <span className="block text-blue-300/60 text-xs">看懂自己</span>
-                    </div>
-                  </th>
-                  <th className="p-5 border-b border-amber-500/30 min-w-[140px] bg-amber-500/10">
-                    <div className="text-center">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/30 text-amber-300 text-xs mb-1">
-                        <Crown className="w-3 h-3" />
-                        旗艦版
-                      </span>
-                      <span className="block text-amber-300/60 text-xs">使用自己</span>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {[
-                  { feature: "Ch.1 開場引言", basic: "✓ 精簡版", standard: "✓ 完整版", flagship: "✓ 完整版", basicDesc: "簡潔破題", standardDesc: "完整情境鋪陳", flagshipDesc: "深度情境引導" },
-                  { feature: "Ch.2 基本資料總覽", basic: "✓", standard: "✓", flagship: "✓", basicDesc: "四系統概覽", standardDesc: "四系統詳解", flagshipDesc: "四系統深度剖析" },
-                  { feature: "Ch.3 人生羅盤圖", basic: "✓ 單圖", standard: "✓ 整合圖", flagship: "✓ 完整導航圖", basicDesc: "基礎定位", standardDesc: "交叉整合", flagshipDesc: "多維導航系統" },
-                  { feature: "Ch.4 你是誰", basic: "✓ 精簡", standard: "✓ 完整", flagship: "✓ 深度", basicDesc: "核心特質速寫", standardDesc: "外在/內在完整分析", flagshipDesc: "多層次人格解構" },
-                  { feature: "Ch.5 你怎麼運作", basic: "—", standard: "✓", flagship: "✓", standardDesc: "情緒/思考模式", flagshipDesc: "運作機制完整拆解" },
-                  { feature: "Ch.6 三大領域", basic: "—", standard: "✓ 事業/愛情/金錢", flagship: "✓ 深度整合", standardDesc: "三領域獨立分析", flagshipDesc: "領域交互影響剖析" },
-                  { feature: "Ch.7 特別注意事項", basic: "—", standard: "✓ 精簡", flagship: "✓ 完整", standardDesc: "重點警示", flagshipDesc: "全方位風險提醒" },
-                  { feature: "Ch.8 結語與祝福", basic: "✓ 精簡", standard: "✓ 完整", flagship: "✓ 深度", basicDesc: "簡短祝福", standardDesc: "完整總結", flagshipDesc: "人生展望與行動呼籲" },
-                  { feature: "Ch.9 思維工具箱", basic: "—", standard: "—", flagship: "✓ 專屬", flagshipDesc: "思維啟動器＋過程圖", highlight: true },
-                  { feature: "Ch.10 四時軍團", basic: "—", standard: "—", flagship: "✓ 專屬", flagshipDesc: "RPG式八字軍團敘事", highlight: true },
-                  { feature: "總字數", basic: "3-4千字", standard: "6-8千字", flagship: "1-1.2萬字", isText: true },
-                  { feature: "製作工時", basic: "5-9 天", standard: "7-12 天", flagship: "12-18 天", isText: true },
-                ].map((row, idx) => (
-                  <tr key={idx} className={`${row.highlight ? 'bg-amber-500/5' : ''} hover:bg-white/5 transition-colors`}>
-                    <td className="p-4 text-white text-sm font-medium">
-                      {row.feature}
-                    </td>
-                    <td className={`p-4 text-center ${row.highlight ? '' : 'bg-slate-500/5'}`}>
-                      {row.isText ? (
-                        <span className="text-slate-300 text-sm font-medium">{row.basic}</span>
-                      ) : row.basic === "—" ? (
-                        <X className="w-4 h-4 text-white/20 mx-auto" />
-                      ) : (
-                        <div>
-                          <span className="text-slate-300 text-xs">{row.basic}</span>
-                          {row.basicDesc && <p className="text-white/30 text-[10px] mt-0.5">{row.basicDesc}</p>}
-                        </div>
-                      )}
-                    </td>
-                    <td className={`p-4 text-center ${row.highlight ? '' : 'bg-blue-500/5'}`}>
-                      {row.isText ? (
-                        <span className="text-blue-300 text-sm font-medium">{row.standard}</span>
-                      ) : row.standard === "—" ? (
-                        <X className="w-4 h-4 text-white/20 mx-auto" />
-                      ) : (
-                        <div>
-                          <span className="text-blue-300 text-xs">{row.standard}</span>
-                          {row.standardDesc && <p className="text-blue-300/50 text-[10px] mt-0.5">{row.standardDesc}</p>}
-                        </div>
-                      )}
-                    </td>
-                    <td className={`p-4 text-center ${row.highlight ? 'bg-amber-500/10' : 'bg-amber-500/5'}`}>
-                      {row.isText ? (
-                        <span className="text-amber-400 text-sm font-bold">{row.flagship}</span>
-                      ) : row.flagship === "—" ? (
-                        <X className="w-4 h-4 text-white/20 mx-auto" />
-                      ) : (
-                        <div>
-                          <span className="text-amber-300 text-xs font-medium">{row.flagship}</span>
-                          {row.flagshipDesc && <p className="text-amber-300/60 text-[10px] mt-0.5">{row.flagshipDesc}</p>}
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Chapter List */}
+          <div className={`space-y-3 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {[
+              { ch: "1", title: "開場引言", desc: "深度情境引導，為整份報告建立對話基調", color: "border-white/20" },
+              { ch: "2", title: "基本資料總覽", desc: "四系統核心數據深度剖析", color: "border-white/20" },
+              { ch: "3", title: "人生羅盤圖", desc: "四系統整合的多維導航系統", color: "border-white/20" },
+              { ch: "4", title: "你是誰", desc: "多層次人格解構——外在表現、內在動機、隱藏模式", color: "border-white/20" },
+              { ch: "5", title: "你怎麼運作", desc: "情緒迴路、思考模式、決策系統完整拆解", color: "border-white/20" },
+              { ch: "6", title: "三大領域", desc: "事業、愛情、金錢——領域交互影響深度剖析", color: "border-white/20" },
+              { ch: "7", title: "特別注意事項", desc: "全方位風險提醒與神煞兵符解讀", color: "border-white/20" },
+              { ch: "8", title: "結語與展望", desc: "人生展望與行動呼籲", color: "border-white/20" },
+              { ch: "9", title: "思維工具箱", desc: "思維啟動器＋過程圖——你的心智操作系統", color: "border-amber-500/40", highlight: true },
+              { ch: "10", title: "四時軍團", desc: "RPG 式八字軍團敘事——你的先天戰隊配置", color: "border-amber-500/40", highlight: true },
+            ].map((item, idx) => (
+              <div 
+                key={idx}
+                className={`flex items-center gap-4 p-5 rounded-2xl bg-white/5 border ${item.color} hover:border-amber-500/30 transition-all duration-300 ${item.highlight ? 'bg-amber-500/5' : ''}`}
+                style={{ transitionDelay: `${idx * 50}ms` }}
+              >
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${item.highlight ? 'bg-amber-500/20 text-amber-400' : 'bg-white/10 text-white/60'}`}>
+                  <span className="font-bold text-sm">{item.ch}</span>
+                </div>
+                <div>
+                  <h4 className={`font-bold text-sm ${item.highlight ? 'text-amber-400' : 'text-white'}`}>{item.title}</h4>
+                  <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
+                </div>
+                {item.highlight && (
+                  <span className="ml-auto text-[10px] px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded-full font-medium">旗艦專屬</span>
+                )}
+              </div>
+            ))}
           </div>
           
-          {/* Mobile Card View */}
-          <div className={`md:hidden space-y-6 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Basic Version Card */}
-            <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-slate-500/20">
-              <div className="flex items-center gap-2 mb-4">
-                <BookOpen className="w-5 h-5 text-slate-400" />
-                <span className="font-bold text-white">基本版・認識自己</span>
-                <span className="text-slate-400 text-sm ml-auto">5 章</span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">開場引言</span><span className="text-slate-300">精簡版</span></div>
-                <div className="flex justify-between"><span className="text-white/60">基本資料</span><span className="text-slate-300">四系統概覽</span></div>
-                <div className="flex justify-between"><span className="text-white/60">人生羅盤</span><span className="text-slate-300">單圖版</span></div>
-                <div className="flex justify-between"><span className="text-white/60">你是誰</span><span className="text-slate-300">核心速寫</span></div>
-                <div className="flex justify-between"><span className="text-white/60">結語祝福</span><span className="text-slate-300">精簡版</span></div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
-                <span className="text-white/50">字數</span><span className="text-slate-300 font-medium">3,000-4,000 字</span>
-              </div>
-            </div>
-
-            {/* Standard Version Card */}
-            <div className="bg-gradient-to-br from-blue-900/30 to-blue-950/30 rounded-2xl p-5 border border-blue-500/20">
-              <div className="flex items-center gap-2 mb-4">
-                <Eye className="w-5 h-5 text-blue-400" />
-                <span className="font-bold text-white">標準版・看懂自己</span>
-                <span className="text-blue-300 text-sm ml-auto">8 章</span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">你怎麼運作</span><span className="text-blue-300">情緒/思考模式</span></div>
-                <div className="flex justify-between"><span className="text-white/60">三大領域</span><span className="text-blue-300">事業/愛情/金錢</span></div>
-                <div className="flex justify-between"><span className="text-white/60">特別注意</span><span className="text-blue-300">重點警示</span></div>
-                <div className="flex justify-between text-white/30"><span>思維工具箱</span><span>—</span></div>
-                <div className="flex justify-between text-white/30"><span>四時軍團</span><span>—</span></div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
-                <span className="text-white/50">字數</span><span className="text-blue-300 font-medium">6,000-8,000 字</span>
-              </div>
-            </div>
-
-            {/* Flagship Version Card */}
-            <div className="bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-5 border border-amber-500/30 relative">
-              <div className="absolute -top-2 right-4">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-black rounded-full text-[10px] font-bold">
-                  <Star className="w-2.5 h-2.5" />
-                  推薦
-                </span>
-              </div>
-              <div className="flex items-center gap-2 mb-4">
-                <Crown className="w-5 h-5 text-amber-400" />
-                <span className="font-bold text-white">旗艦版・使用自己</span>
-                <span className="text-amber-300 text-sm ml-auto">10 章</span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-white/60">三大領域</span><span className="text-amber-300">深度整合剖析</span></div>
-                <div className="flex justify-between"><span className="text-white/60">特別注意</span><span className="text-amber-300">全方位風險</span></div>
-                <div className="flex justify-between bg-amber-500/10 -mx-2 px-2 py-1 rounded"><span className="text-amber-200">思維工具箱</span><span className="text-amber-300 font-medium">專屬</span></div>
-                <div className="flex justify-between bg-amber-500/10 -mx-2 px-2 py-1 rounded"><span className="text-amber-200">四時軍團</span><span className="text-amber-300 font-medium">專屬</span></div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-amber-500/20 flex justify-between text-sm">
-                <span className="text-white/50">字數</span><span className="text-amber-400 font-bold">10,000-12,000 字</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Key Difference Callout */}
-          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-slate-500/10 via-blue-500/10 to-amber-500/10 border border-white/10 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {/* Key Callout */}
+          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-300 text-sm">基本版讓你「認識」自己</span>
+                <Crown className="w-5 h-5 text-amber-400" />
+                <span className="text-amber-300 font-medium">為什麼只有旗艦版？</span>
               </div>
-              <span className="hidden md:block text-white/20">→</span>
-              <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-blue-400" />
-                <span className="text-blue-300 text-sm">標準版讓你「看懂」自己</span>
-              </div>
-              <span className="hidden md:block text-white/20">→</span>
-              <div className="flex items-center gap-2">
-                <Crown className="w-4 h-4 text-amber-400" />
-                <span className="text-amber-300 text-sm font-medium">旗艦版教你「使用」自己</span>
-              </div>
+              <span className="text-white/50 text-sm">因為命盤分析做一半比不做更危險。旗艦版是能完整交付的最低標準。</span>
             </div>
           </div>
         </div>
@@ -2558,7 +2456,7 @@ const ReportPage = () => {
               交付內容階梯
             </h2>
             <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              三階方案，遞進式體驗升級
+              每個產品都有三階方案，遞進式體驗升級
             </p>
           </div>
 
@@ -2597,70 +2495,19 @@ const ReportPage = () => {
             ))}
           </div>
 
-          {/* Pricing Cards - Three Columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Basic Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-slate-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-slate-500/10 text-slate-300 rounded-full text-sm font-medium mb-3">基本版</span>
-                <h3 className="font-serif text-xl font-bold text-white">認識自己</h3>
-                <p className="text-white/40 text-xs mt-2">5 章節・3,000-4,000 字</p>
-              </div>
-              <div className="space-y-3">
-                {basicPricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-slate-500/5 hover:bg-slate-500/10 border border-slate-500/10 hover:border-slate-500/20 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <BlurredPrice color="text-slate-300 text-lg font-bold" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-white/30 text-xs text-center">入門首選・點出方向</p>
-              </div>
-            </div>
-            
-            {/* Standard Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-blue-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-300 rounded-full text-sm font-medium mb-3">標準版</span>
-                <h3 className="font-serif text-xl font-bold text-white">看懂自己</h3>
-                <p className="text-white/40 text-xs mt-2">8 章節・6,000-8,000 字</p>
-              </div>
-              <div className="space-y-3">
-                {standardPricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <BlurredPrice color="text-blue-300 text-lg font-bold" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-white/30 text-xs text-center">完整八大面向・深度理解</p>
-              </div>
-            </div>
-            
+          {/* Pricing Cards - Four Products */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Flagship Pricing */}
-            <div className={`relative transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
+            <div className={`relative transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
               <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/40 via-amber-400/40 to-amber-500/40 rounded-[36px] blur-xl opacity-40 animate-gradient-shift bg-[length:200%_200%]" />
               <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-6 md:p-8 border-2 border-amber-500/30">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="inline-flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-xs font-bold shadow-[0_0_20px_rgba(251,191,36,0.4)] uppercase tracking-wider">
-                    <Star className="w-3 h-3" />
-                    推薦
+                    <Crown className="w-3 h-3" />
+                    個人旗艦版
                   </span>
                 </div>
                 <div className="text-center mb-6 pt-2">
-                  <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-3">旗艦版</span>
                   <h3 className="font-serif text-xl font-bold text-white">使用自己</h3>
                   <p className="text-white/40 text-xs mt-2">10 章節・10,000-12,000 字</p>
                 </div>
@@ -2680,6 +2527,81 @@ const ReportPage = () => {
                 <div className="mt-6 pt-4 border-t border-amber-500/20">
                   <p className="text-amber-400/50 text-xs text-center">完整思維系統・人生操作手冊</p>
                 </div>
+              </div>
+            </div>
+            
+            {/* 感情合盤 Pricing */}
+            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-rose-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-rose-500/10 text-rose-300 rounded-full text-sm font-medium mb-3">感情合盤</span>
+                <h3 className="font-serif text-xl font-bold text-white">關係結構解讀</h3>
+                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
+              </div>
+              <div className="space-y-3">
+                {lovePricing.map((item, idx) => (
+                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-rose-500/5 hover:bg-rose-500/10 border border-rose-500/10 hover:border-rose-500/20 transition-all duration-300">
+                    <div>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                    </div>
+                    <div className="text-right">
+                      <BlurredPrice color="text-rose-300 text-lg font-bold" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-white/30 text-xs text-center">伴侶/對象關係結構分析</p>
+              </div>
+            </div>
+            
+            {/* 商業合盤 Pricing */}
+            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-blue-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-300 rounded-full text-sm font-medium mb-3">商業合盤</span>
+                <h3 className="font-serif text-xl font-bold text-white">合作結構解讀</h3>
+                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
+              </div>
+              <div className="space-y-3">
+                {businessPricing.map((item, idx) => (
+                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
+                    <div>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                    </div>
+                    <div className="text-right">
+                      <BlurredPrice color="text-blue-300 text-lg font-bold" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-white/30 text-xs text-center">合夥/僱傭/師徒關係分析</p>
+              </div>
+            </div>
+            
+            {/* 親子合盤 Pricing */}
+            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-emerald-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.6s' }}>
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-1.5 bg-emerald-500/10 text-emerald-300 rounded-full text-sm font-medium mb-3">親子合盤</span>
+                <h3 className="font-serif text-xl font-bold text-white">教養結構解讀</h3>
+                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
+              </div>
+              <div className="space-y-3">
+                {parentChildPricing.map((item, idx) => (
+                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 hover:border-emerald-500/20 transition-all duration-300">
+                    <div>
+                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
+                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
+                    </div>
+                    <div className="text-right">
+                      <BlurredPrice color="text-emerald-300 text-lg font-bold" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-white/5">
+                <p className="text-white/30 text-xs text-center">親子能量匹配與教養策略</p>
               </div>
             </div>
           </div>
@@ -2975,14 +2897,14 @@ const ReportPage = () => {
           </div>
           
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8">
-            您的靈魂，值得<span className="text-amber-400">最高規格的理解</span>。
+            你的結構，值得<span className="text-amber-400">被完整翻開</span>。
           </h2>
           
           <p className="text-white/60 text-lg md:text-xl mb-6 max-w-2xl mx-auto">
-            別再用舊的思維，應對新的挑戰。
+            個人旗艦版，或加上合盤解讀——看你現在卡在哪裡。
           </p>
           <p className="text-white/60 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
-            現在就選擇您的版本，啟動這場深度的自我升級之旅。
+            帶著你的問題來，我們翻結構、問問題、給選項。
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center px-4">
