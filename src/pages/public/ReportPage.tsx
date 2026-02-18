@@ -246,44 +246,44 @@ const valueAddedServices = [
 ];
 
 const targetAudience = [
-  "你很努力，但常覺得「力氣用錯地方」",
-  "你理性很強，卻也敏感，容易被人事物牽動節奏",
-  "你不想聽好聯話，你想要可驗證、可落地的解釋",
-  "你在關係、事業或金錢上，總有同一種卡點重複出現",
-  "你想要的是「更懂自己」而不是「被定義」",
+  "你努力了很久，但一直覺得力氣用錯地方——不是不夠努力，是沒搞清楚自己的設計圖",
+  "你理性很強，但情緒常常拖後腿——不是你不行，是你還沒搞清楚自己的情緒到底在說什麼",
+  "你不想聽場面話。你要的是可以拿去驗證的東西，不是「你很特別」這種空話",
+  "關係、事業、錢——總有同一種卡點重複出現。你開始懷疑這不是運氣問題",
+  "你想搞清楚自己怎麼運作，不是被人貼標籤然後說「接受自己」",
 ];
 
 // Pain points data - competitor-inspired but aligned with "Mirror not Script" positioning
 const painPoints = [
   {
     icon: Compass,
-    title: "人生迷茫",
-    description: "不知道自己的天賦和方向，感覺在原地打轉",
-    detail: "缺乏對自己運作模式的清晰認知，優勢與盲點混在一起，無法有效發揮",
+    title: "方向感缺失",
+    description: "明明很努力，但一直覺得力氣用錯地方",
+    detail: "不是沒天賦，是沒搞清楚自己的運作模式。優勢和盲點混在一起，力氣分散在不該用力的地方。",
     percentage: 78,
     color: "from-blue-500 to-cyan-500"
   },
   {
     icon: Heart,
-    title: "關係困擾",
-    description: "總是遇到相似的關係模式，不知道問題出在哪",
-    detail: "不了解自己在關係中的需求與投射，重複相同的互動劇本",
+    title: "關係重複卡關",
+    description: "不同對象，同一種劇本，同一種痛",
+    detail: "你不是遇不到對的人。你是還沒看清楚自己在關係裡的投射模式和觸發機制。",
     percentage: 65,
     color: "from-rose-500 to-pink-500"
   },
   {
     icon: Briefcase,
-    title: "事業瓶頸",
-    description: "工作不順利，不知道什麼環境真正適合自己",
-    detail: "職涯發展停滯，缺乏對自身能量類型與適合策略的認知",
+    title: "事業撞牆",
+    description: "做得不少，但升不上去、轉不過彎",
+    detail: "不是能力不夠。是你的能量類型和你選的戰場不匹配，或者你用了不屬於你的策略。",
     percentage: 72,
     color: "from-amber-500 to-orange-500"
   },
   {
     icon: TrendingUp,
-    title: "決策困難",
-    description: "重要抉擇時猶豫不決，事後常感後悔",
-    detail: "缺乏清晰的內在權威與決策機制，容易被外界聲音干擾",
+    title: "決策反覆",
+    description: "想太多、拖太久、做完又後悔",
+    detail: "你的內在權威和你以為的決策方式不一樣。用錯系統做決定，當然反覆。",
     percentage: 83,
     color: "from-purple-500 to-violet-500"
   },
@@ -314,26 +314,26 @@ const simpleSteps = [
 const reportFeatures = [
   {
     icon: Layers,
-    title: "四系統命盤依據",
-    description: "交叉比對，避免單一系統的偏誤",
+    title: "四系統交叉驗證",
+    description: "紫微、八字、占星、人類圖互相校準。一個系統說的，另外三個來驗證。",
     color: "from-blue-500 to-cyan-500",
   },
   {
     icon: Compass,
-    title: "過去與現在的模式對照",
-    description: "讓你用人生經驗驗證",
+    title: "可驗證的模式",
+    description: "拿你自己的過去去對照。對上了，繼續讀；對不上，跟我說哪裡不對。",
     color: "from-purple-500 to-pink-500",
   },
   {
     icon: FileText,
-    title: "可執行的生活建議",
-    description: "寫成你做得到的步驟",
+    title: "做得到的建議",
+    description: "不說「學會愛自己」。說的是：你在什麼情境下容易出什麼問題，怎麼繞過去。",
     color: "from-green-500 to-emerald-500",
   },
   {
     icon: Sparkles,
     title: "默默超不負責提醒",
-    description: "一針見血但不恐嚇",
+    description: "你早就知道但不想承認的那句話。不恐嚇，但也不哄你。",
     color: "from-amber-500 to-orange-500",
   },
 ];
@@ -344,28 +344,28 @@ const fourSystems = [
     icon: Star, 
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。"
+    description: "你的先天人格結構長什麼樣。十二宮位、四化飛星——告訴你天生帶什麼牌、牌怎麼打。"
   },
   { 
     name: "八字", 
     icon: Target, 
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。"
+    description: "你的能量怎麼流動。五行強弱、十神配置——哪些資源是你的，哪些是你以為是你的。"
   },
   { 
     name: "占星", 
     icon: Compass, 
     color: "from-blue-500 to-cyan-600",
     meaning: "星盤配置",
-    description: "透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。"
+    description: "你的心理動態和關係模式。行星相位——為什麼你在某些情境下總是做出同樣的反應。"
   },
   { 
     name: "人類圖", 
     icon: Brain, 
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "定義你的決策權威與能量運作方式，找到最適合你的行動策略。"
+    description: "你的決策系統。類型、權威、通道——用對的方式做決定，而不是用你以為對的方式。"
   },
 ];
 
@@ -379,32 +379,32 @@ const thinkingDimensions = [
 const processSteps = [
   {
     step: "1",
-    title: "提供資料",
-    description: "客戶提供命盤必要資料（出生年月日、時間、地點；或已排盤檔）",
+    title: "你給資料",
+    description: "出生年月日、時間、地點。時間越準確，報告越精準。",
     icon: FileText,
   },
   {
     step: "2",
-    title: "動態評估",
-    description: "先做「療癒 / 效率」比例評估（確認本次解讀的用力方向）",
+    title: "我做評估",
+    description: "先判斷這份報告該偏療癒還是偏效率——不是每個人都需要同一種力道。",
     icon: Target,
   },
   {
     step: "3",
-    title: "撰寫報告",
-    description: "撰寫報告＋產出整合圖",
+    title: "逐章撰寫",
+    description: "四系統交叉比對，逐章人工撰寫。不套模板，每一段都是為你寫的。",
     icon: Palette,
   },
   {
     step: "4",
-    title: "製作加值",
-    description: "製作語音導讀（與語音摘要／簡報／影片依方案）",
-    icon: Mic,
+    title: "品質稽核",
+    description: "QC 檢查：去宿命化、命盤依據完整性、語氣一致性。不合格就重寫。",
+    icon: Settings,
   },
   {
     step: "5",
-    title: "品質交付",
-    description: "品質檢查後交付（網頁版＋PDF）",
+    title: "交付",
+    description: "網頁版＋PDF。語音導讀、摘要、影片依方案等級另附。",
     icon: CheckCircle2,
   },
 ];
@@ -412,27 +412,27 @@ const processSteps = [
 const faqs = [
   {
     q: "我不懂命理也能看懂嗎？",
-    a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。",
+    a: "可以。報告不寫術語。所有命盤語言都翻譯成「你在生活裡看得到的現象」和「你做得到的事」。看不懂的地方，是我寫得不好，不是你程度不夠。",
   },
   {
     q: "多久可以收到報告？",
-    a: "依版本而定：基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。每份報告皆為人工精密解讀，確保品質。",
+    a: "基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。合盤報告另計。每份都是人工逐字寫的，不套模板，所以快不了。",
   },
   {
-    q: "你會不會寫得很玄，或很像算命？",
-    a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。",
+    q: "這跟算命有什麼不同？",
+    a: "算命告訴你「會發生什麼」。我告訴你「你是怎麼運作的」。這是使用說明書，不是預言書。你拿去做什麼決定，是你的事。",
   },
   {
-    q: "報告的準確度如何？",
-    a: "我們使用四系統交叉驗證（紫微、八字、占星、人類圖），避免單一系統偏誤。報告呈現的是你「如何運作」的模式，可用過去經驗驗證。",
+    q: "報告準不準？",
+    a: "四系統交叉驗證，一個系統說的要另外三個也指向同一個方向才算數。但「準」不是目標——「有用」才是。拿你的過去去對照，對上了就繼續用。",
   },
   {
     q: "神煞會不會很可怕？",
-    a: "不會。神煞只在事業、愛情、金錢三章使用，並且一律用「兵符效果」或心理語言翻譯，絕不恐嚇。",
+    a: "不會。所有神煞一律翻譯成心理狀態、能量模式或「兵符效果」。不恐嚇。如果一個東西只能拿來嚇人，那它就沒有用處。",
   },
   {
-    q: "與傳統算命有什麼不同？",
-    a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。你可以終身保存、反覆閱讀。",
+    q: "合盤報告是什麼？",
+    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提是主要測算人須先完成個人旗艦版報告。",
   },
 ];
 
@@ -660,10 +660,10 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超全方位命理解讀報告 | 紫微斗數・八字・占星・人類圖",
-    description: "獨家四系統交叉整合命理報告，80,000+字深度解析。基本版、標準版、旗艦版三種選擇，旗艦版包含元壹宇宙X默默超思維系統。100%全客製化，不套模板。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 全方位命理解讀, 命盤分析, 人生羅盤",
-    ogTitle: "默默超全方位命理解讀報告 - 看見自己，而非被命運定義",
+    title: "默默超命理解讀報告 | 個人報告・感情合盤・商業合盤・親子合盤",
+    description: "四系統交叉驗證命理報告，翻結構、問問題、給選項。個人報告三版本＋三種合盤解讀。100% 客製化，不套模板，不預測命運。",
+    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超",
+    ogTitle: "默默超命理解讀報告 - 翻結構、問問題、給選項",
   });
 
   // Count animations with visibility trigger - updated based on SOP
@@ -737,7 +737,7 @@ const ReportPage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">v2026 人生操作系統</span>
+            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v4.0 人機協作</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
@@ -764,7 +764,7 @@ const ReportPage = () => {
                 textShadow: '0 0 30px rgba(255,255,255,0.2)'
               }}
             >
-              全方位命理解讀報告
+              命理解讀報告
             </h2>
           </div>
           
@@ -892,12 +892,12 @@ const ReportPage = () => {
           </div>
           
           <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
-            <span className="text-white/90">別讓你的靈魂，</span>
-            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">跑在舊版的系統上。</span>
+            <span className="text-white/90">翻結構、問問題、</span>
+            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">給選項。</span>
           </p>
           
           <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
-            融合紫微、八字、占星、人類圖四維運算，為您安裝一套<span className="text-amber-400">人生操作系統</span>。
+            紫微、八字、占星、人類圖四系統交叉驗證。<br className="hidden md:block" />不預測命運，不替你做決定——把你的<span className="text-amber-400">運作模式</span>攤出來，你自己判斷。
           </p>
           
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '1s' }}>
@@ -999,10 +999,10 @@ const ReportPage = () => {
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['pain-points'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              你是否也有這些<span className="text-amber-400">困擾</span>？
+              你卡在哪裡？
             </h2>
             <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              這些問題的根源，往往來自對自己運作模式的不理解
+              這些問題不是因為你不夠努力。是因為你還沒看清楚自己的運作模式。
             </p>
           </div>
           
@@ -1036,10 +1036,10 @@ const ReportPage = () => {
           <div className={`text-center p-8 md:p-12 bg-gradient-to-r from-amber-900/20 via-amber-800/10 to-amber-900/20 rounded-3xl border border-amber-500/20 transition-all duration-1000 delay-500 ${isVisible['pain-points'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
             <Sparkles className="w-12 h-12 text-amber-400 mx-auto mb-4" />
             <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-              這些問題的解答，藏在你的「出廠設定」裡
+              答案不在外面。在你的結構裡。
             </h3>
             <p className="text-white/60 text-lg max-w-2xl mx-auto">
-              我們不預測你的命運，而是幫你讀懂自己的<span className="text-amber-400">使用說明書</span>
+              四系統交叉驗證，把你的<span className="text-amber-400">運作模式</span>翻出來。對不對，你自己驗證。
             </p>
           </div>
         </div>
@@ -1058,9 +1058,9 @@ const ReportPage = () => {
               <span className="text-amber-300 text-sm font-medium">簡單三步驟</span>
             </div>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              獲得你的<span className="text-amber-400">專屬報告</span>
+              三步拿到你的<span className="text-amber-400">報告</span>
             </h2>
-            <p className="text-white/50 text-lg">100% 客製化・不套模板・人工精密解讀</p>
+            <p className="text-white/50 text-lg">100% 客製化・不套模板・人工逐字寫</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1744,11 +1744,11 @@ const ReportPage = () => {
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['features'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              你會拿到什麼
+              你拿到什麼
             </h2>
             <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              你拿到的不是一堆術語。<br />
-              而是一份可反覆使用的<span className="text-amber-400">自我校準文件</span>。
+              不是一堆術語。不是「你很特別」。<br />
+              是一份可以拿去驗證、反覆使用的<span className="text-amber-400">自我校準文件</span>。
             </p>
           </div>
           
@@ -2479,14 +2479,14 @@ const ReportPage = () => {
             <div className="text-center mb-12">
               <Shield className="h-16 w-16 text-amber-400 mx-auto mb-6 animate-float" />
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">
-                我們的立場
+                三條底線
               </h2>
             </div>
             
             <div className="space-y-10 font-serif text-xl leading-relaxed">
               <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">鏡子非劇本，真實即命運。</p>
-                <p className="text-white/50">我們拒絕用「命中注定」把你釘死。</p>
+                <p className="text-2xl md:text-3xl font-medium text-white mb-3">說真話。</p>
+                <p className="text-white/50">確定的事說確定，不確定的事標出來。不用「可能」「大概」來模糊界線。有依據的附依據，沒有的就直接說沒有。</p>
               </div>
               
               <div className="flex items-center justify-center gap-4">
@@ -2496,8 +2496,8 @@ const ReportPage = () => {
               </div>
               
               <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">神煞也不拿來嚇人。</p>
-                <p className="text-white/50">一律轉譯成可理解的心理狀態、能量模式或「兵符效果」。</p>
+                <p className="text-2xl md:text-3xl font-medium text-white mb-3">不替你做決定。</p>
+                <p className="text-white/50">報告翻結構、問問題、給選項。你拿這些去做什麼決定，是你的事。神煞不拿來嚇人，一律翻譯成可理解的心理狀態和能量模式。</p>
               </div>
               
               <div className="flex items-center justify-center gap-4">
@@ -2507,8 +2507,8 @@ const ReportPage = () => {
               </div>
               
               <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">命盤是一種語言，不是判決。</p>
-                <p className="text-white/50">你只需要學會聽懂它在對你說什麼。</p>
+                <p className="text-2xl md:text-3xl font-medium text-white mb-3">你越來越不需要我，就代表我做對了。</p>
+                <p className="text-white/50">命盤是一種語言，不是判決。這份報告的目標是讓你學會自己讀自己——不是讓你依賴任何人。</p>
               </div>
             </div>
           </div>
