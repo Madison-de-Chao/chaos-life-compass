@@ -170,9 +170,9 @@ const AboutPage = () => {
             className="max-w-2xl mx-auto px-2"
           >
             <p className="text-white/40 text-base md:text-lg leading-relaxed">
-              可驗證、可回看、可落地的自我探索工具鏈。
+              幫你看清自己的狀況，不替你做決定。
               <span className="hidden md:inline"><br /></span>
-              玄可說清楚，選擇可回看。
+              確定的事說確定，不確定的標出來。
             </p>
           </motion.div>
 
@@ -239,12 +239,12 @@ const AboutPage = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-                  鏡子非劇本
+                  思考夥伴，不是老師
                 </h2>
-                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Mirror, Not Script</p>
+                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Thinking Partner, Not Guru</p>
                 <p className="text-white/70 leading-relaxed text-base md:text-lg">
-                  我們不提供「命定結論」，我們提供「可驗證的下一步」。
-                  每個判斷都標註依據（C/D/H 分級），區分文獻共識、系統推導與設計假設。
+                  我不替你做決定。我能做的是幫你把選項攤開、把代價看清楚。
+                  每個判斷都分清事實、推測、立場——搞清楚你聽到的是哪一種。
                 </p>
               </motion.div>
 
@@ -254,7 +254,7 @@ const AboutPage = () => {
               >
                 <Quote className="w-6 h-6 md:w-8 md:h-8 text-amber-400/40 mb-3 md:mb-4" />
                 <p className="text-white/60 font-serif text-base md:text-lg leading-relaxed italic relative z-10">
-                  「默默超思維一句話：把話說清楚，把事做完整；自由不是有選擇權，而是可以選擇不選。」
+                  「把話說清楚，把事做完整。對方越來越不需要你，就代表你做對了。」
                 </p>
                 <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人 MOMO CHAO</p>
               </motion.div>
@@ -285,10 +285,10 @@ const AboutPage = () => {
               <Brain className="w-6 h-6 md:w-8 md:h-8 text-amber-400" />
             </motion.div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              默默超思維系統
+              四個操作維度
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              四維運作框架：情緒、行動、心智、價值
+              任何決定都跑不出這四件事——搞清楚它們，你就不容易做錯選擇
             </p>
           </motion.div>
 
@@ -324,7 +324,7 @@ const AboutPage = () => {
             transition={{ delay: 0.3 }}
             className="text-center text-white/40 mt-6 md:mt-8 text-xs md:text-sm px-4"
           >
-            「錯誤不是廢棄物，是通往完整的材料。」— 完整性哲學 L0
+            「搞清楚你現在的感受、能做什麼、怎麼看這件事、在乎的是什麼——問題就解了一半。」
           </motion.p>
         </div>
       </section>
@@ -347,13 +347,13 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              三大方法論
+              三條底線
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              喚醒 Awaken・篩選 Filter・賦能 Empower
+              說真話・說人話・守邊界
             </p>
             <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
-              Care &amp; Truth — 永恆不息的關懷與真誠
+              不是道德要求，是風險管理的必要條件
             </p>
           </motion.div>
 
@@ -367,21 +367,21 @@ const AboutPage = () => {
             {[
               {
                 icon: Eye,
-                title: "喚醒",
-                subtitle: "Awaken",
-                content: "提醒你本來就有，請別放棄相信自己。不是要改變你，是要喚醒你本來就有的東西。"
+                title: "說真話",
+                subtitle: "Truth",
+                content: "確定的事就說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。不用模糊措辭迴避風險。"
               },
               {
                 icon: Heart,
-                title: "篩選",
-                subtitle: "Filter",
-                content: "分辨對自己真正有用的東西，而非盲從價值標籤。"
+                title: "說人話",
+                subtitle: "Human",
+                content: "不說場面話，每一段都有實際內容。語氣直接但不冷漠，像值得信任的朋友，不像客服也不像教授。"
               },
               {
                 icon: CircleDot,
-                title: "賦能",
-                subtitle: "Empower",
-                content: "幫你拿回你原本的權力，最終選擇權永遠在你手裡。"
+                title: "守邊界",
+                subtitle: "Boundary",
+                content: "分清事實、推測和立場。不替你做選擇，不承接不屬於自己的責任。決定權在你。"
               }
             ].map((value) => (
               <motion.div
@@ -429,7 +429,7 @@ const AboutPage = () => {
               transition={{ delay: 0.1 }}
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
-              <span className="text-amber-400">虹靈御所</span> 的誕生
+              為什麼做<span className="text-amber-400">這件事</span>
             </motion.h2>
             
             <motion.div
@@ -440,22 +440,19 @@ const AboutPage = () => {
               className="space-y-4 md:space-y-6 text-white/70 leading-relaxed text-base md:text-lg font-serif relative z-10"
             >
               <motion.p variants={itemVariants}>
-                虹靈御所，取自「虹」（彩虹的多元光譜）與「靈」（靈魂的深度）。
-                這裡是探索自我的聖所，是讓命理回歸本質的嘗試。
+                傳統命理告訴你未來會怎樣，然後你就照著過。
+                問題是——那是別人的解讀，不是你的決定。
               </motion.p>
               <motion.p variants={itemVariants}>
-                傳統命理常以「預測」為賣點，告訴你未來會發生什麼。
-                但默默超相信：<span className="text-amber-400/80">真正的力量不在於知道未來，而在於理解自己。</span>
+                我做這套工具的原因很簡單：<span className="text-amber-400/80">模糊的語言會掩蓋風險，讓人在不知情下踏入麻煩。</span>
+                把話說清楚，風險就降了一半。
               </motion.p>
               <motion.p variants={itemVariants}>
-                元壹宇宙是這套體系的作業系統，所有站點都建立在「賽博玄哲學」框架上——
-                用科技手段，把東方玄學說清楚的哲學系統。
-                <span className="text-white/50">玄不是說不清楚，玄是還沒被說清楚；我們的工作就是把它說清楚。</span>
+                所以這裡的每個產出都分三層：事實、推測、立場。
+                <span className="text-white/50">你看到的是哪一層，自己判斷。我不替你做結論。</span>
               </motion.p>
               <motion.p variants={itemVariants} className="text-white/50 text-sm md:text-base">
-                虹靈御所存在的意義：
-                <span className="hidden md:inline"><br /></span>
-                不是給你劇本，只給可回驗路徑。
+                最終目標：你越來越不需要這套東西，就代表它有用。
               </motion.p>
             </motion.div>
           </motion.div>
@@ -474,13 +471,13 @@ const AboutPage = () => {
               className="relative group order-2 md:order-1"
             >
               <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">人機協作的末法時代</h3>
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">AI 時代，人需要什麼</h3>
                 <p className="text-white/60 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
-                  當 AI 能夠做到越來越多事情，人類真正需要的，
-                  是堅實穩固的思維能力——知道自己是誰、要什麼、能承擔什麼。
+                  AI 能查資料、能分析、能回答問題。但它不知道你在乎什麼、能承擔什麼、底線在哪。
+                  這些只有你自己清楚——前提是你願意搞清楚。
                 </p>
                 <p className="text-amber-400/60 text-xs md:text-sm">
-                  這就是為什麼默默超思維系統在這個時代如此重要。
+                  這套工具幫你釐清這些事，然後你自己決定怎麼做。
                 </p>
               </div>
             </motion.div>
@@ -546,10 +543,10 @@ const AboutPage = () => {
             </motion.div>
             
             <h2 className="text-xl sm:text-2xl md:text-4xl font-serif font-bold text-white mb-4 md:mb-6">
-              準備好照鏡子了嗎？
+              想試試看？
             </h2>
             <p className="text-white/50 mb-8 md:mb-10 max-w-xl mx-auto text-base md:text-lg px-2">
-              不是預言，不是劇本，只是一面夠清晰的鏡子。
+              看一份報告，自己判斷有沒有用。不滿意就當作看過一篇文章。
             </p>
             
             <Button

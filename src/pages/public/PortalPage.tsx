@@ -17,7 +17,7 @@ const portalItems = [
   {
     title: "虹靈御所",
     subtitle: "Rainbow Sanctuary",
-    description: "可驗證、可回看、可落地的自我探索工具鏈。玄可說清楚，選擇可回看。",
+    description: "命理工具，不是算命攤。看清現狀、給可執行的下一步，選不選在你。",
     cta: "進入虹靈御所",
     logo: logoHongling,
     href: "/home",
@@ -28,7 +28,7 @@ const portalItems = [
   {
     title: "超烜創意",
     subtitle: "Maison de Chao",
-    description: "品牌策略與創意服務，讓你的獨特被看見",
+    description: "品牌策略與創意服務。把你想說的話說清楚，讓對的人聽見。",
     cta: "進入超烜創意",
     logo: logoChaoxuan,
     href: "/chaoxuan",
@@ -39,7 +39,7 @@ const portalItems = [
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
-    description: "賽博玄哲學——用科技手段把東方玄學說清楚的自我探索系統",
+    description: "把東方玄學拆開來講清楚的思維系統。不賣預言，只做可追溯的說明。",
     cta: "進入元壹宇宙",
     logo: logoYuanyi,
     href: "/universe",
@@ -50,7 +50,7 @@ const portalItems = [
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
-    description: "一個打工人把思考做成工具的故事",
+    description: "一個把自己踩過的坑做成工具的人。不是老師，是思考夥伴。",
     cta: "認識默默超",
     logo: null,
     href: "/about",
@@ -62,7 +62,7 @@ const portalItems = [
   {
     title: "AI 專屬｜元壹宇宙 × CIP",
     subtitle: "AI Collaboration Portal",
-    description: "人機協作時代的共誠協定，建立你與 AI 的專屬互動框架",
+    description: "跟 AI 協作的規則：說真話、標來源、守邊界。讓人機合作有個底線。",
     cta: "進入 AI 協作入口",
     logo: null,
     href: "/ai",
@@ -668,7 +668,7 @@ const createIntroSections = () => [
           </div>
         </div>
         <div className="text-[#c9a962] text-sm sm:text-lg md:text-xl tracking-[0.2em] sm:tracking-[0.3em] font-light opacity-70">
-          三個入口，一個思維系統
+          三個入口，同一套思維系統
         </div>
       </div>
     ),
@@ -679,7 +679,7 @@ const createIntroSections = () => [
     content: (
       <div className="space-y-4 sm:space-y-6 px-4">
         <div className="text-[#c9a962] text-base sm:text-xl md:text-2xl tracking-[0.2em] sm:tracking-[0.3em] font-light opacity-80">
-          Care & Truth — 永恆不息的關懷與真誠
+          說真話，說人話，守住邊界
         </div>
         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide">
           <span className="relative inline-block">
@@ -688,7 +688,7 @@ const createIntroSections = () => [
           </span>
         </h1>
         <p className="text-white/70 text-base sm:text-xl md:text-2xl font-light italic">
-          「可驗證、可回看、可落地的自我探索工具鏈」
+          「幫你看清自己的狀況，不替你做決定。」
         </p>
       </div>
     ),
@@ -698,10 +698,10 @@ const createIntroSections = () => [
     id: 'intro',
     content: (
       <div className="space-y-5 sm:space-y-8 text-white/80 text-base sm:text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto px-6">
-        <p>我們提供的不是「你是什麼人」的定論，<br className="hidden sm:block" /><span className="sm:hidden"> </span>而是「你可以怎麼做」的可執行路徑。</p>
-        <p>每個產出都有：可追溯來源、可回看機制、可行動建議。</p>
+        <p>這裡不告訴你「你是誰」。<br className="hidden sm:block" /><span className="sm:hidden"> </span>這裡幫你看清現狀，然後給你可以做的下一步。</p>
+        <p>確定的事說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。</p>
         <p><span className="text-[#c9a962]">不是算命，不是心靈雞湯，不是課程推銷。</span><br />
-          是工具，是鏡子，是你的操作手冊。
+          是工具。決定怎麼用，是你的事。
         </p>
       </div>
     ),
@@ -711,19 +711,19 @@ const createIntroSections = () => [
     id: 'philosophy',
     content: (
       <div className="space-y-5 sm:space-y-8 max-w-2xl mx-auto px-4">
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-4 sm:mb-8">三大方法論</h2>
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-4 sm:mb-8">三條底線</h2>
         <div className="grid gap-4 sm:gap-6">
           <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
-            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">喚醒 Awaken</h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">提醒你本來就有，請別放棄相信自己。</p>
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">說真話</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">確定的說確定，不確定的標出來。不用「可能」「大概」來模糊界線。</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
-            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">篩選 Filter</h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">分辨對自己真正有用的東西，而非盲從價值標籤。</p>
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">說人話</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">不說場面話，每一段都有實際內容。像值得信任的朋友，不像客服。</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-[#c9a962]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-left">
-            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">賦能 Empower</h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">幫你拿回你原本的權力，最終選擇權永遠在你手裡。</p>
+            <h3 className="text-[#c9a962] text-lg sm:text-xl font-display mb-2 sm:mb-3">守住邊界</h3>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">分清事實、推測、立場。不替你做選擇，不承接不屬於自己的責任。</p>
           </div>
         </div>
       </div>
@@ -734,28 +734,28 @@ const createIntroSections = () => [
     id: 'four-dimensions',
     content: (
       <div className="space-y-5 sm:space-y-8 max-w-3xl mx-auto px-4">
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-2 sm:mb-4">四維運作系統</h2>
-        <p className="text-white/60 text-sm sm:text-base md:text-lg mb-4 sm:mb-6">默默超思維系統的四個操作維度</p>
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-2 sm:mb-4">四個操作維度</h2>
+        <p className="text-white/60 text-sm sm:text-base md:text-lg mb-4 sm:mb-6">任何決定都跑不出這四件事</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💭</div>
             <h3 className="text-rose-300 text-base sm:text-lg font-display mb-1 sm:mb-2">情緒</h3>
-            <p className="text-white/50 text-xs sm:text-sm">感知・接納・轉化</p>
+            <p className="text-white/50 text-xs sm:text-sm">你現在感覺什麼</p>
           </div>
           <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">⚡</div>
             <h3 className="text-amber-300 text-base sm:text-lg font-display mb-1 sm:mb-2">行動</h3>
-            <p className="text-white/50 text-xs sm:text-sm">覺察・選擇・執行</p>
+            <p className="text-white/50 text-xs sm:text-sm">你接下來能做什麼</p>
           </div>
           <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🧠</div>
             <h3 className="text-blue-300 text-base sm:text-lg font-display mb-1 sm:mb-2">心智</h3>
-            <p className="text-white/50 text-xs sm:text-sm">整合・建構・穩固</p>
+            <p className="text-white/50 text-xs sm:text-sm">你怎麼看這件事</p>
           </div>
           <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💎</div>
             <h3 className="text-emerald-300 text-base sm:text-lg font-display mb-1 sm:mb-2">價值</h3>
-            <p className="text-white/50 text-xs sm:text-sm">定位・校準・堅守</p>
+            <p className="text-white/50 text-xs sm:text-sm">你在乎的到底是什麼</p>
           </div>
         </div>
       </div>
@@ -766,15 +766,15 @@ const createIntroSections = () => [
     id: 'human-ai-era',
     content: (
       <div className="space-y-5 sm:space-y-8 max-w-2xl mx-auto px-5">
-        <div className="text-[#c9a962]/60 text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] uppercase">人機協作末法時代</div>
+        <div className="text-[#c9a962]/60 text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] uppercase">人機協作時代</div>
         <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-wide leading-relaxed">
-          當 AI 能回答所有問題，<br />
-          <span className="text-[#c9a962]">你需要的是問對問題的能力。</span>
+          AI 能回答問題，<br />
+          <span className="text-[#c9a962]">但問題要你自己問對。</span>
         </h2>
         <p className="text-white/60 text-sm sm:text-base md:text-lg leading-relaxed">
-          默默超思維系統提供「堅實穩固的思維能力」，<br className="hidden sm:block" />
-          <span className="sm:hidden"> </span>讓你在 AI 時代保持人類主體性，<br className="hidden sm:block" />
-          <span className="sm:hidden"> </span>不被資訊淹沒，而是駕馭它。
+          工具再強，用的人不清楚自己要什麼，<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>結果就是被工具帶著跑。<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>這套系統幫你搞清楚自己的立場，再去用工具。
         </p>
       </div>
     ),
@@ -785,11 +785,11 @@ const createIntroSections = () => [
     content: (
       <div className="space-y-6 sm:space-y-8 max-w-2xl mx-auto px-5">
         <p className="text-white/70 text-lg sm:text-xl md:text-2xl font-light leading-relaxed italic">
-          「命運是起點，選擇是終點。」
+          「對方越來越不需要你，就代表你做對了。」
         </p>
         <p className="text-white/50 text-sm sm:text-base md:text-lg">
-          你問準不準？重點是：它能不能讓你看見更合適的方向，<br className="hidden sm:block" />
-          然後把選擇權拿回來。事在人為。
+          我們不想讓你依賴這套系統。<br className="hidden sm:block" />
+          用完覺得有用就好，不用就放著，沒關係。
         </p>
         <div className="pt-2 sm:pt-4">
           <div className="inline-block px-5 sm:px-6 py-2.5 sm:py-3 border border-[#c9a962]/30 rounded-full">
@@ -818,10 +818,10 @@ export default function PortalPage() {
   const timeoutRef = useRef<number | null>(null);
 
   useSEO({
-    title: "默默超完整性哲學官方入口網站",
-    description: "默默超完整性哲學官方入口網站 — 可驗證、可回看、可落地的自我探索工具鏈。結合東方命理與決策邏輯的自我探索系統。我們不是算命，不是心靈雞湯，不是課程推銷，不是宗教。我們是工具，是鏡子，是你的操作手冊。",
-    keywords: "默默超, 元壹宇宙, 虹靈御所, 超烜創意, 命理報告, 自我探索, 決策邏輯, 鏡子非劇本",
-    ogTitle: "默默超元壹體系 - 可驗證的自我探索工具鏈",
+    title: "默默超元壹體系｜說真話的自我探索工具",
+    description: "不是算命、不是心靈雞湯、不是課程推銷。默默超元壹體系是一套幫你看清現狀、給可執行下一步的思維工具。確定的說確定，不確定的標出來，選擇權在你手上。",
+    keywords: "默默超, 元壹宇宙, 虹靈御所, 超烜創意, 自我探索, 決策工具, 思考夥伴",
+    ogTitle: "默默超元壹體系 — 幫你看清狀況，不替你做決定",
   });
 
   // Start music on first interaction
@@ -1046,9 +1046,9 @@ export default function PortalPage() {
                 className="font-display text-xl sm:text-2xl md:text-3xl text-white mb-2 md:mb-3"
                 style={{ textShadow: '0 0 40px rgba(201,169,98,0.4)' }}
               >
-                你好！我是默默超！
+                你好，我是默默超。
               </h2>
-              <p className="text-white/50 text-base md:text-lg">想從哪裡開始呢？</p>
+              <p className="text-white/50 text-base md:text-lg">想從哪裡開始？</p>
             </div>
 
             {/* Cards grid - optimized for mobile touch */}
@@ -1146,7 +1146,7 @@ export default function PortalPage() {
 
             {/* Footer */}
             <p className="text-white/30 text-xs sm:text-sm mt-6 md:mt-8 px-4 text-center">
-              此刻的你，已在途中。
+              選不選都行，看過就好。
             </p>
           </div>
         )}
