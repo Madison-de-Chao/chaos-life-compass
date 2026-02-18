@@ -28,9 +28,9 @@ import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 const sections = [
   {
     id: 1,
-    title: "默默超全方位命理報告",
-    subtitle: "可驗證、可回看、可落地",
-    description: "不是「你是什麼人」的定論，而是「你可以怎麼做」的可執行路徑。四系統交叉驗證，每個判斷都有回驗機制。",
+    title: "默默超命理報告",
+    subtitle: "翻結構、問問題、給選項",
+    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉驗證，10 章完整交付，每個判斷都有回驗機制。不給答案，給你做決定的材料。",
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
@@ -39,8 +39,8 @@ const sections = [
   {
     id: 2,
     title: "元壹系統生態",
-    subtitle: "旅程六站・各司其職",
-    description: "占卜決策、八字戰略、神話占星、思維訓練、療癒體驗、企業應用——你不需要用全部，只用你需要的。",
+    subtitle: "六站各司其職，用你需要的就好",
+    description: "占卜做決策支援、八字看長期結構、神話占星翻潛意識、思維訓練練邏輯、療癒體驗處理情緒、企業應用解決團隊問題。不綁套餐。",
     icon: Gamepad2,
     href: "/games",
     color: "from-violet-500/20 to-purple-500/20",
@@ -49,8 +49,8 @@ const sections = [
   {
     id: 3,
     title: "默默超的元壹筆記",
-    subtitle: "有關命理，有關做人",
-    description: "命盤是一種語言，不是判決。這裡記錄著對命理與人生的思考與觀察。",
+    subtitle: "不是雞湯，是觀察紀錄",
+    description: "命盤是一種語言，不是判決。這裡寫的是實際案例的反思、方法論的迭代、以及「為什麼很多命理師不敢講的事」。",
     icon: BookOpen,
     href: "/notes",
     color: "from-emerald-500/20 to-teal-500/20",
@@ -60,7 +60,7 @@ const sections = [
     id: 4,
     title: "元壹宇宙 × 默默超思維",
     subtitle: "四維運作系統",
-    description: "情緒、行動、心智、價值——錯誤是材料，不是懲罰。完整不是沒有缺口，完整是不再害怕缺口。",
+    description: "情緒、行動、心智、價值——四個維度拆開來看，找到卡住的那一個。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
@@ -70,7 +70,7 @@ const sections = [
     id: 5,
     title: "關於虹靈御所",
     subtitle: "Care & Truth",
-    description: "Care 給予溫度，Truth 給予方向。前者讓品牌有靈魂，後者讓品牌有脊椎。",
+    description: "Care 負責讓你願意打開，Truth 負責讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。",
     icon: Building2,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -81,7 +81,7 @@ const sections = [
     id: 6,
     title: "誰是默默超",
     subtitle: "一個把思考做成工具的人",
-    description: "我不是學霸，也不是天選之人。我只是比較固執：做事要有交代，做人要有底線。",
+    description: "16 年實戰，不是學霸，不是天選之人。固執的地方：做事要有交代，說話要有根據，合作要讓對方越來越強。",
     icon: User,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -97,10 +97,10 @@ const HomePage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   
   useSEO({
-    title: "虹靈御所 | 看見命盤裡的自己，而非被命運定義",
-    description: "虹靈御所提供專業命理報告、創新命理遊戲、元壹筆記等服務。透過紫微斗數、八字、占星、人類圖四大系統，幫助你看清自己，自由選擇未來。",
-    keywords: "虹靈御所, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 元壹筆記, 命理遊戲",
-    ogTitle: "虹靈御所 - 看見自己，是最深的修行",
+    title: "虹靈御所 | 翻結構、問問題、給選項的命理平台",
+    description: "虹靈御所提供旗艦版命理報告、感情／商業／親子合盤解讀。四系統交叉驗證，不算命、不給答案，給你做決定的材料。",
+    keywords: "虹靈御所, 命理報告, 合盤解讀, 紫微斗數, 八字, 占星, 人類圖, 默默超, 感情合盤, 商業合盤, 親子合盤",
+    ogTitle: "虹靈御所 - 翻結構、問問題、給選項",
   });
 
   const scrollToSections = () => {
@@ -132,7 +132,7 @@ const HomePage = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-8 animate-fade-in">
             <span className="text-sm font-medium text-amber-400">Rainbow Sanctuary</span>
             <span className="text-white/40">×</span>
-            <span className="text-sm text-white/60">知行如一的密法</span>
+            <span className="text-sm text-white/60">不算命，給你做決定的材料</span>
           </div>
 
           {/* Embedded Video with gold glow frame */}
@@ -172,14 +172,14 @@ const HomePage = () => {
           
           {/* Tagline */}
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-white/60 mb-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            可驗證、可回看、可落地的自我探索
+            翻結構、問問題、給選項
           </p>
           
           {/* Description */}
           <p className="max-w-2xl mx-auto text-sm md:text-base text-white/50 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
-            不是算命，不是心靈雞湯，不是課程推銷。<br />
-            我們提供的不是「你是什麼人」的定論，<br />
-            而是「你可以怎麼做」的可執行路徑。
+            不算命、不給答案、不做心靈雞湯。<br />
+            四系統交叉驗證，每個判斷都有根據。<br />
+            你帶著問題來，我們給結構、給選項、給代價評估。
           </p>
           
           {/* CTA Buttons */}
@@ -256,7 +256,7 @@ const HomePage = () => {
               探索虹靈御所
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
-              每一個入口，都通往自我覺醒的旅程
+              每個入口解決一個具體問題，用你需要的就好
             </p>
           </div>
           
@@ -338,7 +338,7 @@ const HomePage = () => {
               誰是默默超
             </h2>
             <p className="text-white/50 max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              一個正在學會凝視自己的人
+              做事要有交代，說話要有根據
             </p>
           </div>
           
@@ -356,8 +356,8 @@ const HomePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                  <p className="font-serif text-lg font-medium">彩虹花田中的守護者</p>
-                  <p className="text-sm text-white/70">用色彩點亮每一次相遇</p>
+                  <p className="font-serif text-lg font-medium">思考夥伴，不是導師</p>
+                  <p className="text-sm text-white/70">你的問題你決定，我負責把結構翻給你看</p>
                 </div>
               </div>
             </div>
@@ -374,8 +374,8 @@ const HomePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                  <p className="font-serif text-lg font-medium">思維建築師</p>
-                  <p className="text-sm text-white/70">在宇宙的軌道中尋找秩序</p>
+                  <p className="font-serif text-lg font-medium">16 年實戰的結構翻譯者</p>
+                  <p className="text-sm text-white/70">把模糊的困惑翻譯成可操作的選項</p>
                 </div>
               </div>
             </div>
@@ -401,9 +401,9 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-8">
-            「命運從來不是劇本，<br />
-            它只是一面鏡子。<br />
-            而你，正在學會誠實地凝視自己。」
+            「命盤是鏡子，不是劇本。<br />
+            我的工作是幫你把鏡子擦乾淨，<br />
+            看不看、怎麼看，你自己決定。」
           </blockquote>
           <p className="text-amber-400/60">—— 默默超</p>
         </div>
