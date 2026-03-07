@@ -39,7 +39,7 @@ const games = [
     borderColor: "border-purple-500/30",
     category: "divination" as Category,
     categoryLabel: "命理類",
-    previewImage: gameMirrorImg,
+    previewImage: gameYydsImg,
   },
   {
     id: "bazi",
@@ -71,7 +71,7 @@ const games = [
     borderColor: "border-amber-500/30",
     category: "divination" as Category,
     categoryLabel: "命理類",
-    previewImage: gameMirrorImg,
+    previewImage: gameStarImg,
   },
   {
     id: "mmcls",
@@ -87,7 +87,7 @@ const games = [
     borderColor: "border-blue-500/30",
     category: "training" as Category,
     categoryLabel: "思維訓練類",
-    previewImage: gameLogicImg,
+    previewImage: gameMmclsImg,
   },
   {
     id: "atzo",
@@ -103,7 +103,7 @@ const games = [
     borderColor: "border-emerald-500/30",
     category: "healing" as Category,
     categoryLabel: "療癒類",
-    previewImage: gameMirrorImg,
+    previewImage: gameAtzoImg,
   },
   {
     id: "ehfis",
@@ -119,7 +119,7 @@ const games = [
     borderColor: "border-slate-500/30",
     category: "enterprise" as Category,
     categoryLabel: "企業應用",
-    previewImage: gameLogicImg,
+    previewImage: gameEhfisImg,
   },
 ];
 
