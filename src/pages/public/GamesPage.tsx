@@ -7,9 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 
 // Game preview images
-import gameBaziImg from "@/assets/game-bazi.jpg";
-import gameMirrorImg from "@/assets/game-mirror.jpg";
-import gameLogicImg from "@/assets/game-logic.jpg";
+import gameYydsImg from "@/assets/game-yyds.png";
+import gameBaziImg from "@/assets/game-bazi-new.png";
+import gameStarImg from "@/assets/game-star.png";
+import gameMmclsImg from "@/assets/game-mmcls.png";
+import gameAtzoImg from "@/assets/game-atzo.png";
+import gameEhfisImg from "@/assets/game-ehfis.png";
 
 type Category = "all" | "divination" | "training" | "healing" | "enterprise";
 
