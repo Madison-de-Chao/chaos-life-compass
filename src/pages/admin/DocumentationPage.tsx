@@ -122,17 +122,17 @@
                  ]}
                />
  
-               <PageCard
-                 number={2}
-                 title="虹靈御所首頁 (HomePage)"
-                 path="/home"
-                 description="Rainbow Sanctuary 品牌主頁。命理報告服務介紹與服務項目導覽。"
-                 links={[
-                   { path: "/reports", label: "命理報告" },
-                   { path: "/games", label: "超烜遊戲" },
-                   { path: "/universe", label: "元壹宇宙" },
-                 ]}
-               />
+                <PageCard
+                  number={2}
+                  title="虹靈御所首頁 (HomePage)"
+                  path="/home"
+                  description="Rainbow Sanctuary 品牌主頁。核心定位：「翻結構、問問題、給選項」。旗艦版命理報告＋感情／商業／親子合盤。四系統交叉驗證，不算命、不給答案，給你做決定的材料。"
+                  links={[
+                    { path: "/reports", label: "命理報告" },
+                    { path: "/games", label: "超烜遊戲" },
+                    { path: "/universe", label: "元壹宇宙" },
+                  ]}
+                />
  
                <PageCard
                  number={3}
