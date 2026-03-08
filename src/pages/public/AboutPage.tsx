@@ -368,21 +368,21 @@ const AboutPage = () => {
             {[
               {
                 icon: Eye,
-                title: "說真話",
-                subtitle: "Truth",
-                content: "確定的事就說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。不用模糊措辭迴避風險。"
+                title: "喚醒",
+                subtitle: "Awaken",
+                content: "讓你重新信任你的第一反應——那個在你開始想之前就已經知道的東西。不是教你新東西，是讓你知道你只看到了一面。"
               },
               {
                 icon: Heart,
-                title: "說人話",
-                subtitle: "Human",
-                content: "不說場面話，每一段都有實際內容。語氣直接但不冷漠，像值得信任的朋友，不像客服也不像教授。"
+                title: "篩選",
+                subtitle: "Filter",
+                content: "學會分辨哪些是你真正的感受，哪些是別人教你應該有的感受。不是幫你選對錯，是教你在判斷之前先清空自己的框架。"
               },
               {
                 icon: CircleDot,
-                title: "守邊界",
-                subtitle: "Boundary",
-                content: "分清事實、推測和立場。不替你做選擇，不承接不屬於自己的責任。決定權在你。"
+                title: "賦權",
+                subtitle: "Empower",
+                content: "你的身體比你的腦子更早知道答案。把那個信任還給你自己。不是給你能力，是把你本來就有的還給你。"
               }
             ].map((value) => (
               <motion.div
