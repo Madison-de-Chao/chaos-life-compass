@@ -448,104 +448,104 @@ export function ChaoxuanPageContent() {
    );
  }
  
- // 命理報告 (ReportPage) 內容
- export function ReportPageContent() {
-   return (
-     <div className="space-y-6">
-       <ContentBlock title="Hero 區塊">
-         <div className="space-y-2">
-           <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 專業命理報告」</p>
-           <p><span className="text-muted-foreground">主標題：</span><strong>看見自己，是最深的修行</strong></p>
-           <p><span className="text-muted-foreground">描述：</span>四系統命理分析・可驗證可落地</p>
-         </div>
-       </ContentBlock>
- 
-       <ContentBlock title="你可能正在經歷這些困境">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">困境</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">詳情</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">人生迷茫</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不知道自己的天賦和方向，感覺在原地打轉</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">缺乏對自己運作模式的清晰認知，優勢與盲點混在一起，無法有效發揮</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">關係困擾</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">總是遇到相似的關係模式，不知道問題出在哪</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不了解自己在關係中的需求與投射，重複相同的互動劇本</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">事業瓶頸</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">工作不順利，不知道什麼環境真正適合自己</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">職涯發展停滯，缺乏對自身能量類型與適合策略的認知</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">決策困難</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">重要抉擇時猶豫不決，事後常感後悔</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">缺乏清晰的內在權威與決策機制，容易被外界聲音干擾</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="四大命理系統交叉驗證">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">系統</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">意義</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">紫微斗數</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">命宮格局</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">八字</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">五行能量</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">占星</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">星盤配置</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">人類圖</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">能量類型</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">定義你的決策權威與能量運作方式，找到最適合你的行動策略。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="常見問題">
-         <div className="space-y-3">
-           {[
-             { q: "我不懂命理也能看懂嗎？", a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。" },
-             { q: "多久可以收到報告？", a: "依版本而定：基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。每份報告皆為人工精密解讀，確保品質。" },
-             { q: "你會不會寫得很玄，或很像算命？", a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。" },
-             { q: "與傳統算命有什麼不同？", a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。" },
-           ].map((item, i) => (
-             <div key={i} className="p-3 bg-muted/20 rounded print:bg-gray-50 print:border print:border-gray-200">
-               <p className="font-medium text-sm">{item.q}</p>
-               <p className="text-sm text-muted-foreground mt-1">{item.a}</p>
-             </div>
-           ))}
-         </div>
-       </ContentBlock>
-     </div>
-   );
- }
+// 命理報告 (ReportPage) 內容
+export function ReportPageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="Hero 區塊">
+        <div className="space-y-2">
+          <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 專業命理報告」</p>
+          <p><span className="text-muted-foreground">主標題：</span><strong>看見自己，是最深的修行</strong></p>
+          <p><span className="text-muted-foreground">描述：</span>四系統命理分析・可驗證可落地</p>
+        </div>
+      </ContentBlock>
+
+      <ContentBlock title="產品線">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">產品</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">類型</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">旗艦版個人報告</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">個人命理</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">10 章完整交付，四系統交叉驗證。個人報告只有旗艦版，因為這是確保完整交付的最低標準。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">感情合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">伴侶 / 曖昧對象的關係結構分析，解讀互動模式與潛在衝突。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">商業合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">合夥人 / 商業夥伴的合作結構分析，評估協作風險與互補性。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">親子合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">親子之間的互動結構分析，理解教養盲點與溝通模式。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="四大命理系統交叉驗證">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">系統</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">意義</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">紫微斗數</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">命宮格局</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">八字</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">五行能量</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">占星</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">星盤配置</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">人類圖</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">能量類型</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">定義你的決策權威與能量運作方式，找到最適合你的行動策略。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="常見問題">
+        <div className="space-y-3">
+          {[
+            { q: "我不懂命理也能看懂嗎？", a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。" },
+            { q: "為什麼個人報告只有旗艦版？", a: "因為旗艦版是「確保完整交付」的最低標準。四系統交叉驗證、10 章結構化分析，少一個環節都會影響判斷的可靠度。" },
+            { q: "你會不會寫得很玄，或很像算命？", a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。" },
+            { q: "與傳統算命有什麼不同？", a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。" },
+          ].map((item, i) => (
+            <div key={i} className="p-3 bg-muted/20 rounded print:bg-gray-50 print:border print:border-gray-200">
+              <p className="font-medium text-sm">{item.q}</p>
+              <p className="text-sm text-muted-foreground mt-1">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </ContentBlock>
+    </div>
+  );
+}
  
  // 超烜遊戲 (GamesPage) 內容
  export function GamesPageContent() {
