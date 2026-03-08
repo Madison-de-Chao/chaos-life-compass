@@ -80,8 +80,8 @@ const sections = [
   {
     id: 6,
     title: "誰是默默超",
-    subtitle: "一個把思考做成工具的人",
-    description: "16 年實戰，不是學霸，不是天選之人。固執的地方：做事要有交代，說話要有根據，合作要讓對方越來越強。",
+    subtitle: "四十年活出來的信任",
+    description: "不是老師，不是先知，不是聖人。做人直接、敢說真話、不討喜，但發言不會被捨棄或無視。如果我說錯，下次就不會有人再來問我。所以我不能說錯，也不會為了讓你舒服而說假話。",
     icon: User,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
