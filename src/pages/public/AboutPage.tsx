@@ -170,9 +170,9 @@ const AboutPage = () => {
             className="max-w-2xl mx-auto px-2"
           >
             <p className="text-white/40 text-base md:text-lg leading-relaxed">
-              幫你看清自己的狀況，不替你做決定。
+              我知道自己很行。我願意幫忙。
               <span className="hidden md:inline"><br /></span>
-              確定的事說確定，不確定的標出來。
+              相信的自然會靠近，不信的我也不勉強。
             </p>
           </motion.div>
 
@@ -239,12 +239,13 @@ const AboutPage = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-                  思考夥伴，不是老師
+                  鏡子非劇本
                 </h2>
-                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Thinking Partner, Not Guru</p>
+                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Mirror, Not Script</p>
                 <p className="text-white/70 leading-relaxed text-base md:text-lg">
-                  我不替你做決定。我能做的是幫你把選項攤開、把代價看清楚。
-                  每個判斷都分清事實、推測、立場——搞清楚你聽到的是哪一種。
+                  我們不提供「命定結論」，我們提供「可驗證的下一步」。
+                  每個判斷都標註依據，區分事實（Zone A）、推測（Zone B）、立場（Zone C）。
+                  Zone C 不只是你表達立場的位置，也是你邀請對方表達他立場的入口。它是對話中的留白。
                 </p>
               </motion.div>
 
@@ -254,7 +255,7 @@ const AboutPage = () => {
               >
                 <Quote className="w-6 h-6 md:w-8 md:h-8 text-amber-400/40 mb-3 md:mb-4" />
                 <p className="text-white/60 font-serif text-base md:text-lg leading-relaxed italic relative z-10">
-                  「把話說清楚，把事做完整。對方越來越不需要你，就代表你做對了。」
+                  「不是人見人愛的那種。但我發言的時候，不會被捨棄或無視。有重要事情的時候，人們還是會願意問我的意見。如果我說錯，下次就不會有人再來問我。」
                 </p>
                 <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人 MOMO CHAO</p>
               </motion.div>
@@ -347,13 +348,13 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              三條底線
+              三大方法論
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              說真話・說人話・守邊界
+              喚醒 Awaken・篩選 Filter・賦權 Empower
             </p>
             <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
-              不是道德要求，是風險管理的必要條件
+              不是教你新東西，是讓你看見你已經知道的
             </p>
           </motion.div>
 
@@ -367,21 +368,21 @@ const AboutPage = () => {
             {[
               {
                 icon: Eye,
-                title: "說真話",
-                subtitle: "Truth",
-                content: "確定的事就說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。不用模糊措辭迴避風險。"
+                title: "喚醒",
+                subtitle: "Awaken",
+                content: "讓你重新信任你的第一反應——那個在你開始想之前就已經知道的東西。不是教你新東西，是讓你知道你只看到了一面。"
               },
               {
                 icon: Heart,
-                title: "說人話",
-                subtitle: "Human",
-                content: "不說場面話，每一段都有實際內容。語氣直接但不冷漠，像值得信任的朋友，不像客服也不像教授。"
+                title: "篩選",
+                subtitle: "Filter",
+                content: "學會分辨哪些是你真正的感受，哪些是別人教你應該有的感受。不是幫你選對錯，是教你在判斷之前先清空自己的框架。"
               },
               {
                 icon: CircleDot,
-                title: "守邊界",
-                subtitle: "Boundary",
-                content: "分清事實、推測和立場。不替你做選擇，不承接不屬於自己的責任。決定權在你。"
+                title: "賦權",
+                subtitle: "Empower",
+                content: "你的身體比你的腦子更早知道答案。把那個信任還給你自己。不是給你能力，是把你本來就有的還給你。"
               }
             ].map((value) => (
               <motion.div
@@ -429,7 +430,7 @@ const AboutPage = () => {
               transition={{ delay: 0.1 }}
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
-              為什麼做<span className="text-amber-400">這件事</span>
+              這套系統<span className="text-amber-400">怎麼來的</span>
             </motion.h2>
             
             <motion.div
@@ -440,19 +441,20 @@ const AboutPage = () => {
               className="space-y-4 md:space-y-6 text-white/70 leading-relaxed text-base md:text-lg font-serif relative z-10"
             >
               <motion.p variants={itemVariants}>
-                傳統命理告訴你未來會怎樣，然後你就照著過。
-                問題是——那是別人的解讀，不是你的決定。
+                我是趙偉辰，多數人叫我默默超。不是老師，不是先知，不是聖人。打工人，做過公關、活動、行銷專案。
               </motion.p>
               <motion.p variants={itemVariants}>
-                我做這套工具的原因很簡單：<span className="text-amber-400/80">模糊的語言會掩蓋風險，讓人在不知情下踏入麻煩。</span>
-                把話說清楚，風險就降了一半。
+                我只是從四十年的人生裡摸索出一件事：<span className="text-amber-400/80">為什麼我做人直接、敢說真話、不討喜，但卻還是會被信任。</span>
               </motion.p>
               <motion.p variants={itemVariants}>
-                所以這裡的每個產出都分三層：事實、推測、立場。
-                <span className="text-white/50">你看到的是哪一層，自己判斷。我不替你做結論。</span>
+                原因很簡單：我用的方法、對誠信和名譽的在乎程度、對自己高道德高標準高自制的做事方式，讓我說的話有一個很硬的基底：
+                <span className="text-white/50">如果我說錯，下次就不會有人再來問我。</span>
+              </motion.p>
+              <motion.p variants={itemVariants}>
+                我不是工程師，但我不接受「我不是理科腦所以我做不了」這個前提。我用 AI 把需求說清楚，工具替我執行，六個站點就是這樣建出來的。不預設自己做不到，不畫地自限。
               </motion.p>
               <motion.p variants={itemVariants} className="text-white/50 text-sm md:text-base">
-                最終目標：你越來越不需要這套東西，就代表它有用。
+                這套系統就是從這些經歷總結出來的工具。它的可信度不是來自理論框架的完整性，是來自一個人四十年活出來的信任。
               </motion.p>
             </motion.div>
           </motion.div>
@@ -471,13 +473,13 @@ const AboutPage = () => {
               className="relative group order-2 md:order-1"
             >
               <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">AI 時代，人需要什麼</h3>
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">Care & Truth</h3>
                 <p className="text-white/60 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
-                  AI 能查資料、能分析、能回答問題。但它不知道你在乎什麼、能承擔什麼、底線在哪。
-                  這些只有你自己清楚——前提是你願意搞清楚。
+                  <strong className="text-white/80">Truth（真誠）</strong>：不是讓你舒服，是讓你正確收到正確的東西。Truth 負責讓訊號不失真。<br /><br />
+                  <strong className="text-white/80">Care（關懷）</strong>：不是給你想聽的，是給你需要聽的。Care 負責讓內容不失焦。
                 </p>
                 <p className="text-amber-400/60 text-xs md:text-sm">
-                  這套工具幫你釐清這些事，然後你自己決定怎麼做。
+                  第三層：在乎但不追。東西已經準備好了，放在這裡，你來的時候它在。
                 </p>
               </div>
             </motion.div>

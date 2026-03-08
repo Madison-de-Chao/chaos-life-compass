@@ -127,7 +127,7 @@ const brandValues = [
   {
     icon: TrendingUp,
     title: "感性和理性不是二選一",
-    description: "藝術直覺負責方向感，數據分析負責驗證。兩個都要有，缺一個都容易翻車。",
+    description: "大腦裡可能根本不存在「理性」和「感性」兩套獨立的引擎。藝術直覺跟數據分析不是二選一，是同一台引擎的不同輸入。兩種都要餵。",
   },
   {
     icon: Users,
@@ -259,15 +259,16 @@ const ChaoxuanPage = () => {
                 transform: `translateY(${scrollY * 0.05}px)`,
               }}
             >
-              品牌整合、行銷策略、IP 開發、命理定位、企業培訓<br className="hidden md:block" />
-              六個場域各司其職——你不需要用全部，只用你需要的
+              實戰經驗，服務過 Samsung、DIOR、晶華酒店等品牌。<br className="hidden md:block" />
+              不做場面話，只做能落地的品牌策略。
             </p>
 
             <p 
               className="text-sm text-[#f5f5f0]/40 mb-10 max-w-2xl mx-auto animate-fade-in"
               style={{ animationDelay: "0.55s" }}
             >
-              不賣夢想、不灌雞湯、不做場面話。你帶著問題來，我們先評估能不能幫、怎麼幫、代價是什麼，再決定要不要開始。
+              合作的標準：讓對方越來越強，而不是越來越依賴。<br />
+              合作三年你還離不開我們，那是我們的問題。
             </p>
 
             <div 

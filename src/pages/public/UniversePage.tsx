@@ -39,7 +39,7 @@ const dimensions = [
     color: "from-rose-500 to-pink-500",
     bgColor: "bg-rose-500/10",
     textColor: "text-rose-400",
-    content: "情緒是訊號，告訴你哪裡卡住了。不需要消滅它，需要讀懂它在說什麼。",
+    content: "情緒是你最誠實的原始資料。你的身體在你意識到之前就已經有反應了。它不是需要被克服的干擾，是決策鏈的源頭。",
   },
   {
     icon: Zap,
@@ -48,7 +48,7 @@ const dimensions = [
     color: "from-amber-500 to-orange-500",
     bgColor: "bg-amber-500/10",
     textColor: "text-amber-400",
-    content: "行動不是「想好再動」或「先動再想」。是搞清楚現狀之後，做一個 48 小時內可以做的小事。",
+    content: "行動來自整合後的清晰，不是逃避式的忙碌。但不動也不是安全——差值越近零，風險越高。該啟動的時候，今天只做最小一步並立刻做。",
   },
   {
     icon: Brain,
@@ -57,7 +57,7 @@ const dimensions = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-400",
-    content: "你怎麼看一件事，決定你會怎麼處理它。心智不是正確與否的問題，是你的觀察角度夠不夠多。",
+    content: "心智是濾鏡。大多數人不是不願意從對方的視角看，是他們走過去了但帶著自己的整套濾鏡，所以站在對方的位置上看到的還是自己。",
   },
   {
     icon: Compass,
@@ -66,7 +66,7 @@ const dimensions = [
     color: "from-emerald-500 to-teal-500",
     bgColor: "bg-emerald-500/10",
     textColor: "text-emerald-400",
-    content: "價值是你在乎的東西。不是別人說重要的東西，是你自己在選擇裡發現的底線。",
+    content: "價值不是外界給你的規則，是你在每一次選擇中逐漸發現的自己。驅動你最終站在某個立場上的，不是邏輯分析，是情緒。情緒是立場的燃料。",
   },
 ];
 
@@ -74,27 +74,27 @@ const dimensions = [
 const principles = [
   {
     icon: Infinity,
-    title: "完整性",
-    subtitle: "Wholeness",
-    content: "不是只看好的那面。好壞對錯都攤開來看，才有辦法做出不後悔的決定。排除掉的東西不會消失，只會在你沒注意的地方出事。",
+    title: "完整性哲學",
+    subtitle: "The Wholeness Philosophy",
+    content: "追求的不是「沒有缺點」的完美，而是「看見全部」的完整。錯誤不是廢棄物，是通往完整的材料。你只有先接受，才有可能超越。",
   },
   {
     icon: Circle,
     title: "弧度模型",
     subtitle: "The Arc Model",
-    content: "沒有絕對的對錯，只有角度不同。所有狀態都在圓周上的不同位置。這不是和稀泥——是提醒你在下判斷之前，先看完整張地圖。",
+    content: "人生是 360° 的圓，你走過的彎路都是抵達完整的必要弧度。失敗不是錯誤，是還沒走完的路。好與壞、對與錯，只是角度不同，而非本質對立。",
   },
   {
     icon: Layers,
-    title: "分層思考",
-    subtitle: "Layered Thinking",
-    content: "把事實、推測、立場分清楚。混在一起講，聽的人分不清你是在陳述事實還是在推銷觀點。分清楚了，雙方都省事。",
+    title: "賽博玄哲學",
+    subtitle: "Cyber Metaphysics",
+    content: "用可驗證的方式保留玄學的理解功能，拆除玄學的藉口功能。「賽博」不是指科技，是指可驗證。每個結論都要能被回看、被檢驗、被挑戰。",
   },
   {
     icon: Target,
-    title: "不替你做決定",
-    subtitle: "Your Call",
-    content: "我能做的是把選項攤開、把代價列出來。選哪條路，是你的事。這不是冷漠——是尊重你有判斷能力。",
+    title: "鏡子非劇本",
+    subtitle: "Mirror, Not Script",
+    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。但這面鏡子不打柔光——你看見什麼，取決於你願意承認什麼。",
   },
 ];
 
@@ -125,8 +125,8 @@ const journeyStations = [
     title: "元壹占卜系統",
     subtitle: "YYDS — Yuan-Yi Divination System",
     role: "決策分流器",
-    philosophy: "不給答案，給你看清選項的工具",
-    description: "站在岔路口不知道怎麼選的時候用。幫你看清「現在的狀態」跟「每條路的代價」，選哪條是你的事。",
+    philosophy: "鏡子非劇本，真實即命運",
+    description: "你站在岔路口，不確定該接還是該放的時候。幫你看清「現在的狀態」跟「每條路的代價」，選哪條是你的事。",
     features: ["卦象結構解析", "順勢面與反噬面雙面呈現", "完整度分數與元壹提示", "具體可執行行動建議"],
     link: "https://yyds.rainbow-sanctuary.com/",
     color: "from-purple-500 to-indigo-500",
@@ -145,8 +145,8 @@ const journeyStations = [
     title: "四時八字人生兵法",
     subtitle: "RSBZS — Rainbow Sanctuary BaZi System",
     role: "戰略盤點器",
-    philosophy: "你是將軍，這是你的兵力報告",
-    description: "要往某個方向走之前，先盤點手上有什麼。八字不是判決書，是四支軍團的兵力分析。知道自己有什麼牌，才知道怎麼打。",
+    philosophy: "將軍是你，軍團也是你",
+    description: "你決定了方向，但需要知道自己手上有什麼牌可以打。八字不是判決書，是四支軍團的兵力分析。",
     features: ["四柱軍團架構分析", "十神配置與能量分布", "大運流年互動預測", "依週期建議行動時機"],
     link: "https://bazi.rainbow-sanctuary.com/",
     color: "from-red-500 to-orange-500",
@@ -165,8 +165,8 @@ const journeyStations = [
     title: "元壹宇宙神話占星系統",
     subtitle: "Mythic Astrology System",
     role: "身分映射器",
-    philosophy: "星盤是導航系統，不是判決書",
-    description: "把星盤轉成「能力報告」——你的天賦在哪、弱項是什麼、適合走什麼路。不是告訴你命定如何，是讓你知道手上有什麼牌。",
+    philosophy: "命運是起點，選擇是終點",
+    description: "你想深入理解自己的天賦模式和容易忽略的地方。星盤是導航系統，不是判決書。",
     features: ["三重守護神架構", "六維能力值 Stat Sheet", "冒險者公會卡輸出", "7日任務指派"],
     link: "https://star.rainbow-sanctuary.com/",
     color: "from-amber-500 to-yellow-500",
@@ -185,8 +185,8 @@ const journeyStations = [
     title: "默默超思維訓練系統",
     subtitle: "MMCLS — MomoChao Logic System",
     role: "能力訓練器",
-    philosophy: "知道自己是誰之後，練出來",
-    description: "光知道不夠，要練。透過結構化的思維訓練，把「我知道」變成「我做得到」。拆解複雜問題，避免情緒化判斷。",
+    philosophy: "思維工具箱：八階思維循環",
+    description: "你已經看得到問題，但需要練出拆解和處理的方法。透過結構化的思維訓練，把「我知道」變成「我做得到」。",
     features: ["八階思維循環訓練", "九位導師系統", "任務線累積成就證據", "精準拆解複雜問題"],
     link: "https://mmclogic.com/",
     color: "from-blue-500 to-cyan-500",
@@ -205,8 +205,8 @@ const journeyStations = [
     title: "弧度歸零",
     subtitle: "Arc Zero",
     role: "體驗修復器",
-    philosophy: "完整不是沒有缺口，是不再怕缺口",
-    description: "遇到深層情緒困境、自我否定的時候，分析沒用，需要的是一場體驗。透過互動小說，練習面對自己不想看的那面。",
+    philosophy: "完整不是沒有缺口，完整是不再害怕缺口",
+    description: "你遇到的不是認知問題，是情緒困境，需要的是被看見而不是被分析。透過互動小說，練習面對自己不想看的那面。",
     features: ["《弧度歸零：伊》實踐篇", "《弧度歸零：壹》哲學篇", "分歧選擇影響結局", "40-60分鐘沉浸體驗"],
     link: "https://atzo.rainbow-sanctuary.com/",
     color: "from-emerald-500 to-teal-500",
@@ -226,7 +226,7 @@ const journeyStations = [
     subtitle: "EHFIS — Eastern Human Factors Insight System",
     role: "企業應用器",
     philosophy: "行為洞察工具，不是命運審判工具",
-    description: "把個人工具轉成團隊用。分析成員互動跟潛在衝突點。只做行為假設，不做命運定論。不得用於甄選、解僱、升遷。",
+    description: "你帶團隊，想理解成員的協作模式和潛在摩擦點，但不想用命理來做人事判斷。只做行為假設，不做命運定論。",
     features: ["機會命運卡個人報告", "團隊矩陣分析", "RBH 行為假設報告", "團隊發展輔助工具"],
     link: "https://ehfis.rainbow-sanctuary.com/",
     color: "from-slate-500 to-zinc-500",
@@ -340,7 +340,7 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-white/60 mb-4 font-serif"
           >
-            把東方玄學拆開來，用說人話的方式講清楚
+            Yuan-Yi Universe — A Civilization-Level Living Methodology
           </motion.p>
 
           <motion.p
@@ -349,8 +349,9 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            確定的說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。<br />
-            不賣預言，不說場面話。
+            不是一套知識，而是一種活法。<br />
+            用玄學幫你看見自己，但拒絕讓玄學替你開脫。<br />
+            在複雜世界中，找到屬於自己的運作方式——然後長過它。
           </motion.p>
 
           <motion.div

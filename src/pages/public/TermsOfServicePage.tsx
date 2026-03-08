@@ -39,7 +39,7 @@ const sections = [
     content: [
       "我們提供命理報告、占卜分析、互動遊戲等數位內容服務。",
       "所有命理相關內容僅供參考，不構成專業建議（醫療、法律、財務等）。",
-      "我們的服務是「照鏡子」而非「看劇本」——我們協助您認識自己，但最終決定權在您手中。",
+      "我們的服務是自我探索與決策輔助工具。我們協助您看見自己的運作模式，但不提供命定結論。最終決定權與責任都在您手中。",
       "服務內容可能會不時更新或變更，恕不另行通知。",
     ],
   },
@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
             className="mb-8 p-6 bg-gradient-to-r from-amber-500/5 to-transparent border-l-2 border-amber-500/50 rounded-r-xl"
           >
             <p className="text-white/70 italic font-serif text-lg">
-              「你不需要被告知你是誰，你只需要一面夠清晰的鏡子。」
+              「用玄學幫你看見自己，但拒絕讓玄學替你開脫。看見之後，選擇是你的，責任也是你的。」
             </p>
             <p className="text-white/50 text-sm mt-2">
               我們的服務理念是幫助您認識自己，而非替您做決定。

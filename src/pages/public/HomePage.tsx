@@ -30,7 +30,7 @@ const sections = [
     id: 1,
     title: "默默超命理報告",
     subtitle: "翻結構、問問題、給選項",
-    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉驗證，10 章完整交付，每個判斷都有回驗機制。不給答案，給你做決定的材料。",
+    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉比對，不是四倍準確，是四個系統互相拆掉對方的藉口功能。留下的才是你真正需要看的。",
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
@@ -60,7 +60,7 @@ const sections = [
     id: 4,
     title: "元壹宇宙 × 默默超思維",
     subtitle: "四維運作系統",
-    description: "情緒、行動、心智、價值——四個維度拆開來看，找到卡住的那一個。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
+    description: "情緒是燃料，不是敵人。行動來自整合後的清晰，不是逃避式的忙碌。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
@@ -70,7 +70,7 @@ const sections = [
     id: 5,
     title: "關於虹靈御所",
     subtitle: "Care & Truth",
-    description: "Care 負責讓你願意打開，Truth 負責讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。",
+    description: "Truth 負責讓你正確收到正確的東西，不失真。Care 負責給你需要聽的而不是想聽的，不失焦。在乎但不追——東西準備好了放在這裡，你來的時候它在。",
     icon: Building2,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -80,8 +80,8 @@ const sections = [
   {
     id: 6,
     title: "誰是默默超",
-    subtitle: "一個把思考做成工具的人",
-    description: "16 年實戰，不是學霸，不是天選之人。固執的地方：做事要有交代，說話要有根據，合作要讓對方越來越強。",
+    subtitle: "四十年活出來的信任",
+    description: "不是老師，不是先知，不是聖人。做人直接、敢說真話、不討喜，但發言不會被捨棄或無視。如果我說錯，下次就不會有人再來問我。所以我不能說錯，也不會為了讓你舒服而說假話。",
     icon: User,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
@@ -178,8 +178,9 @@ const HomePage = () => {
           {/* Description */}
           <p className="max-w-2xl mx-auto text-sm md:text-base text-white/50 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
             不算命、不給答案、不做心靈雞湯。<br />
-            四系統交叉驗證，每個判斷都有根據。<br />
-            你帶著問題來，我們給結構、給選項、給代價評估。
+            四系統交叉比對，不是為了更準，是為了讓任何一個系統都不能單獨當你的藉口。<br />
+            你帶著問題來，我們給結構、給選項、給代價評估。<br />
+            看見之後，選擇是你的，責任也是你的。
           </p>
           
           {/* CTA Buttons */}
@@ -401,9 +402,9 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-8">
-            「命盤是鏡子，不是劇本。<br />
-            我的工作是幫你把鏡子擦乾淨，<br />
-            看不看、怎麼看，你自己決定。」
+            「往往我們跟隨直覺順從情緒，<br />
+            最後的結果會告訴你真正的事實<br />
+            都是自己的選擇，不是命運的安排。」
           </blockquote>
           <p className="text-amber-400/60">—— 默默超</p>
         </div>

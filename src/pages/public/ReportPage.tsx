@@ -344,28 +344,28 @@ const fourSystems = [
     icon: Star, 
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "你的先天人格結構長什麼樣。十二宮位、四化飛星——告訴你天生帶什麼牌、牌怎麼打。"
+    description: "揭示你的先天人格結構與運勢走向。但這是起點的你，不是永遠的你。"
   },
   { 
     name: "八字", 
     icon: Target, 
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "你的能量怎麼流動。五行強弱、十神配置——哪些資源是你的，哪些是你以為是你的。"
+    description: "解析你的能量組成與流動模式。當你活出了不一樣的自己，八字描述的那個人可能已經不是你了。"
   },
   { 
     name: "占星", 
     icon: Compass, 
     color: "from-blue-500 to-cyan-600",
     meaning: "星盤配置",
-    description: "你的心理動態和關係模式。行星相位——為什麼你在某些情境下總是做出同樣的反應。"
+    description: "透過行星相位與宮位，映照你的心理動態與關係模式。星盤是鷹架，不是建築。"
   },
   { 
     name: "人類圖", 
     icon: Brain, 
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "你的決策系統。類型、權威、通道——用對的方式做決定，而不是用你以為對的方式。"
+    description: "找到你的內在訊號源在哪裡。但我們不接受你拿訊號源的「類型」當不行動的理由。"
   },
 ];
 
@@ -419,16 +419,16 @@ const faqs = [
     a: "旗艦版個人報告 12-18 個工作天。合盤報告 10-15 個工作天。每份都是人工逐字寫的，不套模板，所以快不了。",
   },
   {
-    q: "這跟算命有什麼不同？",
-    a: "算命告訴你「會發生什麼」。我告訴你「你是怎麼運作的」。這是使用說明書，不是預言書。你拿去做什麼決定，是你的事。",
+    q: "與傳統算命有什麼不同？",
+    a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。而且我們會告訴你：當你長過了命盤描述的那個人，就不要再回來靠命盤認識自己了。那代表系統完成了它的工作。",
   },
   {
     q: "報告準不準？",
     a: "四系統交叉驗證，一個系統說的要另外三個也指向同一個方向才算數。但「準」不是目標——「有用」才是。拿你的過去去對照，對上了就繼續用。",
   },
   {
-    q: "神煞會不會很可怕？",
-    a: "不會。所有神煞一律翻譯成心理狀態、能量模式或「兵符效果」。不恐嚇。如果一個東西只能拿來嚇人，那它就沒有用處。",
+    q: "你會不會寫得很玄，或很像算命？",
+    a: "不會。我們的核心是拆掉藉口，不是製造新的藉口。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。",
   },
   {
     q: "合盤報告是什麼？需要什麼前提？",
@@ -437,6 +437,10 @@ const faqs = [
   {
     q: "為什麼個人報告只有旗艦版？",
     a: "因為命盤分析如果只做一半，不如不做。淺層解讀容易被誤解、被斷章取義。旗艦版是我認為能完整交付的最低標準——包含思維系統、四時軍團、全方位風險提醒。少了這些，報告只是「認識自己」，做不到「使用自己」。",
+  },
+  {
+    q: "如果四個系統的結論互相矛盾呢？",
+    a: "那就是你需要自己做選擇的地方。四系統交叉比對不是為了給你一個完美答案，是為了讓任何一個系統都不能單獨當你的藉口。矛盾的地方，就是你的選擇權所在。",
   },
 ];
 
@@ -890,8 +894,8 @@ const ReportPage = () => {
           </div>
           
           <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
-            <span className="text-white/90">翻結構、問問題、</span>
-            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">給選項。</span>
+            <span className="text-white/90">看見自己，是所有</span>
+            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">改變的起點。</span>
           </p>
           
           <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
