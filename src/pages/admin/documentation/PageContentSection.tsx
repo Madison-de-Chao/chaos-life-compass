@@ -53,199 +53,178 @@
    );
  }
  
- // 虹靈御所首頁 (HomePage) 內容
- export function HomePageContent() {
-   return (
-     <div className="space-y-6">
-       <ContentBlock title="Hero 區塊">
-         <div className="space-y-2">
-           <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 知行如一的密法」</p>
-           <p><span className="text-muted-foreground">主標題：</span><strong>虹靈御所</strong></p>
-           <p><span className="text-muted-foreground">副標題：</span>可驗證、可回看、可落地的自我探索</p>
-           <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
-             <p className="text-muted-foreground print:text-gray-600">描述：</p>
-             <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
-               <li>不是算命，不是心靈雞湯，不是課程推銷。</li>
-               <li>我們提供的不是「你是什麼人」的定論，</li>
-               <li>而是「你可以怎麼做」的可執行路徑。</li>
-             </ul>
-           </div>
-         </div>
-       </ContentBlock>
+// 虹靈御所首頁 (HomePage) 內容
+export function HomePageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="Hero 區塊">
+        <div className="space-y-2">
+          <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 不算命，給你做決定的材料」</p>
+          <p><span className="text-muted-foreground">主標題：</span><strong>虹靈御所</strong></p>
+          <p><span className="text-muted-foreground">副標題：</span>翻結構、問問題、給選項</p>
+          <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
+            <p className="text-muted-foreground print:text-gray-600">描述：</p>
+            <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
+              <li>不算命、不給答案、不做心靈雞湯。</li>
+              <li>四系統交叉驗證，每個判斷都有根據。</li>
+              <li>你帶著問題來，我們給結構、給選項、給代價評估。</li>
+            </ul>
+          </div>
+        </div>
+      </ContentBlock>
+
+      <ContentBlock title="六大內容區塊">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">區塊</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">默默超命理報告</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">翻結構、問問題、給選項</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">旗艦版個人報告＋感情／商業／親子合盤。四系統交叉驗證，10 章完整交付，每個判斷都有回驗機制。不給答案，給你做決定的材料。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">元壹系統生態</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">六站各司其職，用你需要的就好</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">占卜做決策支援、八字看長期結構、神話占星翻潛意識、思維訓練練邏輯、療癒體驗處理情緒、企業應用解決團隊問題。不綁套餐。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">默默超的元壹筆記</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">不是雞湯，是觀察紀錄</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">命盤是一種語言，不是判決。這裡寫的是實際案例的反思、方法論的迭代、以及「為什麼很多命理師不敢講的事」。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">元壹宇宙 × 默默超思維</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">四維運作系統</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">情緒、行動、心智、價值——四個維度拆開來看，找到卡住的那一個。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">關於虹靈御所</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">Care & Truth</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">Care 負責讓你願意打開，Truth 負責讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">誰是默默超</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">一個把思考做成工具的人</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">16 年實戰，不是學霸，不是天選之人。固執的地方：做事要有交代，說話要有根據，合作要讓對方越來越強。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="底部金句">
+        <blockquote className="border-l-2 border-primary/50 pl-4 italic text-muted-foreground">
+          「命盤是鏡子，不是劇本。我的工作是幫你把鏡子擦乾淨，看不看、怎麼看，你自己決定。」
+        </blockquote>
+      </ContentBlock>
+    </div>
+  );
+}
  
-       <ContentBlock title="六大內容區塊">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">區塊</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">默默超全方位命理報告</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">可驗證、可回看、可落地</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不是「你是什麼人」的定論，而是「你可以怎麼做」的可執行路徑。四系統交叉驗證，每個判斷都有回驗機制。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">元壹系統生態</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">旅程六站・各司其職</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">占卜決策、八字戰略、神話占星、思維訓練、療癒體驗、企業應用——你不需要用全部，只用你需要的。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">默默超的元壹筆記</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">有關命理，有關做人</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">命盤是一種語言，不是判決。這裡記錄著對命理與人生的思考與觀察。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">元壹宇宙 × 默默超思維</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">四維運作系統</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">情緒、行動、心智、價值——錯誤是材料，不是懲罰。完整不是沒有缺口，完整是不再害怕缺口。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">關於虹靈御所</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">Care & Truth</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">Care 給予溫度，Truth 給予方向。前者讓品牌有靈魂，後者讓品牌有脊椎。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">誰是默默超</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">一個把思考做成工具的人</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">我不是學霸，也不是天選之人。我只是比較固執：做事要有交代，做人要有底線。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="誰是默默超區塊">
-         <div className="space-y-2 text-sm">
-           <p><span className="text-muted-foreground">標題：</span>誰是默默超</p>
-           <p><span className="text-muted-foreground">副標題：</span>一個正在學會凝視自己的人</p>
-           <div className="mt-2 space-y-1">
-             <p className="text-muted-foreground">圖片描述：</p>
-             <ul className="list-disc list-inside text-xs">
-               <li>彩虹花田中的守護者 — 用色彩點亮每一次相遇</li>
-               <li>在宇宙中創造秩序的人 — 用思維照亮每一個決策</li>
-             </ul>
-           </div>
-         </div>
-       </ContentBlock>
-     </div>
-   );
- }
- 
- // 超烜創意 (ChaoxuanPage) 內容
- export function ChaoxuanPageContent() {
-   return (
-     <div className="space-y-6">
-       <ContentBlock title="Hero 區塊">
-         <div className="space-y-2">
-           <p><span className="text-muted-foreground">品牌徽章：</span>「Maison de Chao」</p>
-           <p><span className="text-muted-foreground">主標題：</span><strong>超烜創意聖域</strong></p>
-           <p><span className="text-muted-foreground">副標題：</span>Maison de Chao</p>
-           <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
-             <p className="text-muted-foreground print:text-gray-600">描述：</p>
-             <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
-               <li>我們將創意、藝術、身心療癒與資源整合匯聚一處</li>
-               <li>為您打造一個獨一無二的靈魂聖域</li>
-               <li>不僅是您靈感的孵化器，更是您個人品牌和事業夢想從構思到實現的全方位啟程之所</li>
-             </ul>
-           </div>
-         </div>
-       </ContentBlock>
- 
-       <ContentBlock title="品牌願景區塊">
-         <div className="space-y-3">
-           <p><span className="text-muted-foreground">標題：</span><strong>連結本質，創造不凡</strong></p>
-           <div className="p-3 bg-muted/30 rounded print:bg-gray-100 text-sm space-y-2">
-             <p>超烜創意聖域不僅是創意發想的溫床，更是心靈成長與品牌蛻變的孵化器。我們深信，真正能觸動人心的創意，源於品牌對自身靈魂與願景的深度探索，並透過整合性的表達，綻放出獨一無二的光芒。</p>
-             <p>我們致力於打造一個匯聚多元專業的跨界創意平台，將<strong>美學設計</strong>、<strong>策略行銷</strong>、<strong>原創IP開發</strong>與<strong>靈性療癒</strong>融為一體。透過這四大核心支柱，為渴望突破的個人與企業，提供量身打造的品牌升級服務。</p>
-           </div>
-           <blockquote className="border-l-2 border-primary/50 pl-4 italic text-muted-foreground text-sm">
-             「在超烜創意聖域，我們不僅創造超越想像的視覺語言，更深度塑造品牌的靈魂與識別；我們不僅精準傳遞市場訊息，更引導品牌與受眾產生深度共鳴。」
-           </blockquote>
-         </div>
-       </ContentBlock>
- 
-       <ContentBlock title="六大服務場域">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">服務</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·藝術之廊</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">AI智能繪圖∕原創IP設計∕藝術策展</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">將尖端AI智能繪圖技術與深厚的人文藝術底蘊相結合，為品牌量身打造獨一無二的視覺敘事。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·全能之門</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">全方位整合行銷顧問與活動策劃</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">深入剖析市場脈動與消費者行為，量身打造從品牌定位、內容策略到數位行銷的全方位整合方案。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·元素之庭</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">客製化行銷素材，整合圖文音樂規劃製作</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">集結設計、文案、音樂、影片等多元創意，為品牌製作全方位素材。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·創意之殿</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">原創IP開發∕角色設計∕週邊商品企劃</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">將您的創意點子轉化為具有市場價值的IP資產，為品牌開拓全新商機。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·虹靈御所</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">靈性療癒與人生定位服務</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">結合東方古老智慧與現代心理學精髓，提供客製化的深度療癒、命理諮詢與人生定位服務。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·養成之苑</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">行銷、公關與創新思維課程</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">提供一系列高品質專業課程與客製化企業內訓，協助企業與個人持續成長與升級。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="品牌精神 — 我們的真實價值主張">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">價值</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">誠實且勇敢的真相探索者</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">透過客製化的品牌診斷與深層訪談，勇敢地觸及品牌核心，揭露其獨特的本質與潛藏的價值。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">細膩且深刻的文化融合者</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">將台灣豐富的在地文化元素，以當代美學視野進行轉化與創新，創造具備深厚文化底蘊的作品。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">跨界的整合共創者</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">將藝術創作的感性與品牌策略的理性相結合，提供從個人內在探索到組織文化建構的整合方案。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">永續陪伴與共振成長的夥伴</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">將客戶視為長期夥伴，提供持續性的諮詢與支持，與品牌一同經歷成長的陣痛與喜悅。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="合作過的客戶品牌">
-         <p className="text-sm text-muted-foreground">Samsung, LINE, MediaTek, SEIKO, DIOR, COACH, 晶華酒店, 文華東方, 台灣啤酒</p>
-       </ContentBlock>
-     </div>
-   );
- }
+// 超烜創意 (ChaoxuanPage) 內容
+export function ChaoxuanPageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="Hero 區塊">
+        <div className="space-y-2">
+          <p><span className="text-muted-foreground">品牌徽章：</span>「Maison de Chao」</p>
+          <p><span className="text-muted-foreground">主標題：</span><strong>超烜創意聖域</strong></p>
+          <p><span className="text-muted-foreground">副標題：</span>說真話的品牌整合夥伴</p>
+          <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
+            <p className="text-muted-foreground print:text-gray-600">描述：</p>
+            <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
+              <li>16 年實戰經驗，服務過 Samsung、DIOR、晶華酒店等品牌</li>
+              <li>不做場面話，只做能落地的品牌策略</li>
+              <li>合作的標準：讓對方越來越強，而不是越來越依賴</li>
+            </ul>
+          </div>
+        </div>
+      </ContentBlock>
+
+      <ContentBlock title="六大服務場域">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">服務</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·藝術之廊</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">AI 繪圖｜原創 IP 設計｜藝術策展</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">AI 是工具，不是風格。我們用它加速生產，但視覺語言的判斷權在人。產出標準：能不能在三秒內讓人記住你是誰。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·全能之門</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">整合行銷顧問｜活動策劃</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">行銷的核心不是「讓更多人看到」，是「讓對的人願意留下來」。我們做的是定位、篩選、匹配——不是灑錢買流量。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·元素之庭</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">客製化行銷素材｜圖文音樂整合製作</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">素材不是裝飾品。每一張圖、每一段文案、每一個音效都要回答同一個問題：「這對目標受眾有什麼用？」</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·創意之殿</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">原創 IP 開發｜角色設計｜週邊商品</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">IP 的價值不在於可愛，在於可辨識且可延伸。我們評估的是：這個角色能不能撐起一條產品線，而不只是一張貼紙。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·虹靈御所</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">命理解讀｜人生定位｜結構性自我探索</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不算命、不給答案、不做心靈雞湯。我們翻結構、問問題、給選項。決定權永遠在你自己手上。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">超烜·養成之苑</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">行銷｜公關｜創新思維課程</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">課程的衡量標準只有一個：上完之後，你能不能自己做。如果上完還是得靠我們，那課程就失敗了。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="品牌精神 — 我們的真實價值主張">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">價值</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">說真話，即使不好聽</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">品牌診斷不是拍馬屁。問題在哪裡就指出來，優勢在哪裡就放大。模糊的讚美比直接的批評更浪費時間。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">文化是材料，不是裝飾</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">在地文化不是貼上去的標籤。要用，就要用到結構裡——影響定位、影響語言、影響產品邏輯，而不只是視覺風格。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">感性和理性不是二選一</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">藝術直覺負責方向感，數據分析負責驗證。兩個都要有，缺一個都容易翻車。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">對方越來越不需要你，就對了</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">好的合作夥伴會讓你越來越強，而不是越來越依賴。如果合作三年你還離不開我們，那是我們的問題。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="合作過的客戶品牌">
+        <p className="text-sm text-muted-foreground">Samsung, LINE, MediaTek, SEIKO, DIOR, COACH, 晶華酒店, 文華東方, 台灣啤酒</p>
+      </ContentBlock>
+    </div>
+  );
+}
  
  // 元壹宇宙 (UniversePage) 內容
  export function UniversePageContent() {
@@ -469,104 +448,104 @@
    );
  }
  
- // 命理報告 (ReportPage) 內容
- export function ReportPageContent() {
-   return (
-     <div className="space-y-6">
-       <ContentBlock title="Hero 區塊">
-         <div className="space-y-2">
-           <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 專業命理報告」</p>
-           <p><span className="text-muted-foreground">主標題：</span><strong>看見自己，是最深的修行</strong></p>
-           <p><span className="text-muted-foreground">描述：</span>四系統命理分析・可驗證可落地</p>
-         </div>
-       </ContentBlock>
- 
-       <ContentBlock title="你可能正在經歷這些困境">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">困境</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">詳情</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">人生迷茫</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不知道自己的天賦和方向，感覺在原地打轉</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">缺乏對自己運作模式的清晰認知，優勢與盲點混在一起，無法有效發揮</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">關係困擾</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">總是遇到相似的關係模式，不知道問題出在哪</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不了解自己在關係中的需求與投射，重複相同的互動劇本</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">事業瓶頸</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">工作不順利，不知道什麼環境真正適合自己</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">職涯發展停滯，缺乏對自身能量類型與適合策略的認知</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">決策困難</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">重要抉擇時猶豫不決，事後常感後悔</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">缺乏清晰的內在權威與決策機制，容易被外界聲音干擾</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="四大命理系統交叉驗證">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">系統</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">意義</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">紫微斗數</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">命宮格局</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">八字</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">五行能量</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">占星</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">星盤配置</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">人類圖</td>
-               <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">能量類型</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">定義你的決策權威與能量運作方式，找到最適合你的行動策略。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="常見問題">
-         <div className="space-y-3">
-           {[
-             { q: "我不懂命理也能看懂嗎？", a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。" },
-             { q: "多久可以收到報告？", a: "依版本而定：基本版 5-9 天、標準版 7-12 天、旗艦版 12-18 個工作天。每份報告皆為人工精密解讀，確保品質。" },
-             { q: "你會不會寫得很玄，或很像算命？", a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。" },
-             { q: "與傳統算命有什麼不同？", a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。" },
-           ].map((item, i) => (
-             <div key={i} className="p-3 bg-muted/20 rounded print:bg-gray-50 print:border print:border-gray-200">
-               <p className="font-medium text-sm">{item.q}</p>
-               <p className="text-sm text-muted-foreground mt-1">{item.a}</p>
-             </div>
-           ))}
-         </div>
-       </ContentBlock>
-     </div>
-   );
- }
+// 命理報告 (ReportPage) 內容
+export function ReportPageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="Hero 區塊">
+        <div className="space-y-2">
+          <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 專業命理報告」</p>
+          <p><span className="text-muted-foreground">主標題：</span><strong>看見自己，是最深的修行</strong></p>
+          <p><span className="text-muted-foreground">描述：</span>四系統命理分析・可驗證可落地</p>
+        </div>
+      </ContentBlock>
+
+      <ContentBlock title="產品線">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">產品</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">類型</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">旗艦版個人報告</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">個人命理</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">10 章完整交付，四系統交叉驗證。個人報告只有旗艦版，因為這是確保完整交付的最低標準。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">感情合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">伴侶 / 曖昧對象的關係結構分析，解讀互動模式與潛在衝突。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">商業合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">合夥人 / 商業夥伴的合作結構分析，評估協作風險與互補性。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">親子合盤</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700 text-xs">合盤解讀</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">親子之間的互動結構分析，理解教養盲點與溝通模式。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="四大命理系統交叉驗證">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">系統</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">意義</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">紫微斗數</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">命宮格局</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">揭示你的先天人格結構、內在驅動力與一生運勢走向，如同靈魂的藍圖設計。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">八字</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">五行能量</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">占星</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">星盤配置</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">人類圖</td>
+              <td className="p-2 border border-border print:border-gray-300 text-primary print:text-amber-700">能量類型</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">定義你的決策權威與能量運作方式，找到最適合你的行動策略。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="常見問題">
+        <div className="space-y-3">
+          {[
+            { q: "我不懂命理也能看懂嗎？", a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。" },
+            { q: "為什麼個人報告只有旗艦版？", a: "因為旗艦版是「確保完整交付」的最低標準。四系統交叉驗證、10 章結構化分析，少一個環節都會影響判斷的可靠度。" },
+            { q: "你會不會寫得很玄，或很像算命？", a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。" },
+            { q: "與傳統算命有什麼不同？", a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。" },
+          ].map((item, i) => (
+            <div key={i} className="p-3 bg-muted/20 rounded print:bg-gray-50 print:border print:border-gray-200">
+              <p className="font-medium text-sm">{item.q}</p>
+              <p className="text-sm text-muted-foreground mt-1">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </ContentBlock>
+    </div>
+  );
+}
  
  // 超烜遊戲 (GamesPage) 內容
  export function GamesPageContent() {

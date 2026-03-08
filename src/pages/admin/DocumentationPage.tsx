@@ -49,7 +49,7 @@
                默默超完整性哲學官方入口網站
              </h1>
              <p className="text-xl text-primary print:text-gray-600">網站架構與內容說明</p>
-             <p className="text-sm text-muted-foreground mt-4">最後更新：2026-02-05</p>
+             <p className="text-sm text-muted-foreground mt-4">最後更新：2026-03-08</p>
            </div>
  
            <hr className="border-border print:border-gray-300 my-8" />
@@ -122,38 +122,38 @@
                  ]}
                />
  
-               <PageCard
-                 number={2}
-                 title="虹靈御所首頁 (HomePage)"
-                 path="/home"
-                 description="Rainbow Sanctuary 品牌主頁。命理報告服務介紹與服務項目導覽。"
-                 links={[
-                   { path: "/reports", label: "命理報告" },
-                   { path: "/games", label: "超烜遊戲" },
-                   { path: "/universe", label: "元壹宇宙" },
-                 ]}
-               />
+                <PageCard
+                  number={2}
+                  title="虹靈御所首頁 (HomePage)"
+                  path="/home"
+                  description="Rainbow Sanctuary 品牌主頁。核心定位：「翻結構、問問題、給選項」。旗艦版命理報告＋感情／商業／親子合盤。四系統交叉驗證，不算命、不給答案，給你做決定的材料。"
+                  links={[
+                    { path: "/reports", label: "命理報告" },
+                    { path: "/games", label: "超烜遊戲" },
+                    { path: "/universe", label: "元壹宇宙" },
+                  ]}
+                />
  
-               <PageCard
-                 number={3}
-                 title="超烜創意 (ChaoxuanPage)"
-                 path="/chaoxuan"
-                 description="Maison de Chao 品牌頁面。品牌策略與創意服務介紹。六大服務領域：🎨 藝術之廊、🚪 全能之門、🌿 元素之庭、🏛️ 創意之殿、🌈 虹靈御所、🌱 養成之苑。"
-               />
+                <PageCard
+                  number={3}
+                  title="超烜創意 (ChaoxuanPage)"
+                  path="/chaoxuan"
+                  description="Maison de Chao 品牌頁面。定位：「說真話的品牌整合夥伴」。六大服務場域：🎨 藝術之廊、🚪 全能之門、🌿 元素之庭、🏛️ 創意之殿、🌈 虹靈御所、🌱 養成之苑。品牌精神：說真話、文化是材料、感性理性並重、讓對方越來越強。"
+                />
  
-               <PageCard
-                 number={4}
-                 title="命理報告 (ReportPage)"
-                 path="/reports"
-                 description="三層服務體系：1. 基礎報告（標準命理分析）、2. 進階解讀（深度諮詢服務）、3. VIP 定制（專屬個人化報告）。包含服務流程說明與報告預覽範例。"
-               />
+                <PageCard
+                  number={4}
+                  title="命理報告 (ReportPage)"
+                  path="/reports"
+                  description="產品線：旗艦版個人報告（10 章完整交付）＋三大合盤產品（感情合盤、商業合盤、親子合盤）。四系統交叉驗證，翻結構、問問題、給選項。包含服務流程說明與報告預覽範例。"
+                />
  
-               <PageCard
-                 number={5}
-                 title="超烜遊戲 (GamesPage)"
-                 path="/games"
-                 description="互動式命理遊戲集。遊戲項目：🎴 八字探秘（八字命理入門）、🧩 邏輯測試（思維方式分析）、🪞 鏡像探索（自我認知遊戲）。支援分類篩選系統。"
-               />
+                <PageCard
+                  number={5}
+                  title="超烜遊戲 (GamesPage)"
+                  path="/games"
+                  description="元壹系統生態・旅程六站。六大互動站點：元壹占卜 YYDS、四時八字人生兵法、元壹宇宙神話占星、默默超思維訓練 MMCLS、弧度歸零 Arc Zero、東方人因洞察 EHFIS。支援分類篩選系統。"
+                />
  
                <PageCard
                  number={6}
