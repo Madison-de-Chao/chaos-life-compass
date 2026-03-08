@@ -30,7 +30,7 @@ const sections = [
     id: 1,
     title: "默默超命理報告",
     subtitle: "翻結構、問問題、給選項",
-    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉驗證，10 章完整交付，每個判斷都有回驗機制。不給答案，給你做決定的材料。",
+    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉比對，不是四倍準確，是四個系統互相拆掉對方的藉口功能。留下的才是你真正需要看的。",
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
