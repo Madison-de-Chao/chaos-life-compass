@@ -49,7 +49,7 @@
                默默超完整性哲學官方入口網站
              </h1>
              <p className="text-xl text-primary print:text-gray-600">網站架構與內容說明</p>
-             <p className="text-sm text-muted-foreground mt-4">最後更新：2026-02-05</p>
+             <p className="text-sm text-muted-foreground mt-4">最後更新：2026-03-08</p>
            </div>
  
            <hr className="border-border print:border-gray-300 my-8" />
