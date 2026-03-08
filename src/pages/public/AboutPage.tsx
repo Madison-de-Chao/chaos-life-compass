@@ -255,7 +255,7 @@ const AboutPage = () => {
               >
                 <Quote className="w-6 h-6 md:w-8 md:h-8 text-amber-400/40 mb-3 md:mb-4" />
                 <p className="text-white/60 font-serif text-base md:text-lg leading-relaxed italic relative z-10">
-                  「把話說清楚，把事做完整。對方越來越不需要你，就代表你做對了。」
+                  「不是人見人愛的那種。但我發言的時候，不會被捨棄或無視。有重要事情的時候，人們還是會願意問我的意見。如果我說錯，下次就不會有人再來問我。」
                 </p>
                 <p className="text-amber-400/60 mt-3 md:mt-4 text-sm">— 創辦人 MOMO CHAO</p>
               </motion.div>
