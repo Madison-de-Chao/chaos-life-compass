@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
             className="mb-8 p-6 bg-gradient-to-r from-amber-500/5 to-transparent border-l-2 border-amber-500/50 rounded-r-xl"
           >
             <p className="text-white/70 italic font-serif text-lg">
-              「你不需要被告知你是誰，你只需要一面夠清晰的鏡子。」
+              「用玄學幫你看見自己，但拒絕讓玄學替你開脫。看見之後，選擇是你的，責任也是你的。」
             </p>
             <p className="text-white/50 text-sm mt-2">
               我們的服務理念是幫助您認識自己，而非替您做決定。
