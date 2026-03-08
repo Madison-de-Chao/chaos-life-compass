@@ -348,10 +348,10 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              三條底線
+              三大方法論
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              說真話・說人話・守邊界
+              喚醒 Awaken・篩選 Filter・賦權 Empower
             </p>
             <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
               不是道德要求，是風險管理的必要條件
