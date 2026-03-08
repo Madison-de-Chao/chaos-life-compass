@@ -401,9 +401,9 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-8">
-            「命盤是鏡子，不是劇本。<br />
-            我的工作是幫你把鏡子擦乾淨，<br />
-            看不看、怎麼看，你自己決定。」
+            「往往我們跟隨直覺順從情緒，<br />
+            最後的結果會告訴你真正的事實<br />
+            都是自己的選擇，不是命運的安排。」
           </blockquote>
           <p className="text-amber-400/60">—— 默默超</p>
         </div>

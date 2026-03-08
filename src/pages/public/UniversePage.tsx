@@ -226,7 +226,7 @@ const journeyStations = [
     subtitle: "EHFIS — Eastern Human Factors Insight System",
     role: "企業應用器",
     philosophy: "行為洞察工具，不是命運審判工具",
-    description: "把個人工具轉成團隊用。分析成員互動跟潛在衝突點。只做行為假設，不做命運定論。不得用於甄選、解僱、升遷。",
+    description: "你帶團隊，想理解成員的協作模式和潛在摩擦點，但不想用命理來做人事判斷。只做行為假設，不做命運定論。",
     features: ["機會命運卡個人報告", "團隊矩陣分析", "RBH 行為假設報告", "團隊發展輔助工具"],
     link: "https://ehfis.rainbow-sanctuary.com/",
     color: "from-slate-500 to-zinc-500",

@@ -473,13 +473,13 @@ const AboutPage = () => {
               className="relative group order-2 md:order-1"
             >
               <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">AI 時代，人需要什麼</h3>
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">Care & Truth</h3>
                 <p className="text-white/60 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
-                  AI 能查資料、能分析、能回答問題。但它不知道你在乎什麼、能承擔什麼、底線在哪。
-                  這些只有你自己清楚——前提是你願意搞清楚。
+                  <strong className="text-white/80">Truth（真誠）</strong>：不是讓你舒服，是讓你正確收到正確的東西。Truth 負責讓訊號不失真。<br /><br />
+                  <strong className="text-white/80">Care（關懷）</strong>：不是給你想聽的，是給你需要聽的。Care 負責讓內容不失焦。
                 </p>
                 <p className="text-amber-400/60 text-xs md:text-sm">
-                  這套工具幫你釐清這些事，然後你自己決定怎麼做。
+                  第三層：在乎但不追。東西已經準備好了，放在這裡，你來的時候它在。
                 </p>
               </div>
             </motion.div>
