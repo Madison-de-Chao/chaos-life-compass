@@ -239,12 +239,13 @@ const AboutPage = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-                  思考夥伴，不是老師
+                  鏡子非劇本
                 </h2>
-                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Thinking Partner, Not Guru</p>
+                <p className="text-amber-400/60 text-base md:text-lg mb-4 md:mb-6">Mirror, Not Script</p>
                 <p className="text-white/70 leading-relaxed text-base md:text-lg">
-                  我不替你做決定。我能做的是幫你把選項攤開、把代價看清楚。
-                  每個判斷都分清事實、推測、立場——搞清楚你聽到的是哪一種。
+                  我們不提供「命定結論」，我們提供「可驗證的下一步」。
+                  每個判斷都標註依據，區分事實（Zone A）、推測（Zone B）、立場（Zone C）。
+                  Zone C 不只是你表達立場的位置，也是你邀請對方表達他立場的入口。它是對話中的留白。
                 </p>
               </motion.div>
 
