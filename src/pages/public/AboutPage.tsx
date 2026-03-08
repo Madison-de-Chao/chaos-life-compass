@@ -441,19 +441,20 @@ const AboutPage = () => {
               className="space-y-4 md:space-y-6 text-white/70 leading-relaxed text-base md:text-lg font-serif relative z-10"
             >
               <motion.p variants={itemVariants}>
-                傳統命理告訴你未來會怎樣，然後你就照著過。
-                問題是——那是別人的解讀，不是你的決定。
+                我是趙偉辰，多數人叫我默默超。不是老師，不是先知，不是聖人。打工人，做過公關、活動、行銷專案。
               </motion.p>
               <motion.p variants={itemVariants}>
-                我做這套工具的原因很簡單：<span className="text-amber-400/80">模糊的語言會掩蓋風險，讓人在不知情下踏入麻煩。</span>
-                把話說清楚，風險就降了一半。
+                我只是從四十年的人生裡摸索出一件事：<span className="text-amber-400/80">為什麼我做人直接、敢說真話、不討喜，但卻還是會被信任。</span>
               </motion.p>
               <motion.p variants={itemVariants}>
-                所以這裡的每個產出都分三層：事實、推測、立場。
-                <span className="text-white/50">你看到的是哪一層，自己判斷。我不替你做結論。</span>
+                原因很簡單：我用的方法、對誠信和名譽的在乎程度、對自己高道德高標準高自制的做事方式，讓我說的話有一個很硬的基底：
+                <span className="text-white/50">如果我說錯，下次就不會有人再來問我。</span>
+              </motion.p>
+              <motion.p variants={itemVariants}>
+                我不是工程師，但我不接受「我不是理科腦所以我做不了」這個前提。我用 AI 把需求說清楚，工具替我執行，六個站點就是這樣建出來的。不預設自己做不到，不畫地自限。
               </motion.p>
               <motion.p variants={itemVariants} className="text-white/50 text-sm md:text-base">
-                最終目標：你越來越不需要這套東西，就代表它有用。
+                這套系統就是從這些經歷總結出來的工具。它的可信度不是來自理論框架的完整性，是來自一個人四十年活出來的信任。
               </motion.p>
             </motion.div>
           </motion.div>
