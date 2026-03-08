@@ -430,7 +430,7 @@ const AboutPage = () => {
               transition={{ delay: 0.1 }}
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
-              為什麼做<span className="text-amber-400">這件事</span>
+              這套系統<span className="text-amber-400">怎麼來的</span>
             </motion.h2>
             
             <motion.div
