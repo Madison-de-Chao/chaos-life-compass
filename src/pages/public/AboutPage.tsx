@@ -354,7 +354,7 @@ const AboutPage = () => {
               喚醒 Awaken・篩選 Filter・賦權 Empower
             </p>
             <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
-              不是道德要求，是風險管理的必要條件
+              不是教你新東西，是讓你看見你已經知道的
             </p>
           </motion.div>
 
