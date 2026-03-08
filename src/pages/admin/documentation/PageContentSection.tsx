@@ -53,86 +53,78 @@
    );
  }
  
- // 虹靈御所首頁 (HomePage) 內容
- export function HomePageContent() {
-   return (
-     <div className="space-y-6">
-       <ContentBlock title="Hero 區塊">
-         <div className="space-y-2">
-           <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 知行如一的密法」</p>
-           <p><span className="text-muted-foreground">主標題：</span><strong>虹靈御所</strong></p>
-           <p><span className="text-muted-foreground">副標題：</span>可驗證、可回看、可落地的自我探索</p>
-           <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
-             <p className="text-muted-foreground print:text-gray-600">描述：</p>
-             <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
-               <li>不是算命，不是心靈雞湯，不是課程推銷。</li>
-               <li>我們提供的不是「你是什麼人」的定論，</li>
-               <li>而是「你可以怎麼做」的可執行路徑。</li>
-             </ul>
-           </div>
-         </div>
-       </ContentBlock>
- 
-       <ContentBlock title="六大內容區塊">
-         <table className="w-full text-sm border-collapse">
-           <thead>
-             <tr className="bg-muted/50 print:bg-gray-100">
-               <th className="text-left p-2 border border-border print:border-gray-300">區塊</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
-               <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">默默超全方位命理報告</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">可驗證、可回看、可落地</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">不是「你是什麼人」的定論，而是「你可以怎麼做」的可執行路徑。四系統交叉驗證，每個判斷都有回驗機制。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">元壹系統生態</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">旅程六站・各司其職</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">占卜決策、八字戰略、神話占星、思維訓練、療癒體驗、企業應用——你不需要用全部，只用你需要的。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">默默超的元壹筆記</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">有關命理，有關做人</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">命盤是一種語言，不是判決。這裡記錄著對命理與人生的思考與觀察。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">元壹宇宙 × 默默超思維</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">四維運作系統</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">情緒、行動、心智、價值——錯誤是材料，不是懲罰。完整不是沒有缺口，完整是不再害怕缺口。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">關於虹靈御所</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">Care & Truth</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">Care 給予溫度，Truth 給予方向。前者讓品牌有靈魂，後者讓品牌有脊椎。</td>
-             </tr>
-             <tr>
-               <td className="p-2 border border-border print:border-gray-300 font-medium">誰是默默超</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">一個把思考做成工具的人</td>
-               <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">我不是學霸，也不是天選之人。我只是比較固執：做事要有交代，做人要有底線。</td>
-             </tr>
-           </tbody>
-         </table>
-       </ContentBlock>
- 
-       <ContentBlock title="誰是默默超區塊">
-         <div className="space-y-2 text-sm">
-           <p><span className="text-muted-foreground">標題：</span>誰是默默超</p>
-           <p><span className="text-muted-foreground">副標題：</span>一個正在學會凝視自己的人</p>
-           <div className="mt-2 space-y-1">
-             <p className="text-muted-foreground">圖片描述：</p>
-             <ul className="list-disc list-inside text-xs">
-               <li>彩虹花田中的守護者 — 用色彩點亮每一次相遇</li>
-               <li>在宇宙中創造秩序的人 — 用思維照亮每一個決策</li>
-             </ul>
-           </div>
-         </div>
-       </ContentBlock>
-     </div>
-   );
- }
+// 虹靈御所首頁 (HomePage) 內容
+export function HomePageContent() {
+  return (
+    <div className="space-y-6">
+      <ContentBlock title="Hero 區塊">
+        <div className="space-y-2">
+          <p><span className="text-muted-foreground">品牌徽章：</span>「Rainbow Sanctuary × 不算命，給你做決定的材料」</p>
+          <p><span className="text-muted-foreground">主標題：</span><strong>虹靈御所</strong></p>
+          <p><span className="text-muted-foreground">副標題：</span>翻結構、問問題、給選項</p>
+          <div className="mt-3 p-3 bg-muted/30 rounded print:bg-gray-100">
+            <p className="text-muted-foreground print:text-gray-600">描述：</p>
+            <ul className="list-disc list-inside mt-1 space-y-1 text-sm">
+              <li>不算命、不給答案、不做心靈雞湯。</li>
+              <li>四系統交叉驗證，每個判斷都有根據。</li>
+              <li>你帶著問題來，我們給結構、給選項、給代價評估。</li>
+            </ul>
+          </div>
+        </div>
+      </ContentBlock>
+
+      <ContentBlock title="六大內容區塊">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-muted/50 print:bg-gray-100">
+              <th className="text-left p-2 border border-border print:border-gray-300">區塊</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">副標題</th>
+              <th className="text-left p-2 border border-border print:border-gray-300">描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">默默超命理報告</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">翻結構、問問題、給選項</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">旗艦版個人報告＋感情／商業／親子合盤。四系統交叉驗證，10 章完整交付，每個判斷都有回驗機制。不給答案，給你做決定的材料。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">元壹系統生態</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">六站各司其職，用你需要的就好</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">占卜做決策支援、八字看長期結構、神話占星翻潛意識、思維訓練練邏輯、療癒體驗處理情緒、企業應用解決團隊問題。不綁套餐。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">默默超的元壹筆記</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">不是雞湯，是觀察紀錄</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">命盤是一種語言，不是判決。這裡寫的是實際案例的反思、方法論的迭代、以及「為什麼很多命理師不敢講的事」。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">元壹宇宙 × 默默超思維</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">四維運作系統</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">情緒、行動、心智、價值——四個維度拆開來看，找到卡住的那一個。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">關於虹靈御所</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">Care & Truth</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">Care 負責讓你願意打開，Truth 負責讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。</td>
+            </tr>
+            <tr>
+              <td className="p-2 border border-border print:border-gray-300 font-medium">誰是默默超</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground">一個把思考做成工具的人</td>
+              <td className="p-2 border border-border print:border-gray-300 text-muted-foreground text-xs">16 年實戰，不是學霸，不是天選之人。固執的地方：做事要有交代，說話要有根據，合作要讓對方越來越強。</td>
+            </tr>
+          </tbody>
+        </table>
+      </ContentBlock>
+
+      <ContentBlock title="底部金句">
+        <blockquote className="border-l-2 border-primary/50 pl-4 italic text-muted-foreground">
+          「命盤是鏡子，不是劇本。我的工作是幫你把鏡子擦乾淨，看不看、怎麼看，你自己決定。」
+        </blockquote>
+      </ContentBlock>
+    </div>
+  );
+}
  
  // 超烜創意 (ChaoxuanPage) 內容
  export function ChaoxuanPageContent() {
