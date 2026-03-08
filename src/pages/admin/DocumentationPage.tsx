@@ -141,12 +141,12 @@
                   description="Maison de Chao 品牌頁面。定位：「說真話的品牌整合夥伴」。六大服務場域：🎨 藝術之廊、🚪 全能之門、🌿 元素之庭、🏛️ 創意之殿、🌈 虹靈御所、🌱 養成之苑。品牌精神：說真話、文化是材料、感性理性並重、讓對方越來越強。"
                 />
  
-               <PageCard
-                 number={4}
-                 title="命理報告 (ReportPage)"
-                 path="/reports"
-                 description="三層服務體系：1. 基礎報告（標準命理分析）、2. 進階解讀（深度諮詢服務）、3. VIP 定制（專屬個人化報告）。包含服務流程說明與報告預覽範例。"
-               />
+                <PageCard
+                  number={4}
+                  title="命理報告 (ReportPage)"
+                  path="/reports"
+                  description="產品線：旗艦版個人報告（10 章完整交付）＋三大合盤產品（感情合盤、商業合盤、親子合盤）。四系統交叉驗證，翻結構、問問題、給選項。包含服務流程說明與報告預覽範例。"
+                />
  
                <PageCard
                  number={5}
