@@ -688,7 +688,7 @@ const createIntroSections = () => [
           </span>
         </h1>
         <p className="text-white/70 text-base sm:text-xl md:text-2xl font-light italic">
-          「幫你看清自己的狀況，不替你做決定。」
+          「用玄學幫你看見自己，但拒絕讓玄學替你開脫。」
         </p>
       </div>
     ),
