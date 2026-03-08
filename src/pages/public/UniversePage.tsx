@@ -340,7 +340,7 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-xl md:text-2xl text-white/60 mb-4 font-serif"
           >
-            把東方玄學拆開來，用說人話的方式講清楚
+            Yuan-Yi Universe — A Civilization-Level Living Methodology
           </motion.p>
 
           <motion.p
@@ -349,8 +349,9 @@ const UniversePage = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            確定的說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。<br />
-            不賣預言，不說場面話。
+            不是一套知識，而是一種活法。<br />
+            用玄學幫你看見自己，但拒絕讓玄學替你開脫。<br />
+            在複雜世界中，找到屬於自己的運作方式——然後長過它。
           </motion.p>
 
           <motion.div
