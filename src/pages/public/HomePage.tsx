@@ -60,7 +60,7 @@ const sections = [
     id: 4,
     title: "元壹宇宙 × 默默超思維",
     subtitle: "四維運作系統",
-    description: "情緒、行動、心智、價值——四個維度拆開來看，找到卡住的那一個。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
+    description: "情緒是燃料，不是敵人。行動來自整合後的清晰，不是逃避式的忙碌。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
