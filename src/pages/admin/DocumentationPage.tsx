@@ -148,12 +148,12 @@
                   description="產品線：旗艦版個人報告（10 章完整交付）＋三大合盤產品（感情合盤、商業合盤、親子合盤）。四系統交叉驗證，翻結構、問問題、給選項。包含服務流程說明與報告預覽範例。"
                 />
  
-               <PageCard
-                 number={5}
-                 title="超烜遊戲 (GamesPage)"
-                 path="/games"
-                 description="互動式命理遊戲集。遊戲項目：🎴 八字探秘（八字命理入門）、🧩 邏輯測試（思維方式分析）、🪞 鏡像探索（自我認知遊戲）。支援分類篩選系統。"
-               />
+                <PageCard
+                  number={5}
+                  title="超烜遊戲 (GamesPage)"
+                  path="/games"
+                  description="元壹系統生態・旅程六站。六大互動站點：元壹占卜 YYDS、四時八字人生兵法、元壹宇宙神話占星、默默超思維訓練 MMCLS、弧度歸零 Arc Zero、東方人因洞察 EHFIS。支援分類篩選系統。"
+                />
  
                <PageCard
                  number={6}
