@@ -134,12 +134,12 @@
                   ]}
                 />
  
-               <PageCard
-                 number={3}
-                 title="超烜創意 (ChaoxuanPage)"
-                 path="/chaoxuan"
-                 description="Maison de Chao 品牌頁面。品牌策略與創意服務介紹。六大服務領域：🎨 藝術之廊、🚪 全能之門、🌿 元素之庭、🏛️ 創意之殿、🌈 虹靈御所、🌱 養成之苑。"
-               />
+                <PageCard
+                  number={3}
+                  title="超烜創意 (ChaoxuanPage)"
+                  path="/chaoxuan"
+                  description="Maison de Chao 品牌頁面。定位：「說真話的品牌整合夥伴」。六大服務場域：🎨 藝術之廊、🚪 全能之門、🌿 元素之庭、🏛️ 創意之殿、🌈 虹靈御所、🌱 養成之苑。品牌精神：說真話、文化是材料、感性理性並重、讓對方越來越強。"
+                />
  
                <PageCard
                  number={4}
