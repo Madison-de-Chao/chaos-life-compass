@@ -70,7 +70,7 @@ const sections = [
     id: 5,
     title: "關於虹靈御所",
     subtitle: "Care & Truth",
-    description: "Care 負責讓你願意打開，Truth 負責讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。",
+    description: "Truth 負責讓你正確收到正確的東西，不失真。Care 負責給你需要聽的而不是想聽的，不失焦。在乎但不追——東西準備好了放在這裡，你來的時候它在。",
     icon: Building2,
     href: "https://main.momo-chao.com/about",
     isExternal: true,
