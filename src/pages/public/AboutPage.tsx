@@ -170,9 +170,9 @@ const AboutPage = () => {
             className="max-w-2xl mx-auto px-2"
           >
             <p className="text-white/40 text-base md:text-lg leading-relaxed">
-              幫你看清自己的狀況，不替你做決定。
+              我知道自己很行。我願意幫忙。
               <span className="hidden md:inline"><br /></span>
-              確定的事說確定，不確定的標出來。
+              相信的自然會靠近，不信的我也不勉強。
             </p>
           </motion.div>
 
