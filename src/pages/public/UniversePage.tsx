@@ -39,7 +39,7 @@ const dimensions = [
     color: "from-rose-500 to-pink-500",
     bgColor: "bg-rose-500/10",
     textColor: "text-rose-400",
-    content: "情緒是訊號，告訴你哪裡卡住了。不需要消滅它，需要讀懂它在說什麼。",
+    content: "情緒是你最誠實的原始資料。你的身體在你意識到之前就已經有反應了。它不是需要被克服的干擾，是決策鏈的源頭。",
   },
   {
     icon: Zap,
@@ -48,7 +48,7 @@ const dimensions = [
     color: "from-amber-500 to-orange-500",
     bgColor: "bg-amber-500/10",
     textColor: "text-amber-400",
-    content: "行動不是「想好再動」或「先動再想」。是搞清楚現狀之後，做一個 48 小時內可以做的小事。",
+    content: "行動來自整合後的清晰，不是逃避式的忙碌。但不動也不是安全——差值越近零，風險越高。該啟動的時候，今天只做最小一步並立刻做。",
   },
   {
     icon: Brain,
@@ -57,7 +57,7 @@ const dimensions = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-400",
-    content: "你怎麼看一件事，決定你會怎麼處理它。心智不是正確與否的問題，是你的觀察角度夠不夠多。",
+    content: "心智是濾鏡。大多數人不是不願意從對方的視角看，是他們走過去了但帶著自己的整套濾鏡，所以站在對方的位置上看到的還是自己。",
   },
   {
     icon: Compass,
@@ -66,7 +66,7 @@ const dimensions = [
     color: "from-emerald-500 to-teal-500",
     bgColor: "bg-emerald-500/10",
     textColor: "text-emerald-400",
-    content: "價值是你在乎的東西。不是別人說重要的東西，是你自己在選擇裡發現的底線。",
+    content: "價值不是外界給你的規則，是你在每一次選擇中逐漸發現的自己。驅動你最終站在某個立場上的，不是邏輯分析，是情緒。情緒是立場的燃料。",
   },
 ];
 
