@@ -344,28 +344,28 @@ const fourSystems = [
     icon: Star, 
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "你的先天人格結構長什麼樣。十二宮位、四化飛星——告訴你天生帶什麼牌、牌怎麼打。"
+    description: "揭示你的先天人格結構與運勢走向。但這是起點的你，不是永遠的你。"
   },
   { 
     name: "八字", 
     icon: Target, 
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "你的能量怎麼流動。五行強弱、十神配置——哪些資源是你的，哪些是你以為是你的。"
+    description: "解析你的能量組成與流動模式。當你活出了不一樣的自己，八字描述的那個人可能已經不是你了。"
   },
   { 
     name: "占星", 
     icon: Compass, 
     color: "from-blue-500 to-cyan-600",
     meaning: "星盤配置",
-    description: "你的心理動態和關係模式。行星相位——為什麼你在某些情境下總是做出同樣的反應。"
+    description: "透過行星相位與宮位，映照你的心理動態與關係模式。星盤是鷹架，不是建築。"
   },
   { 
     name: "人類圖", 
     icon: Brain, 
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "你的決策系統。類型、權威、通道——用對的方式做決定，而不是用你以為對的方式。"
+    description: "找到你的內在訊號源在哪裡。但我們不接受你拿訊號源的「類型」當不行動的理由。"
   },
 ];
 
