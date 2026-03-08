@@ -74,27 +74,27 @@ const dimensions = [
 const principles = [
   {
     icon: Infinity,
-    title: "完整性",
-    subtitle: "Wholeness",
-    content: "不是只看好的那面。好壞對錯都攤開來看，才有辦法做出不後悔的決定。排除掉的東西不會消失，只會在你沒注意的地方出事。",
+    title: "完整性哲學",
+    subtitle: "The Wholeness Philosophy",
+    content: "追求的不是「沒有缺點」的完美，而是「看見全部」的完整。錯誤不是廢棄物，是通往完整的材料。你只有先接受，才有可能超越。",
   },
   {
     icon: Circle,
     title: "弧度模型",
     subtitle: "The Arc Model",
-    content: "沒有絕對的對錯，只有角度不同。所有狀態都在圓周上的不同位置。這不是和稀泥——是提醒你在下判斷之前，先看完整張地圖。",
+    content: "人生是 360° 的圓，你走過的彎路都是抵達完整的必要弧度。失敗不是錯誤，是還沒走完的路。好與壞、對與錯，只是角度不同，而非本質對立。",
   },
   {
     icon: Layers,
-    title: "分層思考",
-    subtitle: "Layered Thinking",
-    content: "把事實、推測、立場分清楚。混在一起講，聽的人分不清你是在陳述事實還是在推銷觀點。分清楚了，雙方都省事。",
+    title: "賽博玄哲學",
+    subtitle: "Cyber Metaphysics",
+    content: "用可驗證的方式保留玄學的理解功能，拆除玄學的藉口功能。「賽博」不是指科技，是指可驗證。每個結論都要能被回看、被檢驗、被挑戰。",
   },
   {
     icon: Target,
-    title: "不替你做決定",
-    subtitle: "Your Call",
-    content: "我能做的是把選項攤開、把代價列出來。選哪條路，是你的事。這不是冷漠——是尊重你有判斷能力。",
+    title: "鏡子非劇本",
+    subtitle: "Mirror, Not Script",
+    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。但這面鏡子不打柔光——你看見什麼，取決於你願意承認什麼。",
   },
 ];
 
