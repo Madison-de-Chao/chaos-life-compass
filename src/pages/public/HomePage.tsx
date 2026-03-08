@@ -178,8 +178,9 @@ const HomePage = () => {
           {/* Description */}
           <p className="max-w-2xl mx-auto text-sm md:text-base text-white/50 mb-10 animate-fade-in leading-relaxed" style={{ animationDelay: '0.6s' }}>
             不算命、不給答案、不做心靈雞湯。<br />
-            四系統交叉驗證，每個判斷都有根據。<br />
-            你帶著問題來，我們給結構、給選項、給代價評估。
+            四系統交叉比對，不是為了更準，是為了讓任何一個系統都不能單獨當你的藉口。<br />
+            你帶著問題來，我們給結構、給選項、給代價評估。<br />
+            看見之後，選擇是你的，責任也是你的。
           </p>
           
           {/* CTA Buttons */}

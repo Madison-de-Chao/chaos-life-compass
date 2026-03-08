@@ -740,22 +740,22 @@ const createIntroSections = () => [
           <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💭</div>
             <h3 className="text-rose-300 text-base sm:text-lg font-display mb-1 sm:mb-2">情緒</h3>
-            <p className="text-white/50 text-xs sm:text-sm">你現在感覺什麼</p>
+            <p className="text-white/50 text-xs sm:text-sm">情緒不是干擾，是你最誠實的原始資料</p>
           </div>
           <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">⚡</div>
             <h3 className="text-amber-300 text-base sm:text-lg font-display mb-1 sm:mb-2">行動</h3>
-            <p className="text-white/50 text-xs sm:text-sm">你接下來能做什麼</p>
+            <p className="text-white/50 text-xs sm:text-sm">不動不是安全，是鎖死。今天只做最小一步</p>
           </div>
           <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🧠</div>
             <h3 className="text-blue-300 text-base sm:text-lg font-display mb-1 sm:mb-2">心智</h3>
-            <p className="text-white/50 text-xs sm:text-sm">你怎麼看這件事</p>
+            <p className="text-white/50 text-xs sm:text-sm">心智是濾鏡。你看到什麼取決於你戴了什麼</p>
           </div>
           <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💎</div>
             <h3 className="text-emerald-300 text-base sm:text-lg font-display mb-1 sm:mb-2">價值</h3>
-            <p className="text-white/50 text-xs sm:text-sm">你在乎的到底是什麼</p>
+            <p className="text-white/50 text-xs sm:text-sm">價值不是外界給你的規則，是你逐漸發現的自己</p>
           </div>
         </div>
       </div>
