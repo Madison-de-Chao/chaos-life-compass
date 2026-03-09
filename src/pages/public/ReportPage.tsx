@@ -344,7 +344,7 @@ const fourSystems = [
     icon: Star, 
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "揭示你的先天人格結構與運勢走向。但這是起點的你，不是永遠的你。"
+    description: "揭示你的先天人格結構與一生運勢走向，如同靈魂的藍圖設計。"
   },
   { 
     name: "八字", 
