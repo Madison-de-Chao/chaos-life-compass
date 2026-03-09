@@ -351,7 +351,7 @@ const fourSystems = [
     icon: Target, 
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "解析你的能量組成與流動模式。當你活出了不一樣的自己，八字描述的那個人可能已經不是你了。"
+    description: "解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。"
   },
   { 
     name: "占星", 
