@@ -170,9 +170,7 @@ const AboutPage = () => {
             className="max-w-2xl mx-auto px-2"
           >
             <p className="text-white/40 text-base md:text-lg leading-relaxed">
-              我知道自己很行。我願意幫忙。
-              <span className="hidden md:inline"><br /></span>
-              相信的自然會靠近，不信的我也不勉強。
+              一個花了四十年把做人的方式變成工具的人。
             </p>
           </motion.div>
 
