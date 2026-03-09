@@ -39,7 +39,7 @@ const dimensions = [
     color: "from-rose-500 to-pink-500",
     bgColor: "bg-rose-500/10",
     textColor: "text-rose-400",
-    content: "情緒是你最誠實的原始資料。你的身體在你意識到之前就已經有反應了。它不是需要被克服的干擾，是決策鏈的源頭。",
+    content: "情緒不是敵人，而是訊號。它告訴你哪裡還沒被整合，哪裡還在呼喚你的注意力。",
   },
   {
     icon: Zap,
@@ -48,7 +48,7 @@ const dimensions = [
     color: "from-amber-500 to-orange-500",
     bgColor: "bg-amber-500/10",
     textColor: "text-amber-400",
-    content: "行動來自整合後的清晰，不是逃避式的忙碌。但不動也不是安全——差值越近零，風險越高。該啟動的時候，今天只做最小一步並立刻做。",
+    content: "行動是思維的延伸，不是思維的對立面。真正的行動來自整合後的清晰，而非逃避式的忙碌。",
   },
   {
     icon: Brain,
@@ -57,7 +57,7 @@ const dimensions = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-400",
-    content: "心智是濾鏡。大多數人不是不願意從對方的視角看，是他們走過去了但帶著自己的整套濾鏡，所以站在對方的位置上看到的還是自己。",
+    content: "心智是你觀看世界的透鏡。當透鏡改變，世界的模樣也隨之改變。",
   },
   {
     icon: Compass,
@@ -66,7 +66,7 @@ const dimensions = [
     color: "from-emerald-500 to-teal-500",
     bgColor: "bg-emerald-500/10",
     textColor: "text-emerald-400",
-    content: "價值不是外界給你的規則，是你在每一次選擇中逐漸發現的自己。驅動你最終站在某個立場上的，不是邏輯分析，是情緒。情緒是立場的燃料。",
+    content: "價值是你的內在羅盤。它不是外界給你的規則，而是你在選擇中逐漸發現的自己。",
   },
 ];
 
@@ -76,13 +76,13 @@ const principles = [
     icon: Infinity,
     title: "完整性哲學",
     subtitle: "The Wholeness Philosophy",
-    content: "追求的不是「沒有缺點」的完美，而是「看見全部」的完整。錯誤不是廢棄物，是通往完整的材料。你只有先接受，才有可能超越。",
+    content: "世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。納入一切，才能超越一切。",
   },
   {
     icon: Circle,
     title: "弧度模型",
     subtitle: "The Arc Model",
-    content: "人生是 360° 的圓，你走過的彎路都是抵達完整的必要弧度。失敗不是錯誤，是還沒走完的路。好與壞、對與錯，只是角度不同，而非本質對立。",
+    content: "以「弧度模型」取代「二元模型」。所有狀態都在圓周上的不同位置，好與壞、對與錯，只是角度不同。",
   },
   {
     icon: Layers,
@@ -94,7 +94,7 @@ const principles = [
     icon: Target,
     title: "鏡子非劇本",
     subtitle: "Mirror, Not Script",
-    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。但這面鏡子不打柔光——你看見什麼，取決於你願意承認什麼。",
+    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。",
   },
 ];
 
@@ -350,8 +350,8 @@ const UniversePage = () => {
             className="text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             不是一套知識，而是一種活法。<br />
-            用玄學幫你看見自己，但拒絕讓玄學替你開脫。<br />
-            在複雜世界中，找到屬於自己的運作方式——然後長過它。
+            沒有錯誤，只有未完成的弧度。<br />
+            在複雜世界中，找到屬於自己的運作方式。
           </motion.p>
 
           <motion.div

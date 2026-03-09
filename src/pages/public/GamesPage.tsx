@@ -198,10 +198,6 @@ const GamesPage = () => {
               多站不是分散，是分工。每一站只解決一個特定階段的問題。
               <br className="hidden md:block" />
               你不需要用全部，只用你需要的。
-              <br className="hidden md:block" />
-              這些工具是鷹架——幫你搞懂起點的你，但你會長過它。
-              <br className="hidden md:block" />
-              系統的成功不是你越來越會用它，是你有一天不再需要它。
             </p>
             
             <div className="flex items-center justify-center gap-6 text-sm text-white/40">

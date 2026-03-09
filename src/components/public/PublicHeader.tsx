@@ -43,6 +43,7 @@ const navLinks = [
   { label: "元壹筆記", href: "/notes-public" },
   { label: "元壹宇宙", href: "/universe" },
   { label: "關於默默超", href: "/about" },
+  { label: "默默超體系", href: "/momochao-system" },
 ];
 
 const ecosystemLinks = [

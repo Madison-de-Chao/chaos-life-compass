@@ -127,7 +127,7 @@ const brandValues = [
   {
     icon: TrendingUp,
     title: "感性和理性不是二選一",
-    description: "大腦裡可能根本不存在「理性」和「感性」兩套獨立的引擎。藝術直覺跟數據分析不是二選一，是同一台引擎的不同輸入。兩種都要餵。",
+    description: "藝術直覺負責方向感，數據分析負責驗證。兩個都要有，缺一個都容易翻車。",
   },
   {
     icon: Users,
