@@ -39,7 +39,7 @@ const dimensions = [
     color: "from-rose-500 to-pink-500",
     bgColor: "bg-rose-500/10",
     textColor: "text-rose-400",
-    content: "情緒是你最誠實的原始資料。你的身體在你意識到之前就已經有反應了。它不是需要被克服的干擾，是決策鏈的源頭。",
+    content: "情緒不是敵人，而是訊號。它告訴你哪裡還沒被整合，哪裡還在呼喚你的注意力。",
   },
   {
     icon: Zap,
