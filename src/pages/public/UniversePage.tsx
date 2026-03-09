@@ -76,7 +76,7 @@ const principles = [
     icon: Infinity,
     title: "完整性哲學",
     subtitle: "The Wholeness Philosophy",
-    content: "追求的不是「沒有缺點」的完美，而是「看見全部」的完整。錯誤不是廢棄物，是通往完整的材料。你只有先接受，才有可能超越。",
+    content: "世界缺乏的並非「正確性」，而是「完整性」。錯誤不是廢棄物，而是材料。納入一切，才能超越一切。",
   },
   {
     icon: Circle,
