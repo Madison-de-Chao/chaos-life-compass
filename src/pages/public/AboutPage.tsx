@@ -427,7 +427,7 @@ const AboutPage = () => {
               transition={{ delay: 0.1 }}
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
-              這套系統<span className="text-amber-400">怎麼來的</span>
+              品牌的<span className="text-amber-400">誕生</span>
             </motion.h2>
             
             <motion.div
@@ -438,20 +438,16 @@ const AboutPage = () => {
               className="space-y-4 md:space-y-6 text-white/70 leading-relaxed text-base md:text-lg font-serif relative z-10"
             >
               <motion.p variants={itemVariants}>
-                我是趙偉辰，多數人叫我默默超。不是老師，不是先知，不是聖人。打工人，做過公關、活動、行銷專案。
+                虹靈御所的誕生，源於一個信念：每個人都值得被好好理解。
               </motion.p>
               <motion.p variants={itemVariants}>
-                我只是從四十年的人生裡摸索出一件事：<span className="text-amber-400/80">為什麼我做人直接、敢說真話、不討喜，但卻還是會被信任。</span>
+                不是被貼標籤，不是被預測命運，而是<span className="text-amber-400/80">被看見那些連自己都忽略的角落。</span>
               </motion.p>
               <motion.p variants={itemVariants}>
-                原因很簡單：我用的方法、對誠信和名譽的在乎程度、對自己高道德高標準高自制的做事方式，讓我說的話有一個很硬的基底：
-                <span className="text-white/50">如果我說錯，下次就不會有人再來問我。</span>
+                當你真正理解自己的運作方式，你就不再需要外界的答案。
               </motion.p>
               <motion.p variants={itemVariants}>
-                我不是工程師，但我不接受「我不是理科腦所以我做不了」這個前提。我用 AI 把需求說清楚，工具替我執行，六個站點就是這樣建出來的。不預設自己做不到，不畫地自限。
-              </motion.p>
-              <motion.p variants={itemVariants} className="text-white/50 text-sm md:text-base">
-                這套系統就是從這些經歷總結出來的工具。它的可信度不是來自理論框架的完整性，是來自一個人四十年活出來的信任。
+                因為最好的答案，從來都在你裡面。
               </motion.p>
             </motion.div>
           </motion.div>
