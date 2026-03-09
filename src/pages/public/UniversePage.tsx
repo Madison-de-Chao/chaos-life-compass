@@ -66,7 +66,7 @@ const dimensions = [
     color: "from-emerald-500 to-teal-500",
     bgColor: "bg-emerald-500/10",
     textColor: "text-emerald-400",
-    content: "價值不是外界給你的規則，是你在每一次選擇中逐漸發現的自己。驅動你最終站在某個立場上的，不是邏輯分析，是情緒。情緒是立場的燃料。",
+    content: "價值是你的內在羅盤。它不是外界給你的規則，而是你在選擇中逐漸發現的自己。",
   },
 ];
 
