@@ -367,19 +367,19 @@ const AboutPage = () => {
                 icon: Eye,
                 title: "喚醒",
                 subtitle: "Awaken",
-                content: "讓你重新信任你的第一反應——那個在你開始想之前就已經知道的東西。不是教你新東西，是讓你知道你只看到了一面。"
+                content: "提醒你本來就有的東西，幫你找回那些你早就知道、只是忘記的能力。"
               },
               {
                 icon: Heart,
                 title: "篩選",
                 subtitle: "Filter",
-                content: "學會分辨哪些是你真正的感受，哪些是別人教你應該有的感受。不是幫你選對錯，是教你在判斷之前先清空自己的框架。"
+                content: "分辨對自己真正有用的東西，而非盲從價值標籤。知道什麼值得留下。"
               },
               {
                 icon: CircleDot,
-                title: "賦權",
+                title: "賦能",
                 subtitle: "Empower",
-                content: "你的身體比你的腦子更早知道答案。把那個信任還給你自己。不是給你能力，是把你本來就有的還給你。"
+                content: "幫你拿回你原本的權力。賦能的本質是歸還，不是給予。"
               }
             ].map((value) => (
               <motion.div
