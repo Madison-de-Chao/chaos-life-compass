@@ -365,17 +365,15 @@ const HomePage = () => {
             </div>
           </div>
           
-          {/* CTA to external about page */}
+          {/* CTA to about page */}
           <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <a 
-              href="https://main.momo-chao.com/about" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              to="/about"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 text-amber-400 hover:from-amber-500/30 hover:to-amber-600/30 transition-all duration-300 group font-medium"
             >
               認識默默超的故事
-              <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
@@ -385,9 +383,9 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed mb-8">
-            「往往我們跟隨直覺順從情緒，<br />
-            最後的結果會告訴你真正的事實<br />
-            都是自己的選擇，不是命運的安排。」
+            「命盤是鏡子，不是劇本。<br />
+            我的工作是幫你把鏡子擦乾淨，<br />
+            看不看、怎麼看，你自己決定。」
           </blockquote>
           <p className="text-amber-400/60">—— 默默超</p>
         </div>
