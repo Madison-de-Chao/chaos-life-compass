@@ -291,29 +291,14 @@ const HomePage = () => {
                     
                     {/* Arrow */}
                     <div className="flex items-center text-amber-400 font-medium text-sm">
-                      <span>{section.isExternal ? '前往了解' : '進入探索'}</span>
-                      {section.isExternal ? (
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      ) : (
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
-                      )}
+                      <span>進入探索</span>
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
                   </div>
                 </>
               );
 
-              return section.isExternal ? (
-                <a
-                  key={section.id}
-                  href={section.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {cardContent}
-                </a>
-              ) : (
+              return (
                 <Link
                   key={section.id}
                   to={section.href}
