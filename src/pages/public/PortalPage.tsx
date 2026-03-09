@@ -17,7 +17,7 @@ const portalItems = [
   {
     title: "虹靈御所",
     subtitle: "Rainbow Sanctuary",
-    description: "不打柔光的鏡子。四系統交叉比對，拆掉藉口，留下理解。",
+    description: "元壹宇宙在地球的辦事處。四系統交叉比對，看見自己的結構。",
     cta: "進入虹靈御所",
     logo: logoHongling,
     href: "/home",
@@ -28,7 +28,7 @@ const portalItems = [
   {
     title: "超烜創意",
     subtitle: "Maison de Chao",
-    description: "說真話的品牌整合夥伴。讓你越來越強，而不是越來越依賴。",
+    description: "說真話的品牌整合夥伴。合作的標準：讓你越來越強，而不是越來越依賴。",
     cta: "進入超烜創意",
     logo: logoChaoxuan,
     href: "/chaoxuan",
@@ -39,7 +39,7 @@ const portalItems = [
   {
     title: "元壹宇宙",
     subtitle: "Yuan-Yi Universe",
-    description: "結合東方命理與決策邏輯的自我探索系統。鷹架，不是建築。",
+    description: "完整性導向的思維操作系統。沒有錯誤，只有未完成的弧度。",
     cta: "進入元壹宇宙",
     logo: logoYuanyi,
     href: "/universe",
@@ -50,7 +50,7 @@ const portalItems = [
   {
     title: "默默超是誰",
     subtitle: "Who is MomoChao",
-    description: "不是老師，不是先知。一個做人直接、敢說真話、不討喜但還是會被信任的人。",
+    description: "一個花了四十年把做人的方式變成工具的人。",
     cta: "認識默默超",
     logo: null,
     href: "/about",
