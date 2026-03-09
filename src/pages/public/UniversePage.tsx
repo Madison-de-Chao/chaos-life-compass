@@ -82,7 +82,7 @@ const principles = [
     icon: Circle,
     title: "弧度模型",
     subtitle: "The Arc Model",
-    content: "人生是 360° 的圓，你走過的彎路都是抵達完整的必要弧度。失敗不是錯誤，是還沒走完的路。好與壞、對與錯，只是角度不同，而非本質對立。",
+    content: "以「弧度模型」取代「二元模型」。所有狀態都在圓周上的不同位置，好與壞、對與錯，只是角度不同。",
   },
   {
     icon: Layers,
