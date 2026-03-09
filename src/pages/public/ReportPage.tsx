@@ -365,7 +365,7 @@ const fourSystems = [
     icon: Brain, 
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "找到你的內在訊號源在哪裡。但我們不接受你拿訊號源的「類型」當不行動的理由。"
+    description: "定義你的決策權威與能量運作方式，找到最適合你的行動策略。"
   },
 ];
 

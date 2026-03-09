@@ -350,8 +350,8 @@ const UniversePage = () => {
             className="text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             不是一套知識，而是一種活法。<br />
-            用玄學幫你看見自己，但拒絕讓玄學替你開脫。<br />
-            在複雜世界中，找到屬於自己的運作方式——然後長過它。
+            沒有錯誤，只有未完成的弧度。<br />
+            在複雜世界中，找到屬於自己的運作方式。
           </motion.p>
 
           <motion.div
