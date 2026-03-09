@@ -94,7 +94,7 @@ const principles = [
     icon: Target,
     title: "鏡子非劇本",
     subtitle: "Mirror, Not Script",
-    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。但這面鏡子不打柔光——你看見什麼，取決於你願意承認什麼。",
+    content: "我們不給答案，只給倒影。命運從來不是劇本，它只是一面鏡子。",
   },
 ];
 
