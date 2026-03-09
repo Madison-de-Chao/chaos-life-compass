@@ -48,7 +48,7 @@ const dimensions = [
     color: "from-amber-500 to-orange-500",
     bgColor: "bg-amber-500/10",
     textColor: "text-amber-400",
-    content: "行動來自整合後的清晰，不是逃避式的忙碌。但不動也不是安全——差值越近零，風險越高。該啟動的時候，今天只做最小一步並立刻做。",
+    content: "行動是思維的延伸，不是思維的對立面。真正的行動來自整合後的清晰，而非逃避式的忙碌。",
   },
   {
     icon: Brain,
