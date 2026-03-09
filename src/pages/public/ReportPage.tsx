@@ -358,7 +358,7 @@ const fourSystems = [
     icon: Compass, 
     color: "from-blue-500 to-cyan-600",
     meaning: "星盤配置",
-    description: "透過行星相位與宮位，映照你的心理動態與關係模式。星盤是鷹架，不是建築。"
+    description: "透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。"
   },
   { 
     name: "人類圖", 
