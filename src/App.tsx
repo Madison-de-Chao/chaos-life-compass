@@ -76,6 +76,14 @@ import {
   AIIntegrityPage,
 } from "./pages/ai";
 
+// MomoChao System Pages (默默超的元壹體系)
+import {
+  MomochaoSystemPage,
+  MomochaoPhilosophyPage,
+  MomochaoAboutPage,
+  MomochaoEducationPage,
+} from "./pages/momochao";
+
 // Account Pages
 import ProductsPage from "./pages/account/ProductsPage";
 
