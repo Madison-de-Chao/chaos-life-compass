@@ -348,7 +348,7 @@ const AboutPage = () => {
               三大方法論
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
-              喚醒 Awaken・篩選 Filter・賦權 Empower
+              喚醒 Awaken・篩選 Filter・賦能 Empower
             </p>
             <p className="text-white/40 text-xs mt-2 max-w-lg mx-auto">
               不是教你新東西，是讓你看見你已經知道的
