@@ -136,6 +136,12 @@ const App = () => (
                 <Route path="/ai/safety" element={<AISafetyPage />} />
                 <Route path="/ai/integrity" element={<AIIntegrityPage />} />
                 
+                {/* MomoChao System routes - 默默超的元壹體系 */}
+                <Route path="/momochao-system" element={<MomochaoSystemPage />} />
+                <Route path="/momochao-system/philosophy" element={<MomochaoPhilosophyPage />} />
+                <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
+                <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
+                
                 {/* Unified Auth routes - 統一會員系統 */}
                 <Route path="/auth/login" element={<UnifiedAuthPage />} />
                 <Route path="/oauth/authorize" element={<OAuthAuthorizePage />} />
