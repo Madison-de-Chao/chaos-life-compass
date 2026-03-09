@@ -57,7 +57,7 @@ const dimensions = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-400",
-    content: "心智是濾鏡。大多數人不是不願意從對方的視角看，是他們走過去了但帶著自己的整套濾鏡，所以站在對方的位置上看到的還是自己。",
+    content: "心智是你觀看世界的透鏡。當透鏡改變，世界的模樣也隨之改變。",
   },
   {
     icon: Compass,
