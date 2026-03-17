@@ -26,14 +26,14 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
+(globalThis as any).ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+(globalThis as any).IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
@@ -102,7 +102,7 @@ Object.defineProperty(window, 'location', {
 });
 
 // Mock crypto.randomUUID
-Object.defineProperty(global, 'crypto', {
+Object.defineProperty(globalThis, 'crypto', {
   value: {
     randomUUID: () => 'test-uuid-1234-5678-9abc-def012345678',
     getRandomValues: (arr: Uint8Array) => {
