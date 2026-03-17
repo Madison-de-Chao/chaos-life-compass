@@ -23,7 +23,7 @@ import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import { PullToRefreshIndicator } from "@/components/PullToRefresh";
-import { MemberPageHeader } from "../components/MemberPageHeader";
+
 
 // Product display info
 const PRODUCT_INFO: Record<string, { 
