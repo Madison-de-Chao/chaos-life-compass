@@ -64,6 +64,9 @@ import UnifiedDashboard from "./pages/member/UnifiedDashboard";
 import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
 import OAuthAuthorizePage from "./pages/member/OAuthAuthorizePage";
 
+// Public Layout
+import PublicLayout from "./components/public/PublicLayout";
+
 // AI Portal Pages (AI 協作入口)
 import {
   AIPortalPage,
@@ -142,17 +145,17 @@ const App = () => (
                 <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
                 <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
                 
-                {/* Unified Auth routes - 統一會員系統 */}
-                <Route path="/auth/login" element={<UnifiedAuthPage />} />
-                <Route path="/oauth/authorize" element={<OAuthAuthorizePage />} />
-                <Route path="/account" element={<MemberProtectedRoute><UnifiedDashboard /></MemberProtectedRoute>} />
-                <Route path="/account/profile" element={<MemberProtectedRoute><UnifiedProfilePage /></MemberProtectedRoute>} />
-                <Route path="/account/products" element={<MemberProtectedRoute><ProductsPage /></MemberProtectedRoute>} />
+                {/* Unified Auth routes - 統一會員系統（共用主站導航） */}
+                <Route path="/auth/login" element={<PublicLayout><UnifiedAuthPage /></PublicLayout>} />
+                <Route path="/oauth/authorize" element={<PublicLayout><OAuthAuthorizePage /></PublicLayout>} />
+                <Route path="/account" element={<MemberProtectedRoute><PublicLayout><UnifiedDashboard /></PublicLayout></MemberProtectedRoute>} />
+                <Route path="/account/profile" element={<MemberProtectedRoute><PublicLayout><UnifiedProfilePage /></PublicLayout></MemberProtectedRoute>} />
+                <Route path="/account/products" element={<MemberProtectedRoute><PublicLayout><ProductsPage /></PublicLayout></MemberProtectedRoute>} />
                 
-                {/* Member routes - 虹靈御所會員中心 (Legacy, redirects to unified) */}
-                <Route path="/member/auth" element={<MemberAuthPage />} />
-                <Route path="/member" element={<MemberProtectedRoute><MemberDashboard /></MemberProtectedRoute>} />
-                <Route path="/member/profile" element={<MemberProtectedRoute><MemberProfilePage /></MemberProtectedRoute>} />
+                {/* Member routes - 虹靈御所會員中心（共用主站導航） */}
+                <Route path="/member/auth" element={<PublicLayout><MemberAuthPage /></PublicLayout>} />
+                <Route path="/member" element={<MemberProtectedRoute><PublicLayout><MemberDashboard /></PublicLayout></MemberProtectedRoute>} />
+                <Route path="/member/profile" element={<MemberProtectedRoute><PublicLayout><MemberProfilePage /></PublicLayout></MemberProtectedRoute>} />
                 
                 {/* Protected routes - Admin dashboard */}
                 <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />

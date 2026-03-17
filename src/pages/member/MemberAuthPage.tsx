@@ -101,14 +101,14 @@ const MemberAuthPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-parchment flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="animate-pulse text-muted-foreground">載入中...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-parchment flex items-center justify-center p-4 relative z-10">
+    <div className="flex items-center justify-center p-4 relative z-10" style={{ minHeight: 'calc(100vh - 200px)' }}>
       <div className="w-full max-w-md animate-fade-in">
         {/* Back to home */}
         <Link 

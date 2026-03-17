@@ -89,7 +89,7 @@ const MemberDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-parchment flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="animate-pulse text-muted-foreground">載入中...</div>
       </div>
     );
@@ -107,32 +107,24 @@ const MemberDashboard = () => {
   const subInfo = subscriptionLabels[subStatus];
 
   return (
-    <div className="min-h-screen bg-parchment relative z-10">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/home" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
-              <Sparkles className="w-5 h-5 text-amber-600" />
-            </div>
-            <span className="font-serif font-bold text-lg">虹靈御所</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            {(isAdmin || isHelper) && (
-              <Button variant="outline" size="sm" onClick={() => navigate("/dashboard")}>
-                {isAdmin ? '管理後台' : '小幫手後台'}
-              </Button>
-            )}
-            <Button variant="ghost" size="sm" onClick={() => navigate("/member/profile")}>
-              <Settings className="w-4 h-4" />
+    <div className="relative z-10">
+      {/* Page Action Bar */}
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div />
+        <div className="flex items-center gap-3">
+          {(isAdmin || isHelper) && (
+            <Button variant="outline" size="sm" onClick={() => navigate("/dashboard")}>
+              {isAdmin ? '管理後台' : '小幫手後台'}
             </Button>
-            <Button variant="ghost" size="sm" onClick={handleSignOut}>
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
+          )}
+          <Button variant="ghost" size="sm" onClick={() => navigate("/member/profile")}>
+            <Settings className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <LogOut className="w-4 h-4" />
+          </Button>
         </div>
-      </header>
+      </div>
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         {/* Welcome Section */}
