@@ -12,7 +12,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useMember } from "../context/MemberContext";
-import { MemberPageHeader } from "../components/MemberPageHeader";
 import { toast } from "@/hooks/use-toast";
 
 const UnifiedProfilePage = () => {
