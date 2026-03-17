@@ -64,6 +64,9 @@ import UnifiedDashboard from "./pages/member/UnifiedDashboard";
 import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
 import OAuthAuthorizePage from "./pages/member/OAuthAuthorizePage";
 
+// Public Layout
+import PublicLayout from "./components/public/PublicLayout";
+
 // AI Portal Pages (AI 協作入口)
 import {
   AIPortalPage,
