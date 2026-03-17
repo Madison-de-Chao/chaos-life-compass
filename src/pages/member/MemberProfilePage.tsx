@@ -84,29 +84,14 @@ const MemberProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-parchment flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="animate-pulse text-muted-foreground">載入中...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-parchment relative z-10">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/member")}>
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center border border-amber-500/30">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-            </div>
-            <span className="font-serif font-bold">個人資料設定</span>
-          </div>
-        </div>
-      </header>
-
+    <div className="relative z-10">
       <main className="container mx-auto px-4 py-8 max-w-2xl">
         <form onSubmit={handleSubmit}>
           <Card className="bg-card/60 backdrop-blur mb-6">
