@@ -102,7 +102,7 @@ Object.defineProperty(window, 'location', {
 });
 
 // Mock crypto.randomUUID
-Object.defineProperty(global, 'crypto', {
+Object.defineProperty(globalThis, 'crypto', {
   value: {
     randomUUID: () => 'test-uuid-1234-5678-9abc-def012345678',
     getRandomValues: (arr: Uint8Array) => {
