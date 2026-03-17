@@ -258,7 +258,7 @@ const UnifiedDashboard = () => {
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-y-auto relative"
+      className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-y-auto relative"
     >
       {/* Pull to Refresh Indicator */}
       <PullToRefreshIndicator
@@ -267,43 +267,40 @@ const UnifiedDashboard = () => {
         progress={progress}
         shouldTrigger={shouldTrigger}
       />
-      
-      {/* Header */}
-      <MemberPageHeader 
-        title="會員中心"
-        showHomeButton
-        rightContent={
-          <>
-            {(isAdmin || isHelper) && (
-              <Button 
-                variant="default" 
-                size="sm" 
-                onClick={() => navigate("/dashboard")}
-                className="bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs sm:text-sm px-2.5 sm:px-3"
-              >
-                <span className="hidden sm:inline">{isAdmin ? '管理後台' : '小幫手後台'}</span>
-                <span className="sm:hidden">後台</span>
-              </Button>
-            )}
+
+      {/* Page Action Bar */}
+      <div className="container mx-auto px-3 sm:px-4 py-3 max-w-6xl flex items-center justify-between">
+        <h1 className="text-lg sm:text-xl font-bold text-slate-100">會員中心</h1>
+        <div className="flex items-center gap-1 sm:gap-2">
+          {(isAdmin || isHelper) && (
             <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => navigate("/account/profile")}
-              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
+              variant="default" 
+              size="sm" 
+              onClick={() => navigate("/dashboard")}
+              className="bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs sm:text-sm px-2.5 sm:px-3"
             >
-              <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isAdmin ? '管理後台' : '小幫手後台'}</span>
+              <span className="sm:hidden">後台</span>
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={handleSignOut}
-              className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
-            >
-              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
-            </Button>
-          </>
-        }
-      />
+          )}
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => navigate("/account/profile")}
+            className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
+          >
+            <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={handleSignOut}
+            className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 w-9 h-9 sm:w-10 sm:h-10"
+          >
+            <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+          </Button>
+        </div>
+      </div>
 
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-6xl">
         {/* Beta Notice with Countdown */}

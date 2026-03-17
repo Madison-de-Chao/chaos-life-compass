@@ -234,7 +234,7 @@ const UnifiedAuthPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="relative">
           <div className="w-16 h-16 rounded-full border-2 border-amber-500/30 border-t-amber-500 animate-spin" />
           <Shield className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-amber-500" />
@@ -247,7 +247,7 @@ const UnifiedAuthPage = () => {
   const activeProduct = PRODUCTS[activeProductIndex];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="flex items-center justify-center p-4 relative overflow-hidden" style={{ minHeight: 'calc(100vh - 200px)' }}>
       {/* Animated background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Rotating gradient orbs */}
