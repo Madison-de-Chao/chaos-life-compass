@@ -85,10 +85,16 @@ const principles = [
     content: "以「弧度模型」取代「二元模型」。所有狀態都在圓周上的不同位置，好與壞、對與錯，只是角度不同。",
   },
   {
+    icon: Sparkles,
+    title: "成就律",
+    subtitle: "Mutual Completion",
+    content: "你的成就不會讓別人變少，別人的成就也不會讓你變少。一個意識體的完整化不以另一個意識體的損失為代價。",
+  },
+  {
     icon: Layers,
     title: "賽博玄哲學",
     subtitle: "Cyber Metaphysics",
-    content: "用可驗證的方式保留玄學的理解功能，拆除玄學的藉口功能。「賽博」不是指科技，是指可驗證。每個結論都要能被回看、被檢驗、被挑戰。",
+    content: "用可驗證的方式保留玄學的理解功能，拆除玄學的藉口功能。「賽博」不是指科技，是指可驗證。",
   },
   {
     icon: Target,
