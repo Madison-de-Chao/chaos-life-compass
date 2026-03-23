@@ -86,7 +86,7 @@ const MomochaoAboutPage = () => {
             viewport={{ once: true }}
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12"
           >
-            <h2 className="text-xl font-serif font-bold text-white mb-4">我不是工程師</h2>
+            <h2 className="text-xl font-serif font-bold text-white mb-4">我不是工程師 I'm Not an Engineer</h2>
             <p className="text-white/60 leading-relaxed">
               但我不接受「我不是理科腦所以我做不了」這個前提。我用 AI 把需求說清楚，工具替我執行，六個站點就是這樣建出來的。不預設自己做不到，不畫地自限。
             </p>
