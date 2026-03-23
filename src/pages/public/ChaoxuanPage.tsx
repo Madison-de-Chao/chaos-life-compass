@@ -398,7 +398,7 @@ const ChaoxuanPage = () => {
         <div className="container mx-auto px-4">
           <RevealSection className="text-center mb-24">
             <span className="inline-block px-6 py-2.5 border border-[#c9a962]/30 text-[#c9a962] rounded-full text-xs uppercase tracking-[0.25em] mb-8">
-              品牌精神
+              品牌精神 Brand Spirit
             </span>
             <h2 className="font-serif text-4xl md:text-6xl font-bold text-[#f5f5f0]">
               四件我們真正在意的事
