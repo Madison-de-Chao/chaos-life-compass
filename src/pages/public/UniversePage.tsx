@@ -591,7 +591,7 @@ const UniversePage = () => {
               <span>人機協作時代</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
-              為什麼需要這套東西
+              為什麼需要這套東西 Why This System
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
               AI 能做很多事，但不知道你在乎什麼
