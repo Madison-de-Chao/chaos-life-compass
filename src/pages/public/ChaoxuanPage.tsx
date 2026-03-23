@@ -355,7 +355,7 @@ const ChaoxuanPage = () => {
               聖域導覽 Service Domains
             </span>
             <h2 className="font-serif text-4xl md:text-6xl font-bold text-[#f5f5f0] mb-8">
-              六大服務場域
+              六大服務場域 Six Service Domains
             </h2>
             <p className="text-lg text-[#f5f5f0]/45 max-w-2xl mx-auto leading-relaxed">
               你不需要用全部，只用你需要的<br className="hidden md:block" />
