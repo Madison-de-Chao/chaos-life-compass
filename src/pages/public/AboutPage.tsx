@@ -428,6 +428,7 @@ const AboutPage = () => {
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
               品牌的<span className="text-amber-400">誕生</span>
+              <span className="block text-base sm:text-lg text-white/40 font-normal mt-2">The Birth of Rainbow Sanctuary</span>
             </motion.h2>
             
             <motion.div
