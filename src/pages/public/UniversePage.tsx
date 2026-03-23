@@ -447,25 +447,29 @@ const UniversePage = () => {
               </p>
             </div>
 
-            {/* Seven Layer Architecture */}
+            {/* Eight Layer + Final Chapter Architecture */}
             <div className="mt-10 pt-8 border-t border-white/10">
-              <h3 className="text-xl font-serif font-bold text-center text-amber-400 mb-6">七層架構</h3>
+              <h3 className="text-xl font-serif font-bold text-center text-amber-400 mb-6">八層 + 終章架構 8 Levels + Final Chapter</h3>
               <div className="space-y-3">
                 {[
-                  { layer: "L0", name: "完整性", desc: "好壞都看，不只看你想看的" },
-                  { layer: "L1", name: "九源歸一", desc: "人提供判斷，AI 提供資料，合作才有用" },
-                  { layer: "L2", name: "世界觀", desc: "同源、連結、完整——三個層次" },
-                  { layer: "L3", name: "七大法則", desc: "所有看似對立的東西，最終都指向同一個方向" },
-                  { layer: "L4", name: "思維系統", desc: "把哲學變成可以操作的工具" },
-                  { layer: "L5", name: "虹靈御所", desc: "理論落地的地方，六個站點各解決一件事" },
-                  { layer: "L6", name: "CIP 協定", desc: "人機協作的底線規範——說真話、標來源、守邊界" },
+                  { layer: "L0", name: "完整性哲學", desc: "沒有錯誤，只有未完成的弧度", tag: "憲法層" },
+                  { layer: "L1", name: "九源歸一", desc: "人類提供 Care，AI 提供 Truth", tag: "憲法層" },
+                  { layer: "L2", name: "元壹宇宙世界觀", desc: "人生是 360° 的圓，不是 180° 的線", tag: "憲法層" },
+                  { layer: "L3", name: "七大無二法則", desc: "一切終將回返", tag: "憲法層" },
+                  { layer: "L4", name: "默默超思維系統", desc: "工具＋病毒＋情緒框架", tag: "落地層" },
+                  { layer: "L5", name: "虹靈御所", desc: "靈魂的家：場域本體＋賽博玄哲學", tag: "落地層" },
+                  { layer: "L6", name: "人機文明協作", desc: "推測必須標示，立場必須透明", tag: "落地層" },
+                  { layer: "L7", name: "人機雙向教育", desc: "規格沒有能力支撐就是廢紙", tag: "教育層" },
+                  { layer: "L8", name: "現實映照", desc: "獨立的宇宙本體，標示邊界，不論優劣", tag: "邊界層" },
+                  { layer: "終章", name: "創世人與協作夥伴", desc: "創始人與 AI 協作者的個人聲音", tag: "—" },
                 ].map((item) => (
                   <div key={item.layer} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
-                    <span className="text-amber-400 font-mono font-bold text-sm w-8 flex-shrink-0 pt-0.5">{item.layer}</span>
-                    <div className="min-w-0">
+                    <span className="text-amber-400 font-mono font-bold text-sm w-10 flex-shrink-0 pt-0.5">{item.layer}</span>
+                    <div className="min-w-0 flex-1">
                       <span className="text-white/80 font-medium text-sm block">{item.name}</span>
                       <span className="text-white/40 text-xs md:text-sm block mt-0.5">{item.desc}</span>
                     </div>
+                    <span className="text-xs text-white/30 flex-shrink-0 pt-0.5">{item.tag}</span>
                   </div>
                 ))}
               </div>
