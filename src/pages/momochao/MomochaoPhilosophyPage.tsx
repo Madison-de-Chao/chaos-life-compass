@@ -77,10 +77,10 @@ const MomochaoPhilosophyPage = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16">
             <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                我怎麼看玄學
+                我怎麼看玄學 How I See Metaphysics
               </span>
             </h1>
-            <p className="text-white/50 text-lg">教學理念 — 賽博玄哲學</p>
+            <p className="text-white/50 text-lg">教學理念 Teaching Philosophy — 賽博玄哲學 Cyber Metaphysics</p>
           </motion.div>
 
           {/* Philosophy Sections */}
