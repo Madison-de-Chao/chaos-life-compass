@@ -129,6 +129,7 @@ const App = () => (
                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/notes-public" element={<ComingSoonPage />} />
+                <Route path="/discover" element={<DiscoverPage />} />
                 
                 {/* AI Portal routes - AI 協作入口 */}
                 <Route path="/ai" element={<AIPortalPage />} />
