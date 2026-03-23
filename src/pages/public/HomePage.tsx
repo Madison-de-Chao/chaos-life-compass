@@ -252,7 +252,7 @@ const HomePage = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-              探索虹靈御所
+              探索虹靈御所 Explore Rainbow Sanctuary
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
               每個入口解決一個具體問題，用你需要的就好
