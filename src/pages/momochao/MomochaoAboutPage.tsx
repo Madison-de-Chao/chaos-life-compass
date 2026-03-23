@@ -47,7 +47,7 @@ const MomochaoAboutPage = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="text-3xl md:text-5xl font-serif font-bold mb-6">
                 <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                  我是誰
+                  我是誰 Who I Am
                 </span>
               </h1>
               <div className="space-y-4 text-white/60 leading-relaxed">
