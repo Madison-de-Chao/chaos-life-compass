@@ -236,6 +236,9 @@ const ChaoxuanPage = () => {
             >
               <span className="text-[#c9a962]">超</span>烜創意聖域
             </h1>
+            <p className="text-sm text-[#f5f5f0]/40 mb-3 animate-fade-in" style={{ animationDelay: "0.35s" }}>
+              說真話的品牌整合夥伴 Brand Integration Partner
+            </p>
 
             <p 
               className="text-lg md:text-xl text-[#f5f5f0]/50 mb-6 font-light tracking-[0.2em] animate-fade-in uppercase"
