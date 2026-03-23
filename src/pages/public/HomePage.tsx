@@ -319,7 +319,7 @@ const HomePage = () => {
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-in">
-              誰是默默超
+              誰是默默超 Who is MomoChao
             </h2>
             <p className="text-white/50 max-w-xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               做事要有交代，說話要有根據
