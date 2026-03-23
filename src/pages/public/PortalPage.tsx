@@ -734,28 +734,28 @@ const createIntroSections = () => [
     id: 'four-dimensions',
     content: (
       <div className="space-y-5 sm:space-y-8 max-w-3xl mx-auto px-4">
-        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-2 sm:mb-4">四個操作維度</h2>
+        <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-wide mb-2 sm:mb-4">四維度介紹 Four Dimensions</h2>
         <p className="text-white/60 text-sm sm:text-base md:text-lg mb-4 sm:mb-6">任何決定都跑不出這四件事</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           <div className="bg-gradient-to-br from-rose-500/10 to-rose-500/5 backdrop-blur-sm border border-rose-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💭</div>
             <h3 className="text-rose-300 text-base sm:text-lg font-display mb-1 sm:mb-2">情緒</h3>
-            <p className="text-white/50 text-xs sm:text-sm">情緒不是干擾，是你最誠實的原始資料</p>
+            <p className="text-white/50 text-xs sm:text-sm">你最誠實的原始資料。決策的起點，不是需要被克服的障礙。</p>
           </div>
           <div className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 backdrop-blur-sm border border-amber-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">⚡</div>
             <h3 className="text-amber-300 text-base sm:text-lg font-display mb-1 sm:mb-2">行動</h3>
-            <p className="text-white/50 text-xs sm:text-sm">不動不是安全，是鎖死。今天只做最小一步</p>
+            <p className="text-white/50 text-xs sm:text-sm">來自整合後的清晰，不是逃避式的忙碌。該啟動的時候，今天只做最小一步。</p>
           </div>
           <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 backdrop-blur-sm border border-blue-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🧠</div>
             <h3 className="text-blue-300 text-base sm:text-lg font-display mb-1 sm:mb-2">心智</h3>
-            <p className="text-white/50 text-xs sm:text-sm">心智是濾鏡。你看到什麼取決於你戴了什麼</p>
+            <p className="text-white/50 text-xs sm:text-sm">你看到什麼取決於你戴了什麼濾鏡。我們幫你把濾鏡拿下來看看。</p>
           </div>
           <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 backdrop-blur-sm border border-emerald-400/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center">
             <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💎</div>
             <h3 className="text-emerald-300 text-base sm:text-lg font-display mb-1 sm:mb-2">價值</h3>
-            <p className="text-white/50 text-xs sm:text-sm">價值不是外界給你的規則，是你逐漸發現的自己</p>
+            <p className="text-white/50 text-xs sm:text-sm">不是外界給你的規則，是你在每一次選擇中逐漸發現的自己。</p>
           </div>
         </div>
       </div>

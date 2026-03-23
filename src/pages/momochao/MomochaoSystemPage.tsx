@@ -81,6 +81,7 @@ const MomochaoSystemPage = () => {
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
                 默默超的元壹體系
               </span>
+              <span className="block text-lg md:text-xl text-white/40 font-normal mt-3">MoMo Chao's YuanYi System</span>
             </h1>
 
             <div className="max-w-2xl mx-auto space-y-4 text-white/60 leading-relaxed mb-12">

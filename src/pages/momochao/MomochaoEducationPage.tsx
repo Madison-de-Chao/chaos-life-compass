@@ -108,7 +108,7 @@ const MomochaoEducationPage = () => {
 
             <h1 className="text-3xl md:text-5xl font-serif font-bold mb-6">
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                默默超元壹教育體系
+                默默超元壹教育體系 Education System
               </span>
             </h1>
 
@@ -190,7 +190,7 @@ const MomochaoEducationPage = () => {
             viewport={{ once: true }}
             className="bg-gradient-to-br from-amber-500/10 to-purple-500/10 rounded-2xl p-6 md:p-8 border border-amber-500/20 mb-12"
           >
-            <h2 className="text-xl font-serif font-bold text-white mb-4">教學承諾</h2>
+            <h2 className="text-xl font-serif font-bold text-white mb-4">教學承諾 Teaching Commitment</h2>
             <div className="space-y-3 text-white/60 leading-relaxed">
               <p>這些課程都建立在虹靈御所的產品和元壹宇宙的哲學基礎上。</p>
               <p>工具是中性的，但我帶課的風格不是。</p>
@@ -208,7 +208,7 @@ const MomochaoEducationPage = () => {
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12 text-center"
           >
             <Mail className="w-8 h-8 text-amber-400 mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢</h2>
+            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢 Registration / Inquiry</h2>
             <p className="text-white/60 mb-4">目前為預約制，請透過 <a href="mailto:serves@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">serves@momo-chao.com</a> 聯繫。</p>
             <p className="text-white/40 text-sm">每期名額有限，因為我不做大班。我要能看到每一個人。</p>
           </motion.div>

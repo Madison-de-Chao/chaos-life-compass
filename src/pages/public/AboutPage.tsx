@@ -283,7 +283,7 @@ const AboutPage = () => {
               <Brain className="w-6 h-6 md:w-8 md:h-8 text-amber-400" />
             </motion.div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              四個操作維度
+              四個操作維度 Four Dimensions
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
               任何決定都跑不出這四件事——搞清楚它們，你就不容易做錯選擇
@@ -345,7 +345,7 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              三大方法論
+              三大方法論 Three Methodologies
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
               喚醒 Awaken・篩選 Filter・賦能 Empower
@@ -428,6 +428,7 @@ const AboutPage = () => {
               className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-white mb-6 md:mb-8 text-center relative z-10"
             >
               品牌的<span className="text-amber-400">誕生</span>
+              <span className="block text-base sm:text-lg text-white/40 font-normal mt-2">The Birth of Rainbow Sanctuary</span>
             </motion.h2>
             
             <motion.div
@@ -468,8 +469,8 @@ const AboutPage = () => {
               <div className="text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">Care & Truth</h3>
                 <p className="text-white/60 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
-                  <strong className="text-white/80">Truth（真誠）</strong>：不是讓你舒服，是讓你正確收到正確的東西。Truth 負責讓訊號不失真。<br /><br />
-                  <strong className="text-white/80">Care（關懷）</strong>：不是給你想聽的，是給你需要聽的。Care 負責讓內容不失焦。
+                  <strong className="text-white/80">Care（關懷）</strong>：我們用心聆聽每一個故事，因為每個人都值得被溫柔對待。<br /><br />
+                  <strong className="text-white/80">Truth（真相）</strong>：我們誠實面對每一個議題，因為真相是自由的起點。
                 </p>
                 <p className="text-amber-400/60 text-xs md:text-sm">
                   第三層：在乎但不追。東西已經準備好了，放在這裡，你來的時候它在。

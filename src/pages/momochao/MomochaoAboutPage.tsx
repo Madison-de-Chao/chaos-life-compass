@@ -47,7 +47,7 @@ const MomochaoAboutPage = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="text-3xl md:text-5xl font-serif font-bold mb-6">
                 <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                  我是誰
+                  我是誰 Who I Am
                 </span>
               </h1>
               <div className="space-y-4 text-white/60 leading-relaxed">
@@ -86,7 +86,7 @@ const MomochaoAboutPage = () => {
             viewport={{ once: true }}
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12"
           >
-            <h2 className="text-xl font-serif font-bold text-white mb-4">我不是工程師</h2>
+            <h2 className="text-xl font-serif font-bold text-white mb-4">我不是工程師 I'm Not an Engineer</h2>
             <p className="text-white/60 leading-relaxed">
               但我不接受「我不是理科腦所以我做不了」這個前提。我用 AI 把需求說清楚，工具替我執行，六個站點就是這樣建出來的。不預設自己做不到，不畫地自限。
             </p>
@@ -99,7 +99,7 @@ const MomochaoAboutPage = () => {
             viewport={{ once: true }}
             className="bg-gradient-to-br from-amber-500/10 to-purple-500/10 rounded-2xl p-6 md:p-8 border border-amber-500/20 mb-12"
           >
-            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">Care & Truth — 我的版本</h2>
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">Care & Truth — 我的版本 My Version</h2>
             <div className="space-y-6">
               <div>
                 <h3 className="text-amber-400 font-bold mb-2">Truth（真誠）</h3>
@@ -126,7 +126,7 @@ const MomochaoAboutPage = () => {
             className="mb-16"
           >
             <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-8 text-center">
-              喚醒 / 篩選 / 賦能 — 我的版本
+              喚醒 / 篩選 / 賦能 — 我的版本 Awaken / Filter / Empower — My Version
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
