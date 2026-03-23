@@ -28,7 +28,7 @@ import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 const sections = [
   {
     id: 1,
-    title: "默默超命理報告",
+    title: "默默超命理報告 Destiny Reports",
     subtitle: "翻結構、問問題、給選項",
     description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉比對，每個判斷都有回驗機制。不給答案，給你做決定的材料。",
     icon: FileText,
@@ -38,7 +38,7 @@ const sections = [
   },
   {
     id: 2,
-    title: "元壹系統生態",
+    title: "元壹系統生態 YuanYi Ecosystem",
     subtitle: "六站各司其職，用你需要的就好",
     description: "占卜做決策支援、八字看長期結構、神話占星翻潛意識、思維訓練練邏輯、療癒體驗處理情緒、企業應用解決團隊問題。不綁套餐。",
     icon: Gamepad2,
@@ -48,7 +48,7 @@ const sections = [
   },
   {
     id: 3,
-    title: "默默超的元壹筆記",
+    title: "默默超的元壹筆記 YuanYi Notes",
     subtitle: "不是雞湯，是觀察紀錄",
     description: "命盤是一種語言，不是判決。這裡寫的是實際案例的反思、方法論的迭代、以及「為什麼很多命理師不敢講的事」。",
     icon: BookOpen,
@@ -58,9 +58,9 @@ const sections = [
   },
   {
     id: 4,
-    title: "元壹宇宙 × 默默超思維",
-    subtitle: "四維運作系統",
-    description: "情緒是燃料，不是敵人。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
+    title: "元壹宇宙 × 默默超思維 Yuan-Yi Universe",
+    subtitle: "完整性導向的思維操作系統",
+    description: "八層架構＋終章。從完整性哲學到人機協作規格到雙向教育。情緒是燃料，不是敵人。錯誤是材料，不是懲罰。完整不是沒有缺口，是不再害怕缺口。",
     icon: Sparkles,
     href: "/universe",
     color: "from-sky-500/20 to-blue-500/20",
@@ -68,7 +68,7 @@ const sections = [
   },
   {
     id: 5,
-    title: "關於虹靈御所",
+    title: "關於虹靈御所 About Rainbow Sanctuary",
     subtitle: "Care & Truth",
     description: "Care 讓你願意打開，Truth 讓你看清楚。前者是態度，後者是能力。兩個都少一個就不是我們。",
     icon: Building2,
@@ -78,7 +78,7 @@ const sections = [
   },
   {
     id: 6,
-    title: "誰是默默超",
+    title: "誰是默默超 Who is MomoChao",
     subtitle: "四十年活出來的信任",
     description: "公關、行銷、活動企劃出身。做人直接、敢說真話。把四十年做人的方式變成了一套工具。想認識他的教學風格，請到「默默超的元壹體系」。",
     icon: User,
