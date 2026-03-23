@@ -312,7 +312,7 @@ const ChaoxuanPage = () => {
           <div className="max-w-4xl mx-auto">
             <RevealSection className="text-center mb-16">
               <span className="inline-block px-6 py-2.5 border border-[#c9a962]/30 text-[#c9a962] rounded-full text-xs uppercase tracking-[0.25em] mb-8">
-                品牌願景
+                品牌願景 Brand Vision
               </span>
               <h2 className="font-serif text-4xl md:text-6xl font-bold text-[#f5f5f0] leading-tight">
                 我們做什麼<br className="md:hidden" />
