@@ -13,7 +13,8 @@ import {
   LogIn,
   ExternalLink,
   Volume2,
-  VolumeX
+  VolumeX,
+  Compass
 } from "lucide-react";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { Button } from "@/components/ui/button";
