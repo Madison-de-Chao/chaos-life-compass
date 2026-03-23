@@ -283,7 +283,7 @@ const AboutPage = () => {
               <Brain className="w-6 h-6 md:w-8 md:h-8 text-amber-400" />
             </motion.div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              四個操作維度
+              四個操作維度 Four Dimensions
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
               任何決定都跑不出這四件事——搞清楚它們，你就不容易做錯選擇
