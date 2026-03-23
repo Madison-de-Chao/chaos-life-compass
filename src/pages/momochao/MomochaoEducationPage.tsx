@@ -48,6 +48,7 @@ const courseLevels = [
       { name: "四系統交叉比對", content: "實際操作：同一個問題放進四個系統，看哪裡指向同一個方向、哪裡互相矛盾", takeaway: "學會用矛盾來逼出真正的選擇，而不是找一個系統來替你決定" },
       { name: "思維病毒掃描", content: "十大思維病毒辨識與拆除：責任外包、二元切割、概念偷換…", takeaway: "知道自己最常用哪些病毒來逃避，並且有具體方法處理" },
       { name: "標籤拆除工作坊", content: "「我就是理科腦」「我太感性了」「我不擅長這個」——這些標籤怎麼變成不行動的許可", takeaway: "理解標籤是安慰不是事實，學會在標籤出現的時候先暫停" },
+      { name: "ABC 誠實校準", content: "精確、有邊界、可修正——練習在對話中區分「我確定的」「我不確定的」「我錯了的」", takeaway: "一套對自己和對別人都適用的誠實標準" },
     ],
   },
   {
@@ -61,6 +62,7 @@ const courseLevels = [
     courses: [
       { name: "決策壓力測試", content: "把你正在面對的真實決策拆成 Zone A/B/C，用四系統交叉比對做壓力測試", takeaway: "不是一個答案，是一張看得清楚的決策地圖" },
       { name: "反噬模擬", content: "每個選擇都有順勢面和反噬面。我們把兩面都攤出來，你自己選", takeaway: "做決定之前就知道最壞情況是什麼，而不是做完才後悔" },
+      { name: "偏差識別訓練", content: "三層訓練：事後 → 過程中 → 預測性。練習辨識自己的偏差模式，以及偏差被拆掉後會進化成什麼變體", takeaway: "看見偏差的進化路徑，而不只是當下的偏差" },
       { name: "弧度歸零體驗", content: "不是認知課，是情緒體驗。讓你被看見，而不是被分析", takeaway: "如果你卡住的不是思維而是情緒，這堂課讓你有機會先把情緒放下來" },
     ],
   },
@@ -76,6 +78,7 @@ const courseLevels = [
       { name: "Zone A/B/C 在團隊溝通中的應用", content: "怎麼讓團隊成員區分事實、推測、立場，減少無意義的爭論", takeaway: "一套可以直接導入團隊的溝通規則" },
       { name: "EHFIS 企業應用", content: "用行為假設工具理解成員的協作模式，但不做人事判斷", takeaway: "知道每個成員的能量怎麼跑，但不用命理替他們貼標籤" },
       { name: "不預設不畫地自限 — 領導者版", content: "你是不是用「我不擅長」讓自己不去碰該碰的事？帶人的時候你是不是在替團隊畫地自限？", takeaway: "看見自己和團隊的限制信念，然後決定要不要拆掉它" },
+      { name: "人機協作導入", content: "怎麼把 CIP 協定導入團隊的 AI 使用流程——推測標示、Zone A/B/C、保持知識完整性", takeaway: "一套讓團隊在用 AI 時不照單全收的操作規則" },
     ],
   },
 ];
@@ -208,9 +211,13 @@ const MomochaoEducationPage = () => {
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12 text-center"
           >
             <Mail className="w-8 h-8 text-amber-400 mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢 Registration / Inquiry</h2>
-            <p className="text-white/60 mb-4">目前為預約制，請透過 <a href="mailto:serves@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">serves@momo-chao.com</a> 聯繫。</p>
-            <p className="text-white/40 text-sm">每期名額有限，因為我不做大班。我要能看到每一個人。</p>
+            <h2 className="text-xl font-serif font-bold text-white mb-4">報名 / 諮詢 Registration / Inquiry</h2>
+            <p className="text-white/40 text-sm mb-6">目前為預約制。每期名額有限，因為我不做大班。我要能看到每一個人。</p>
+            <div className="space-y-2 text-sm text-white/60">
+              <p>課程報名與命理諮詢：<a href="mailto:service@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">service@momo-chao.com</a></p>
+              <p>講座邀約、媒體與 B2B 合作：<a href="mailto:contact@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">contact@momo-chao.com</a></p>
+              <p>網站與一般問題：<a href="mailto:support@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">support@momo-chao.com</a></p>
+            </div>
           </motion.div>
 
           {/* Navigation */}
