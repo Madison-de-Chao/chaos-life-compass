@@ -6,7 +6,7 @@ import { useMember } from "@/hooks/useMember";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn } from "lucide-react";
+import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn, Compass } from "lucide-react";
 
 // Brand logos
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
@@ -1049,6 +1049,13 @@ export default function PortalPage() {
                 你好，我是默默超。
               </h2>
               <p className="text-white/50 text-base md:text-lg">想從哪裡開始？</p>
+              <Link 
+                to="/discover" 
+                className="inline-flex items-center gap-2 mt-3 px-5 py-2.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-300 text-sm hover:bg-amber-500/20 hover:border-amber-400/40 transition-all duration-300 touch-manipulation active:scale-[0.97]"
+              >
+                <Compass className="w-4 h-4" />
+                <span>不確定？讓我幫你找方向</span>
+              </Link>
             </div>
 
             {/* Cards grid - optimized for mobile touch */}

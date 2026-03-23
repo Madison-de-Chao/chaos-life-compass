@@ -40,6 +40,7 @@ import UniversePage from "./pages/public/UniversePage";
 import AboutPage from "./pages/public/AboutPage";
 import PrivacyPolicyPage from "./pages/public/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/public/TermsOfServicePage";
+import DiscoverPage from "./pages/public/DiscoverPage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -128,6 +129,7 @@ const App = () => (
                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/notes-public" element={<ComingSoonPage />} />
+                <Route path="/discover" element={<DiscoverPage />} />
                 
                 {/* AI Portal routes - AI 協作入口 */}
                 <Route path="/ai" element={<AIPortalPage />} />
