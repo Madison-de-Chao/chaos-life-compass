@@ -401,7 +401,7 @@ const ChaoxuanPage = () => {
               品牌精神 Brand Spirit
             </span>
             <h2 className="font-serif text-4xl md:text-6xl font-bold text-[#f5f5f0]">
-              四件我們真正在意的事
+              四件我們真正在意的事 Four Core Values
             </h2>
           </RevealSection>
 
