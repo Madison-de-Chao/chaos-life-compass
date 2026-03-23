@@ -211,9 +211,13 @@ const MomochaoEducationPage = () => {
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12 text-center"
           >
             <Mail className="w-8 h-8 text-amber-400 mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢 Registration / Inquiry</h2>
-            <p className="text-white/60 mb-4">目前為預約制，請透過 <a href="mailto:serves@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">serves@momo-chao.com</a> 聯繫。</p>
-            <p className="text-white/40 text-sm">每期名額有限，因為我不做大班。我要能看到每一個人。</p>
+            <h2 className="text-xl font-serif font-bold text-white mb-4">報名 / 諮詢 Registration / Inquiry</h2>
+            <p className="text-white/40 text-sm mb-6">目前為預約制。每期名額有限，因為我不做大班。我要能看到每一個人。</p>
+            <div className="space-y-2 text-sm text-white/60">
+              <p>課程報名與命理諮詢：<a href="mailto:service@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">service@momo-chao.com</a></p>
+              <p>講座邀約、媒體與 B2B 合作：<a href="mailto:contact@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">contact@momo-chao.com</a></p>
+              <p>網站與一般問題：<a href="mailto:support@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">support@momo-chao.com</a></p>
+            </div>
           </motion.div>
 
           {/* Navigation */}
