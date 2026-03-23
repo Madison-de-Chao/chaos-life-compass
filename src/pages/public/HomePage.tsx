@@ -182,7 +182,7 @@ const HomePage = () => {
           </p>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <Button asChild size="lg" className="px-8 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold shadow-[0_0_30px_rgba(217,161,99,0.3)]">
               <Link to="/reports">
                 探索命理報告
@@ -195,6 +195,18 @@ const HomePage = () => {
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </Button>
+          </div>
+          
+          {/* Discover CTA */}
+          <div className="animate-fade-in mb-8" style={{ animationDelay: '0.85s' }}>
+            <Link 
+              to="/discover" 
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/15 text-white/70 text-sm hover:bg-amber-500/10 hover:border-amber-400/30 hover:text-amber-300 transition-all duration-300 group"
+            >
+              <Compass className="w-4 h-4" />
+              <span>不知道從哪開始？測測看適合你的方向</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
 
           {/* Member Area CTA */}
