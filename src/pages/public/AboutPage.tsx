@@ -345,7 +345,7 @@ const AboutPage = () => {
             className="text-center mb-10 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 md:mb-4">
-              三大方法論
+              三大方法論 Three Methodologies
             </h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm md:text-base">
               喚醒 Awaken・篩選 Filter・賦能 Empower
