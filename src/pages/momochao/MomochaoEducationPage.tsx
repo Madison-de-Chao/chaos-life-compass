@@ -208,7 +208,7 @@ const MomochaoEducationPage = () => {
             className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12 text-center"
           >
             <Mail className="w-8 h-8 text-amber-400 mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢</h2>
+            <h2 className="text-xl font-serif font-bold text-white mb-2">報名 / 諮詢 Registration / Inquiry</h2>
             <p className="text-white/60 mb-4">目前為預約制，請透過 <a href="mailto:serves@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">serves@momo-chao.com</a> 聯繫。</p>
             <p className="text-white/40 text-sm">每期名額有限，因為我不做大班。我要能看到每一個人。</p>
           </motion.div>

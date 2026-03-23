@@ -126,7 +126,7 @@ const MomochaoAboutPage = () => {
             className="mb-16"
           >
             <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-8 text-center">
-              喚醒 / 篩選 / 賦能 — 我的版本
+              喚醒 / 篩選 / 賦能 — 我的版本 Awaken / Filter / Empower — My Version
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[

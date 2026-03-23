@@ -135,11 +135,13 @@ const MomochaoPhilosophyPage = () => {
           >
             <div className="flex items-center gap-3 mb-6">
               <Zap className="w-6 h-6 text-amber-400" />
-              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">情緒不是干擾</h2>
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">情緒不是干擾 Emotions Are Not Interference</h2>
             </div>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>情緒是你最誠實的原始資料。你的身體在你意識到之前就已經有反應了。</p>
               <p>決策的真實順序：情緒先跑完 → 直覺給方向 → 理性最後來補敘事。</p>
+              <p>情緒的正確操作序列：承認它存在 → 給它名字 → 追溯來源 → 選擇回應方式。</p>
+              <p>兩種病態模式：壓抑（導致行為回聲迴圈）和放縱（用情緒當不行動的藉口）。</p>
               <p>情緒是人與人之間唯一無法偽造的語言。</p>
             </div>
           </motion.div>
