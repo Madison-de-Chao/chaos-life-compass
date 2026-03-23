@@ -108,7 +108,7 @@ const MomochaoEducationPage = () => {
 
             <h1 className="text-3xl md:text-5xl font-serif font-bold mb-6">
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                默默超元壹教育體系
+                默默超元壹教育體系 Education System
               </span>
             </h1>
 
