@@ -489,7 +489,7 @@ const UniversePage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-              <span className="text-white">四維運作框架</span>
+              <span className="text-white">四維運作框架 Four-Dimensional Operating Framework</span>
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
               任何決定都跑不出這四件事
