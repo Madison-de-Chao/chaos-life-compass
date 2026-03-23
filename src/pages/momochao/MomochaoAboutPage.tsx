@@ -99,7 +99,7 @@ const MomochaoAboutPage = () => {
             viewport={{ once: true }}
             className="bg-gradient-to-br from-amber-500/10 to-purple-500/10 rounded-2xl p-6 md:p-8 border border-amber-500/20 mb-12"
           >
-            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">Care & Truth — 我的版本</h2>
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">Care & Truth — 我的版本 My Version</h2>
             <div className="space-y-6">
               <div>
                 <h3 className="text-amber-400 font-bold mb-2">Truth（真誠）</h3>
