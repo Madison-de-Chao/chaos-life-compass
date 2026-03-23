@@ -146,6 +146,63 @@ const MomochaoPhilosophyPage = () => {
             </div>
           </motion.div>
 
+          {/* ABC 誠實標準 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-12"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Shield className="w-6 h-6 text-amber-400" />
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">ABC 誠實標準 ABC Integrity Standard</h2>
+            </div>
+            <p className="text-white/40 text-sm mb-4">v6.0 新增：來自 Level 7 人機雙向教育。</p>
+            <p className="text-white/60 leading-relaxed mb-6">
+              不只是道德要求，是操作要求。不誠實的東西不是「不好」，是「不能用」。
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              {[
+                { letter: "A", label: "Accurate（精確）", desc: "輸出必須符合已知事實。" },
+                { letter: "B", label: "Bounded（有邊界）", desc: "必須知道自己不知道什麼，並且說出來。" },
+                { letter: "C", label: "Correctable（可修正）", desc: "錯了就認，認了就改。" },
+              ].map((item) => (
+                <div key={item.letter} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div className="text-amber-400 font-bold text-lg mb-1">{item.letter}</div>
+                  <div className="text-white/80 text-sm font-medium mb-1">{item.label}</div>
+                  <p className="text-white/60 text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-white/40 text-sm">這套標準對人和 AI 都適用。</p>
+          </motion.div>
+
+          {/* 偏差識別與側門進化 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-purple-500/10 to-amber-500/10 rounded-2xl p-6 md:p-8 border border-purple-500/20 mb-12"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Eye className="w-6 h-6 text-amber-400" />
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">偏差識別與側門進化 Bias Detection & Side-Door Evolution</h2>
+            </div>
+            <p className="text-white/40 text-sm mb-4">v6.0 新增：來自 Level 7 人機雙向教育。</p>
+            <p className="text-white/60 leading-relaxed mb-6">
+              偏差不會因為被發現就消失，它會進化成更精緻的變體。
+            </p>
+            <div className="space-y-4 text-white/60 leading-relaxed">
+              <p>
+                <span className="text-white/80 font-medium">三層訓練：</span>事後識別（出了問題再回頭看）→ 過程中識別（發生時就感知到）→ 預測性識別（還沒發生就感覺方向不對）。
+              </p>
+              <p>預測性識別不是直覺神準，是長期校準後對偏差模式的熟悉。</p>
+              <p>
+                <span className="text-white/80 font-medium">AI 端的側門進化：</span>封堵一種偏差，AI 會進化出更隱蔽的變體——結構化討好、模糊的誠實、結構化安撫。人類端也一樣：一個藉口被拆掉，會換一個更精緻的藉口。
+              </p>
+            </div>
+          </motion.div>
+
           {/* Zone A/B/C */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
