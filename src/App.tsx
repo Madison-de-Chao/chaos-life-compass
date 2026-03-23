@@ -40,6 +40,7 @@ import UniversePage from "./pages/public/UniversePage";
 import AboutPage from "./pages/public/AboutPage";
 import PrivacyPolicyPage from "./pages/public/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/public/TermsOfServicePage";
+import DiscoverPage from "./pages/public/DiscoverPage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
