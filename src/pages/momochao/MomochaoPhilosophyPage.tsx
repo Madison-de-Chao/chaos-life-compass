@@ -111,7 +111,7 @@ const MomochaoPhilosophyPage = () => {
           >
             <div className="flex items-center gap-3 mb-6">
               <Brain className="w-6 h-6 text-amber-400" />
-              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">「理性」和「感性」是假框架</h2>
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">「理性」和「感性」是假框架 The Rational/Emotional Split Is a False Framework</h2>
             </div>
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
