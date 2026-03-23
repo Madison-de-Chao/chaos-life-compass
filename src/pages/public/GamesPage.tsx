@@ -190,7 +190,7 @@ const GamesPage = () => {
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
               <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                互動式自我探索
+                互動式自我探索 Interactive Exploration
               </span>
             </h1>
             

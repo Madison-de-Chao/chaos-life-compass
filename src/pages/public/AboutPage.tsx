@@ -469,8 +469,8 @@ const AboutPage = () => {
               <div className="text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3 md:mb-4">Care & Truth</h3>
                 <p className="text-white/60 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
-                  <strong className="text-white/80">Truth（真誠）</strong>：不是讓你舒服，是讓你正確收到正確的東西。Truth 負責讓訊號不失真。<br /><br />
-                  <strong className="text-white/80">Care（關懷）</strong>：不是給你想聽的，是給你需要聽的。Care 負責讓內容不失焦。
+                  <strong className="text-white/80">Care（關懷）</strong>：我們用心聆聽每一個故事，因為每個人都值得被溫柔對待。<br /><br />
+                  <strong className="text-white/80">Truth（真相）</strong>：我們誠實面對每一個議題，因為真相是自由的起點。
                 </p>
                 <p className="text-amber-400/60 text-xs md:text-sm">
                   第三層：在乎但不追。東西已經準備好了，放在這裡，你來的時候它在。
