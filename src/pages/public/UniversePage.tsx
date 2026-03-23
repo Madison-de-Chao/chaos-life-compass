@@ -539,7 +539,7 @@ const UniversePage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
-              核心理念
+              核心理念 Core Concepts
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
               不是規則，是看事情的方式
