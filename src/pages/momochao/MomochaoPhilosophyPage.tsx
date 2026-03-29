@@ -36,10 +36,10 @@ const philosophySections = [
     icon: Target,
     title: "四系統交叉比對",
     content: [
-      "同時使用塔羅、八字、占星、人類圖。不是因為四個比一個準。",
-      "四個系統放在一起比對時，每個系統獨有的那套敘事就被稀釋了。占星不能再說「這張牌告訴你命運就是這樣」，因為八字可能說的是另一個方向。沒有任何一個系統可以單獨成為權威。",
-      "藉口功能在交叉比對中被自動拆除，留下的只有共通結構——那才是理解功能。",
-      "當四個系統指向同一個參數時，它就是生命的底層邏輯。當它們互相矛盾時，那就是你需要自己做選擇的地方。",
+      "同時使用紫微斗數、八字、占星、人類圖。不是因為四個比一個準。",
+      "四個系統放在一起比對時，每個系統獨有的那套敘事就被稀釋了。沒有任何一個系統可以單獨成為權威。藉口功能在交叉比對中被自動拆除，留下的只有共通結構——那才是理解功能。",
+      "當四個系統指向同一個參數時，它就是你的底層結構——這是共振版報告在做的事。",
+      "當它們互相矛盾時，那個矛盾就是你需要正視的偏勝——這是偏勝版報告在做的事。",
     ],
   },
   {
@@ -229,6 +229,55 @@ const MomochaoPhilosophyPage = () => {
             <div className="space-y-3 text-white/60 leading-relaxed">
               <p>驅動一個人最終站在 Zone C 位置上的，不是邏輯分析，是情緒。情緒是 C 區的燃料。</p>
               <p>Zone C 也是邀請對方表達立場的入口——它是對話中的留白。</p>
+            </div>
+          </motion.div>
+
+          {/* 默默超思維工具箱 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-cyan-500/10 to-amber-500/10 rounded-2xl p-6 md:p-8 border border-cyan-500/20 mb-16"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Brain className="w-6 h-6 text-cyan-400" />
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-white">默默超思維工具箱 Thinking Toolbox</h2>
+            </div>
+            <p className="text-white/60 leading-relaxed mb-6">
+              五個結構工具，三個應用模組。不是哲學，是可以直接用的思考流程。
+            </p>
+
+            {/* 結構層五工具 */}
+            <h3 className="text-lg font-bold text-white mb-4">結構層五工具</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+              {[
+                { tool: "六步 OS", what: "確保問題被正確定義", line: "起飛前校準——先確認大家談的是同一件事" },
+                { tool: "思維八階循環", what: "確保每次決策經過完整思考", line: "主飛行流程——從懷疑到總結，不跳步" },
+                { tool: "三層邏輯校準", what: "穿透表面找到真正問題", line: "往下鑽探——情緒是信號、語言是包裝、結構是源頭" },
+                { tool: "回家地圖協定", what: "思維迷路時的導航", line: "飛行中返航——停、回到核心問題、檢查你在哪一層" },
+                { tool: "地基重建", what: "底層信念系統不穩時的緊急工程", line: "不是修牆，是挖地基——辨識、暫停、拆除、重建、測試" },
+              ].map((item) => (
+                <div key={item.tool} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div className="text-cyan-400 font-bold text-sm mb-1">{item.tool}</div>
+                  <p className="text-white/70 text-sm mb-1">{item.what}</p>
+                  <p className="text-white/40 text-xs italic">{item.line}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 應用層三模組 */}
+            <h3 className="text-lg font-bold text-white mb-4">應用層三模組</h3>
+            <div className="space-y-3">
+              {[
+                { mod: "情緒認知框架", desc: "情緒是原始資料，不是干擾。承認→命名→溯源→選擇回應。" },
+                { mod: "十大思維病毒", desc: "時態錯位、情緒蓋過思考、防衛反應優先、極端化語言、自我應驗迴圈、因果簡化、責任轉嫁、確認偏誤、話語櫃架、悲情投射。" },
+                { mod: "環境層病毒", desc: "不是所有的卡住都來自你自己。資訊過載、共識壓力、結構性不對稱、情緒傳染——離開那個環境你就不這樣想了。" },
+              ].map((item) => (
+                <div key={item.mod} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div className="text-amber-400 font-bold text-sm mb-1">{item.mod}</div>
+                  <p className="text-white/60 text-sm">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 

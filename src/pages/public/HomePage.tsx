@@ -30,8 +30,8 @@ const sections = [
   {
     id: 1,
     title: "默默超命理報告 Destiny Reports",
-    subtitle: "翻結構、問問題、給選項",
-    description: "旗艦版個人報告＋感情／商業／親子合盤。四系統交叉比對，每個判斷都有回驗機制。不給答案，給你做決定的材料。",
+    subtitle: "兩種視角，一個你",
+    description: "共振版幫你看見完整的自己。偏勝版幫你看見你以為的自己哪裡跟結構對不上。四系統交叉比對，每個判斷都有根據。",
     icon: FileText,
     href: "/reports",
     color: "from-amber-500/20 to-orange-500/20",
@@ -391,6 +391,38 @@ const HomePage = () => {
         </div>
       </section>
       
+      {/* Compass Experience Entry */}
+      <section className="py-16 px-4 relative">
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className="bg-gradient-to-br from-amber-500/10 to-purple-500/10 rounded-2xl p-8 md:p-10 border border-amber-500/20 text-center">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
+              30 秒，四系統怎麼看你
+            </h2>
+            <p className="text-white/60 max-w-xl mx-auto mb-2">
+              填 6 個選項，立刻看見紫微、八字、占星、人類圖各自怎麼描述你。
+            </p>
+            <p className="text-white/50 text-sm mb-6">不用懂命理，不用輸入完整命盤。</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <Button asChild className="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold px-6">
+                <Link to="/reports/compass#life">
+                  體驗人生羅盤
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10 px-6">
+                <Link to="/reports/compass#bias">
+                  體驗偏勝羅盤
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <p className="text-white/30 text-xs">
+              體驗版僅使用每個系統最基礎的一個指標。完整版報告使用四系統完整命盤資料，進行交叉驗證與深度整合。
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Quote Section */}
       <section className="py-24 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent" />

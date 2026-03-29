@@ -344,14 +344,14 @@ const fourSystems = [
     icon: Star, 
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "揭示你的先天人格結構與一生運勢走向，如同靈魂的藍圖設計。"
+    description: "你的先天人格結構與一生運勢走向，靈魂的藍圖設計。"
   },
   { 
     name: "八字", 
     icon: Target, 
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "解析你的能量組成與流動模式，呈現事業、財運、感情的時空週期。"
+    description: "你的能量組成與流動模式，事業、財運、感情的時空週期。"
   },
   { 
     name: "占星", 
@@ -365,7 +365,7 @@ const fourSystems = [
     icon: Brain, 
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "定義你的決策權威與能量運作方式，找到最適合你的行動策略。"
+    description: "你的決策權威與能量運作方式，最適合你的行動策略。"
   },
 ];
 
@@ -411,36 +411,40 @@ const processSteps = [
 
 const faqs = [
   {
-    q: "我不懂命理也能看懂嗎？",
-    a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，完全不需要任何命理基礎。",
+    q: "共振版跟偏勝版有什麼不同？",
+    a: "共振版找四系統說同一件事的地方，幫你看見完整的自己。偏勝版找四系統互相打架的地方，幫你看見你以為的自己哪裡跟結構對不上。一份讓你被理解，一份讓你被校準。",
   },
   {
-    q: "為什麼個人報告只有旗艦版？",
-    a: "因為旗艦版是「確保完整交付」的最低標準。四系統交叉驗證、10 章結構化分析，少一個環節都會影響判斷的可靠度。",
+    q: "一定要兩份都買嗎？",
+    a: "不用。兩份都可以獨立購買。如果你從來沒做過四系統整合，共振版是很好的起點。如果你已經對自己有一定認識，想知道哪裡可能有盲區，偏勝版可以直接切入。",
+  },
+  {
+    q: "我不懂命理也能看懂嗎？",
+    a: "可以。報告會把命盤語言轉成「你在生活裡看得到的現象」與「你做得到的建議」，不需要任何命理基礎。",
   },
   {
     q: "你會不會寫得很玄，或很像算命？",
-    a: "不會。我們的核心是「鏡子，不是劇本」。拒絕預言式的結論，只呈現可驗證的模式與可執行的建議。",
+    a: "不會。核心是「鏡子，不是劇本」。拒絕預言式結論，只呈現可驗證的模式與可執行的建議。",
   },
   {
-    q: "與傳統算命有什麼不同？",
+    q: "跟傳統算命有什麼不同？",
     a: "傳統算命告訴你「會發生什麼」，我們告訴你「你是如何運作的」。這是使用說明書，不是預言書。",
   },
   {
-    q: "多久可以收到報告？",
-    a: "旗艦版個人報告 12-18 個工作天。合盤報告 10-15 個工作天。每份都是人工逐字寫的，不套模板，所以快不了。",
+    q: "跟心理諮商有什麼不同？",
+    a: "心理諮商處理的是你的真實困擾與情緒，由專業心理師透過長期對話陪伴。我們的報告處理的是你的命盤結構——從出生資料推導你的運作模式，輸出一份可以帶走反覆翻看的書面報告。兩者不互斥，可以互補。",
   },
   {
-    q: "報告準不準？",
-    a: "四系統交叉驗證，一個系統說的要另外三個也指向同一個方向才算數。但「準」不是目標——「有用」才是。拿你的過去去對照，對上了就繼續用。",
+    q: "報告裡的描述真的準嗎？",
+    a: "報告裡的描述來自四系統交叉驗證後的結構推導，不是我們猜的。但它描述的是「這個結構配置的人傾向怎麼運作」，不是「我們觀察過你本人」。最終的驗證權在你自己——讀到覺得中的地方，拿去對照你的現實。",
+  },
+  {
+    q: "多久可以收到報告？",
+    a: "共振版個人報告 12-18 個工作天，偏勝版 10-15 個工作天。合盤報告 10-15 個工作天。每份都是人工逐字寫的，不套模板。",
   },
   {
     q: "合盤報告是什麼？需要什麼前提？",
-    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提：主要測算人須先完成個人旗艦版報告。",
-  },
-  {
-    q: "如果四個系統的結論互相矛盾呢？",
-    a: "那就是你需要自己做選擇的地方。四系統交叉比對不是為了給你一個完美答案，是為了讓任何一個系統都不能單獨當你的藉口。矛盾的地方，就是你的選擇權所在。",
+    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提：主要測算人須先完成個人共振版報告。",
   },
 ];
 
@@ -662,14 +666,14 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超命理解讀報告 | 旗艦版個人報告・感情合盤・商業合盤・親子合盤",
-    description: "四系統交叉驗證命理報告，翻結構、問問題、給選項。旗艦版個人報告＋三種合盤解讀。100% 客製化，不套模板，不預測命運。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超",
-    ogTitle: "默默超命理解讀報告 - 翻結構、問問題、給選項",
+    title: "默默超命理解讀報告 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
+    description: "四系統交叉驗證命理報告。共振版幫你看見完整的自己，偏勝版幫你看見認知偏差。100% 客製化，不套模板，不預測命運。",
+    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版",
+    ogTitle: "默默超命理解讀報告 - 兩種視角，一個你",
   });
 
   // Count animations with visibility trigger - updated based on SOP
-  const wordCount = useCountUp(12000, 2500, 0, heroVisible);
+  const wordCount = useCountUp(13000, 2500, 0, heroVisible);
   const chapterCount = useCountUp(10, 1500, 0, heroVisible);
   const systemCount = useCountUp(4, 1000, 0, heroVisible);
 
@@ -739,7 +743,7 @@ const ReportPage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v4.0 人機協作</span>
+            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v5.0 雙產品線</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
@@ -894,12 +898,12 @@ const ReportPage = () => {
           </div>
           
           <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
-            <span className="text-white/90">看見自己，是所有</span>
+            <span className="text-white/90">看見自己的結構，是所有</span>
             <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">改變的起點。</span>
           </p>
           
           <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
-            紫微、八字、占星、人類圖四系統交叉驗證。<br className="hidden md:block" />不預測命運，不替你做決定——把你的<span className="text-amber-400">運作模式</span>攤出來，你自己判斷。
+            紫微斗數 × 八字命理 × 西洋占星 × 人類圖<br className="hidden md:block" />四系統同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />你拿到的不是一個答案，是一份可以反覆翻看的<span className="text-amber-400">結構地圖</span>。
           </p>
           
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '1s' }}>
@@ -918,71 +922,39 @@ const ReportPage = () => {
 
           {/* Three Version Quick Navigation Cards */}
           <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
-            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">三種版本，對應不同需求</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              {/* Basic Version Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 border border-slate-500/30 hover:border-slate-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <BookOpen className="w-5 h-5 text-slate-400" />
-                    <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">Basic</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">認識自己</h4>
-                  <p className="text-slate-400 text-sm">5 章・快速入門</p>
-                  <div className="mt-3 flex items-center gap-1 text-slate-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-slate-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </button>
-
-              {/* Standard Version Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-blue-900/30 to-blue-950/30 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Eye className="w-5 h-5 text-blue-400" />
-                    <span className="text-xs text-blue-400 font-medium uppercase tracking-wider">Standard</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">看懂自己</h4>
-                  <p className="text-blue-300/70 text-sm">8 章・完整解析</p>
-                  <div className="mt-3 flex items-center gap-1 text-blue-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-blue-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </button>
-
-              {/* Flagship Version Card */}
+            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">兩種視角，對應不同需求</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {/* 共振版 Card */}
               <button 
                 onClick={scrollToPlans}
                 className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute -top-2 right-4">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-black rounded-full text-[10px] font-bold">
-                    <Star className="w-2.5 h-2.5" />
-                    推薦
-                  </span>
-                </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <Crown className="w-5 h-5 text-amber-400" />
-                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Flagship</span>
+                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
                   </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">使用自己</h4>
-                  <p className="text-amber-300/70 text-sm">10 章・人生系統</p>
-                  <div className="mt-3 flex items-center gap-1 text-amber-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-amber-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">共振版</h4>
+                  <p className="text-amber-300/70 text-sm mb-2">讓你看見完整的自己，學會使用自己</p>
+                  <p className="text-white/40 text-xs">10 章＋默默超大總結・約 10,000-13,000 字</p>
+                </div>
+              </button>
+
+              {/* 偏勝版 Card */}
+              <button 
+                onClick={scrollToPlans}
+                className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Eye className="w-5 h-5 text-purple-400" />
+                    <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
                   </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">偏勝版</h4>
+                  <p className="text-purple-300/70 text-sm mb-2">讓你看見認知偏差，學會校正自己</p>
+                  <p className="text-white/40 text-xs">8 章＋默默超大總結・約 8,000-10,000 字</p>
                 </div>
               </button>
             </div>
@@ -1788,75 +1760,68 @@ const ReportPage = () => {
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              產品線總覽
+              兩份報告，兩種視角
             </h2>
             <p className="text-white/50 text-lg md:text-xl">
-              一份個人旗艦版，三種合盤解讀
+              同一份命盤資料，兩種完全不同的閱讀方式。兩份都可以獨立購買。
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Flagship Version */}
-            <div className={`group relative lg:col-span-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
-              
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden">
-                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
-                
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
-                    <Crown className="w-4 h-4" />
-                    個人報告
-                  </span>
+            {/* 共振版 */}
+            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full">
+                <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  共振版 Resonance
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你是誰，你怎麼運作</h3>
+                <p className="text-amber-300/80 text-sm mb-4 italic">像深夜居酒屋裡最懂你的朋友</p>
+                <p className="text-white/50 text-sm mb-6">
+                  當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。共振版的任務是把這些交集整合成一份你讀得懂、拿得走的生命地圖。
+                </p>
+                <div className="space-y-2 mb-6">
+                  {["10 章＋默默超大總結", "約 10,000-13,000 字", "含思維工具箱＋四時軍團秘笈", "讀完的感覺：被看見、被理解"].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
+                      <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
-                
-                <div className="grid md:grid-cols-2 gap-8 pt-4 relative z-10">
-                  <div>
-                    <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
-                      旗艦版 Flagship
-                    </span>
-                    <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                      【使用自己】
-                    </h3>
-                    <p className="text-lg text-amber-300/90 mb-3 font-serif">
-                      人生操作導航系統
-                    </p>
-                    <p className="text-white/50 text-sm mb-6">
-                      不是「認識自己」就夠了。旗艦版是我認為能完整交付的最低標準——包含思維系統、四時軍團、全方位風險提醒。少了這些，報告只是一面鏡子，做不到「教你怎麼用自己」。
-                    </p>
-                  </div>
-                  <div>
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>10 章完整系統，含思維工具箱＋四時軍團</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>默默超思維系統完整教學（情緒/行動/心智/價值）</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>約 10,000-12,000 字人生操作系統</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>12-18 個工作天交付</span>
-                      </div>
+                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                  <p className="text-amber-300/90 italic text-sm">適合：想認識自己、需要方向感的人</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 偏勝版 */}
+            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1420] via-[#141018] to-[#0a080e] rounded-[32px] p-8 md:p-10 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-500 overflow-hidden h-full">
+                <span className="inline-block px-4 py-1.5 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  偏勝版 Bias Detection
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你以為的自己，哪些是真的</h3>
+                <p className="text-purple-300/80 text-sm mb-4 italic">全篇都在拆你</p>
+                <p className="text-white/50 text-sm mb-6">
+                  四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。偏勝版的任務是把這些歧異找出來，拆解你的自我敘事，告訴你哪些是結構、哪些是藉口。
+                </p>
+                <div className="space-y-2 mb-6">
+                  {["8 章＋默默超大總結", "約 8,000-10,000 字", "含偏勝偵測矩陣＋思維病毒掃描", "讀完的感覺：被看穿、被戳破"].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
+                      <Sparkles className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
                     </div>
-                    
-                    <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
-                      <p className="text-amber-300/90 italic text-sm">
-                        適合：想搞清楚自己怎麼運作、怎麼用的人。不分職業、不分年齡。
-                      </p>
-                    </div>
-                  </div>
+                  ))}
+                </div>
+                <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                  <p className="text-purple-300/90 italic text-sm">適合：已有自我認知但可能陷入盲區的人</p>
                 </div>
               </div>
             </div>
             
             {/* 感情合盤 */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
               <div className="mb-6">
                 <span className="inline-block px-4 py-1.5 bg-rose-500/20 text-rose-300 rounded-full text-sm font-medium mb-4 tracking-wide">
                   感情合盤
@@ -1886,7 +1851,7 @@ const ReportPage = () => {
               
               <div className="p-4 bg-rose-500/5 rounded-xl border border-rose-500/10">
                 <p className="text-rose-300/70 italic text-sm">
-                  前提：主要測算人須先完成個人旗艦版報告
+                  前提：主要測算人須先完成個人共振版報告
                 </p>
               </div>
             </div>
