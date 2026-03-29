@@ -922,64 +922,43 @@ const ReportPage = () => {
 
           {/* Three Version Quick Navigation Cards */}
           <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
-            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">三種版本，對應不同需求</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              {/* Basic Version Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 border border-slate-500/30 hover:border-slate-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <BookOpen className="w-5 h-5 text-slate-400" />
-                    <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">Basic</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">認識自己</h4>
-                  <p className="text-slate-400 text-sm">5 章・快速入門</p>
-                  <div className="mt-3 flex items-center gap-1 text-slate-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-slate-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </button>
-
-              {/* Standard Version Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-blue-900/30 to-blue-950/30 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Eye className="w-5 h-5 text-blue-400" />
-                    <span className="text-xs text-blue-400 font-medium uppercase tracking-wider">Standard</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">看懂自己</h4>
-                  <p className="text-blue-300/70 text-sm">8 章・完整解析</p>
-                  <div className="mt-3 flex items-center gap-1 text-blue-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-blue-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </button>
-
-              {/* Flagship Version Card */}
+            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">兩種視角，對應不同需求</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {/* 共振版 Card */}
               <button 
                 onClick={scrollToPlans}
                 className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute -top-2 right-4">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-500 text-black rounded-full text-[10px] font-bold">
-                    <Star className="w-2.5 h-2.5" />
-                    推薦
-                  </span>
-                </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <Crown className="w-5 h-5 text-amber-400" />
-                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Flagship</span>
+                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">共振版</h4>
+                  <p className="text-amber-300/70 text-sm mb-2">讓你看見完整的自己，學會使用自己</p>
+                  <p className="text-white/40 text-xs">10 章＋默默超大總結・約 10,000-13,000 字</p>
+                </div>
+              </button>
+
+              {/* 偏勝版 Card */}
+              <button 
+                onClick={scrollToPlans}
+                className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Eye className="w-5 h-5 text-purple-400" />
+                    <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-white mb-1">偏勝版</h4>
+                  <p className="text-purple-300/70 text-sm mb-2">讓你看見認知偏差，學會校正自己</p>
+                  <p className="text-white/40 text-xs">8 章＋默默超大總結・約 8,000-10,000 字</p>
+                </div>
+              </button>
+            </div>
+          </div>
                   </div>
                   <h4 className="font-serif text-lg font-bold text-white mb-1">使用自己</h4>
                   <p className="text-amber-300/70 text-sm">10 章・人生系統</p>
