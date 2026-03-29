@@ -1760,75 +1760,68 @@ const ReportPage = () => {
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              產品線總覽
+              兩份報告，兩種視角
             </h2>
             <p className="text-white/50 text-lg md:text-xl">
-              一份個人旗艦版，三種合盤解讀
+              同一份命盤資料，兩種完全不同的閱讀方式。兩份都可以獨立購買。
             </p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Flagship Version */}
-            <div className={`group relative lg:col-span-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-gradient-shift bg-[length:200%_200%]" />
-              
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden">
-                <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnYtMmgtNHYyaC0ydi0yaC00djJoLTJ2NGgydjJoNHYtMmgydjJoNHYtMnoiLz48L2c+PC9nPjwvc3ZnPg==')]" />
-                
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-sm font-bold shadow-[0_0_30px_rgba(251,191,36,0.5)] uppercase tracking-wider animate-glow-pulse">
-                    <Crown className="w-4 h-4" />
-                    個人報告
-                  </span>
+            {/* 共振版 */}
+            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full">
+                <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  共振版 Resonance
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你是誰，你怎麼運作</h3>
+                <p className="text-amber-300/80 text-sm mb-4 italic">像深夜居酒屋裡最懂你的朋友</p>
+                <p className="text-white/50 text-sm mb-6">
+                  當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。共振版的任務是把這些交集整合成一份你讀得懂、拿得走的生命地圖。
+                </p>
+                <div className="space-y-2 mb-6">
+                  {["10 章＋默默超大總結", "約 10,000-13,000 字", "含思維工具箱＋四時軍團秘笈", "讀完的感覺：被看見、被理解"].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
+                      <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
-                
-                <div className="grid md:grid-cols-2 gap-8 pt-4 relative z-10">
-                  <div>
-                    <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
-                      旗艦版 Flagship
-                    </span>
-                    <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                      【使用自己】
-                    </h3>
-                    <p className="text-lg text-amber-300/90 mb-3 font-serif">
-                      人生操作導航系統
-                    </p>
-                    <p className="text-white/50 text-sm mb-6">
-                      不是「認識自己」就夠了。旗艦版是我認為能完整交付的最低標準——包含思維系統、四時軍團、全方位風險提醒。少了這些，報告只是一面鏡子，做不到「教你怎麼用自己」。
-                    </p>
-                  </div>
-                  <div>
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>10 章完整系統，含思維工具箱＋四時軍團</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>默默超思維系統完整教學（情緒/行動/心智/價值）</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>約 10,000-12,000 字人生操作系統</span>
-                      </div>
-                      <div className="flex items-start gap-3 text-white/70 text-sm">
-                        <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <span>12-18 個工作天交付</span>
-                      </div>
+                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                  <p className="text-amber-300/90 italic text-sm">適合：想認識自己、需要方向感的人</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 偏勝版 */}
+            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="relative bg-gradient-to-br from-[#1a1420] via-[#141018] to-[#0a080e] rounded-[32px] p-8 md:p-10 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-500 overflow-hidden h-full">
+                <span className="inline-block px-4 py-1.5 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium mb-4 tracking-wide">
+                  偏勝版 Bias Detection
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你以為的自己，哪些是真的</h3>
+                <p className="text-purple-300/80 text-sm mb-4 italic">全篇都在拆你</p>
+                <p className="text-white/50 text-sm mb-6">
+                  四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。偏勝版的任務是把這些歧異找出來，拆解你的自我敘事，告訴你哪些是結構、哪些是藉口。
+                </p>
+                <div className="space-y-2 mb-6">
+                  {["8 章＋默默超大總結", "約 8,000-10,000 字", "含偏勝偵測矩陣＋思維病毒掃描", "讀完的感覺：被看穿、被戳破"].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
+                      <Sparkles className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
                     </div>
-                    
-                    <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
-                      <p className="text-amber-300/90 italic text-sm">
-                        適合：想搞清楚自己怎麼運作、怎麼用的人。不分職業、不分年齡。
-                      </p>
-                    </div>
-                  </div>
+                  ))}
+                </div>
+                <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                  <p className="text-purple-300/90 italic text-sm">適合：已有自我認知但可能陷入盲區的人</p>
                 </div>
               </div>
             </div>
             
             {/* 感情合盤 */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
+            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
               <div className="mb-6">
                 <span className="inline-block px-4 py-1.5 bg-rose-500/20 text-rose-300 rounded-full text-sm font-medium mb-4 tracking-wide">
                   感情合盤
@@ -1858,7 +1851,7 @@ const ReportPage = () => {
               
               <div className="p-4 bg-rose-500/5 rounded-xl border border-rose-500/10">
                 <p className="text-rose-300/70 italic text-sm">
-                  前提：主要測算人須先完成個人旗艦版報告
+                  前提：主要測算人須先完成個人共振版報告
                 </p>
               </div>
             </div>
