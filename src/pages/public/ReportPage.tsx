@@ -666,14 +666,14 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超命理解讀報告 | 旗艦版個人報告・感情合盤・商業合盤・親子合盤",
-    description: "四系統交叉驗證命理報告，翻結構、問問題、給選項。旗艦版個人報告＋三種合盤解讀。100% 客製化，不套模板，不預測命運。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超",
-    ogTitle: "默默超命理解讀報告 - 翻結構、問問題、給選項",
+    title: "默默超命理解讀報告 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
+    description: "四系統交叉驗證命理報告。共振版幫你看見完整的自己，偏勝版幫你看見認知偏差。100% 客製化，不套模板，不預測命運。",
+    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版",
+    ogTitle: "默默超命理解讀報告 - 兩種視角，一個你",
   });
 
   // Count animations with visibility trigger - updated based on SOP
-  const wordCount = useCountUp(12000, 2500, 0, heroVisible);
+  const wordCount = useCountUp(13000, 2500, 0, heroVisible);
   const chapterCount = useCountUp(10, 1500, 0, heroVisible);
   const systemCount = useCountUp(4, 1000, 0, heroVisible);
 
@@ -743,7 +743,7 @@ const ReportPage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v4.0 人機協作</span>
+            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v5.0 雙產品線</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
@@ -898,12 +898,12 @@ const ReportPage = () => {
           </div>
           
           <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
-            <span className="text-white/90">看見自己，是所有</span>
+            <span className="text-white/90">看見自己的結構，是所有</span>
             <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">改變的起點。</span>
           </p>
           
           <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
-            紫微、八字、占星、人類圖四系統交叉驗證。<br className="hidden md:block" />不預測命運，不替你做決定——把你的<span className="text-amber-400">運作模式</span>攤出來，你自己判斷。
+            紫微斗數 × 八字命理 × 西洋占星 × 人類圖<br className="hidden md:block" />四系統同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />你拿到的不是一個答案，是一份可以反覆翻看的<span className="text-amber-400">結構地圖</span>。
           </p>
           
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '1s' }}>
