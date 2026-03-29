@@ -959,17 +959,6 @@ const ReportPage = () => {
               </button>
             </div>
           </div>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">使用自己</h4>
-                  <p className="text-amber-300/70 text-sm">10 章・人生系統</p>
-                  <div className="mt-3 flex items-center gap-1 text-amber-300 text-xs group-hover:text-white transition-colors">
-                    <BlurredPrice color="text-amber-300" />
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
