@@ -36,6 +36,7 @@ const publicHeaderAuthConfig = {
 };
 
 const navLinks = [
+  { label: "入口", href: "/" },
   { label: "超烜創意", href: "/chaoxuan" },
   { label: "虹靈御所", href: "/home" },
   { label: "命理報告", href: "/reports" },
