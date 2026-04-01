@@ -210,7 +210,7 @@ export default function CompassPage() {
   useSEO({
     title: "四系統羅盤體驗版 Four-System Compass | 虹靈御所",
     description: "30 秒填完 6 個選項，看見紫微斗數、八字、占星、人類圖四套系統怎麼描述你。",
-    keywords: ["羅盤", "四系統", "紫微斗數", "八字", "占星", "人類圖", "命理體驗"],
+    keywords: "羅盤,四系統,紫微斗數,八字,占星,人類圖,命理體驗",
   });
 
   const [ziWei, setZiWei] = useState("");
