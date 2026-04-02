@@ -1253,7 +1253,7 @@ const ReportPage = () => {
                 在這個資訊過載的時代，傳統的算命只能告訴您「會發生什麼」，卻無法告訴您「該如何運作自己」。
               </p>
               <p>
-                《默默超命理解讀系統》是一項超越時代的生命工程。我們拒絕模稜兩可的宿命論，堅持以<span className="text-amber-400 font-bold">「鏡子非劇本，真實即命運」</span>的最高原則，透過嚴謹的交叉演算，將您的天賦、情緒、思維與價值觀，轉化為可執行、可落地的精密導航。
+                《歸覓｜人生羅盤定位系統》是一項超越時代的生命工程。我們拒絕模稜兩可的宿命論，堅持以<span className="text-amber-400 font-bold">「鏡子非劇本，真實即命運」</span>的最高原則，透過嚴謹的交叉演算，將您的天賦、情緒、思維與價值觀，轉化為可執行、可落地的精密導航。
               </p>
               <div className="flex items-center justify-center gap-4 py-6">
                 <div className="w-20 h-px bg-gradient-to-r from-transparent to-amber-500/50" />
