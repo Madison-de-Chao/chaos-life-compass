@@ -1108,84 +1108,60 @@ const ReportPage = () => {
             </p>
           </div>
           
-          {/* Comparison Grid */}
-          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Traditional Side */}
+          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* 一般命理服務 */}
             <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
               <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
-                <span className="text-white/60 text-sm font-medium">傳統算命服務</span>
+                <span className="text-white/60 text-sm font-medium">一般命理服務</span>
               </div>
-              
-              <div className="pt-4 space-y-6">
-                {[
-                  { label: "知名老師面相/八字諮詢", price: "NT$ 3,000-8,000", note: "單次・30-60分鐘" },
-                  { label: "紫微斗數詳批", price: "NT$ 5,000-15,000", note: "單次・僅文字" },
-                  { label: "西洋占星流年解讀", price: "NT$ 3,500-6,000", note: "單次・口述為主" },
-                  { label: "人類圖完整解讀", price: "NT$ 4,000-8,000", note: "單次・基礎版" },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
-                    <div>
-                      <p className="text-white/80 font-medium">{item.label}</p>
-                      <p className="text-white/40 text-sm">{item.note}</p>
-                    </div>
-                    <p className="text-white/60 font-mono text-lg">{item.price}</p>
-                  </div>
-                ))}
-                
-                <div className="pt-4 border-t border-white/20">
-                  <div className="flex items-center justify-between">
-                    <p className="text-white/60">若要四系統都做...</p>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-rose-400 line-through">NT$ 15,500-37,000</p>
-                      <p className="text-white/40 text-sm">需 4 次預約・無法交叉對照</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-white/80 font-medium">做什麼：</span>回答問題、預測運勢</div>
+                <div><span className="text-white/80 font-medium">方法：</span>單系統解讀</div>
+                <div><span className="text-white/80 font-medium">當系統打架：</span>忽略或硬圓</div>
+                <div><span className="text-white/80 font-medium">給你什麼：</span>口頭解讀或短報告</div>
+                <div><span className="text-white/80 font-medium">你的角色：</span>被動聽</div>
+                <div><span className="text-white/80 font-medium">建議：</span>「多溝通」「適合創業」</div>
+                <div><span className="text-white/80 font-medium">用多久：</span>看一次就結束</div>
               </div>
             </div>
-            
-            {/* MomoChao Side */}
+
+            {/* 心理諮商 */}
+            <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
+                <span className="text-white/60 text-sm font-medium">心理諮商</span>
+              </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-white/80 font-medium">做什麼：</span>陪你處理困擾</div>
+                <div><span className="text-white/80 font-medium">方法：</span>對話、探索、引導</div>
+                <div><span className="text-white/80 font-medium">當系統打架：</span>不適用</div>
+                <div><span className="text-white/80 font-medium">給你什麼：</span>過程體驗</div>
+                <div><span className="text-white/80 font-medium">你的角色：</span>主動探索</div>
+                <div><span className="text-white/80 font-medium">建議：</span>過程中慢慢浮現</div>
+                <div><span className="text-white/80 font-medium">用多久：</span>長期諮商關係</div>
+              </div>
+            </div>
+
+            {/* 歸覓 */}
             <div className="relative bg-gradient-to-br from-amber-900/20 to-[#0d0d0d] rounded-3xl p-8 border border-amber-500/30 shadow-[0_0_40px_rgba(251,191,36,0.15)]">
               <div className="absolute -top-3 left-6 px-4 py-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full">
-                <span className="text-black text-sm font-bold">默默超全方位報告</span>
+                <span className="text-black text-sm font-bold">歸覓｜人生羅盤定位系統</span>
               </div>
-              
-              <div className="pt-4 space-y-4">
-                {[
-                  { icon: CheckCircle2, text: "四大系統交叉整合（紫微、八字、占星、人類圖）" },
-                  { icon: CheckCircle2, text: "12,000+ 字深度分析・永久保存" },
-                  { icon: CheckCircle2, text: "可反覆閱讀的網頁版 + PDF 下載" },
-                  { icon: CheckCircle2, text: "專業語音導讀（深度吸收包）" },
-                  { icon: CheckCircle2, text: "1對1 諮詢時間（完整校準包）" },
-                  { icon: CheckCircle2, text: "10+ 章節覆蓋人格、關係、事業、財運" },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <item.icon className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-white/80">{item.text}</p>
-                  </div>
-                ))}
-                
-                <div className="pt-6 mt-6 border-t border-amber-500/30">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-amber-300 text-sm mb-1">核心包起</p>
-                      <p className="text-white/40 text-sm">即將公佈正式售價</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-3xl font-black text-amber-400">即將公佈</p>
-                      <p className="text-emerald-400 text-sm font-medium">✓ 四系統合一・終身可查閱</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-amber-300 font-medium">做什麼：</span>把結構攤開，你自己決定怎麼用</div>
+                <div><span className="text-amber-300 font-medium">方法：</span>四系統強制交叉驗證</div>
+                <div><span className="text-amber-300 font-medium">當系統打架：</span>矛盾是訊號——偏勝偵測矩陣</div>
+                <div><span className="text-amber-300 font-medium">給你什麼：</span>8-13 千字結構化書面報告</div>
+                <div><span className="text-amber-300 font-medium">你的角色：</span>自己對照、驗證、使用</div>
+                <div><span className="text-amber-300 font-medium">建議：</span>每章 1-3 步具體可執行操作＋思維工具箱</div>
+                <div><span className="text-amber-300 font-medium">用多久：</span>可反覆翻看的長期操作手冊</div>
               </div>
             </div>
           </div>
-          
-          {/* Bottom Note */}
+
+          {/* Bottom Disclaimer */}
           <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="text-white/40 text-sm max-w-2xl mx-auto">
-              * 傳統服務價格為市場調查參考值，實際依各老師收費為準。<br/>
-              默默超報告提供的不是「預測」，而是可反覆對照的「自我認知地圖」。
+            <p className="text-white/30 text-xs max-w-2xl mx-auto">
+              本報告為命理結構整合分析，不是心理治療、醫療建議或未來預測。閱讀過程中若觸發強烈情緒，建議搭配合格心理專業一起處理。
             </p>
           </div>
         </div>
