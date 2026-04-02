@@ -920,43 +920,104 @@ const ReportPage = () => {
             </Button>
           </div>
 
-          {/* Three Version Quick Navigation Cards */}
+          {/* Dual Product Line Introduction */}
           <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
-            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">兩種視角，對應不同需求</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white text-center mb-3">兩份報告，兩種視角</h3>
+            <p className="text-white/50 text-center max-w-2xl mx-auto mb-8 text-sm">
+              同一份命盤資料，兩種完全不同的閱讀方式。<br />
+              共振版找四系統說同一件事的地方——幫你看見完整的自己。<br />
+              偏勝版找四系統互相打架的地方——幫你看見你以為的自己哪裡跟結構對不上。<br />
+              兩份都可以獨立購買。
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* 共振版 Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Crown className="w-5 h-5 text-amber-400" />
-                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">共振版</h4>
-                  <p className="text-amber-300/70 text-sm mb-2">讓你看見完整的自己，學會使用自己</p>
-                  <p className="text-white/40 text-xs">10 章＋默默超大總結・約 10,000-13,000 字</p>
+              <div className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <Crown className="w-5 h-5 text-amber-400" />
+                  <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
                 </div>
-              </button>
+                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位共振解讀報告</h4>
+                <p className="text-amber-300/70 text-sm mb-3">讓你看見完整的自己，學會使用自己</p>
+                <div className="space-y-2 text-xs text-white/50">
+                  <p>四系統怎麼用：找四系統交集——它們同時說的才進報告</p>
+                  <p>正文語氣：像深夜居酒屋裡最懂你的朋友</p>
+                  <p>不負責提醒：朋友突然放下酒杯，眼神清醒戳你一刀</p>
+                  <p>讀完的感覺：被看見、被理解</p>
+                  <p>適合誰：想認識自己、需要方向感</p>
+                </div>
+                <p className="text-white/30 text-xs mt-3">10 章＋默默超大總結・約 10,000-13,000 字</p>
+              </div>
 
               {/* 偏勝版 Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Eye className="w-5 h-5 text-purple-400" />
-                    <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">偏勝版</h4>
-                  <p className="text-purple-300/70 text-sm mb-2">讓你看見認知偏差，學會校正自己</p>
-                  <p className="text-white/40 text-xs">8 章＋默默超大總結・約 8,000-10,000 字</p>
+              <div className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <Eye className="w-5 h-5 text-purple-400" />
+                  <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
                 </div>
-              </button>
+                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位偏勝解讀報告</h4>
+                <p className="text-purple-300/70 text-sm mb-3">讓你看見認知偏差，學會校正自己</p>
+                <div className="space-y-2 text-xs text-white/50">
+                  <p>四系統怎麼用：找四系統歧異——它們互相打架的地方才是重點</p>
+                  <p>正文語氣：全篇都在拆你</p>
+                  <p>不負責提醒：拆完之後安靜看著你說「我知道這不好受」</p>
+                  <p>讀完的感覺：被看穿、被戳破</p>
+                  <p>適合誰：已有自我認知但可能陷入盲區</p>
+                </div>
+                <p className="text-white/30 text-xs mt-3">8 章＋默默超大總結・約 8,000-10,000 字</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Chapter Overview - 共振版 */}
+          <div className="mt-16 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.4s' }}>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-amber-400 mb-6 text-center">共振版｜你是誰，你怎麼運作</h3>
+            <p className="text-white/50 text-sm text-center mb-6">
+              當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { ch: "基本資料", desc: "四系統命盤資料總覽" },
+                { ch: "人生羅盤", desc: "四系統各自怎麼看你——優勢、盲點、建議，一張表收齊" },
+                { ch: "你是誰", desc: "你的核心性格結構，四系統交叉驗證" },
+                { ch: "你怎麼運作", desc: "你的思考方式、行動模式、能量節奏" },
+                { ch: "人生三大領域", desc: "事業、愛情、金錢——同一套內在機制的不同呈現" },
+                { ch: "特別注意", desc: "你最容易忽略的盲區" },
+                { ch: "結語", desc: "把整份報告收成你可以帶走的核心訊息" },
+                { ch: "思維工具箱", desc: "六步 OS、八階思維循環、回家地圖——教你自己拆解問題" },
+                { ch: "四時軍團秘笈", desc: "你的八字化身 RPG 軍團——用故事讓你記住自己的結構" },
+                { ch: "默默超大總結", desc: "一刀見血的核心觀察＋三領域各一刀＋一句你會帶走的話" },
+              ].map((item) => (
+                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+                  <span className="text-amber-400 font-medium text-sm">{item.ch}</span>
+                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Chapter Overview - 偏勝版 */}
+          <div className="mt-12 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.5s' }}>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-purple-400 mb-6 text-center">偏勝版｜你以為的自己，哪些是真的</h3>
+            <p className="text-white/50 text-sm text-center mb-6">
+              四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { ch: "四張不同的臉", desc: "四系統各自怎麼描述你——讓你看見它們說的不是同一個人" },
+                { ch: "偏勝羅盤", desc: "偏勝偵測矩陣——哪些維度四系統一致、哪些在打架" },
+                { ch: "你以為的自己", desc: "你的自我描述，有多少是結構支持的？有多少只是慣性說法？" },
+                { ch: "你沒發現的劇本", desc: "三層校準（情緒→語言→結構）——找出偏勝背後的深層信念" },
+                { ch: "用錯版本的自己", desc: "事業、愛情、金錢——偏勝在三個領域的具體呈現" },
+                { ch: "腦中的迴圈", desc: "十大思維病毒＋環境層病毒掃描" },
+                { ch: "地基穩嗎", desc: "偏勝是單一偏差還是整個信念系統的問題" },
+                { ch: "軍團裡的叛將", desc: "偏勝的那個系統在你軍團裡扮演什麼角色——它不是壞人" },
+                { ch: "默默超大總結", desc: "核心偏勝＋三領域拆穿＋一句你會帶走的話" },
+              ].map((item) => (
+                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-purple-500/10">
+                  <span className="text-purple-400 font-medium text-sm">{item.ch}</span>
+                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
