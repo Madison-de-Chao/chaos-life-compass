@@ -404,13 +404,13 @@ const HomePage = () => {
             <p className="text-white/50 text-sm mb-6">不用懂命理，不用輸入完整命盤。</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Button asChild className="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold px-6">
-                <Link to="/reports/compass#life">
+                <Link to="/reports">
                   體驗人生羅盤
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10 px-6">
-                <Link to="/reports/compass#bias">
+                <Link to="/reports">
                   體驗偏勝羅盤
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
