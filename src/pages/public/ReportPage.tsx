@@ -760,7 +760,7 @@ const ReportPage = () => {
                   textShadow: '0 0 60px rgba(251,191,36,0.4)'
                 }}
               >
-                默默超
+                歸覓
               </span>
             </h1>
             <h2 
@@ -770,7 +770,7 @@ const ReportPage = () => {
                 textShadow: '0 0 30px rgba(255,255,255,0.2)'
               }}
             >
-              命理解讀報告
+              人生羅盤定位系統
             </h2>
           </div>
           
