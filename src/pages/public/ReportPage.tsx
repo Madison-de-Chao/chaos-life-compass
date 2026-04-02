@@ -1098,13 +1098,13 @@ const ReportPage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-6">
               <Scale className="w-4 h-4 text-emerald-400" />
-              <span className="text-emerald-300 text-sm font-medium">價值對比</span>
+              <span className="text-emerald-300 text-sm font-medium">市場定位</span>
             </div>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              傳統服務 vs <span className="text-amber-400">默默超報告</span>
+              這不是算命，也不是<span className="text-amber-400">心理諮商</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              同樣的深度理解，截然不同的價值與便利性
+              市面命理告訴你你是誰、你會怎樣。心理諮商陪你找到自己。<br />我們做的是第三件事：把四套結構壓成一張你可以反覆對照、自己驗證、拿去用的生命結構地圖。
             </p>
           </div>
           
