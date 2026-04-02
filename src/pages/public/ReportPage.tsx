@@ -245,7 +245,7 @@ const ReportPage = () => {
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-white/90">
               《最好的閨蜜（總能讀懂你）》
             </h2>
-            <p className="text-white/40 text-sm mt-2">虹靈御所命理解讀系統推廣曲</p>
+            <p className="text-white/40 text-sm mt-2">歸覓人生羅盤定位系統推廣曲</p>
           </div>
           <div className="relative rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(251,191,36,0.1)]">
             <video
