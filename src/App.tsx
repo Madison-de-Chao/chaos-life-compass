@@ -33,7 +33,7 @@ import PortalPage from "./pages/public/PortalPage";
 import HomePage from "./pages/public/HomePage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
-import CompassPage from "./pages/public/CompassPage";
+
 import NotePage from "./pages/public/NotePage";
 import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
