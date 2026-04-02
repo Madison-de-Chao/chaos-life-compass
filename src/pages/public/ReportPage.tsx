@@ -666,10 +666,10 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超命理解讀報告 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
+    title: "歸覓｜人生羅盤定位系統 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
     description: "四系統交叉驗證命理報告。共振版幫你看見完整的自己，偏勝版幫你看見認知偏差。100% 客製化，不套模板，不預測命運。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版",
-    ogTitle: "默默超命理解讀報告 - 兩種視角，一個你",
+    keywords: "歸覓, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版, 人生羅盤",
+    ogTitle: "歸覓｜人生羅盤定位系統 - 兩種視角，一個你",
   });
 
   // Count animations with visibility trigger - updated based on SOP
