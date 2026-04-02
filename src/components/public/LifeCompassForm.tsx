@@ -163,10 +163,8 @@ const LifeCompassForm = () => {
 
   // 計算各維度分數（示意）
   const calculateDimensionScores = () => {
-    // 這裡用簡化的邏輯來示意，實際會有更複雜的交叉整合演算法
     const baseScore = 50;
-    const variance = () => Math.floor(Math.random() * 40) + 30; // 30-70 隨機
-    
+    const variance = () => Math.floor(Math.random() * 40) + 30;
     return {
       core: formData.ziWeiMainStar ? variance() : baseScore,
       emotion: formData.moonSign ? variance() : baseScore,
@@ -175,7 +173,51 @@ const LifeCompassForm = () => {
     };
   };
 
-  const scores = showResults ? calculateDimensionScores() : null;
+  const scoresRef = useRef<ReturnType<typeof calculateDimensionScores> | null>(null);
+  if (showResults && !scoresRef.current) {
+    scoresRef.current = calculateDimensionScores();
+  }
+  if (!showResults) {
+    scoresRef.current = null;
+  }
+  const scores = scoresRef.current;
+
+  // Animated count-up hook
+  const [animatedScores, setAnimatedScores] = useState({ core: 0, emotion: 0, career: 0, relationship: 0 });
+  const [revealStage, setRevealStage] = useState(0); // 0=hidden, 1=radar, 2=cards, 3=summary, 4=cta
+
+  useEffect(() => {
+    if (!showResults || !scores) {
+      setAnimatedScores({ core: 0, emotion: 0, career: 0, relationship: 0 });
+      setRevealStage(0);
+      return;
+    }
+    // Stagger reveal stages
+    const t1 = setTimeout(() => setRevealStage(1), 300);
+    const t2 = setTimeout(() => setRevealStage(2), 900);
+    const t3 = setTimeout(() => setRevealStage(3), 1400);
+    const t4 = setTimeout(() => setRevealStage(4), 1800);
+
+    // Animate scores counting up
+    const duration = 1200;
+    const startTime = Date.now();
+    const target = scores;
+    const frame = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setAnimatedScores({
+        core: Math.round(target.core * ease),
+        emotion: Math.round(target.emotion * ease),
+        career: Math.round(target.career * ease),
+        relationship: Math.round(target.relationship * ease),
+      });
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+    const startDelay = setTimeout(() => requestAnimationFrame(frame), 400);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(startDelay); };
+  }, [showResults, scores]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
