@@ -743,7 +743,7 @@ const ReportPage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v5.0 雙產品線</span>
+            <span className="text-amber-300 text-sm font-medium tracking-wider">Rainbow Sanctuary × 歸覓｜人生羅盤定位系統</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
