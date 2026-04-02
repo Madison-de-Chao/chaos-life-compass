@@ -666,10 +666,10 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "默默超命理解讀報告 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
+    title: "歸覓｜人生羅盤定位系統 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
     description: "四系統交叉驗證命理報告。共振版幫你看見完整的自己，偏勝版幫你看見認知偏差。100% 客製化，不套模板，不預測命運。",
-    keywords: "命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版",
-    ogTitle: "默默超命理解讀報告 - 兩種視角，一個你",
+    keywords: "歸覓, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版, 人生羅盤",
+    ogTitle: "歸覓｜人生羅盤定位系統 - 兩種視角，一個你",
   });
 
   // Count animations with visibility trigger - updated based on SOP
@@ -743,7 +743,7 @@ const ReportPage = () => {
         <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-            <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">SOP v5.0 雙產品線</span>
+            <span className="text-amber-300 text-sm font-medium tracking-wider">Rainbow Sanctuary × 歸覓｜人生羅盤定位系統</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
           
@@ -760,7 +760,7 @@ const ReportPage = () => {
                   textShadow: '0 0 60px rgba(251,191,36,0.4)'
                 }}
               >
-                默默超
+                歸覓
               </span>
             </h1>
             <h2 
@@ -770,7 +770,7 @@ const ReportPage = () => {
                 textShadow: '0 0 30px rgba(255,255,255,0.2)'
               }}
             >
-              命理解讀報告
+              人生羅盤定位系統
             </h2>
           </div>
           
@@ -920,43 +920,104 @@ const ReportPage = () => {
             </Button>
           </div>
 
-          {/* Three Version Quick Navigation Cards */}
+          {/* Dual Product Line Introduction */}
           <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
-            <p className="text-white/40 text-sm mb-6 tracking-wider uppercase">兩種視角，對應不同需求</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white text-center mb-3">兩份報告，兩種視角</h3>
+            <p className="text-white/50 text-center max-w-2xl mx-auto mb-8 text-sm">
+              同一份命盤資料，兩種完全不同的閱讀方式。<br />
+              共振版找四系統說同一件事的地方——幫你看見完整的自己。<br />
+              偏勝版找四系統互相打架的地方——幫你看見你以為的自己哪裡跟結構對不上。<br />
+              兩份都可以獨立購買。
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* 共振版 Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Crown className="w-5 h-5 text-amber-400" />
-                    <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">共振版</h4>
-                  <p className="text-amber-300/70 text-sm mb-2">讓你看見完整的自己，學會使用自己</p>
-                  <p className="text-white/40 text-xs">10 章＋默默超大總結・約 10,000-13,000 字</p>
+              <div className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <Crown className="w-5 h-5 text-amber-400" />
+                  <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
                 </div>
-              </button>
+                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位共振解讀報告</h4>
+                <p className="text-amber-300/70 text-sm mb-3">讓你看見完整的自己，學會使用自己</p>
+                <div className="space-y-2 text-xs text-white/50">
+                  <p>四系統怎麼用：找四系統交集——它們同時說的才進報告</p>
+                  <p>正文語氣：像深夜居酒屋裡最懂你的朋友</p>
+                  <p>不負責提醒：朋友突然放下酒杯，眼神清醒戳你一刀</p>
+                  <p>讀完的感覺：被看見、被理解</p>
+                  <p>適合誰：想認識自己、需要方向感</p>
+                </div>
+                <p className="text-white/30 text-xs mt-3">10 章＋默默超大總結・約 10,000-13,000 字</p>
+              </div>
 
               {/* 偏勝版 Card */}
-              <button 
-                onClick={scrollToPlans}
-                className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:-translate-y-1 text-left"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Eye className="w-5 h-5 text-purple-400" />
-                    <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
-                  </div>
-                  <h4 className="font-serif text-lg font-bold text-white mb-1">偏勝版</h4>
-                  <p className="text-purple-300/70 text-sm mb-2">讓你看見認知偏差，學會校正自己</p>
-                  <p className="text-white/40 text-xs">8 章＋默默超大總結・約 8,000-10,000 字</p>
+              <div className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <Eye className="w-5 h-5 text-purple-400" />
+                  <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
                 </div>
-              </button>
+                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位偏勝解讀報告</h4>
+                <p className="text-purple-300/70 text-sm mb-3">讓你看見認知偏差，學會校正自己</p>
+                <div className="space-y-2 text-xs text-white/50">
+                  <p>四系統怎麼用：找四系統歧異——它們互相打架的地方才是重點</p>
+                  <p>正文語氣：全篇都在拆你</p>
+                  <p>不負責提醒：拆完之後安靜看著你說「我知道這不好受」</p>
+                  <p>讀完的感覺：被看穿、被戳破</p>
+                  <p>適合誰：已有自我認知但可能陷入盲區</p>
+                </div>
+                <p className="text-white/30 text-xs mt-3">8 章＋默默超大總結・約 8,000-10,000 字</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Chapter Overview - 共振版 */}
+          <div className="mt-16 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.4s' }}>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-amber-400 mb-6 text-center">共振版｜你是誰，你怎麼運作</h3>
+            <p className="text-white/50 text-sm text-center mb-6">
+              當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { ch: "基本資料", desc: "四系統命盤資料總覽" },
+                { ch: "人生羅盤", desc: "四系統各自怎麼看你——優勢、盲點、建議，一張表收齊" },
+                { ch: "你是誰", desc: "你的核心性格結構，四系統交叉驗證" },
+                { ch: "你怎麼運作", desc: "你的思考方式、行動模式、能量節奏" },
+                { ch: "人生三大領域", desc: "事業、愛情、金錢——同一套內在機制的不同呈現" },
+                { ch: "特別注意", desc: "你最容易忽略的盲區" },
+                { ch: "結語", desc: "把整份報告收成你可以帶走的核心訊息" },
+                { ch: "思維工具箱", desc: "六步 OS、八階思維循環、回家地圖——教你自己拆解問題" },
+                { ch: "四時軍團秘笈", desc: "你的八字化身 RPG 軍團——用故事讓你記住自己的結構" },
+                { ch: "默默超大總結", desc: "一刀見血的核心觀察＋三領域各一刀＋一句你會帶走的話" },
+              ].map((item) => (
+                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+                  <span className="text-amber-400 font-medium text-sm">{item.ch}</span>
+                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Chapter Overview - 偏勝版 */}
+          <div className="mt-12 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.5s' }}>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-purple-400 mb-6 text-center">偏勝版｜你以為的自己，哪些是真的</h3>
+            <p className="text-white/50 text-sm text-center mb-6">
+              四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { ch: "四張不同的臉", desc: "四系統各自怎麼描述你——讓你看見它們說的不是同一個人" },
+                { ch: "偏勝羅盤", desc: "偏勝偵測矩陣——哪些維度四系統一致、哪些在打架" },
+                { ch: "你以為的自己", desc: "你的自我描述，有多少是結構支持的？有多少只是慣性說法？" },
+                { ch: "你沒發現的劇本", desc: "三層校準（情緒→語言→結構）——找出偏勝背後的深層信念" },
+                { ch: "用錯版本的自己", desc: "事業、愛情、金錢——偏勝在三個領域的具體呈現" },
+                { ch: "腦中的迴圈", desc: "十大思維病毒＋環境層病毒掃描" },
+                { ch: "地基穩嗎", desc: "偏勝是單一偏差還是整個信念系統的問題" },
+                { ch: "軍團裡的叛將", desc: "偏勝的那個系統在你軍團裡扮演什麼角色——它不是壞人" },
+                { ch: "默默超大總結", desc: "核心偏勝＋三領域拆穿＋一句你會帶走的話" },
+              ].map((item) => (
+                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-purple-500/10">
+                  <span className="text-purple-400 font-medium text-sm">{item.ch}</span>
+                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1098,94 +1159,70 @@ const ReportPage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-6">
               <Scale className="w-4 h-4 text-emerald-400" />
-              <span className="text-emerald-300 text-sm font-medium">價值對比</span>
+              <span className="text-emerald-300 text-sm font-medium">市場定位</span>
             </div>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              傳統服務 vs <span className="text-amber-400">默默超報告</span>
+              這不是算命，也不是<span className="text-amber-400">心理諮商</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              同樣的深度理解，截然不同的價值與便利性
+              市面命理告訴你你是誰、你會怎樣。心理諮商陪你找到自己。<br />我們做的是第三件事：把四套結構壓成一張你可以反覆對照、自己驗證、拿去用的生命結構地圖。
             </p>
           </div>
           
-          {/* Comparison Grid */}
-          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Traditional Side */}
+          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* 一般命理服務 */}
             <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
               <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
-                <span className="text-white/60 text-sm font-medium">傳統算命服務</span>
+                <span className="text-white/60 text-sm font-medium">一般命理服務</span>
               </div>
-              
-              <div className="pt-4 space-y-6">
-                {[
-                  { label: "知名老師面相/八字諮詢", price: "NT$ 3,000-8,000", note: "單次・30-60分鐘" },
-                  { label: "紫微斗數詳批", price: "NT$ 5,000-15,000", note: "單次・僅文字" },
-                  { label: "西洋占星流年解讀", price: "NT$ 3,500-6,000", note: "單次・口述為主" },
-                  { label: "人類圖完整解讀", price: "NT$ 4,000-8,000", note: "單次・基礎版" },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-white/10 last:border-0">
-                    <div>
-                      <p className="text-white/80 font-medium">{item.label}</p>
-                      <p className="text-white/40 text-sm">{item.note}</p>
-                    </div>
-                    <p className="text-white/60 font-mono text-lg">{item.price}</p>
-                  </div>
-                ))}
-                
-                <div className="pt-4 border-t border-white/20">
-                  <div className="flex items-center justify-between">
-                    <p className="text-white/60">若要四系統都做...</p>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-rose-400 line-through">NT$ 15,500-37,000</p>
-                      <p className="text-white/40 text-sm">需 4 次預約・無法交叉對照</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-white/80 font-medium">做什麼：</span>回答問題、預測運勢</div>
+                <div><span className="text-white/80 font-medium">方法：</span>單系統解讀</div>
+                <div><span className="text-white/80 font-medium">當系統打架：</span>忽略或硬圓</div>
+                <div><span className="text-white/80 font-medium">給你什麼：</span>口頭解讀或短報告</div>
+                <div><span className="text-white/80 font-medium">你的角色：</span>被動聽</div>
+                <div><span className="text-white/80 font-medium">建議：</span>「多溝通」「適合創業」</div>
+                <div><span className="text-white/80 font-medium">用多久：</span>看一次就結束</div>
               </div>
             </div>
-            
-            {/* MomoChao Side */}
+
+            {/* 心理諮商 */}
+            <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
+              <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
+                <span className="text-white/60 text-sm font-medium">心理諮商</span>
+              </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-white/80 font-medium">做什麼：</span>陪你處理困擾</div>
+                <div><span className="text-white/80 font-medium">方法：</span>對話、探索、引導</div>
+                <div><span className="text-white/80 font-medium">當系統打架：</span>不適用</div>
+                <div><span className="text-white/80 font-medium">給你什麼：</span>過程體驗</div>
+                <div><span className="text-white/80 font-medium">你的角色：</span>主動探索</div>
+                <div><span className="text-white/80 font-medium">建議：</span>過程中慢慢浮現</div>
+                <div><span className="text-white/80 font-medium">用多久：</span>長期諮商關係</div>
+              </div>
+            </div>
+
+            {/* 歸覓 */}
             <div className="relative bg-gradient-to-br from-amber-900/20 to-[#0d0d0d] rounded-3xl p-8 border border-amber-500/30 shadow-[0_0_40px_rgba(251,191,36,0.15)]">
               <div className="absolute -top-3 left-6 px-4 py-1 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full">
-                <span className="text-black text-sm font-bold">默默超全方位報告</span>
+                <span className="text-black text-sm font-bold">歸覓｜人生羅盤定位系統</span>
               </div>
-              
-              <div className="pt-4 space-y-4">
-                {[
-                  { icon: CheckCircle2, text: "四大系統交叉整合（紫微、八字、占星、人類圖）" },
-                  { icon: CheckCircle2, text: "12,000+ 字深度分析・永久保存" },
-                  { icon: CheckCircle2, text: "可反覆閱讀的網頁版 + PDF 下載" },
-                  { icon: CheckCircle2, text: "專業語音導讀（深度吸收包）" },
-                  { icon: CheckCircle2, text: "1對1 諮詢時間（完整校準包）" },
-                  { icon: CheckCircle2, text: "10+ 章節覆蓋人格、關係、事業、財運" },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <item.icon className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-white/80">{item.text}</p>
-                  </div>
-                ))}
-                
-                <div className="pt-6 mt-6 border-t border-amber-500/30">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-amber-300 text-sm mb-1">核心包起</p>
-                      <p className="text-white/40 text-sm">即將公佈正式售價</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-3xl font-black text-amber-400">即將公佈</p>
-                      <p className="text-emerald-400 text-sm font-medium">✓ 四系統合一・終身可查閱</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="pt-4 space-y-4 text-sm text-white/60">
+                <div><span className="text-amber-300 font-medium">做什麼：</span>把結構攤開，你自己決定怎麼用</div>
+                <div><span className="text-amber-300 font-medium">方法：</span>四系統強制交叉驗證</div>
+                <div><span className="text-amber-300 font-medium">當系統打架：</span>矛盾是訊號——偏勝偵測矩陣</div>
+                <div><span className="text-amber-300 font-medium">給你什麼：</span>8-13 千字結構化書面報告</div>
+                <div><span className="text-amber-300 font-medium">你的角色：</span>自己對照、驗證、使用</div>
+                <div><span className="text-amber-300 font-medium">建議：</span>每章 1-3 步具體可執行操作＋思維工具箱</div>
+                <div><span className="text-amber-300 font-medium">用多久：</span>可反覆翻看的長期操作手冊</div>
               </div>
             </div>
           </div>
-          
-          {/* Bottom Note */}
+
+          {/* Bottom Disclaimer */}
           <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="text-white/40 text-sm max-w-2xl mx-auto">
-              * 傳統服務價格為市場調查參考值，實際依各老師收費為準。<br/>
-              默默超報告提供的不是「預測」，而是可反覆對照的「自我認知地圖」。
+            <p className="text-white/30 text-xs max-w-2xl mx-auto">
+              本報告為命理結構整合分析，不是心理治療、醫療建議或未來預測。閱讀過程中若觸發強烈情緒，建議搭配合格心理專業一起處理。
             </p>
           </div>
         </div>
@@ -1216,7 +1253,7 @@ const ReportPage = () => {
                 在這個資訊過載的時代，傳統的算命只能告訴您「會發生什麼」，卻無法告訴您「該如何運作自己」。
               </p>
               <p>
-                《默默超命理解讀系統》是一項超越時代的生命工程。我們拒絕模稜兩可的宿命論，堅持以<span className="text-amber-400 font-bold">「鏡子非劇本，真實即命運」</span>的最高原則，透過嚴謹的交叉演算，將您的天賦、情緒、思維與價值觀，轉化為可執行、可落地的精密導航。
+                《歸覓｜人生羅盤定位系統》是一項超越時代的生命工程。我們拒絕模稜兩可的宿命論，堅持以<span className="text-amber-400 font-bold">「鏡子非劇本，真實即命運」</span>的最高原則，透過嚴謹的交叉演算，將您的天賦、情緒、思維與價值觀，轉化為可執行、可落地的精密導航。
               </p>
               <div className="flex items-center justify-center gap-4 py-6">
                 <div className="w-20 h-px bg-gradient-to-r from-transparent to-amber-500/50" />

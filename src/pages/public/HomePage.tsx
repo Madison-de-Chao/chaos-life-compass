@@ -29,7 +29,7 @@ import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
 const sections = [
   {
     id: 1,
-    title: "默默超命理報告 Destiny Reports",
+    title: "歸覓｜人生羅盤定位系統 Destiny Compass",
     subtitle: "兩種視角，一個你",
     description: "共振版幫你看見完整的自己。偏勝版幫你看見你以為的自己哪裡跟結構對不上。四系統交叉比對，每個判斷都有根據。",
     icon: FileText,
