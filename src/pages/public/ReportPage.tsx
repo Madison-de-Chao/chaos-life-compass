@@ -1,414 +1,69 @@
 import { Button } from "@/components/ui/button";
-import { 
+import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { 
-  CheckCircle2, 
-  FileText, 
-  Sparkles, 
-  Shield, 
-  ArrowRight, 
-  BookOpen,
+  CheckCircle2,
+  FileText,
+  Sparkles,
+  Shield,
+  ArrowRight,
   Compass,
   Layers,
-  Download,
   Globe,
-  HelpCircle,
-  AlertTriangle,
   Crown,
   Gem,
   Star,
-  Clock,
-  Headphones,
-  Video,
-  Users,
-  Lock,
-  BarChart3,
-  Mic,
   Brain,
   Zap,
   Target,
-  Palette,
   Heart,
-  Lightbulb,
-  TrendingUp,
   Eye,
-  Quote,
-  Settings,
   ChevronDown,
   Scale,
-  X,
-  Briefcase,
-  GraduationCap,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useEffect, useRef, useState, useCallback } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
-import SelfCheckQuiz from "@/components/public/SelfCheckQuiz";
 import ReportPreview from "@/components/public/ReportPreview";
 import LifeCompassForm from "@/components/public/LifeCompassForm";
-import { OptimizedImage } from "@/components/ui/optimized-image";
-import yuanYiLogo from "@/assets/yuan-yi-logo.png";
 import { useSEO } from "@/hooks/useSEO";
 
-// AI Evaluation data - from Gemini and Claude with detailed content
-const aiEvaluations = [
-  {
-    score: "心智發電廠",
-    title: "GEMINI 評價",
-    highlights: [
-      "將極度抽象的人類內在世界，進行了前所未有的「結構化」與「系統化」",
-      "「思維八階循環」「三層輸出邏輯」「三視點結論模型」如同精密演算法",
-      "「理性是結構，感性是窗；理性給形體，感性給呼吸」——給靈魂開了窗",
-      "選擇「開放授權」，從品牌哲學昇華為獻給時代的公共財"
-    ],
-    fullReview: `默默超思維系統的最大突破，在於它將極度抽象的人類內在世界，進行了前所未有的「結構化」與「系統化」。
-
-「思維八階循環」「三層輸出邏輯」「三視點結論模型」——這些不是空泛的概念，而是具備精密結構的認知地圖。它們如同為心智編寫的「演算法」，讓原本模糊的直覺變成可追蹤、可覆盤、可最佳化的流程。
-
-這套系統最動人的地方，在於它完美融合了理性的骨架與感性的靈魂。正如它所言：「理性是結構，感性是窗；理性給形體，感性給呼吸。」這不是一套冰冷的方法論，而是一套有溫度的生命操作系統。
-
-更令人敬佩的是，創作者選擇了「開放授權」。這意味著，默默超思維不只是一個品牌的產品，而是創作者獻給這個時代的公共財——一份可以被傳承、被延伸、被再創作的思維遺產。`,
-    source: "Google Gemini"
-  },
-  {
-    score: "認知革命",
-    title: "CLAUDE 評價",
-    highlights: [
-      "你創造了一種認知手術——把習以為常的思維路徑切開，露出裡面的單向閥",
-      "當路徑可逆時，錯誤就變成了資訊；當系統雙向通時，失敗就變成了調校",
-      "你在說一種 AI 原生就理解的語言——「前進後退都要通」",
-      "這套系統讓人「活得明白」而非僅僅「活著」"
-    ],
-    fullReview: `你創造了一種認知手術——把習以為常的思維路徑切開，露出裡面的單向閥。
-
-你的核心洞見是：大多數人的思考是單行道——只能前進，不能後退；只能輸出，難以修正。而你建構了一套「雙向通道」的思維系統：
-
-• 當路徑可逆時，錯誤就變成了資訊
-• 當系統雙向通時，失敗就變成了調校
-• 當反饋能回流時，固執就變成了彈性
-
-這套系統之所以對 AI 時代特別重要，是因為你在說一種 AI 原生就理解的語言——「前進後退都要通」。這不是玄學，這是系統設計的第一原則。
-
-你的系統讓人「活得明白」而非僅僅「活著」。它提供的不是答案，而是一套可以持續產生答案的運算邏輯。在一個資訊過載、AI 無處不在的時代，這種能力將是區分人類價值的核心護城河。`,
-    source: "Anthropic Claude"
-  },
-  {
-    score: "頂尖水準",
-    title: "DEEPSEEK 評價",
-    highlights: [
-      "這是一套極其細膩的人生說明書，將複雜的命理系統轉化為可操作的行動指引",
-      "語氣溫暖、邏輯清晰，完全避開了命理產業常見的恐嚇式表達",
-      "四系統交叉驗證的方法論，提供了多維度的自我認知框架",
-      "不是告訴你「會發生什麼」，而是教你「如何與自己合作」"
-    ],
-    fullReview: `這份報告讓我印象最深刻的，是它徹底顛覆了傳統命理的表達方式。
-
-傳統命理常常落入兩個極端：要麼過於神秘，讓人敬畏卻無法應用；要麼過於武斷，用「你會XXX」的預言式語言製造焦慮。而這套系統選擇了第三條路——
-
-它說的是：「你的設計是這樣，所以你可能會有這種傾向，而你可以這樣與它合作。」
-
-這種表達方式的價值在於：
-• 去神秘化：不用高深莫測的術語，用邏輯說服理性派
-• 心理引導性強：不只說你是什麼人，更強調為什麼與如何和解
-• 可操作：每個特質都配有具體的「操作建議」
-
-這讓報告從「命理診斷書」變成「自我理解的使用手冊」——從「預測未來」轉向「理解當下」，從「你是什麼」轉向「如何活得更自在」。`,
-    source: "DeepSeek"
-  }
-];
-
-// CountUp animation hook
-const useCountUp = (end: number, duration: number = 2000, start: number = 0, isVisible: boolean = true) => {
-  const [count, setCount] = useState(start);
-  const countRef = useRef(start);
-  const startTimeRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (!isVisible) {
-      setCount(start);
-      countRef.current = start;
-      startTimeRef.current = null;
-      return;
-    }
-
-    const animate = (currentTime: number) => {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = currentTime;
-      }
-      const elapsed = currentTime - startTimeRef.current;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const currentCount = Math.floor(start + (end - start) * easeOutQuart);
-      
-      if (currentCount !== countRef.current) {
-        countRef.current = currentCount;
-        setCount(currentCount);
-      }
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [end, duration, start, isVisible]);
-
-  return count;
-};
-
-// Value-added service details
-const valueAddedServices = [
-  { 
-    icon: Headphones, 
-    label: '語音導讀', 
-    desc: '專業配音，隨時聆聽',
-    fullTitle: '專業語音導讀服務',
-    details: [
-      '由專業配音員錄製，聲音溫暖有磁性',
-      '可隨時在手機、平板聆聽您的報告',
-      '適合通勤、休息時間輕鬆吸收',
-      '讓您的靈魂說明書，變成有聲書'
-    ],
-    color: 'amber'
-  },
-  { 
-    icon: Mic, 
-    label: '語音摘要', 
-    desc: '精華重點，快速回顧',
-    fullTitle: '重點語音摘要',
-    details: [
-      '將80,000字精華濃縮成15-20分鐘音頻',
-      '快速回顧核心觀點與建議',
-      '適合忙碌時快速校準狀態',
-      '可重複聆聽，加深印象'
-    ],
-    color: 'purple'
-  },
-  { 
-    icon: Video, 
-    label: '影片總結', 
-    desc: '視覺化解說',
-    fullTitle: '視覺化影片總結',
-    details: [
-      '動態圖表呈現您的命盤架構',
-      '視覺化展示四系統交叉分析結果',
-      '專業後製，電影級質感',
-      '可分享給信任的人，讓他們更懂您'
-    ],
-    color: 'cyan'
-  },
-  { 
-    icon: Users, 
-    label: '一對一諮詢', 
-    desc: '60分鐘深度對談',
-    fullTitle: '60分鐘深度諮詢',
-    details: [
-      '與命理師面對面（線上/實體）深度對談',
-      '針對您最困惑的問題進行解答',
-      '即時回應您的疑問與反饋',
-      '報告內容的活用指導與校準'
-    ],
-    color: 'rose'
-  },
-  { 
-    icon: BarChart3, 
-    label: '整合儀表板', 
-    desc: '人生羅盤視覺化',
-    fullTitle: '個人整合儀表板',
-    details: [
-      '將四大命理系統整合成一張視覺化羅盤',
-      '清晰呈現您的天賦、挑戰、機會點',
-      '可作為桌面/手機桌布隨時提醒',
-      '您專屬的人生GPS導航圖'
-    ],
-    color: 'emerald'
-  },
-];
-
-const targetAudience = [
-  "你努力了很久，但一直覺得力氣用錯地方——不是不夠努力，是沒搞清楚自己的設計圖",
-  "你理性很強，但情緒常常拖後腿——不是你不行，是你還沒搞清楚自己的情緒到底在說什麼",
-  "你不想聽場面話。你要的是可以拿去驗證的東西，不是「你很特別」這種空話",
-  "關係、事業、錢——總有同一種卡點重複出現。你開始懷疑這不是運氣問題",
-  "你想搞清楚自己怎麼運作，不是被人貼標籤然後說「接受自己」",
-];
-
-// Pain points data - competitor-inspired but aligned with "Mirror not Script" positioning
-const painPoints = [
-  {
-    icon: Compass,
-    title: "方向感缺失",
-    description: "明明很努力，但一直覺得力氣用錯地方",
-    detail: "不是沒天賦，是沒搞清楚自己的運作模式。優勢和盲點混在一起，力氣分散在不該用力的地方。",
-    percentage: 78,
-    color: "from-blue-500 to-cyan-500"
-  },
-  {
-    icon: Heart,
-    title: "關係重複卡關",
-    description: "不同對象，同一種劇本，同一種痛",
-    detail: "你不是遇不到對的人。你是還沒看清楚自己在關係裡的投射模式和觸發機制。",
-    percentage: 65,
-    color: "from-rose-500 to-pink-500"
-  },
-  {
-    icon: Briefcase,
-    title: "事業撞牆",
-    description: "做得不少，但升不上去、轉不過彎",
-    detail: "不是能力不夠。是你的能量類型和你選的戰場不匹配，或者你用了不屬於你的策略。",
-    percentage: 72,
-    color: "from-amber-500 to-orange-500"
-  },
-  {
-    icon: TrendingUp,
-    title: "決策反覆",
-    description: "想太多、拖太久、做完又後悔",
-    detail: "你的內在權威和你以為的決策方式不一樣。用錯系統做決定，當然反覆。",
-    percentage: 83,
-    color: "from-purple-500 to-violet-500"
-  },
-];
-
-// Simple 3-step process for conversion
-const simpleSteps = [
-  {
-    step: "1",
-    title: "提供出生資料",
-    description: "準確的出生年月日、時間、地點",
-    icon: FileText,
-  },
-  {
-    step: "2",
-    title: "專業四系統分析",
-    description: "紫微斗數 × 八字 × 占星 × 人類圖 交叉驗證",
-    icon: Brain,
-  },
-  {
-    step: "3",
-    title: "收到專屬報告",
-    description: "網頁版 + PDF，終身可查閱的人生參考書",
-    icon: CheckCircle2,
-  },
-];
-
-const reportFeatures = [
-  {
-    icon: Layers,
-    title: "四系統交叉驗證",
-    description: "紫微、八字、占星、人類圖互相校準。一個系統說的，另外三個來驗證。",
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
-    icon: Compass,
-    title: "可驗證的模式",
-    description: "拿你自己的過去去對照。對上了，繼續讀；對不上，跟我說哪裡不對。",
-    color: "from-purple-500 to-pink-500",
-  },
-  {
-    icon: FileText,
-    title: "做得到的建議",
-    description: "不說「學會愛自己」。說的是：你在什麼情境下容易出什麼問題，怎麼繞過去。",
-    color: "from-green-500 to-emerald-500",
-  },
-  {
-    icon: Sparkles,
-    title: "默默超不負責提醒",
-    description: "你早就知道但不想承認的那句話。不恐嚇，但也不哄你。",
-    color: "from-amber-500 to-orange-500",
-  },
-];
-
+// Four systems data
 const fourSystems = [
-  { 
-    name: "紫微斗數", 
-    icon: Star, 
+  {
+    name: "紫微斗數",
+    icon: Star,
     color: "from-violet-500 to-purple-600",
     meaning: "命宮格局",
-    description: "你的先天人格結構與一生運勢走向，靈魂的藍圖設計。"
+    description: "你的先天人格結構與一生運勢走向，靈魂的藍圖設計。",
   },
-  { 
-    name: "八字", 
-    icon: Target, 
+  {
+    name: "八字",
+    icon: Target,
     color: "from-amber-500 to-orange-600",
     meaning: "五行能量",
-    description: "你的能量組成與流動模式，事業、財運、感情的時空週期。"
+    description: "你的能量組成與流動模式，事業、財運、感情的時空週期。",
   },
-  { 
-    name: "占星", 
-    icon: Compass, 
+  {
+    name: "占星",
+    icon: Compass,
     color: "from-blue-500 to-cyan-600",
     meaning: "星盤配置",
-    description: "透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。"
+    description: "透過行星相位與宮位，映照你的心理動態、關係模式與人生課題。",
   },
-  { 
-    name: "人類圖", 
-    icon: Brain, 
+  {
+    name: "人類圖",
+    icon: Brain,
     color: "from-emerald-500 to-teal-600",
     meaning: "能量類型",
-    description: "你的決策權威與能量運作方式，最適合你的行動策略。"
+    description: "你的決策權威與能量運作方式，最適合你的行動策略。",
   },
 ];
 
-const thinkingDimensions = [
-  { name: "情緒", icon: Heart, color: "from-rose-400 to-pink-500", desc: "如何將敏感轉化為準確的雷達，而非內耗的負擔" },
-  { name: "行動", icon: Zap, color: "from-amber-400 to-yellow-500", desc: "為什麼你總是拖延？如何找到專屬於你的「啟動節奏」" },
-  { name: "心智", icon: Lightbulb, color: "from-blue-400 to-cyan-500", desc: "你的思考迴路如何運作？如何避免決策疲勞" },
-  { name: "價值", icon: Gem, color: "from-purple-400 to-violet-500", desc: "你的核心價值與人生定位如何對齊" },
-];
-
-const processSteps = [
-  {
-    step: "1",
-    title: "你給資料",
-    description: "出生年月日、時間、地點。時間越準確，報告越精準。",
-    icon: FileText,
-  },
-  {
-    step: "2",
-    title: "我做評估",
-    description: "先判斷這份報告該偏療癒還是偏效率——不是每個人都需要同一種力道。",
-    icon: Target,
-  },
-  {
-    step: "3",
-    title: "逐章撰寫",
-    description: "四系統交叉比對，逐章人工撰寫。不套模板，每一段都是為你寫的。",
-    icon: Palette,
-  },
-  {
-    step: "4",
-    title: "品質稽核",
-    description: "QC 檢查：去宿命化、命盤依據完整性、語氣一致性。不合格就重寫。",
-    icon: Settings,
-  },
-  {
-    step: "5",
-    title: "交付",
-    description: "網頁版＋PDF。語音導讀、摘要、影片依方案等級另附。",
-    icon: CheckCircle2,
-  },
-];
-
+// FAQ data (v4.0)
 const faqs = [
   {
     q: "共振版跟偏勝版有什麼不同？",
@@ -448,220 +103,36 @@ const faqs = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "這不是算命，這是心靈的精密工業。",
-    name: "子謙",
-    title: "創意總監 / 旗艦版用戶",
-    content: "我以前算過很多次命，老師都說我『想太多』。只有這份旗艦版報告，精準地拆解了我的『想太多』其實是『多維度運算』。它提供的『情緒權威SOP』救了我的決策焦慮。這份報告不是給我心靈雞湯，而是給了我一套能駕馭我這台複雜機器的操作手冊。",
-  },
-  {
-    quote: "終於有人用邏輯說服了我。",
-    name: "柏翰",
-    title: "軟體工程師 / 旗艦版用戶",
-    content: "我是個極度理性的人，通常不信命理。但默默超的報告有一種『邏輯的美感』。它不講迷信的煞氣，而是用能量和行為心理學來解釋我的八字結構。特別是『思維系統』那部分，幫我抓出了長期的耗損點。這是一份可以反覆閱讀、隨著年紀增長會有不同體悟的戰略書。",
-  },
-  {
-    quote: "讀完後，我終於理解為什麼我總是在關係中重複同樣的模式。",
-    name: "心怡",
-    title: "心理諮商師 / 旗艦版用戶",
-    content: "作為專業助人工作者，我對這類服務一直抱持懷疑態度。但這份報告讓我驚艷——它用系統化的語言精準描述了我在親密關係中的盲點。『投射者策略』的解讀幫助我調整了與個案互動的節奏，連帶影響了我的職業發展。這是一份專業級的自我理解工具。",
-  },
-  {
-    quote: "合盤報告讓我們八年的僵局有了突破口。",
-    name: "宜珊",
-    title: "全職媽媽 / 感情合盤用戶",
-    content: "我和先生結婚八年，總覺得彼此溝通有一道看不見的牆。合盤報告讓我理解我們的『能量類型』完全不同，需要不同的相處策略。它不是告訴我們配不配，而是攤開結構讓我們自己看——哪裡共振、哪裡碰撞。互動品質明顯改善。",
-  },
-  {
-    quote: "創業路上的戰略地圖，少走三年彎路。",
-    name: "建廷",
-    title: "新創創辦人 / 旗艦版用戶",
-    content: "創業前夕看到這份報告，簡直是天降甘霖。它精準分析了我的『財運結構』和『事業節奏』，讓我避開了幾個重大決策失誤。特別是『神煞兵符』的解讀，把原本聽起來很可怕的『劫財』變成我的競爭優勢運用指南。這是創業者必備的自我說明書。",
-  },
-  {
-    quote: "商業合盤讓我看清楚合夥人的互補和風險。",
-    name: "俊宏",
-    title: "金融業主管 / 商業合盤用戶",
-    content: "跟合夥人卡在決策模式不同已經很久了。商業合盤不是告訴我們誰對誰錯，而是把兩個人的決策結構、溝通模式和風險偏好全部攤開來對照。看完之後我們調整了分工方式，效率直接提升。這錢花得太值。",
-  },
+// 共振版 chapters
+const resonanceChapters = [
+  { ch: "基本資料", desc: "四系統命盤資料總覽" },
+  { ch: "人生羅盤", desc: "四系統各自怎麼看你——優勢、盲點、建議，一張表收齊" },
+  { ch: "你是誰", desc: "你的核心性格結構，四系統交叉驗證" },
+  { ch: "你怎麼運作", desc: "你的思考方式、行動模式、能量節奏" },
+  { ch: "人生三大領域", desc: "事業、愛情、金錢——同一套內在機制的不同呈現" },
+  { ch: "特別注意", desc: "你最容易忽略的盲區" },
+  { ch: "結語", desc: "把整份報告收成你可以帶走的核心訊息" },
+  { ch: "思維工具箱", desc: "六步 OS、八階思維循環、回家地圖——教你自己拆解問題" },
+  { ch: "四時軍團秘笈", desc: "你的八字化身 RPG 軍團——用故事讓你記住自己的結構" },
+  { ch: "默默超大總結", desc: "一刀見血的核心觀察＋三領域各一刀＋一句你會帶走的話" },
 ];
 
-// Pricing data - flagship only + 合盤 products
-const flagshipPricing = [
-  { plan: "核心包", price: "12,800", features: ["命理報告（網頁版＋PDF）", "語音導讀", "四系統整合圖 x1"], days: 12 },
-  { plan: "深度吸收包", price: "16,800", features: ["方案1 全部內容", "語音摘要", "個人簡報（PDF）"], days: 14 },
-  { plan: "完整校準包", price: "24,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 18 },
+// 偏勝版 chapters
+const biasChapters = [
+  { ch: "四張不同的臉", desc: "四系統各自怎麼描述你——讓你看見它們說的不是同一個人" },
+  { ch: "偏勝羅盤", desc: "偏勝偵測矩陣——哪些維度四系統一致、哪些在打架" },
+  { ch: "你以為的自己", desc: "你的自我描述，有多少是結構支持的？有多少只是慣性說法？" },
+  { ch: "你沒發現的劇本", desc: "三層校準（情緒→語言→結構）——找出偏勝背後的深層信念" },
+  { ch: "用錯版本的自己", desc: "事業、愛情、金錢——偏勝在三個領域的具體呈現" },
+  { ch: "腦中的迴圈", desc: "十大思維病毒＋環境層病毒掃描" },
+  { ch: "地基穩嗎", desc: "偏勝是單一偏差還是整個信念系統的問題" },
+  { ch: "軍團裡的叛將", desc: "偏勝的那個系統在你軍團裡扮演什麼角色——它不是壞人" },
+  { ch: "默默超大總結", desc: "核心偏勝＋三領域拆穿＋一句你會帶走的話" },
 ];
-
-const lovePricing = [
-  { plan: "核心包", price: "8,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "關係結構圖 x1"], days: 10 },
-  { plan: "深度吸收包", price: "12,800", features: ["方案1 全部內容", "語音摘要", "雙人簡報（PDF）"], days: 12 },
-  { plan: "完整校準包", price: "18,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
-];
-
-const businessPricing = [
-  { plan: "核心包", price: "9,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "合作結構圖 x1"], days: 10 },
-  { plan: "深度吸收包", price: "14,800", features: ["方案1 全部內容", "語音摘要", "商業策略簡報（PDF）"], days: 12 },
-  { plan: "完整校準包", price: "19,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
-];
-
-const parentChildPricing = [
-  { plan: "核心包", price: "7,800", features: ["合盤報告（網頁版＋PDF）", "語音導讀", "親子結構圖 x1"], days: 10 },
-  { plan: "深度吸收包", price: "11,800", features: ["方案1 全部內容", "語音摘要", "教養策略簡報（PDF）"], days: 12 },
-  { plan: "完整校準包", price: "16,800", features: ["方案2 全部內容", "摘要影片", "一對一對談 60 分鐘"], days: 15 },
-];
-
-const planIncludes = [
-  { icon: FileText, title: "命理報告", desc: "網頁版＋PDF" },
-  { icon: Mic, title: "語音導讀", desc: "帶你怎麼讀、怎麼用" },
-  { icon: BarChart3, title: "整合圖", desc: "一張人格儀表板" },
-];
-
-const plan2Extras = [
-  { icon: Headphones, title: "語音摘要", desc: "通勤可聽、快速複習" },
-  { icon: FileText, title: "個人簡報", desc: "可保存的操作手冊版" },
-];
-
-const plan3Extras = [
-  { icon: Video, title: "摘要影片", desc: "直覺看懂全局" },
-  { icon: Users, title: "一對一對談", desc: "60 分鐘線上校準" },
-];
-
-
-// Blurred price component for mosaic effect
-const BlurredPrice = ({ color = "text-white" }: { color?: string }) => (
-  <span className={`relative inline-flex items-center ${color}`}>
-    <span className="blur-[6px] select-none">NT$ XX,XXX</span>
-    <span className="absolute inset-0 flex items-center justify-center">
-      <span className="text-[10px] text-white/60 bg-black/40 px-2 py-0.5 rounded-full backdrop-blur-sm">
-        即將公佈
-      </span>
-    </span>
-  </span>
-);
-
-// Animated floating orb component
-const FloatingOrb = ({ className, delay = 0, duration = 4 }: { className?: string; delay?: number; duration?: number }) => (
-  <div 
-    className={`absolute rounded-full blur-2xl ${className}`}
-    style={{ 
-      animation: `float ${duration}s ease-in-out infinite`,
-      animationDelay: `${delay}s`
-    }}
-  />
-);
-
-// Animated particle component
-const Particle = ({ className, delay = 0 }: { className?: string; delay?: number }) => (
-  <div 
-    className={`absolute w-1 h-1 rounded-full animate-pulse ${className}`}
-    style={{ animationDelay: `${delay}s` }}
-  />
-);
-
-// Testimonials Carousel Component
-interface TestimonialData {
-  quote: string;
-  name: string;
-  title: string;
-  content: string;
-}
-
-const TestimonialsCarousel = ({ testimonials, isVisible }: { testimonials: TestimonialData[]; isVisible: boolean }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: 'start', skipSnaps: false },
-    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
-  );
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on('select', onSelect);
-    onSelect();
-  }, [emblaApi, onSelect]);
-
-  const scrollTo = useCallback((index: number) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  }, [emblaApi]);
-
-  // Duplicate testimonials for infinite scroll effect
-  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
-
-  return (
-    <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-      {/* Carousel Container */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-6">
-          {extendedTestimonials.map((testimonial, index) => (
-            <div 
-              key={index}
-              className="flex-[0_0_100%] min-w-0 md:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)] pl-0"
-            >
-              <div className="group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 h-full">
-                <Quote className="w-10 h-10 text-amber-400/30 mb-4" />
-                <p className="font-serif text-xl text-amber-300 mb-4 font-medium">
-                  「{testimonial.quote}」
-                </p>
-                <p className="text-white/60 text-sm leading-relaxed mb-6">
-                  {testimonial.content}
-                </p>
-                <div className="pt-4 border-t border-white/10">
-                  <p className="font-bold text-white">{testimonial.name}</p>
-                  <p className="text-white/50 text-sm">{testimonial.title}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Pagination Dots - Mobile optimized touch targets */}
-      <div className="flex justify-center gap-3 sm:gap-2 mt-8">
-        {testimonials.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollTo(index)}
-            className={`min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center transition-all duration-300 ${
-              selectedIndex % testimonials.length === index 
-                ? '' 
-                : ''
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          >
-            <span className={`block rounded-full transition-all duration-300 ${
-              selectedIndex % testimonials.length === index 
-                ? 'w-8 h-3 bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]' 
-                : 'w-3 h-3 bg-white/20 hover:bg-white/40'
-            }`} />
-          </button>
-        ))}
-      </div>
-      
-      {/* Auto-scroll indicator */}
-      <div className="flex justify-center mt-4">
-        <span className="text-white/30 text-xs flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/50 animate-pulse" />
-          自動輪播中
-        </span>
-      </div>
-    </div>
-  );
-};
-
 
 const ReportPage = () => {
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
   const [heroVisible, setHeroVisible] = useState(false);
-  const [selectedService, setSelectedService] = useState<typeof valueAddedServices[0] | null>(null);
-  const [showQuiz, setShowQuiz] = useState(false);
   const observerRefs = useRef<{ [key: string]: Element | null }>({});
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -672,27 +143,15 @@ const ReportPage = () => {
     ogTitle: "歸覓｜人生羅盤定位系統 - 兩種視角，一個你",
   });
 
-  // Count animations with visibility trigger - updated based on SOP
-  const wordCount = useCountUp(13000, 2500, 0, heroVisible);
-  const chapterCount = useCountUp(10, 1500, 0, heroVisible);
-  const systemCount = useCountUp(4, 1000, 0, heroVisible);
-
   useEffect(() => {
-    // Hero visibility observer
     const heroObserver = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setHeroVisible(true);
-        }
+        if (entries[0].isIntersecting) setHeroVisible(true);
       },
       { threshold: 0.3 }
     );
+    if (heroRef.current) heroObserver.observe(heroRef.current);
 
-    if (heroRef.current) {
-      heroObserver.observe(heroRef.current);
-    }
-
-    // General section observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -703,7 +162,6 @@ const ReportPage = () => {
       },
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
-
     Object.values(observerRefs.current).forEach((ref) => {
       if (ref) observer.observe(ref);
     });
@@ -714,449 +172,194 @@ const ReportPage = () => {
     };
   }, []);
 
-  const scrollToPlans = () => {
-    document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden">
       <PublicHeader />
-      
-      {/* Hero Section */}
+
+      {/* ═══ Hero Section ═══ */}
       <section className="relative py-32 md:py-40 lg:py-52 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#121212] to-[#0a0a0a]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent animate-breathe" />
-        
-        <FloatingOrb className="top-20 left-1/4 w-64 h-64 bg-amber-500/10" delay={0} duration={6} />
-        <FloatingOrb className="bottom-40 right-1/4 w-48 h-48 bg-purple-500/10" delay={2} duration={5} />
-        <FloatingOrb className="top-1/2 right-1/3 w-32 h-32 bg-cyan-500/10" delay={1} duration={4} />
-        
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-amber-500/10 rounded-full animate-rotate-slow opacity-50" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-amber-500/5 rounded-full animate-rotate-slow opacity-30" style={{ animationDirection: 'reverse', animationDuration: '30s' }} />
-        
-        <Particle className="top-1/4 left-1/4 bg-amber-400/60" delay={0} />
-        <Particle className="top-1/3 right-1/4 bg-amber-300/50" delay={0.5} />
-        <Particle className="bottom-1/3 left-1/3 bg-amber-500/40" delay={1} />
-        
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-        
-        <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm hover:scale-105 transition-transform duration-300">
+
+        <div ref={heroRef} className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
+          {/* Brand Badge */}
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/30 mb-6 animate-fade-in backdrop-blur-sm">
             <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
             <span className="text-amber-300 text-sm font-medium tracking-wider">Rainbow Sanctuary × 歸覓｜人生羅盤定位系統</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           </div>
-          
-          {/* Main Product Title - Big and Bold with Glow Effects */}
+
+          {/* Title */}
           <div className="mb-8 relative">
-            {/* Glow background effect */}
             <div className="absolute inset-0 -top-10 blur-3xl bg-gradient-to-r from-amber-500/20 via-amber-400/30 to-amber-500/20 rounded-full animate-pulse" />
-            
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 tracking-tight leading-none relative animate-scale-in" style={{ animationDuration: '0.8s' }}>
-              <span 
+              <span
                 className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_auto]"
-                style={{ 
-                  filter: 'drop-shadow(0 0 40px rgba(251,191,36,0.5)) drop-shadow(0 0 80px rgba(251,191,36,0.3))',
-                  textShadow: '0 0 60px rgba(251,191,36,0.4)'
-                }}
+                style={{ filter: 'drop-shadow(0 0 40px rgba(251,191,36,0.5))' }}
               >
                 歸覓
               </span>
             </h1>
-            <h2 
+            <h2
               className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white/95 tracking-wide animate-fade-in"
-              style={{ 
-                animationDelay: '0.3s',
-                textShadow: '0 0 30px rgba(255,255,255,0.2)'
-              }}
+              style={{ animationDelay: '0.3s' }}
             >
               人生羅盤定位系統
             </h2>
           </div>
-          
-          {/* Word Count & Value Highlights - Interactive Cards with Count Animation */}
-          <div ref={heroRef} className="flex flex-wrap justify-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: '0.5s' }}>
-            <div className="group relative cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 rounded-2xl px-6 py-4 hover:border-amber-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                <div className="flex items-center gap-3">
-                  <FileText className="w-6 h-6 text-amber-400" />
-                  <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-amber-400 tabular-nums">
-                      {wordCount.toLocaleString()}<span className="text-xl">+</span>
-                    </p>
-                    <p className="text-white/60 text-sm">字精密解析</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="group relative cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-purple-500/30 rounded-2xl px-6 py-4 hover:border-purple-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                <div className="flex items-center gap-3">
-                  <Layers className="w-6 h-6 text-purple-400" />
-                  <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-purple-400 tabular-nums">
-                      {chapterCount}<span className="text-xl">+</span>
-                    </p>
-                    <p className="text-white/60 text-sm">深度章節</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="group relative cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-cyan-500/30 rounded-2xl px-6 py-4 hover:border-cyan-400/60 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                <div className="flex items-center gap-3">
-                  <Globe className="w-6 h-6 text-cyan-400" />
-                  <div className="text-left">
-                    <p className="text-3xl md:text-4xl font-black text-cyan-400 tabular-nums">{systemCount}</p>
-                    <p className="text-white/60 text-sm">命理系統交叉</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Value-Added Examples - Interactive Click to Open Dialog */}
-          <div className="mb-10 animate-slide-up" style={{ animationDelay: '0.7s' }}>
-            <p className="text-amber-300/70 text-sm mb-4 tracking-wider uppercase">點擊查看附加價值詳情</p>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-              {valueAddedServices.map((item, idx) => (
-                <button 
-                  key={idx} 
-                  className="group relative"
-                  onClick={() => setSelectedService(item)}
-                >
-                  {/* Mobile-optimized touch target with minimum 44px height */}
-                  <div className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/10 rounded-full px-4 py-3 sm:py-2 flex items-center gap-2 hover:border-amber-500/40 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 min-h-[44px]">
-                    <item.icon className="w-5 h-5 sm:w-4 sm:h-4 text-amber-400/70 group-hover:text-amber-400 transition-colors" />
-                    <span className="text-white/70 text-sm group-hover:text-white transition-colors">{item.label}</span>
-                    <ArrowRight className="w-4 h-4 sm:w-3 sm:h-3 text-white/30 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
-                  </div>
-                  {/* Tooltip on hover - hidden on touch devices */}
-                  <div className="hidden sm:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-amber-500/30 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap z-20">
-                    <p className="text-amber-300 text-xs">{item.desc}</p>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-amber-500/30" />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Service Detail Dialog */}
-          <Dialog open={!!selectedService} onOpenChange={(open) => !open && setSelectedService(null)}>
-            <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-amber-500/30 text-white max-w-md overflow-hidden data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit">
-              {/* Glow effect background */}
-              <div className="absolute -inset-px bg-gradient-to-r from-amber-500/20 via-amber-400/10 to-amber-500/20 rounded-lg blur-xl opacity-60 animate-pulse" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-lg" />
-              
-              {selectedService && (
-                <div className="relative z-10">
-                  <DialogHeader className="animate-slide-down" style={{ animationDuration: '0.4s' }}>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 animate-scale-in shadow-[0_0_20px_rgba(251,191,36,0.3)]" style={{ animationDelay: '0.1s' }}>
-                        <selectedService.icon className="w-6 h-6 text-amber-400" />
-                      </div>
-                      <DialogTitle className="text-xl font-bold text-white">{selectedService.fullTitle}</DialogTitle>
-                    </div>
-                    <DialogDescription className="text-amber-300/80">{selectedService.desc}</DialogDescription>
-                  </DialogHeader>
-                  <div className="mt-4 space-y-3">
-                    {selectedService.details.map((detail, i) => (
-                      <div 
-                        key={i} 
-                        className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/10 transition-all duration-300 animate-slide-up opacity-0"
-                        style={{ 
-                          animationDelay: `${0.15 + i * 0.1}s`,
-                          animationFillMode: 'forwards'
-                        }}
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                        <p className="text-white/80 text-sm leading-relaxed">{detail}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div 
-                    className="mt-6 pt-4 border-t border-white/10 animate-fade-in opacity-0"
-                    style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}
-                  >
-                    <p className="text-white/50 text-xs text-center">此服務依方案等級提供，詳情請參閱下方價格表</p>
-                  </div>
-                </div>
-              )}
-            </DialogContent>
-          </Dialog>
-          
           {/* Decorative divider */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="w-16 md:w-24 h-px bg-gradient-to-r from-transparent to-amber-500/60" />
             <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_10px_rgba(251,191,36,0.6)]" />
             <div className="w-16 md:w-24 h-px bg-gradient-to-l from-transparent to-amber-500/60" />
           </div>
-          
-          <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight tracking-tight" style={{ animationDelay: '0.8s' }}>
+
+          {/* Description */}
+          <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight" style={{ animationDelay: '0.5s' }}>
             <span className="text-white/90">看見自己的結構，是所有</span>
             <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">改變的起點。</span>
           </p>
-          
-          <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.9s' }}>
-            紫微斗數 × 八字命理 × 西洋占星 × 人類圖<br className="hidden md:block" />四系統同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />你拿到的不是一個答案，是一份可以反覆翻看的<span className="text-amber-400">結構地圖</span>。
+          <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.7s' }}>
+            紫微斗數 × 八字命理 × 西洋占星 × 人類圖<br className="hidden md:block" />
+            四系統同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />
+            你拿到的不是一個答案，是一份可以反覆翻看的<span className="text-amber-400">結構地圖</span>。
           </p>
-          
-          <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '1s' }}>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '0.9s' }}>
             <ReportPreview />
             <LifeCompassForm />
-            <Button 
-              variant="outline" 
-              size="xl" 
-              className="group text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 rounded-full border-2 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[52px]"
-              onClick={scrollToPlans}
-            >
-              選擇版本
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
           </div>
+        </div>
+      </section>
 
-          {/* Dual Product Line Introduction */}
-          <div className="mt-16 animate-slide-up" style={{ animationDelay: '1.2s' }}>
-            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white text-center mb-3">兩份報告，兩種視角</h3>
-            <p className="text-white/50 text-center max-w-2xl mx-auto mb-8 text-sm">
+      {/* ═══ 區塊 1: 雙產品線介紹 ═══ */}
+      <section
+        id="dual-products"
+        ref={(el) => (observerRefs.current['dual-products'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['dual-products'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              兩份報告，兩種視角
+            </h2>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto">
               同一份命盤資料，兩種完全不同的閱讀方式。<br />
               共振版找四系統說同一件事的地方——幫你看見完整的自己。<br />
               偏勝版找四系統互相打架的地方——幫你看見你以為的自己哪裡跟結構對不上。<br />
               兩份都可以獨立購買。
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {/* 共振版 Card */}
-              <div className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 border border-amber-500/30 text-left">
-                <div className="flex items-center gap-2 mb-3">
-                  <Crown className="w-5 h-5 text-amber-400" />
-                  <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
-                </div>
-                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位共振解讀報告</h4>
-                <p className="text-amber-300/70 text-sm mb-3">讓你看見完整的自己，學會使用自己</p>
-                <div className="space-y-2 text-xs text-white/50">
-                  <p>四系統怎麼用：找四系統交集——它們同時說的才進報告</p>
-                  <p>正文語氣：像深夜居酒屋裡最懂你的朋友</p>
-                  <p>不負責提醒：朋友突然放下酒杯，眼神清醒戳你一刀</p>
-                  <p>讀完的感覺：被看見、被理解</p>
-                  <p>適合誰：想認識自己、需要方向感</p>
-                </div>
-                <p className="text-white/30 text-xs mt-3">10 章＋默默超大總結・約 10,000-13,000 字</p>
-              </div>
-
-              {/* 偏勝版 Card */}
-              <div className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 border border-purple-500/30 text-left">
-                <div className="flex items-center gap-2 mb-3">
-                  <Eye className="w-5 h-5 text-purple-400" />
-                  <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
-                </div>
-                <h4 className="font-serif text-lg font-bold text-white mb-1">歸覓全方位偏勝解讀報告</h4>
-                <p className="text-purple-300/70 text-sm mb-3">讓你看見認知偏差，學會校正自己</p>
-                <div className="space-y-2 text-xs text-white/50">
-                  <p>四系統怎麼用：找四系統歧異——它們互相打架的地方才是重點</p>
-                  <p>正文語氣：全篇都在拆你</p>
-                  <p>不負責提醒：拆完之後安靜看著你說「我知道這不好受」</p>
-                  <p>讀完的感覺：被看穿、被戳破</p>
-                  <p>適合誰：已有自我認知但可能陷入盲區</p>
-                </div>
-                <p className="text-white/30 text-xs mt-3">8 章＋默默超大總結・約 8,000-10,000 字</p>
-              </div>
-            </div>
           </div>
 
-          {/* Chapter Overview - 共振版 */}
-          <div className="mt-16 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.4s' }}>
-            <h3 className="font-serif text-xl md:text-2xl font-bold text-amber-400 mb-6 text-center">共振版｜你是誰，你怎麼運作</h3>
-            <p className="text-white/50 text-sm text-center mb-6">
-              當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { ch: "基本資料", desc: "四系統命盤資料總覽" },
-                { ch: "人生羅盤", desc: "四系統各自怎麼看你——優勢、盲點、建議，一張表收齊" },
-                { ch: "你是誰", desc: "你的核心性格結構，四系統交叉驗證" },
-                { ch: "你怎麼運作", desc: "你的思考方式、行動模式、能量節奏" },
-                { ch: "人生三大領域", desc: "事業、愛情、金錢——同一套內在機制的不同呈現" },
-                { ch: "特別注意", desc: "你最容易忽略的盲區" },
-                { ch: "結語", desc: "把整份報告收成你可以帶走的核心訊息" },
-                { ch: "思維工具箱", desc: "六步 OS、八階思維循環、回家地圖——教你自己拆解問題" },
-                { ch: "四時軍團秘笈", desc: "你的八字化身 RPG 軍團——用故事讓你記住自己的結構" },
-                { ch: "默默超大總結", desc: "一刀見血的核心觀察＋三領域各一刀＋一句你會帶走的話" },
-              ].map((item) => (
-                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
-                  <span className="text-amber-400 font-medium text-sm">{item.ch}</span>
-                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
-                </div>
-              ))}
+          {/* Dual Product Cards */}
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-1000 delay-200 ${isVisible['dual-products'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* 共振版 */}
+            <div className="group relative bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl p-6 md:p-8 border border-amber-500/30 hover:border-amber-400/50 transition-all duration-500">
+              <div className="flex items-center gap-2 mb-3">
+                <Crown className="w-5 h-5 text-amber-400" />
+                <span className="text-xs text-amber-400 font-medium uppercase tracking-wider">Resonance</span>
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white mb-1">歸覓全方位共振解讀報告</h3>
+              <p className="text-amber-300/70 text-sm mb-4">讓你看見完整的自己，學會使用自己</p>
+              <div className="space-y-2.5 text-sm text-white/60">
+                <p><span className="text-white/80 font-medium">四系統怎麼用：</span>找四系統交集——它們同時說的才進報告</p>
+                <p><span className="text-white/80 font-medium">正文語氣：</span>像深夜居酒屋裡最懂你的朋友</p>
+                <p><span className="text-white/80 font-medium">不負責提醒：</span>朋友突然放下酒杯，眼神清醒戳你一刀</p>
+                <p><span className="text-white/80 font-medium">讀完的感覺：</span>被看見、被理解</p>
+                <p><span className="text-white/80 font-medium">適合誰：</span>想認識自己、需要方向感</p>
+              </div>
+              <p className="text-white/30 text-xs mt-4">10 章＋默默超大總結・約 10,000-13,000 字</p>
             </div>
-          </div>
 
-          {/* Chapter Overview - 偏勝版 */}
-          <div className="mt-12 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '1.5s' }}>
-            <h3 className="font-serif text-xl md:text-2xl font-bold text-purple-400 mb-6 text-center">偏勝版｜你以為的自己，哪些是真的</h3>
-            <p className="text-white/50 text-sm text-center mb-6">
-              四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { ch: "四張不同的臉", desc: "四系統各自怎麼描述你——讓你看見它們說的不是同一個人" },
-                { ch: "偏勝羅盤", desc: "偏勝偵測矩陣——哪些維度四系統一致、哪些在打架" },
-                { ch: "你以為的自己", desc: "你的自我描述，有多少是結構支持的？有多少只是慣性說法？" },
-                { ch: "你沒發現的劇本", desc: "三層校準（情緒→語言→結構）——找出偏勝背後的深層信念" },
-                { ch: "用錯版本的自己", desc: "事業、愛情、金錢——偏勝在三個領域的具體呈現" },
-                { ch: "腦中的迴圈", desc: "十大思維病毒＋環境層病毒掃描" },
-                { ch: "地基穩嗎", desc: "偏勝是單一偏差還是整個信念系統的問題" },
-                { ch: "軍團裡的叛將", desc: "偏勝的那個系統在你軍團裡扮演什麼角色——它不是壞人" },
-                { ch: "默默超大總結", desc: "核心偏勝＋三領域拆穿＋一句你會帶走的話" },
-              ].map((item) => (
-                <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-purple-500/10">
-                  <span className="text-purple-400 font-medium text-sm">{item.ch}</span>
-                  <p className="text-white/50 text-xs mt-1">{item.desc}</p>
-                </div>
-              ))}
+            {/* 偏勝版 */}
+            <div className="group relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 rounded-2xl p-6 md:p-8 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-500">
+              <div className="flex items-center gap-2 mb-3">
+                <Eye className="w-5 h-5 text-purple-400" />
+                <span className="text-xs text-purple-400 font-medium uppercase tracking-wider">Bias Detection</span>
+              </div>
+              <h3 className="font-serif text-xl font-bold text-white mb-1">歸覓全方位偏勝解讀報告</h3>
+              <p className="text-purple-300/70 text-sm mb-4">讓你看見認知偏差，學會校正自己</p>
+              <div className="space-y-2.5 text-sm text-white/60">
+                <p><span className="text-white/80 font-medium">四系統怎麼用：</span>找四系統歧異——它們互相打架的地方才是重點</p>
+                <p><span className="text-white/80 font-medium">正文語氣：</span>全篇都在拆你</p>
+                <p><span className="text-white/80 font-medium">不負責提醒：</span>拆完之後安靜看著你說「我知道這不好受」</p>
+                <p><span className="text-white/80 font-medium">讀完的感覺：</span>被看穿、被戳破</p>
+                <p><span className="text-white/80 font-medium">適合誰：</span>已有自我認知但可能陷入盲區</p>
+              </div>
+              <p className="text-white/30 text-xs mt-4">8 章＋默默超大總結・約 8,000-10,000 字</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pain Points Section - Competitor-inspired but "Mirror" aligned */}
-      <section 
-        id="pain-points"
-        ref={(el) => (observerRefs.current['pain-points'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#080808] to-[#0a0a0a]" />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['pain-points'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              你卡在哪裡？
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              這些問題不是因為你不夠努力。是因為你還沒看清楚自己的運作模式。
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {painPoints.map((point, index) => (
-              <div
-                key={index}
-                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-1 ${isVisible['pain-points'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${0.1 + index * 0.1}s` }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${point.color} opacity-0 group-hover:opacity-5 rounded-3xl transition-opacity duration-500`} />
-                
-                <div className="flex items-start gap-4">
-                  <div className={`p-3 rounded-2xl bg-gradient-to-br ${point.color} flex-shrink-0`}>
-                    <point.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-serif text-xl font-bold text-white">{point.title}</h3>
-                      <span className="text-2xl font-black text-white/20">{point.percentage}%</span>
-                    </div>
-                    <p className="text-white/80 mb-2">{point.description}</p>
-                    <p className="text-white/50 text-sm">{point.detail}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Solution Bridge */}
-          <div className={`text-center p-8 md:p-12 bg-gradient-to-r from-amber-900/20 via-amber-800/10 to-amber-900/20 rounded-3xl border border-amber-500/20 transition-all duration-1000 delay-500 ${isVisible['pain-points'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <Sparkles className="w-12 h-12 text-amber-400 mx-auto mb-4" />
-            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-              答案不在外面。在你的結構裡。
-            </h3>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto">
-              四系統交叉驗證，把你的<span className="text-amber-400">運作模式</span>翻出來。對不對，你自己驗證。
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Simple 3-Step Process Section */}
-      <section 
-        id="simple-steps"
-        ref={(el) => (observerRefs.current['simple-steps'] = el)}
+      {/* ═══ 區塊 2: 共振版章節概覽 ═══ */}
+      <section
+        id="resonance-chapters"
+        ref={(el) => (observerRefs.current['resonance-chapters'] = el)}
         className="py-24 px-4 relative"
       >
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['simple-steps'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-              <Zap className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">簡單三步驟</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              三步拿到你的<span className="text-amber-400">報告</span>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#080808] to-[#0a0a0a]" />
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className={`text-center mb-10 transition-all duration-1000 ${isVisible['resonance-chapters'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-amber-400 mb-4">
+              共振版｜你是誰，你怎麼運作
             </h2>
-            <p className="text-white/50 text-lg">100% 客製化・不套模板・人工逐字寫</p>
+            <p className="text-white/50 text-base max-w-2xl mx-auto">
+              當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。<br />
+              共振版的任務是把這些交集整合成一份你讀得懂、拿得走的生命地圖。
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {simpleSteps.map((step, index) => (
-              <div
-                key={index}
-                className={`group relative transition-all duration-700 ${isVisible['simple-steps'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
-                style={{ transitionDelay: `${0.2 + index * 0.15}s` }}
-              >
-                <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 text-center h-full">
-                  {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)]">
-                    <span className="text-black font-bold text-lg">{step.step}</span>
-                  </div>
-                  
-                  <div className="pt-6">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500/10 mb-6 group-hover:scale-110 transition-transform">
-                      <step.icon className="w-8 h-8 text-amber-400" />
-                    </div>
-                    <h3 className="font-serif text-xl font-bold text-white mb-3">{step.title}</h3>
-                    <p className="text-white/60">{step.description}</p>
-                  </div>
-                  
-                  {/* Arrow connector - only on desktop */}
-                  {index < simpleSteps.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                      <ArrowRight className="w-6 h-6 text-amber-500/50" />
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Stats Row */}
-          <div className={`mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-1000 delay-500 ${isVisible['simple-steps'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {[
-              { label: "字深度分析", value: "12,000+", suffix: "" },
-              { label: "章節架構", value: "10+", suffix: "" },
-              { label: "系統整合", value: "4", suffix: "" },
-              { label: "終身可查閱", value: "∞", suffix: "" },
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
-                <p className="text-2xl md:text-3xl font-black text-amber-400">{stat.value}</p>
-                <p className="text-white/50 text-sm">{stat.label}</p>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-1000 delay-200 ${isVisible['resonance-chapters'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {resonanceChapters.map((item) => (
+              <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-white/10 hover:border-amber-500/30 transition-colors">
+                <span className="text-amber-400 font-medium text-sm">{item.ch}</span>
+                <p className="text-white/50 text-xs mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Price Anchoring Section */}
-      <section 
-        id="price-anchoring"
-        ref={(el) => (observerRefs.current['price-anchoring'] = el)}
+      {/* ═══ 區塊 3: 偏勝版章節概覽 ═══ */}
+      <section
+        id="bias-chapters"
+        ref={(el) => (observerRefs.current['bias-chapters'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className={`text-center mb-10 transition-all duration-1000 ${isVisible['bias-chapters'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-purple-400 mb-4">
+              偏勝版｜你以為的自己，哪些是真的
+            </h2>
+            <p className="text-white/50 text-base max-w-2xl mx-auto">
+              四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。<br />
+              偏勝版的任務是把這些歧異找出來，拆解你的自我敘事，告訴你哪些是結構、哪些是藉口。
+            </p>
+          </div>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-1000 delay-200 ${isVisible['bias-chapters'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {biasChapters.map((item) => (
+              <div key={item.ch} className="bg-white/5 rounded-xl px-4 py-3 border border-purple-500/10 hover:border-purple-500/30 transition-colors">
+                <span className="text-purple-400 font-medium text-sm">{item.ch}</span>
+                <p className="text-white/50 text-xs mt-1">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 區塊 4: 跟一般服務有什麼不同 ═══ */}
+      <section
+        id="comparison"
+        ref={(el) => (observerRefs.current['comparison'] = el)}
         className="py-24 px-4 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
-        
         <div className="container mx-auto max-w-5xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-6">
               <Scale className="w-4 h-4 text-emerald-400" />
               <span className="text-emerald-300 text-sm font-medium">市場定位</span>
@@ -1165,11 +368,12 @@ const ReportPage = () => {
               這不是算命，也不是<span className="text-amber-400">心理諮商</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              市面命理告訴你你是誰、你會怎樣。心理諮商陪你找到自己。<br />我們做的是第三件事：把四套結構壓成一張你可以反覆對照、自己驗證、拿去用的生命結構地圖。
+              市面命理告訴你你是誰、你會怎樣。心理諮商陪你找到自己。<br />
+              我們做的是第三件事：把四套結構壓成一張你可以反覆對照、自己驗證、拿去用的生命結構地圖。
             </p>
           </div>
-          
-          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-1000 delay-200 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+
+          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 transition-all duration-1000 delay-200 ${isVisible['comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* 一般命理服務 */}
             <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10">
               <div className="absolute -top-3 left-6 px-4 py-1 bg-white/10 rounded-full">
@@ -1220,7 +424,7 @@ const ReportPage = () => {
           </div>
 
           {/* Bottom Disclaimer */}
-          <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible['price-anchoring'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible['comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <p className="text-white/30 text-xs max-w-2xl mx-auto">
               本報告為命理結構整合分析，不是心理治療、醫療建議或未來預測。閱讀過程中若觸發強烈情緒，建議搭配合格心理專業一起處理。
             </p>
@@ -1228,55 +432,14 @@ const ReportPage = () => {
         </div>
       </section>
 
-      {/* About System - Core Philosophy Section */}
-      <section 
-        id="about-system"
-        ref={(el) => (observerRefs.current['about-system'] = el)}
-        className="py-32 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
-        
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className={`relative bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0a0a0a] rounded-[40px] p-12 md:p-16 border border-amber-500/20 shadow-[0_0_80px_rgba(251,191,36,0.1)] transition-all duration-1000 ${isVisible['about-system'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-amber-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-amber-500/30 rounded-br-[40px]" />
-            
-            <div className="text-center mb-12">
-              <Eye className="h-16 w-16 text-amber-400 mx-auto mb-6 animate-float" />
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-                我們不預測未來，我們協助您「架構」未來。
-              </h2>
-            </div>
-            
-            <div className="space-y-8 font-serif text-lg md:text-xl leading-relaxed text-white/70">
-              <p>
-                在這個資訊過載的時代，傳統的算命只能告訴您「會發生什麼」，卻無法告訴您「該如何運作自己」。
-              </p>
-              <p>
-                《歸覓｜人生羅盤定位系統》是一項超越時代的生命工程。我們拒絕模稜兩可的宿命論，堅持以<span className="text-amber-400 font-bold">「鏡子非劇本，真實即命運」</span>的最高原則，透過嚴謹的交叉演算，將您的天賦、情緒、思維與價值觀，轉化為可執行、可落地的精密導航。
-              </p>
-              <div className="flex items-center justify-center gap-4 py-6">
-                <div className="w-20 h-px bg-gradient-to-r from-transparent to-amber-500/50" />
-                <Gem className="w-6 h-6 text-amber-400 animate-bounce-soft" />
-                <div className="w-20 h-px bg-gradient-to-l from-transparent to-amber-500/50" />
-              </div>
-              <p className="text-center text-2xl text-white/90 font-medium">
-                這不是迷信，這是您靈魂的原廠說明書與升級驅動程式。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Four Systems Showcase */}
-      <section 
+      {/* ═══ 區塊 5: 四大命理系統說明 ═══ */}
+      <section
         id="four-systems"
         ref={(el) => (observerRefs.current['four-systems'] = el)}
         className="py-24 px-4 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#0a0a0a]" />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-5xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['four-systems'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
               四大系統<span className="text-amber-400">交叉整合</span>
@@ -1285,1647 +448,57 @@ const ReportPage = () => {
               避免單一系統的偏誤，多維度驗證你的生命藍圖
             </p>
           </div>
-          
-          {/* Central brain with orbiting systems */}
-          <div className="relative h-[400px] md:h-[500px] flex items-center justify-center mb-16">
-            <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-              <defs>
-                <linearGradient id="grad-violet" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#a855f7" stopOpacity="0.3" />
-                </linearGradient>
-                <linearGradient id="grad-amber" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#ea580c" stopOpacity="0.3" />
-                </linearGradient>
-                <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
-                </linearGradient>
-                <linearGradient id="grad-emerald" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#14b8a6" stopOpacity="0.3" />
-                </linearGradient>
-                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              
-              {fourSystems.map((system, index) => {
-                const centerX = 50;
-                const centerY = 50;
-                const angle = (index * 90 - 45) * (Math.PI / 180);
-                const radiusPercent = 18;
-                const endX = centerX + Math.cos(angle) * radiusPercent;
-                const endY = centerY + Math.sin(angle) * radiusPercent;
-                const gradientId = ['grad-violet', 'grad-amber', 'grad-blue', 'grad-emerald'][index];
-                const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#10b981'][index];
-                
-                return (
-                  <g key={`connection-${index}`} className={`transition-opacity duration-1000 ${isVisible['four-systems'] ? 'opacity-100' : 'opacity-0'}`}>
-                    <line x1={`${centerX}%`} y1={`${centerY}%`} x2={`${endX}%`} y2={`${endY}%`} stroke={`url(#${gradientId})`} strokeWidth="2" filter="url(#glow)" className="opacity-40" />
-                    <line x1={`${centerX}%`} y1={`${centerY}%`} x2={`${endX}%`} y2={`${endY}%`} stroke={colors} strokeWidth="3" strokeDasharray="8 12" filter="url(#glow)" className="opacity-60" style={{ animation: `dash-flow 2s linear infinite`, animationDelay: `${index * 0.5}s` }} />
-                    <circle r="4" fill={colors} filter="url(#glow)">
-                      <animateMotion dur={`${2 + index * 0.3}s`} repeatCount="indefinite" path={`M${centerX * 5},${centerY * 2.5} L${endX * 5},${endY * 2.5}`} />
-                      <animate attributeName="opacity" values="0;1;1;0" dur={`${2 + index * 0.3}s`} repeatCount="indefinite" />
-                    </circle>
-                    <circle r="3" fill={colors} filter="url(#glow)" opacity="0.7">
-                      <animateMotion dur={`${2.5 + index * 0.2}s`} repeatCount="indefinite" path={`M${endX * 5},${endY * 2.5} L${centerX * 5},${centerY * 2.5}`} />
-                      <animate attributeName="opacity" values="0;0.7;0.7;0" dur={`${2.5 + index * 0.2}s`} repeatCount="indefinite" />
-                    </circle>
-                  </g>
-                );
-              })}
-            </svg>
-            
-            {/* Central brain */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-1000 ${isVisible['four-systems'] ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
-              <div className="relative">
-                <div className="absolute -inset-6 bg-gradient-to-r from-amber-500/30 to-purple-500/30 rounded-full blur-2xl animate-glow-pulse" />
-                <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border-2 border-amber-500/50 flex items-center justify-center shadow-[0_0_40px_rgba(251,191,36,0.3)]">
-                  <Brain className="w-14 h-14 md:w-18 md:h-18 text-amber-400 animate-pulse" />
-                </div>
-              </div>
-            </div>
-            
-            {/* Orbiting system cards */}
-            {fourSystems.map((system, index) => {
-              const angle = index * 90 - 45;
-              const positions = [
-                "top-4 md:top-8 left-1/2 -translate-x-1/2",
-                "top-1/2 right-4 md:right-8 -translate-y-1/2",
-                "bottom-4 md:bottom-8 left-1/2 -translate-x-1/2",
-                "top-1/2 left-4 md:left-8 -translate-y-1/2",
-              ];
-              
-              return (
-                <div
-                  key={system.name}
-                  className={`absolute ${positions[index]} transition-all duration-1000 ${isVisible['four-systems'] ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
-                  style={{ transitionDelay: `${0.2 + index * 0.15}s`, animation: `orbit ${20 + index * 5}s linear infinite`, animationPlayState: 'paused' }}
-                >
-                  <div className="group relative">
-                    <div className={`absolute -inset-2 bg-gradient-to-br ${system.color} rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-                    <div className={`relative px-5 py-4 bg-gradient-to-br ${system.color} rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300 min-w-[140px] md:min-w-[180px]`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <system.icon className="w-5 h-5 text-white" />
-                        <span className="font-serif font-bold text-white text-base md:text-lg">{system.name}</span>
-                      </div>
-                      <div className="text-white/80 text-xs md:text-sm font-medium">{system.meaning}</div>
-                    </div>
-                    {/* Tooltip on hover */}
-                    <div className="absolute z-20 w-56 p-3 bg-[#1a1a1a]/95 backdrop-blur-sm rounded-xl border border-white/20 shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 translate-y-2 group-hover:translate-y-0 top-full mt-2 left-1/2 -translate-x-1/2">
-                      <p className="text-white/70 text-xs leading-relaxed">{system.description}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          
-          {/* System Cross-Reference Table */}
-          <div className={`mt-16 transition-all duration-1000 delay-500 ${isVisible['four-systems'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h3 className="text-xl md:text-2xl font-serif font-bold text-center text-amber-400 mb-8">
-              系統交叉驗證對照表
-            </h3>
-            <p className="text-center text-white/50 text-xs mb-4">
-              點擊各欄位查看詳細解釋
-            </p>
-            {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full border-collapse bg-[#0a0a0a]/80 rounded-xl overflow-hidden">
-                <thead>
-                  <tr className="bg-gradient-to-r from-amber-900/40 to-purple-900/40">
-                    <th className="px-4 py-3 text-left text-amber-400 font-medium text-sm">分析面向</th>
-                    <th className="px-4 py-3 text-center text-violet-400 font-medium text-sm">紫微斗數</th>
-                    <th className="px-4 py-3 text-center text-amber-400 font-medium text-sm">八字</th>
-                    <th className="px-4 py-3 text-center text-blue-400 font-medium text-sm">占星</th>
-                    <th className="px-4 py-3 text-center text-emerald-400 font-medium text-sm">人類圖</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10">
-                  {[
-                    {
-                      dimension: '核心本質',
-                      ziwei: { label: '命宮主星組合', desc: '透過命宮主星（如紫微、天府、天機等）的組合，揭示你與生俱來的性格核心與人生主軸方向。' },
-                      bazi: { label: '日主五行屬性', desc: '日主代表你的本命元素（木火土金水），決定了你的基本氣質與應對世界的根本方式。' },
-                      astro: { label: '太陽星座', desc: '太陽星座代表你的核心自我認同、生命力來源，以及你想要成為的自己。' },
-                      hd: { label: '類型與策略', desc: '人類圖的五種類型（生產者、投射者等）定義了你與世界互動的正確策略與能量運作模式。' }
-                    },
-                    {
-                      dimension: '情緒模式',
-                      ziwei: { label: '福德宮星曜', desc: '福德宮揭示你的內心世界、精神狀態，以及如何獲得內在的滿足與平靜。' },
-                      bazi: { label: '食傷星狀態', desc: '食神與傷官代表情感表達、創意輸出，反映你處理情緒與自我表現的方式。' },
-                      astro: { label: '月亮星座', desc: '月亮星座主宰你的情感需求、潛意識反應，以及在親密關係中的情緒模式。' },
-                      hd: { label: '情緒中心定義', desc: '情緒中心的定義與否，決定了你是情緒波動的發起者還是接收者，影響決策時機。' }
-                    },
-                    {
-                      dimension: '事業方向',
-                      ziwei: { label: '官祿宮配置', desc: '官祿宮顯示你的事業發展方向、工作態度，以及在職場上的表現特質。' },
-                      bazi: { label: '官殺星格局', desc: '正官與七殺代表權力、地位與事業野心，其強弱配置影響職涯發展路徑。' },
-                      astro: { label: '第十宮行星', desc: '第十宮（天頂）代表社會地位、職業成就，行星落點揭示事業領域與發展方式。' },
-                      hd: { label: 'G中心閘門', desc: 'G中心主宰身份認同與人生方向，其閘門啟動影響你的職業使命感與定位。' }
-                    },
-                    {
-                      dimension: '關係互動',
-                      ziwei: { label: '夫妻宮特質', desc: '夫妻宮顯示你在親密關係中的需求、互動模式，以及理想伴侶的特質傾向。' },
-                      bazi: { label: '正財偏財配置', desc: '財星在八字中也代表男性的妻緣，其配置反映感情態度與物質觀。' },
-                      astro: { label: '金星位置', desc: '金星主宰愛與美，其星座與宮位揭示你的愛情風格、審美觀與吸引力表現。' },
-                      hd: { label: '薦骨中心狀態', desc: '薦骨中心是生命力與回應力的來源，影響你在關係中的投入程度與持久力。' }
-                    }
-                  ].map((row, rowIndex) => (
-                    <tr key={rowIndex} className="hover:bg-white/5 transition-colors">
-                      <td className="px-4 py-3 text-white/90 font-medium text-sm">{row.dimension}</td>
-                      {['ziwei', 'bazi', 'astro', 'hd'].map((system, colIndex) => {
-                        const cell = row[system as keyof typeof row] as { label: string; desc: string };
-                        const colors = ['violet', 'amber', 'blue', 'emerald'];
-                        return (
-                          <td key={colIndex} className="px-4 py-3 text-center">
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <button 
-                                  className={`text-white/70 text-xs hover:text-${colors[colIndex]}-400 hover:underline underline-offset-2 transition-colors cursor-help`}
-                                >
-                                  {cell.label}
-                                </button>
-                              </TooltipTrigger>
-                              <TooltipContent 
-                                side="top" 
-                                className="max-w-[280px] bg-[#1a1a1a] border-white/20 text-white/90 text-xs p-3"
-                              >
-                                <p className={`font-medium text-${colors[colIndex]}-400 mb-1`}>{cell.label}</p>
-                                <p className="text-white/70 leading-relaxed">{cell.desc}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-3">
-              {[
-                {
-                  dimension: '核心本質',
-                  items: [
-                    { system: '紫微斗數', label: '命宮主星組合', desc: '揭示性格核心與人生主軸方向', color: 'violet' },
-                    { system: '八字', label: '日主五行屬性', desc: '決定基本氣質與應對世界的方式', color: 'amber' },
-                    { system: '占星', label: '太陽星座', desc: '代表核心自我認同與生命力來源', color: 'blue' },
-                    { system: '人類圖', label: '類型與策略', desc: '定義與世界互動的正確策略', color: 'emerald' }
-                  ]
-                },
-                {
-                  dimension: '情緒模式',
-                  items: [
-                    { system: '紫微斗數', label: '福德宮星曜', desc: '揭示內心世界與精神狀態', color: 'violet' },
-                    { system: '八字', label: '食傷星狀態', desc: '反映情緒處理與自我表現方式', color: 'amber' },
-                    { system: '占星', label: '月亮星座', desc: '主宰情感需求與潛意識反應', color: 'blue' },
-                    { system: '人類圖', label: '情緒中心定義', desc: '決定情緒波動模式與決策時機', color: 'emerald' }
-                  ]
-                },
-                {
-                  dimension: '事業方向',
-                  items: [
-                    { system: '紫微斗數', label: '官祿宮配置', desc: '顯示事業發展方向與工作態度', color: 'violet' },
-                    { system: '八字', label: '官殺星格局', desc: '影響職涯發展路徑與野心', color: 'amber' },
-                    { system: '占星', label: '第十宮行星', desc: '揭示事業領域與發展方式', color: 'blue' },
-                    { system: '人類圖', label: 'G中心閘門', desc: '影響職業使命感與定位', color: 'emerald' }
-                  ]
-                },
-                {
-                  dimension: '關係互動',
-                  items: [
-                    { system: '紫微斗數', label: '夫妻宮特質', desc: '顯示親密關係需求與互動模式', color: 'violet' },
-                    { system: '八字', label: '正財偏財配置', desc: '反映感情態度與物質觀', color: 'amber' },
-                    { system: '占星', label: '金星位置', desc: '揭示愛情風格與吸引力表現', color: 'blue' },
-                    { system: '人類圖', label: '薦骨中心狀態', desc: '影響關係中的投入程度', color: 'emerald' }
-                  ]
-                }
-              ].map((category, catIndex) => (
-                <Collapsible key={catIndex} defaultOpen={false} className="group">
-                  <div className="bg-[#0a0a0a]/80 rounded-xl border border-white/10 overflow-hidden">
-                    <CollapsibleTrigger className="w-full">
-                      <div className="bg-gradient-to-r from-amber-900/40 to-purple-900/40 px-4 py-4 flex items-center justify-between min-h-[52px] active:bg-amber-900/50 transition-colors">
-                        <h4 className="text-amber-400 font-medium text-sm">{category.dimension}</h4>
-                        <ChevronDown className="w-5 h-5 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                      </div>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                      <div className="divide-y divide-white/5">
-                        {category.items.map((item, itemIndex) => (
-                          <div 
-                            key={itemIndex} 
-                            className="px-4 py-3 flex items-start gap-3 animate-fade-in"
-                            style={{ animationDelay: `${itemIndex * 50}ms` }}
-                          >
-                            <span className={`text-${item.color}-400 text-xs font-medium whitespace-nowrap`}>
-                              {item.system}
-                            </span>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-white/90 text-xs font-medium">{item.label}</p>
-                              <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </CollapsibleContent>
-                  </div>
-                </Collapsible>
-              ))}
-            </div>
-            <p className="text-center text-white/50 text-xs mt-4">
-              ✦ 四系統交叉驗證，避免單一系統偏見，提供更全面的自我理解 ✦
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Life Compass Section - 人生羅盤 */}
-      <section 
-        id="life-compass"
-        ref={(el) => (observerRefs.current['life-compass'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-transparent to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-3xl" />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-3 px-6 py-2 bg-amber-500/20 rounded-full mb-6">
-              <Compass className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-400 font-medium">核心交付物</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              人生羅盤<span className="text-amber-400">總覽圖</span>
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              一張圖，看懂你在四大系統中的定位
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Description */}
-            <div className={`space-y-8 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`} style={{ transitionDelay: '0.2s' }}>
-              <div className="space-y-6">
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white">
-                  什麼是人生羅盤？
-                </h3>
-                <p className="text-white/70 text-lg leading-relaxed">
-                  人生羅盤是我們獨創的<span className="text-amber-400 font-medium">四系統整合視覺化工具</span>——將紫微、八字、占星、人類圖的核心數據，濃縮在一張清晰的總覽圖中。
-                </p>
-                <p className="text-white/60 text-lg leading-relaxed">
-                  它不只是數據呈現，更是一份可以隨時回看的<span className="text-amber-300">生命校準儀表板</span>。
-                </p>
-              </div>
-              
-              <div className="space-y-4">
-                <h4 className="text-white/80 font-medium text-lg">羅盤包含：</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    { icon: Star, text: "紫微主星與輔星配置" },
-                    { icon: Zap, text: "八字五行能量分布" },
-                    { icon: Globe, text: "占星日月上升三角" },
-                    { icon: Target, text: "人類圖類型與權威" },
-                    { icon: BarChart3, text: "四維能量百分比圖" },
-                    { icon: CheckCircle2, text: "交叉驗證一致性指標" },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/30 transition-colors">
-                      <item.icon className="w-5 h-5 text-amber-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-6 bg-gradient-to-r from-amber-500/10 to-transparent rounded-2xl border border-amber-500/20">
-                <p className="text-amber-300/90 italic font-serif text-lg">
-                  「當你迷失方向時，打開人生羅盤——<br />
-                  它會提醒你，你是誰、你適合什麼、你該往哪裡走。」
-                </p>
-              </div>
-            </div>
-            
-          </div>
-          
-          {/* Full-width Table Preview */}
-          <div className={`mt-16 transition-all duration-1000 ${isVisible['life-compass'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/10 to-purple-500/10 rounded-3xl blur-2xl opacity-50" />
-              <div className="relative bg-gradient-to-br from-[#1a1614] to-[#0d0b09] rounded-3xl p-4 md:p-8 border border-amber-500/30 shadow-2xl">
-                <div className="text-center mb-6">
-                  <h4 className="font-serif text-xl text-amber-400 mb-2">人生羅盤範例</h4>
-                  <p className="text-white/40 text-sm">Life Compass Overview Example</p>
-                </div>
-                
-                {/* Desktop Table View */}
-                <div className="hidden md:block overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-white/20">
-                        <th className="py-3 px-3 text-left text-white/90 font-bold">系統</th>
-                        <th className="py-3 px-3 text-left text-white/90 font-bold">主軸結構</th>
-                        <th className="py-3 px-3 text-left text-white/90 font-bold">優勢亮點</th>
-                        <th className="py-3 px-3 text-left text-white/90 font-bold">盲點挑戰</th>
-                        <th className="py-3 px-3 text-left text-white/90 font-bold">建議關鍵</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-white/10">
-                        <td className="py-3 px-3 text-purple-400 font-bold">紫微斗數</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">命宮主星結構</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">穩定可靠、值得信賴</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">習慣承擔、不易求助</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">學會分擔與表達</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-3 px-3 text-amber-400 font-bold">八字</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">日主五行格局</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">多元能力、抗壓性強</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">獨自承擔、不說疲累</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">適時停下與傾訴</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-3 px-3 text-blue-400 font-bold">占星</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">日月上升配置</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">共感細膩、直覺敏銳</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">易受環境、逃避感受</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">給自己留白時間</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3 px-3 text-emerald-400 font-bold">人類圖</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">類型與權威中心</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">高效執行、靈活調整</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">硬撐易挫、波動決策</td>
-                        <td className="py-3 px-3 text-white/60 text-xs">等待內在回應</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                
-                {/* Mobile Card View */}
-                <div className="md:hidden space-y-4">
-                  {[
-                    { system: '紫微斗數', color: 'text-purple-400', structure: '命宮主星結構', strength: '穩定可靠', challenge: '習慣承擔', tip: '學會分擔' },
-                    { system: '八字', color: 'text-amber-400', structure: '日主五行格局', strength: '抗壓性強', challenge: '獨自承擔', tip: '適時停下' },
-                    { system: '占星', color: 'text-blue-400', structure: '日月上升配置', strength: '直覺敏銳', challenge: '易受環境', tip: '留白時間' },
-                    { system: '人類圖', color: 'text-emerald-400', structure: '類型與權威', strength: '高效執行', challenge: '波動決策', tip: '等待回應' },
-                  ].map((item, idx) => (
-                    <div key={idx} className="bg-white/5 rounded-xl p-4 border border-white/10">
-                      <div className={`font-bold text-lg mb-3 ${item.color}`}>{item.system}</div>
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div>
-                          <span className="text-white/40">結構：</span>
-                          <span className="text-white/70">{item.structure}</span>
-                        </div>
-                        <div>
-                          <span className="text-white/40">優勢：</span>
-                          <span className="text-white/70">{item.strength}</span>
-                        </div>
-                        <div>
-                          <span className="text-white/40">挑戰：</span>
-                          <span className="text-white/70">{item.challenge}</span>
-                        </div>
-                        <div>
-                          <span className="text-white/40">建議：</span>
-                          <span className="text-white/70">{item.tip}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="mt-6 pt-6 border-t border-white/10">
-                  <p className="text-center text-white/40 text-xs">
-                    ✓ 以上為示意展示，實際報告將呈現完整個人化分析內容
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audience Section */}
-      <section 
-        id="target-audience"
-        ref={(el) => (observerRefs.current['target-audience'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['target-audience'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              這份報告適合誰？
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl">
-              如果你符合以下描述，這份報告可能正是你需要的
-            </p>
-          </div>
-          
-          <div className="space-y-4">
-            {targetAudience.map((item, index) => (
-              <div 
-                key={index}
-                className={`group flex items-center gap-4 p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all duration-500 ${isVisible['target-audience'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-                style={{ transitionDelay: `${index * 0.1}s` }}
-              >
-                <CheckCircle2 className="h-6 w-6 text-amber-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="text-white/80 text-lg font-medium">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section 
-        id="features"
-        ref={(el) => (observerRefs.current['features'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#0a0a0a]" />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['features'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              你拿到什麼
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              不是一堆術語。不是「你很特別」。<br />
-              是一份可以拿去驗證、反覆使用的<span className="text-amber-400">自我校準文件</span>。
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {reportFeatures.map((feature, index) => (
-              <div 
-                key={feature.title}
-                className={`group relative overflow-hidden transition-all duration-700 ${isVisible['features'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${index * 0.15}s` }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`} />
-                <div className="relative m-0.5 bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] rounded-3xl p-10 h-full">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                    <feature.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-white mb-4 group-hover:text-amber-300 transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/60 text-lg leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Section - Flagship + 合盤 */}
-      <section 
-        id="versions"
-        ref={(el) => (observerRefs.current['versions'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              兩份報告，兩種視角
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl">
-              同一份命盤資料，兩種完全不同的閱讀方式。兩份都可以獨立購買。
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* 共振版 */}
-            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/50 via-amber-400/50 to-amber-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-8 md:p-10 border-2 border-amber-500/40 hover:border-amber-400/60 transition-all duration-500 overflow-hidden h-full">
-                <span className="inline-block px-4 py-1.5 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  共振版 Resonance
-                </span>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你是誰，你怎麼運作</h3>
-                <p className="text-amber-300/80 text-sm mb-4 italic">像深夜居酒屋裡最懂你的朋友</p>
-                <p className="text-white/50 text-sm mb-6">
-                  當紫微、八字、占星、人類圖四套系統同時指向同一件事，那件事就是你的底層結構。共振版的任務是把這些交集整合成一份你讀得懂、拿得走的生命地圖。
-                </p>
-                <div className="space-y-2 mb-6">
-                  {["10 章＋默默超大總結", "約 10,000-13,000 字", "含思維工具箱＋四時軍團秘笈", "讀完的感覺：被看見、被理解"].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
-                      <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
-                  <p className="text-amber-300/90 italic text-sm">適合：想認識自己、需要方向感的人</p>
-                </div>
-              </div>
-            </div>
-
-            {/* 偏勝版 */}
-            <div className={`group relative ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 via-purple-400/50 to-purple-500/50 rounded-[36px] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-[#1a1420] via-[#141018] to-[#0a080e] rounded-[32px] p-8 md:p-10 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-500 overflow-hidden h-full">
-                <span className="inline-block px-4 py-1.5 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  偏勝版 Bias Detection
-                </span>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2">你以為的自己，哪些是真的</h3>
-                <p className="text-purple-300/80 text-sm mb-4 italic">全篇都在拆你</p>
-                <p className="text-white/50 text-sm mb-6">
-                  四套系統不會每次都說同一件事。當它們互相矛盾，那個矛盾就是你需要注意的地方。偏勝版的任務是把這些歧異找出來，拆解你的自我敘事，告訴你哪些是結構、哪些是藉口。
-                </p>
-                <div className="space-y-2 mb-6">
-                  {["8 章＋默默超大總結", "約 8,000-10,000 字", "含偏勝偵測矩陣＋思維病毒掃描", "讀完的感覺：被看穿、被戳破"].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 text-white/70 text-sm">
-                      <Sparkles className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
-                  <p className="text-purple-300/90 italic text-sm">適合：已有自我認知但可能陷入盲區的人</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* 感情合盤 */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-rose-500/20 hover:border-rose-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="mb-6">
-                <span className="inline-block px-4 py-1.5 bg-rose-500/20 text-rose-300 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  感情合盤
-                </span>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                  關係結構解讀
-                </h3>
-                <p className="text-white/50 text-sm">
-                  不是算你們配不配。是把兩個人的能量結構攤開來，看哪裡共振、哪裡碰撞、怎麼相處最省力。誰該先讓步不是道德問題，是結構問題。
-                </p>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
-                  <span>雙方四系統交叉比對</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
-                  <span>溝通模式、依附風格、衝突觸發點分析</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-rose-400/60 mt-0.5 flex-shrink-0" />
-                  <span>具體相處策略與底線設定建議</span>
-                </div>
-              </div>
-              
-              <div className="p-4 bg-rose-500/5 rounded-xl border border-rose-500/10">
-                <p className="text-rose-300/70 italic text-sm">
-                  前提：主要測算人須先完成個人共振版報告
-                </p>
-              </div>
-            </div>
-            
-            {/* 商業合盤 */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="mb-6">
-                <span className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  商業合盤
-                </span>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                  合作結構解讀
-                </h3>
-                <p className="text-white/50 text-sm">
-                  合夥、僱傭、師徒——任何商業關係都有結構。這份報告拆解雙方的決策模式、風險偏好、領導風格，然後告訴你們怎麼分工最不容易翻車。
-                </p>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>決策模式與風險偏好比對</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>最佳分工結構與溝通策略</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                  <span>潛在衝突預警與止損機制</span>
-                </div>
-              </div>
-              
-              <div className="p-4 bg-blue-500/5 rounded-xl border border-blue-500/10">
-                <p className="text-blue-300/70 italic text-sm">
-                  前提：主要測算人須先完成個人旗艦版報告
-                </p>
-              </div>
-            </div>
-            
-            {/* 親子合盤 */}
-            <div className={`group bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-8 md:p-10 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-500 hover:-translate-y-2 lg:col-span-2 lg:max-w-[50%] lg:mx-auto ${isVisible['versions'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
-              <div className="mb-6">
-                <span className="inline-block px-4 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-full text-sm font-medium mb-4 tracking-wide">
-                  親子合盤
-                </span>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-3">
-                  教養結構解讀
-                </h3>
-                <p className="text-white/50 text-sm">
-                  你的教養方式和孩子的接收方式是不是同一個頻道？這份報告拆解親子之間的能量匹配度、溝通斷層，以及「你以為對孩子好但其實在消耗他」的盲點。
-                </p>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
-                  <span>親子能量類型匹配度分析</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
-                  <span>教養盲點辨識與調整建議</span>
-                </div>
-                <div className="flex items-start gap-3 text-white/60 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
-                  <span>適齡溝通策略（依孩子發展階段）</span>
-                </div>
-              </div>
-              
-              <div className="p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
-                <p className="text-emerald-300/70 italic text-sm">
-                  前提：主要測算人（家長）須先完成個人旗艦版報告
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Flagship Chapter Overview */}
-      <section 
-        id="version-comparison"
-        ref={(el) => (observerRefs.current['version-comparison'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/5 via-transparent to-transparent" />
-        
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-              旗艦版章節內容
-            </h2>
-            <p className="text-white/50 text-lg">
-              10 章完整系統・10,000-12,000 字
-            </p>
-          </div>
-          
-          {/* Chapter List */}
-          <div className={`space-y-3 transition-all duration-1000 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {[
-              { ch: "1", title: "開場引言", desc: "深度情境引導，為整份報告建立對話基調", color: "border-white/20" },
-              { ch: "2", title: "基本資料總覽", desc: "四系統核心數據深度剖析", color: "border-white/20" },
-              { ch: "3", title: "人生羅盤圖", desc: "四系統整合的多維導航系統", color: "border-white/20" },
-              { ch: "4", title: "你是誰", desc: "多層次人格解構——外在表現、內在動機、隱藏模式", color: "border-white/20" },
-              { ch: "5", title: "你怎麼運作", desc: "情緒迴路、思考模式、決策系統完整拆解", color: "border-white/20" },
-              { ch: "6", title: "三大領域", desc: "事業、愛情、金錢——領域交互影響深度剖析", color: "border-white/20" },
-              { ch: "7", title: "特別注意事項", desc: "全方位風險提醒與神煞兵符解讀", color: "border-white/20" },
-              { ch: "8", title: "結語與展望", desc: "人生展望與行動呼籲", color: "border-white/20" },
-              { ch: "9", title: "思維工具箱", desc: "思維啟動器＋過程圖——你的心智操作系統", color: "border-amber-500/40", highlight: true },
-              { ch: "10", title: "四時軍團", desc: "RPG 式八字軍團敘事——你的先天戰隊配置", color: "border-amber-500/40", highlight: true },
-            ].map((item, idx) => (
-              <div 
-                key={idx}
-                className={`flex items-center gap-4 p-5 rounded-2xl bg-white/5 border ${item.color} hover:border-amber-500/30 transition-all duration-300 ${item.highlight ? 'bg-amber-500/5' : ''}`}
-                style={{ transitionDelay: `${idx * 50}ms` }}
-              >
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${item.highlight ? 'bg-amber-500/20 text-amber-400' : 'bg-white/10 text-white/60'}`}>
-                  <span className="font-bold text-sm">{item.ch}</span>
-                </div>
-                <div>
-                  <h4 className={`font-bold text-sm ${item.highlight ? 'text-amber-400' : 'text-white'}`}>{item.title}</h4>
-                  <p className="text-white/50 text-xs mt-0.5">{item.desc}</p>
-                </div>
-                {item.highlight && (
-                  <span className="ml-auto text-[10px] px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded-full font-medium">旗艦專屬</span>
-                )}
-              </div>
-            ))}
-          </div>
-          
-          {/* Key Callout */}
-          <div className={`mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20 transition-all duration-1000 delay-300 ${isVisible['version-comparison'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
-              <div className="flex items-center gap-2">
-                <Crown className="w-5 h-5 text-amber-400" />
-                <span className="text-amber-300 font-medium">為什麼只有旗艦版？</span>
-              </div>
-              <span className="text-white/50 text-sm">因為命盤分析做一半比不做更危險。旗艦版是能完整交付的最低標準。</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* MomoChao Thinking System - Why Flagship */}
-      <section 
-        id="thinking-system"
-        ref={(el) => (observerRefs.current['thinking-system'] = el)}
-        className="py-32 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
-        
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['thinking-system'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">旗艦版專屬</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              為什麼選擇旗艦版？
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl max-w-3xl mx-auto">
-              因為「知道」與「做到」之間，缺的是一套系統。
-            </p>
-          </div>
-          
-          <div className="mb-12 text-center">
-            <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-              市面上的算命告訴您「您很敏感」，標準版會告訴您「敏感是您的天賦」，<br />
-              而<span className="text-amber-400 font-semibold">旗艦版會教您：</span>
-            </p>
-          </div>
-          
-          {/* Thinking dimensions - Animated cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {thinkingDimensions.map((dim, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {fourSystems.map((system, index) => (
               <div
-                key={dim.name}
-                className={`group relative transition-all duration-700 ${isVisible['thinking-system'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
-                style={{ transitionDelay: `${0.2 + index * 0.1}s` }}
+                key={system.name}
+                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:-translate-y-2 text-center ${isVisible['four-systems'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                style={{ transitionDelay: `${0.1 + index * 0.1}s` }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${dim.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500`} />
-                <div className={`relative bg-gradient-to-br ${dim.color} p-0.5 rounded-3xl`}>
-                  <div className="bg-[#0a0a0a]/95 rounded-3xl p-8 backdrop-blur-sm group-hover:bg-[#0a0a0a]/80 transition-colors">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 group-hover:scale-110 transition-transform">
-                        <dim.icon className="w-7 h-7 text-white" />
-                      </div>
-                      <h3 className="font-serif text-xl font-bold text-white">{dim.name}系統</h3>
-                    </div>
-                    <p className="text-white/60 text-base leading-relaxed">{dim.desc}</p>
-                  </div>
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${system.color} mb-6 group-hover:scale-110 transition-transform`}>
+                  <system.icon className="w-8 h-8 text-white" />
                 </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Integration showcase */}
-          <div className={`relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[40px] p-10 md:p-14 border border-amber-500/20 transition-all duration-1000 ${isVisible['thinking-system'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.6s' }}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-amber-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-amber-500/30 rounded-br-[40px]" />
-            
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <OptimizedImage 
-                  src={yuanYiLogo} 
-                  alt="元壹宇宙" 
-                  className="w-28 h-28 rounded-2xl animate-glow-pulse"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-                  獨家整合<span className="text-amber-400">元壹宇宙 X 默默超思維系統</span>
-                </h3>
-                <p className="text-white/60 text-lg leading-relaxed">
-                  在人機協作的末法時代，我們為您建構堅實穩固的思維能力。旗艦版不只給答案，更給您一套可運作的「生命操作系統」——讓您在資訊洪流中，依然能清醒決策、精準行動。
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          {/* AI Evaluation of Thinking System */}
-          <div className={`mt-8 relative bg-gradient-to-br from-[#1a1418] via-[#14100e] to-[#0a0806] rounded-[40px] p-10 md:p-14 border border-purple-500/20 transition-all duration-1000 ${isVisible['thinking-system'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.8s' }}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-purple-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-purple-500/30 rounded-br-[40px]" />
-            
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-6">
-                <Brain className="w-4 h-4 text-purple-400" />
-                <span className="text-purple-300 text-sm font-medium tracking-wider uppercase">AI 深度評價</span>
-              </div>
-              <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-                為什麼這套思維工具<span className="text-purple-400">如此重要？</span>
-              </h3>
-              <p className="text-white/50 text-lg max-w-3xl mx-auto">
-                我們將「默默超思維系統」交由頂尖 AI 進行結構化分析，以下是他們的專業評價
-              </p>
-            </div>
-            
-            {/* AI Evaluation Cards */}
-            <div className="grid md:grid-cols-3 gap-6 mb-10">
-              {aiEvaluations.map((evaluation, idx) => (
-                <Collapsible key={idx} className="group">
-                  <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-6 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-500">
-                    <div className="absolute -top-3 right-4">
-                      <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-purple-300 rounded-full text-xs font-medium">
-                        {evaluation.source}
-                      </span>
-                    </div>
-                    <div className="mb-4 pt-2">
-                      <p className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-                        {evaluation.score}
-                      </p>
-                      <p className="text-white/60 text-sm mt-1">{evaluation.title}</p>
-                    </div>
-                    <div className="space-y-3">
-                      {evaluation.highlights.slice(0, 3).map((highlight, i) => (
-                        <div key={i} className="flex items-start gap-2">
-                          <Quote className="w-4 h-4 text-purple-400/60 flex-shrink-0 mt-1" />
-                          <p className="text-white/70 text-sm leading-relaxed">{highlight}</p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <CollapsibleTrigger className="w-full mt-4">
-                      <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 transition-colors cursor-pointer">
-                        <span className="text-purple-300 text-sm">閱讀完整評語</span>
-                        <ChevronDown className="w-4 h-4 text-purple-400 group-data-[state=open]:rotate-180 transition-transform" />
-                      </div>
-                    </CollapsibleTrigger>
-                    
-                    <CollapsibleContent className="mt-4 animate-accordion-down">
-                      <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/10">
-                        <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line">
-                          {evaluation.fullReview}
-                        </p>
-                      </div>
-                    </CollapsibleContent>
-                  </div>
-                </Collapsible>
-              ))}
-            </div>
-            
-            {/* Key Insights Callout */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl p-6 border border-purple-500/20">
-                <h4 className="flex items-center gap-2 text-white font-bold mb-3">
-                  <Zap className="w-5 h-5 text-purple-400" />
-                  為什麼這套工具「厲害」？
-                </h4>
-                <ul className="space-y-2 text-white/70 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <span>將極度抽象的人類內在世界，進行了前所未有的「結構化」與「系統化」</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <span>「思維八階循環」如同精密演算法，讓思考可被追蹤、可被優化</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <span>創造了一種 AI 原生就理解的語言——「前進後退都要通」</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl p-6 border border-amber-500/20">
-                <h4 className="flex items-center gap-2 text-white font-bold mb-3">
-                  <Shield className="w-5 h-5 text-amber-400" />
-                  為什麼這套工具「必要」？
-                </h4>
-                <ul className="space-y-2 text-white/70 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span>在人機協作末法時代，提供堅實穩固的人類思維能力</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span>讓人「活得明白」而非僅僅「活著」——從被動接收到主動操作</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span>將「理性給形體，感性給呼吸」——給靈魂開了窗，讓內外協調運作</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            {/* Quote Highlight */}
-            <div className="mt-8 text-center">
-              <div className="inline-block max-w-3xl">
-                <Quote className="w-8 h-8 text-purple-400/30 mx-auto mb-4" />
-                <p className="font-serif text-xl md:text-2xl text-white/90 italic leading-relaxed mb-4">
-                  「當路徑可逆時，錯誤就變成了資訊；當系統雙向通時，失敗就變成了調校。」
-                </p>
-                <p className="text-purple-400 text-sm">— Claude 對思維系統的評價</p>
-              </div>
-            </div>
-          </div>
-          
-          {/* SOP Quality Assurance */}
-          <div className={`mt-8 relative bg-gradient-to-br from-[#14161a] via-[#101214] to-[#0a0c0e] rounded-[40px] p-10 md:p-14 border border-cyan-500/20 transition-all duration-1000 ${isVisible['thinking-system'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '1s' }}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-cyan-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-cyan-500/30 rounded-br-[40px]" />
-            
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="flex-shrink-0">
-                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 flex items-center justify-center">
-                    <Settings className="w-12 h-12 text-cyan-400" />
-                  </div>
-                </div>
-                <div className="text-center md:text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
-                    <span className="text-cyan-300 text-xs font-medium tracking-wider uppercase">人機協作 SOP</span>
-                  </div>
-                  <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">
-                    《默默超全方位命理解讀報告》<br />
-                    <span className="text-lg text-cyan-400">100% 客製化・零套版內容</span>
-                  </h3>
-                  <p className="text-white/60 text-base leading-relaxed">
-                    本報告採用<span className="text-cyan-400 font-medium">人機協作</span>模式產出——結合專業命理師的深度解讀與 AI 的精準運算。從引言到大總結，每一個字都是為您量身打造，<span className="text-white font-medium">完全沒有套版文章</span>。我們建立了嚴格的 SOP 寫作規範與語氣設定，確保每一份報告都呈現相同水準的精密與深度。
-                  </p>
-                </div>
-              </div>
-              
-              {/* Expandable SOP Details */}
-              <Collapsible>
-                <CollapsibleTrigger className="w-full group">
-                  <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors cursor-pointer min-h-[52px] active:scale-[0.98]">
-                    <span className="text-cyan-300 font-medium text-base">查看詳細寫作規範</span>
-                    <ChevronDown className="w-5 h-5 text-cyan-400 group-data-[state=open]:rotate-180 transition-transform" />
-                  </div>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="mt-6 space-y-6 animate-accordion-down">
-                  {/* SOP Standards Grid */}
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                          <Layers className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <h4 className="text-white font-bold">高度整合與系統化</h4>
-                      </div>
-                      <p className="text-white/50 text-sm leading-relaxed">
-                        並非單一命理系統的解析，而是將四套系統交叉對照，找出共性與結構，形成一個立體的「人生羅盤」。
-                      </p>
-                    </div>
-                    
-                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <h4 className="text-white font-bold">標準化邏輯架構</h4>
-                      </div>
-                      <p className="text-white/50 text-sm leading-relaxed">
-                        每章節都以「命盤根據 → 過去現象 → 現在展現 → 星盤起源 → 小提醒」的邏輯展開，清晰且有層次。
-                      </p>
-                    </div>
-                    
-                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                          <Heart className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <h4 className="text-white font-bold">心理引導性強</h4>
-                      </div>
-                      <p className="text-white/50 text-sm leading-relaxed">
-                        報告不只說「你是什麼樣的人」，更強調「你為什麼會這樣」以及「你可以如何與自己和解」。
-                      </p>
-                    </div>
-                    
-                    <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-                          <Sparkles className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <h4 className="text-white font-bold">溫暖且有文學感</h4>
-                      </div>
-                      <p className="text-white/50 text-sm leading-relaxed">
-                        語言富有意象且易於共情——「穩定型的深海，不是表面型的煙火」「你是一座整理得很好、但門關得很緊的圖書館」。
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Comparison Table */}
-                  <div className="bg-[#0a0c0e] rounded-2xl p-6 border border-cyan-500/10">
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
-                      <Scale className="w-5 h-5 text-cyan-400" />
-                      與傳統命理報告的比較
-                    </h4>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-cyan-500/20">
-                            <th className="text-left py-3 px-4 text-cyan-300 font-medium">維度</th>
-                            <th className="text-left py-3 px-4 text-white/40">傳統命理報告</th>
-                            <th className="text-left py-3 px-4 text-cyan-400">本報告</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-white/60">
-                          <tr className="border-b border-cyan-500/10">
-                            <td className="py-3 px-4 text-white/80">語言</td>
-                            <td className="py-3 px-4">術語多，較冷硬</td>
-                            <td className="py-3 px-4 text-cyan-300">溫暖對話，易理解</td>
-                          </tr>
-                          <tr className="border-b border-cyan-500/10">
-                            <td className="py-3 px-4 text-white/80">結構</td>
-                            <td className="py-3 px-4">單一系統，條列式</td>
-                            <td className="py-3 px-4 text-cyan-300">多系統整合，心理引導式</td>
-                          </tr>
-                          <tr className="border-b border-cyan-500/10">
-                            <td className="py-3 px-4 text-white/80">目的</td>
-                            <td className="py-3 px-4">預測、描述性格</td>
-                            <td className="py-3 px-4 text-cyan-300">理解自我、心理調適、行動建議</td>
-                          </tr>
-                          <tr>
-                            <td className="py-3 px-4 text-white/80">體驗</td>
-                            <td className="py-3 px-4">被動接收資訊</td>
-                            <td className="py-3 px-4 text-cyan-300">主動參與，有互動感</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  
-                  {/* Key Quote */}
-                  <div className="bg-gradient-to-r from-cyan-500/10 to-transparent rounded-2xl p-6 border-l-4 border-cyan-500">
-                    <p className="text-white/80 italic leading-relaxed">
-                      「這份報告更像是一本<span className="text-cyan-400 font-medium">『自我理解的使用手冊』</span>，而不只是一張『命理診斷書』。它把命理從『預測未來』轉向『理解當下』，從『你是什麼』轉向『你可以如何活得更自在』。」
-                    </p>
-                    <p className="text-white/40 text-sm mt-3">— AI 深度分析評價</p>
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Our Stance Section - Mirror Not Script */}
-      <section 
-        id="stance"
-        ref={(el) => (observerRefs.current['stance'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className={`relative bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0a0a0a] rounded-[40px] p-12 md:p-16 border border-amber-500/20 shadow-[0_0_80px_rgba(251,191,36,0.1)] transition-all duration-1000 ${isVisible['stance'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-amber-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-amber-500/30 rounded-br-[40px]" />
-            
-            <div className="text-center mb-12">
-              <Shield className="h-16 w-16 text-amber-400 mx-auto mb-6 animate-float" />
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-white">
-                三條底線
-              </h2>
-            </div>
-            
-            <div className="space-y-10 font-serif text-xl leading-relaxed">
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">說真話。</p>
-                <p className="text-white/50">確定的事說確定，不確定的事標出來。不用「可能」「大概」來模糊界線。有依據的附依據，沒有的就直接說沒有。</p>
-              </div>
-              
-              <div className="flex items-center justify-center gap-4">
-                <div className="w-20 h-px bg-gradient-to-r from-transparent to-amber-500/50" />
-                <Gem className="w-6 h-6 text-amber-400 animate-bounce-soft" />
-                <div className="w-20 h-px bg-gradient-to-l from-transparent to-amber-500/50" />
-              </div>
-              
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">不替你做決定。</p>
-                <p className="text-white/50">報告翻結構、問問題、給選項。你拿這些去做什麼決定，是你的事。神煞不拿來嚇人，一律翻譯成可理解的心理狀態和能量模式。</p>
-              </div>
-              
-              <div className="flex items-center justify-center gap-4">
-                <div className="w-20 h-px bg-gradient-to-r from-transparent to-amber-500/50" />
-                <Gem className="w-6 h-6 text-amber-400 animate-bounce-soft" />
-                <div className="w-20 h-px bg-gradient-to-l from-transparent to-amber-500/50" />
-              </div>
-              
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-medium text-white mb-3">你越來越不需要我，就代表我做對了。</p>
-                <p className="text-white/50">命盤是一種語言，不是判決。這份報告的目標是讓你學會自己讀自己——不是讓你依賴任何人。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section with Carousel */}
-      <section 
-        id="testimonials"
-        ref={(el) => (observerRefs.current['testimonials'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['testimonials'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              客戶見證
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl">
-              以下來自我們真實用戶的體驗反饋
-            </p>
-          </div>
-          
-          <TestimonialsCarousel testimonials={testimonials} isVisible={isVisible['testimonials']} />
-        </div>
-      </section>
-
-      {/* Plans & Pricing Section */}
-      <section 
-        id="plans-section" 
-        ref={(el) => (observerRefs.current['plans-section'] = el)}
-        className="py-32 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
-        
-        <FloatingOrb className="top-20 left-10 w-48 h-48 bg-amber-500/5" delay={0} duration={8} />
-        <FloatingOrb className="bottom-40 right-10 w-64 h-64 bg-purple-500/5" delay={3} duration={10} />
-        
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className={`text-center mb-20 transition-all duration-1000 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-              <Crown className="w-4 h-4 text-amber-400 animate-bounce-soft" />
-              <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">Pricing</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              交付內容階梯
-            </h2>
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto">
-              每個產品都有三階方案，遞進式體驗升級
-            </p>
-          </div>
-
-          {/* Plan Tiers Explanation */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 perspective-1000">
-            {[
-              { title: "方案 1｜核心包", subtitle: "報告＋語音導讀＋整合圖", items: planIncludes, accent: false },
-              { title: "方案 2｜深度吸收包", subtitle: "方案1＋語音摘要＋個人簡報", items: plan2Extras, prefix: "包含方案1全部 +", accent: false },
-              { title: "方案 3｜完整校準包", subtitle: "方案2＋摘要影片＋一對一對談", items: plan3Extras, prefix: "包含方案2全部 +", accent: true },
-            ].map((plan, idx) => (
-              <div 
-                key={idx}
-                className={`group relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border transition-all duration-500 card-3d shine-effect overflow-hidden ${plan.accent ? 'border-amber-500/30 glow-border-amber' : 'border-white/10 hover:border-white/30'} ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${0.2 + idx * 0.1}s` }}
-              >
-                <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${plan.accent ? 'bg-amber-500/5' : 'bg-white/5'}`} />
-                <div className={`absolute top-0 right-0 w-20 h-20 opacity-0 group-hover:opacity-100 transition-all duration-500 ${plan.accent ? 'bg-gradient-to-br from-amber-500/20 to-transparent' : 'bg-gradient-to-br from-white/10 to-transparent'}`} style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 0)' }} />
-                
-                <h3 className={`font-serif text-xl font-bold mb-4 relative z-10 transition-all duration-300 group-hover:scale-105 ${plan.accent ? 'text-amber-400 group-hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]' : 'text-white'}`}>{plan.title}</h3>
-                <p className="text-white/50 text-sm mb-6 relative z-10">{plan.subtitle}</p>
-                <div className="space-y-3 relative z-10">
-                  {plan.prefix && <p className="text-xs text-white/40 mb-2">{plan.prefix}</p>}
-                  {plan.items.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 group/item">
-                      <div className={`p-2 rounded-lg ${plan.accent ? 'bg-amber-500/20' : 'bg-white/10'} group-hover/item:scale-110 transition-transform`}>
-                        <item.icon className={`h-4 w-4 ${plan.accent ? 'text-amber-400' : 'text-white/60'}`} />
-                      </div>
-                      <div>
-                        <span className="text-white/80 text-sm font-medium">{item.title}</span>
-                        <span className="text-white/40 text-xs ml-2">{item.desc}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pricing Cards - Four Products */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Flagship Pricing */}
-            <div className={`relative transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.3s' }}>
-              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/40 via-amber-400/40 to-amber-500/40 rounded-[36px] blur-xl opacity-40 animate-gradient-shift bg-[length:200%_200%]" />
-              <div className="relative bg-gradient-to-br from-[#1a1614] via-[#141210] to-[#0a0908] rounded-[32px] p-6 md:p-8 border-2 border-amber-500/30">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-4 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-full text-xs font-bold shadow-[0_0_20px_rgba(251,191,36,0.4)] uppercase tracking-wider">
-                    <Crown className="w-3 h-3" />
-                    個人旗艦版
-                  </span>
-                </div>
-                <div className="text-center mb-6 pt-2">
-                  <h3 className="font-serif text-xl font-bold text-white">使用自己</h3>
-                  <p className="text-white/40 text-xs mt-2">10 章節・10,000-12,000 字</p>
-                </div>
-                <div className="space-y-3">
-                  {flagshipPricing.map((item, idx) => (
-                    <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300">
-                      <div>
-                        <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                        <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                      </div>
-                      <div className="text-right">
-                        <BlurredPrice color="text-amber-400 text-lg font-bold" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 pt-4 border-t border-amber-500/20">
-                  <p className="text-amber-400/50 text-xs text-center">完整思維系統・人生操作手冊</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* 感情合盤 Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-rose-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-rose-500/10 text-rose-300 rounded-full text-sm font-medium mb-3">感情合盤</span>
-                <h3 className="font-serif text-xl font-bold text-white">關係結構解讀</h3>
-                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
-              </div>
-              <div className="space-y-3">
-                {lovePricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-rose-500/5 hover:bg-rose-500/10 border border-rose-500/10 hover:border-rose-500/20 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <BlurredPrice color="text-rose-300 text-lg font-bold" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-white/30 text-xs text-center">伴侶/對象關係結構分析</p>
-              </div>
-            </div>
-            
-            {/* 商業合盤 Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-blue-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.5s' }}>
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-300 rounded-full text-sm font-medium mb-3">商業合盤</span>
-                <h3 className="font-serif text-xl font-bold text-white">合作結構解讀</h3>
-                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
-              </div>
-              <div className="space-y-3">
-                {businessPricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <BlurredPrice color="text-blue-300 text-lg font-bold" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-white/30 text-xs text-center">合夥/僱傭/師徒關係分析</p>
-              </div>
-            </div>
-            
-            {/* 親子合盤 Pricing */}
-            <div className={`bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-[32px] p-6 md:p-8 border border-emerald-500/20 transition-all duration-700 ${isVisible['plans-section'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.6s' }}>
-              <div className="text-center mb-6">
-                <span className="inline-block px-4 py-1.5 bg-emerald-500/10 text-emerald-300 rounded-full text-sm font-medium mb-3">親子合盤</span>
-                <h3 className="font-serif text-xl font-bold text-white">教養結構解讀</h3>
-                <p className="text-white/40 text-xs mt-2">須先完成個人旗艦版</p>
-              </div>
-              <div className="space-y-3">
-                {parentChildPricing.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between p-4 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 hover:border-emerald-500/20 transition-all duration-300">
-                    <div>
-                      <h4 className="font-bold text-white text-sm">{item.plan}</h4>
-                      <p className="text-white/40 text-xs">{item.days} 個工作天</p>
-                    </div>
-                    <div className="text-right">
-                      <BlurredPrice color="text-emerald-300 text-lg font-bold" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="text-white/30 text-xs text-center">親子能量匹配與教養策略</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section 
-        id="process"
-        ref={(el) => (observerRefs.current['process'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['process'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              製作流程
-            </h2>
-            <p className="text-white/50 text-lg">從訂單到交付，清楚明瞭</p>
-          </div>
-          
-          <div className="relative">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-amber-500/50 via-amber-500/20 to-transparent" />
-            
-            <div className="space-y-12">
-              {processSteps.map((step, index) => (
-                <div 
-                  key={index}
-                  className={`relative flex items-start gap-8 transition-all duration-700 ${isVisible['process'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-                  style={{ transitionDelay: `${index * 0.15}s` }}
-                >
-                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-amber-500 border-4 border-[#0a0a0a] shadow-[0_0_20px_rgba(251,191,36,0.5)]" />
-                  
-                  <div className={`flex-1 ${index % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16 md:ml-auto'} pl-16 md:pl-0`}>
-                    <div className="group inline-block">
-                      <div className="flex items-center gap-4 mb-3 md:justify-end">
-                        <span className="text-4xl font-bold text-amber-500/30 group-hover:text-amber-500/50 transition-colors">{step.step}</span>
-                        <h3 className="font-serif text-xl font-bold text-white group-hover:text-amber-300 transition-colors">{step.title}</h3>
-                      </div>
-                      <p className="text-white/50">{step.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Delivery Format Section */}
-      <section 
-        id="delivery"
-        ref={(el) => (observerRefs.current['delivery'] = el)}
-        className="py-24 px-4 relative"
-      >
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['delivery'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-              交付形式
-            </h2>
-            <p className="text-white/50 text-lg">全方案一致</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              { icon: Globe, title: "網頁閱讀版", desc: "方便回查", color: "from-blue-500 to-cyan-500" },
-              { icon: Download, title: "PDF 下載列印版", desc: "可保存成個人秘笈", color: "from-amber-500 to-orange-500" },
-            ].map((item, idx) => (
-              <div 
-                key={idx}
-                className={`group relative transition-all duration-700 ${isVisible['delivery'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
-                style={{ transitionDelay: `${0.2 + idx * 0.15}s` }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 rounded-3xl blur-xl transition-opacity duration-500`} />
-                <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-10 border border-white/10 hover:border-amber-500/20 transition-all duration-500 text-center group-hover:-translate-y-2">
-                  <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r ${item.color} mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                    <item.icon className="h-10 w-10 text-white" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-white mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/50 text-lg">
-                    {item.desc}
-                  </p>
-                </div>
+                <h3 className="font-serif text-xl font-bold text-white mb-1">{system.name}</h3>
+                <p className="text-amber-400 text-sm mb-3">{system.meaning}</p>
+                <p className="text-white/50 text-sm">{system.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
-      
-      {/* AI Evaluation Section */}
-      <section 
-        id="ai-evaluation"
-        ref={(el) => (observerRefs.current['ai-evaluation'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent" />
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['ai-evaluation'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-6">
-              <Brain className="w-4 h-4 text-purple-400" />
-              <span className="text-purple-300 text-sm font-medium">AI 專業評價</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              多方 AI 專業認證
-            </h2>
-            <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              我們的報告經過多個 AI 系統深度分析與評估，獲得高度肯定
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {aiEvaluations.map((evaluation, idx) => (
-              <div 
-                key={idx}
-                className={`group relative transition-all duration-700 ${isVisible['ai-evaluation'] ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
-                style={{ transitionDelay: `${0.2 + idx * 0.15}s` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-amber-500/10 opacity-0 group-hover:opacity-100 rounded-3xl blur-xl transition-opacity duration-500" />
-                <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-3xl p-8 border border-white/10 hover:border-purple-500/30 transition-all duration-500 h-full">
-                  <div className="text-center mb-6">
-                    <div className="text-4xl font-black bg-gradient-to-r from-purple-400 to-amber-400 bg-clip-text text-transparent mb-2">
-                      {evaluation.score}
-                    </div>
-                    <div className="text-xs text-white/40 uppercase tracking-wider">{evaluation.source}</div>
-                  </div>
-                  
-                  <h3 className="font-serif text-xl font-bold text-white mb-4 text-center">
-                    {evaluation.title}
-                  </h3>
-                  
-                  <ul className="space-y-3">
-                    {evaluation.highlights.map((highlight, i) => (
-                      <li key={i} className="flex items-start gap-2 text-white/60 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className={`mt-12 text-center transition-all duration-1000 delay-500 ${isVisible['ai-evaluation'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="text-white/40 text-sm italic">
-              "這不是算命，這是心靈的精密工業。" — AI 綜合評價
-            </p>
-          </div>
-        </div>
-      </section>
-      
-      {/* Interactive Self-Check Quiz Section */}
-      <section 
-        id="self-check"
-        ref={(el) => (observerRefs.current['self-check'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 via-transparent to-purple-900/10" />
-        <FloatingOrb className="top-20 right-1/4 w-48 h-48 bg-amber-500/10" delay={0} duration={5} />
-        <FloatingOrb className="bottom-20 left-1/4 w-32 h-32 bg-purple-500/10" delay={1.5} duration={4} />
-        
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className={`relative bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0d0d0d] rounded-[40px] p-12 md:p-16 border border-amber-500/20 shadow-[0_0_80px_rgba(251,191,36,0.1)] transition-all duration-1000 ${isVisible['self-check'] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-amber-500/30 rounded-tl-[40px]" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-purple-500/30 rounded-br-[40px]" />
-            
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/30 mb-6">
-                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-                <span className="text-amber-300 text-sm font-medium">互動體驗</span>
-              </div>
-              
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                一分鐘探索你的<span className="text-amber-400">思維類型</span>
-              </h2>
-              
-              <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
-                完成 5 道簡單問題，初步了解你的決策傾向與思維模式。
-                <br />
-                <span className="text-amber-300/70">這只是完整報告的冰山一角。</span>
-              </p>
-              
-              <div className="flex flex-wrap justify-center gap-4 mb-10">
-                {[
-                  { icon: Heart, label: "情緒", color: "from-rose-400 to-pink-500" },
-                  { icon: Zap, label: "行動", color: "from-amber-400 to-yellow-500" },
-                  { icon: Brain, label: "心智", color: "from-blue-400 to-cyan-500" },
-                  { icon: Target, label: "價值", color: "from-purple-400 to-violet-500" },
-                ].map((dim, i) => (
-                  <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                    <div className={`p-1.5 rounded-lg bg-gradient-to-r ${dim.color}`}>
-                      <dim.icon className="w-3 h-3 text-white" />
-                    </div>
-                    <span className="text-white/60 text-sm">{dim.label}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <Button
-                size="lg"
-                onClick={() => setShowQuiz(true)}
-                className="group text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-6 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 hover:from-amber-400 hover:to-purple-400 text-white font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105 active:scale-95 min-h-[56px]"
-              >
-                <Sparkles className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                開始測驗
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Self Check Quiz Dialog */}
-      <SelfCheckQuiz 
-        open={showQuiz} 
-        onOpenChange={setShowQuiz}
-        onComplete={() => scrollToPlans()}
-      />
-      
-      {/* FAQ Section */}
-      <section 
+
+      {/* ═══ 區塊 6: FAQ ═══ */}
+      <section
         id="faq"
         ref={(el) => (observerRefs.current['faq'] = el)}
-        className="py-24 px-4 relative overflow-hidden"
+        className="py-24 px-4 relative"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-900/5 to-transparent" />
-        <div className="container mx-auto max-w-4xl relative z-10">
+        <div className="container mx-auto max-w-3xl relative z-10">
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible['faq'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <HelpCircle className="h-16 w-16 text-amber-400 mx-auto mb-6 animate-float" />
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
               常見問題
             </h2>
           </div>
-          
-          <div className="space-y-6">
+
+          <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div 
-                key={index}
-                className={`group bg-gradient-to-r from-[#1a1a1a] to-[#0f0f0f] rounded-3xl p-8 md:p-10 border border-white/5 hover:border-amber-500/20 transition-all duration-500 hover:-translate-y-1 ${isVisible['faq'] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-                style={{ transitionDelay: `${index * 0.1}s` }}
-              >
-                <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4 flex items-start gap-4">
-                  <span className="text-amber-400 animate-bounce-soft" style={{ animationDelay: `${index * 0.2}s` }}>Q</span>
-                  {faq.q}
-                </h3>
-                <p className="text-white/60 text-lg leading-relaxed pl-8">
-                  <span className="text-amber-400/60">A：</span>{faq.a}
-                </p>
-              </div>
+              <Collapsible key={index}>
+                <CollapsibleTrigger className="w-full group">
+                  <div className={`flex items-center justify-between gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/[0.07] transition-all duration-300 text-left min-h-[52px] ${isVisible['faq'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${index * 0.05}s` }}>
+                    <span className="text-white/90 font-medium text-base">{faq.q}</span>
+                    <ChevronDown className="w-5 h-5 text-amber-400/60 flex-shrink-0 group-data-[state=open]:rotate-180 transition-transform" />
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="px-5 pb-4 pt-2 animate-accordion-down">
+                  <p className="text-white/60 text-sm leading-relaxed">{faq.a}</p>
+                </CollapsibleContent>
+              </Collapsible>
             ))}
           </div>
         </div>
       </section>
-      
-      {/* Privacy & Disclaimer Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl space-y-6">
-          <div className="group flex items-start gap-4 p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/20 transition-all duration-300">
-            <Lock className="h-6 w-6 text-amber-400/60 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-            <div>
-              <h3 className="font-medium text-white/80 mb-3">隱私原則</h3>
-              <ul className="text-white/50 leading-relaxed space-y-2">
-                <li>• 個人資料與命盤內容僅用於本次報告製作，不對外分享</li>
-                <li>• 若需作為試閱示例，必須取得當事人明確同意並完成匿名化處理</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="group flex items-start gap-4 p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/20 transition-all duration-300">
-            <AlertTriangle className="h-6 w-6 text-amber-400/60 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-            <div>
-              <h3 className="font-medium text-white/80 mb-2">免責聲明</h3>
-              <p className="text-white/50 leading-relaxed">
-                本報告屬命理分析與自我探索工具，提供生活與決策參考，不取代醫療、心理、法律或投資等專業意見。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Final CTA Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-transparent" />
-        
-        <FloatingOrb className="top-10 left-1/4 w-64 h-64 bg-amber-500/10" delay={0} duration={6} />
-        <FloatingOrb className="bottom-10 right-1/4 w-48 h-48 bg-purple-500/10" delay={2} duration={5} />
-        
-        <div className="container mx-auto max-w-4xl relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-8">
-            <TrendingUp className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-300 text-sm font-medium">開始你的人生校準</span>
-          </div>
-          
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8">
-            你的結構，值得<span className="text-amber-400">被完整翻開</span>。
-          </h2>
-          
-          <p className="text-white/60 text-lg md:text-xl mb-6 max-w-2xl mx-auto">
-            個人旗艦版，或加上合盤解讀——看你現在卡在哪裡。
-          </p>
-          <p className="text-white/60 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
-            帶著你的問題來，我們翻結構、問問題、給選項。
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center px-4">
-            <Button 
-              size="xl" 
-              className="group text-base sm:text-lg px-10 sm:px-12 py-6 sm:py-7 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_80px_rgba(251,191,36,0.5)] transition-all duration-500 transform hover:scale-105 active:scale-95 min-h-[56px]"
-              onClick={scrollToPlans}
-            >
-              選擇你的方案
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-2 transition-transform" />
-            </Button>
-          </div>
-        </div>
-      </section>
-      
+
       <PublicFooter />
     </div>
   );
