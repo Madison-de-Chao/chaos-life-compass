@@ -236,6 +236,30 @@ const ReportPage = () => {
         </div>
       </section>
 
+      {/* ═══ 推廣曲影片 ═══ */}
+      <section className="py-16 md:py-24 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-amber-900/5 to-[#0a0a0a]" />
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className="text-center mb-8">
+            <p className="text-amber-400/70 text-sm tracking-widest uppercase mb-2">♪ 推廣曲</p>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white/90">
+              《最好的閨蜜（總能讀懂你）》
+            </h2>
+            <p className="text-white/40 text-sm mt-2">虹靈御所命理解讀系統推廣曲</p>
+          </div>
+          <div className="relative rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(251,191,36,0.1)]">
+            <video
+              controls
+              preload="metadata"
+              className="w-full aspect-video bg-black"
+              poster=""
+            >
+              <source src="/videos/guimi-promo.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ 區塊 1: 雙產品線介紹 ═══ */}
       <section
         id="dual-products"
