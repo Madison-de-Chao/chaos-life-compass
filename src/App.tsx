@@ -33,7 +33,7 @@ import PortalPage from "./pages/public/PortalPage";
 import HomePage from "./pages/public/HomePage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
-import CompassPage from "./pages/public/CompassPage";
+
 import NotePage from "./pages/public/NotePage";
 import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
@@ -123,7 +123,7 @@ const App = () => (
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/chaoxuan" element={<ChaoxuanPage />} />
                 <Route path="/reports" element={<ReportPage />} />
-                <Route path="/reports/compass" element={<CompassPage />} />
+                
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/notes/:shareLink" element={<NotePage />} />
                 <Route path="/universe" element={<UniversePage />} />
