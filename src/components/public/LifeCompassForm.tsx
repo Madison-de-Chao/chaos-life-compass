@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -163,10 +163,8 @@ const LifeCompassForm = () => {
 
   // 計算各維度分數（示意）
   const calculateDimensionScores = () => {
-    // 這裡用簡化的邏輯來示意，實際會有更複雜的交叉整合演算法
     const baseScore = 50;
-    const variance = () => Math.floor(Math.random() * 40) + 30; // 30-70 隨機
-    
+    const variance = () => Math.floor(Math.random() * 40) + 30;
     return {
       core: formData.ziWeiMainStar ? variance() : baseScore,
       emotion: formData.moonSign ? variance() : baseScore,
@@ -175,7 +173,51 @@ const LifeCompassForm = () => {
     };
   };
 
-  const scores = showResults ? calculateDimensionScores() : null;
+  const scoresRef = useRef<ReturnType<typeof calculateDimensionScores> | null>(null);
+  if (showResults && !scoresRef.current) {
+    scoresRef.current = calculateDimensionScores();
+  }
+  if (!showResults) {
+    scoresRef.current = null;
+  }
+  const scores = scoresRef.current;
+
+  // Animated count-up hook
+  const [animatedScores, setAnimatedScores] = useState({ core: 0, emotion: 0, career: 0, relationship: 0 });
+  const [revealStage, setRevealStage] = useState(0); // 0=hidden, 1=radar, 2=cards, 3=summary, 4=cta
+
+  useEffect(() => {
+    if (!showResults || !scores) {
+      setAnimatedScores({ core: 0, emotion: 0, career: 0, relationship: 0 });
+      setRevealStage(0);
+      return;
+    }
+    // Stagger reveal stages
+    const t1 = setTimeout(() => setRevealStage(1), 300);
+    const t2 = setTimeout(() => setRevealStage(2), 900);
+    const t3 = setTimeout(() => setRevealStage(3), 1400);
+    const t4 = setTimeout(() => setRevealStage(4), 1800);
+
+    // Animate scores counting up
+    const duration = 1200;
+    const startTime = Date.now();
+    const target = scores;
+    const frame = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setAnimatedScores({
+        core: Math.round(target.core * ease),
+        emotion: Math.round(target.emotion * ease),
+        career: Math.round(target.career * ease),
+        relationship: Math.round(target.relationship * ease),
+      });
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+    const startDelay = setTimeout(() => requestAnimationFrame(frame), 400);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(startDelay); };
+  }, [showResults, scores]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -555,116 +597,160 @@ const LifeCompassForm = () => {
           </>
         ) : (
           /* Results View */
-          <div className="space-y-6 animate-fade-in">
-            <div className="text-center mb-6">
+          <div className="space-y-6">
+            {/* Header - always visible */}
+            <div className={`text-center mb-6 transition-all duration-700 ${revealStage >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 mb-4">
-                <Compass className="w-8 h-8 text-emerald-400 animate-spin-slow" />
+                <Compass className={`w-8 h-8 text-emerald-400 ${revealStage >= 1 ? 'animate-spin' : ''}`} style={{ animationDuration: '2s', animationIterationCount: 1 }} />
               </div>
-              <h3 className="font-serif text-xl font-bold text-white">你的人生羅盤</h3>
-              <p className="text-white/50 text-sm mt-1">四系統交叉整合分析結果</p>
+              <h3 className="font-serif text-xl font-bold text-foreground">你的人生羅盤</h3>
+              <p className="text-muted-foreground text-sm mt-1">四系統交叉整合分析結果</p>
             </div>
 
-            {/* Radar Chart Placeholder - 四維度視覺化 */}
-            <div className="relative w-full aspect-square max-w-xs mx-auto">
-              {/* Background circles */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-full h-full rounded-full border border-white/10" />
-                <div className="absolute w-3/4 h-3/4 rounded-full border border-white/10" />
-                <div className="absolute w-1/2 h-1/2 rounded-full border border-white/10" />
-                <div className="absolute w-1/4 h-1/4 rounded-full border border-white/10" />
-              </div>
-              
-              {/* Dimension Labels & Scores */}
-              {analysisDimensions.map((dim, idx) => {
-                const angle = (idx * 90 - 90) * (Math.PI / 180);
-                const radius = 45;
-                const x = 50 + radius * Math.cos(angle);
-                const y = 50 + radius * Math.sin(angle);
-                const score = scores ? scores[dim.id as keyof typeof scores] : 50;
+            {/* Radar Chart */}
+            <div className={`transition-all duration-700 delay-200 ${revealStage >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+              <div className="relative w-full aspect-square max-w-xs mx-auto">
+                {/* Background circles with pulse */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {[100, 75, 50, 25].map((size, i) => (
+                    <div
+                      key={size}
+                      className={`absolute rounded-full border border-white/10 transition-all duration-700`}
+                      style={{
+                        width: `${size}%`,
+                        height: `${size}%`,
+                        transitionDelay: `${i * 150}ms`,
+                        opacity: revealStage >= 1 ? 1 : 0,
+                        transform: revealStage >= 1 ? 'scale(1)' : 'scale(0.5)',
+                      }}
+                    />
+                  ))}
+                </div>
                 
-                return (
-                  <div
-                    key={dim.id}
-                    className="absolute flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2"
-                    style={{ left: `${x}%`, top: `${y}%` }}
-                  >
-                    <div className={`p-2 rounded-full bg-gradient-to-br ${dim.color} mb-1`}>
-                      <dim.icon className="w-4 h-4 text-white" />
+                {/* Dimension Labels & Animated Scores */}
+                {analysisDimensions.map((dim, idx) => {
+                  const angle = (idx * 90 - 90) * (Math.PI / 180);
+                  const radius = 45;
+                  const x = 50 + radius * Math.cos(angle);
+                  const y = 50 + radius * Math.sin(angle);
+                  const animScore = animatedScores[dim.id as keyof typeof animatedScores];
+                  
+                  return (
+                    <div
+                      key={dim.id}
+                      className="absolute flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500"
+                      style={{
+                        left: `${x}%`,
+                        top: `${y}%`,
+                        transitionDelay: `${idx * 200 + 400}ms`,
+                        opacity: revealStage >= 1 ? 1 : 0,
+                        transform: `translate(-50%, -50%) ${revealStage >= 1 ? 'scale(1)' : 'scale(0)'}`,
+                      }}
+                    >
+                      <div className={`p-2 rounded-full bg-gradient-to-br ${dim.color} mb-1 transition-shadow duration-500`}
+                        style={{ boxShadow: revealStage >= 1 ? `0 0 20px ${idx === 0 ? 'rgba(168,85,247,0.4)' : idx === 1 ? 'rgba(239,68,68,0.4)' : idx === 2 ? 'rgba(59,130,246,0.4)' : 'rgba(16,185,129,0.4)'}` : 'none' }}>
+                        <dim.icon className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-xs text-muted-foreground font-medium">{dim.name}</span>
+                      <span className="text-lg font-bold text-foreground tabular-nums">{animScore}</span>
                     </div>
-                    <span className="text-xs text-white/70 font-medium">{dim.name}</span>
-                    <span className="text-lg font-bold text-white">{score}</span>
+                  );
+                })}
+                
+                {/* Center pulse */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 flex items-center justify-center transition-all duration-700 ${revealStage >= 1 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}>
+                    <span className="text-emerald-400 text-xs font-bold">YOU</span>
                   </div>
-                );
-              })}
-              
-              {/* Center */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 flex items-center justify-center">
-                  <span className="text-emerald-400 text-xs font-bold">YOU</span>
                 </div>
               </div>
             </div>
 
-            {/* Dimension Details */}
+            {/* Dimension Detail Cards - staggered */}
             <div className="grid grid-cols-2 gap-3">
-              {analysisDimensions.map((dim) => {
-                const score = scores ? scores[dim.id as keyof typeof scores] : 50;
+              {analysisDimensions.map((dim, idx) => {
+                const animScore = animatedScores[dim.id as keyof typeof animatedScores];
                 return (
-                  <div key={dim.id} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div
+                    key={dim.id}
+                    className="bg-white/5 rounded-xl p-4 border border-white/10 transition-all duration-500"
+                    style={{
+                      transitionDelay: `${idx * 150}ms`,
+                      opacity: revealStage >= 2 ? 1 : 0,
+                      transform: revealStage >= 2 ? 'translateY(0)' : 'translateY(20px)',
+                    }}
+                  >
                     <div className="flex items-center gap-2 mb-2">
                       <div className={`p-1.5 rounded-lg bg-gradient-to-br ${dim.color}`}>
                         <dim.icon className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-sm font-bold text-white">{dim.name}</span>
+                      <span className="text-sm font-bold text-foreground">{dim.name}</span>
                     </div>
                     <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
                       <div
-                        className={`h-full bg-gradient-to-r ${dim.color} transition-all duration-1000`}
-                        style={{ width: `${score}%` }}
+                        className={`h-full bg-gradient-to-r ${dim.color} rounded-full`}
+                        style={{
+                          width: `${animScore}%`,
+                          transition: 'width 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                        }}
                       />
                     </div>
-                    <p className="text-xs text-white/50">{dim.description}</p>
+                    <p className="text-xs text-muted-foreground">{dim.description}</p>
                   </div>
                 );
               })}
             </div>
 
             {/* Input Summary */}
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="text-sm font-bold text-white mb-3">您的輸入數據</h4>
+            <div
+              className="bg-white/5 rounded-xl p-4 border border-white/10 transition-all duration-500"
+              style={{
+                opacity: revealStage >= 3 ? 1 : 0,
+                transform: revealStage >= 3 ? 'translateY(0)' : 'translateY(16px)',
+              }}
+            >
+              <h4 className="text-sm font-bold text-foreground mb-3">您的輸入數據</h4>
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="text-white/40">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStar || '未填'}</span></div>
-                <div className="text-white/40">太陽星座：<span className="text-blue-300">{formData.sunSign || '未填'}</span></div>
-                <div className="text-white/40">月亮星座：<span className="text-blue-300">{formData.moonSign || '未填'}</span></div>
-                <div className="text-white/40">人類圖類型：<span className="text-emerald-300">{formData.hdType || '未填'}</span></div>
+                <div className="text-muted-foreground">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStar || '未填'}</span></div>
+                <div className="text-muted-foreground">太陽星座：<span className="text-blue-300">{formData.sunSign || '未填'}</span></div>
+                <div className="text-muted-foreground">月亮星座：<span className="text-blue-300">{formData.moonSign || '未填'}</span></div>
+                <div className="text-muted-foreground">人類圖類型：<span className="text-emerald-300">{formData.hdType || '未填'}</span></div>
               </div>
             </div>
 
             {/* CTA */}
-            <div className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 rounded-xl p-4 border border-amber-500/30">
-              <p className="text-amber-300/90 text-sm text-center mb-3">
-                想要完整的四系統深度解析報告？
-              </p>
+            <div
+              className="transition-all duration-500"
+              style={{
+                opacity: revealStage >= 4 ? 1 : 0,
+                transform: revealStage >= 4 ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
+              }}
+            >
+              <div className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 rounded-xl p-4 border border-amber-500/30">
+                <p className="text-amber-300/90 text-sm text-center mb-3">
+                  想要完整的四系統深度解析報告？
+                </p>
+                <Button
+                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold min-h-[48px] text-base active:scale-95"
+                  onClick={() => {
+                    setOpen(false);
+                    document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  查看完整報告方案
+                </Button>
+              </div>
+
               <Button
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold min-h-[48px] text-base active:scale-95"
-                onClick={() => {
-                  setOpen(false);
-                  document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                variant="ghost"
+                onClick={handleReset}
+                className="w-full text-muted-foreground hover:text-foreground mt-3 min-h-[48px] text-base active:scale-95"
               >
-                <Sparkles className="w-5 h-5 mr-2" />
-                查看完整報告方案
+                <RotateCcw className="w-5 h-5 mr-2" />
+                重新填寫
               </Button>
             </div>
-
-            <Button
-              variant="ghost"
-              onClick={handleReset}
-              className="w-full text-white/40 hover:text-white/60 min-h-[48px] text-base active:scale-95"
-            >
-              <RotateCcw className="w-5 h-5 mr-2" />
-              重新填寫
-            </Button>
           </div>
         )}
       </DialogContent>
