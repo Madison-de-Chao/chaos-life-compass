@@ -166,7 +166,7 @@ const LifeCompassForm = () => {
     const baseScore = 50;
     const variance = () => Math.floor(Math.random() * 40) + 30;
     return {
-      core: formData.ziWeiMainStar ? variance() : baseScore,
+      core: formData.ziWeiMainStars.length > 0 ? variance() : baseScore,
       emotion: formData.moonSign ? variance() : baseScore,
       career: formData.tenthHousePlanet ? variance() : baseScore,
       relationship: formData.venusSign ? variance() : baseScore,
