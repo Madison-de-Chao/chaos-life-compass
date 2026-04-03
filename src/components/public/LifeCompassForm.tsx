@@ -734,7 +734,7 @@ const LifeCompassForm = () => {
             >
               <h4 className="text-sm font-bold text-foreground mb-3">您的輸入數據</h4>
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="text-muted-foreground">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStar || '未填'}</span></div>
+                <div className="text-muted-foreground">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStars.length > 0 ? formData.ziWeiMainStars.join('、') : '未填'}</span></div>
                 <div className="text-muted-foreground">太陽星座：<span className="text-blue-300">{formData.sunSign || '未填'}</span></div>
                 <div className="text-muted-foreground">月亮星座：<span className="text-blue-300">{formData.moonSign || '未填'}</span></div>
                 <div className="text-muted-foreground">人類圖類型：<span className="text-emerald-300">{formData.hdType || '未填'}</span></div>
