@@ -87,7 +87,7 @@ interface FormData {
   birthMinute: string;
   gender: string;
   // 紫微斗數
-  ziWeiMainStar: string;
+  ziWeiMainStars: string[];
   ziWeiBodyStar: string;
   // 占星
   sunSign: string;
