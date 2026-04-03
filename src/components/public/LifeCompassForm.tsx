@@ -108,7 +108,7 @@ const initialFormData: FormData = {
   birthHour: "",
   birthMinute: "",
   gender: "",
-  ziWeiMainStar: "",
+  ziWeiMainStars: [],
   ziWeiBodyStar: "",
   sunSign: "",
   moonSign: "",
