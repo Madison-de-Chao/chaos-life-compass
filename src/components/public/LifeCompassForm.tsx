@@ -87,7 +87,7 @@ interface FormData {
   birthMinute: string;
   gender: string;
   // 紫微斗數
-  ziWeiMainStar: string;
+  ziWeiMainStars: string[];
   ziWeiBodyStar: string;
   // 占星
   sunSign: string;
@@ -108,7 +108,7 @@ const initialFormData: FormData = {
   birthHour: "",
   birthMinute: "",
   gender: "",
-  ziWeiMainStar: "",
+  ziWeiMainStars: [],
   ziWeiBodyStar: "",
   sunSign: "",
   moonSign: "",
@@ -166,7 +166,7 @@ const LifeCompassForm = () => {
     const baseScore = 50;
     const variance = () => Math.floor(Math.random() * 40) + 30;
     return {
-      core: formData.ziWeiMainStar ? variance() : baseScore,
+      core: formData.ziWeiMainStars.length > 0 ? variance() : baseScore,
       emotion: formData.moonSign ? variance() : baseScore,
       career: formData.tenthHousePlanet ? variance() : baseScore,
       relationship: formData.venusSign ? variance() : baseScore,
@@ -365,19 +365,42 @@ const LifeCompassForm = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <Label className="text-white/60 text-sm">命宮主星</Label>
-                    <Select value={formData.ziWeiMainStar} onValueChange={(v) => updateFormData("ziWeiMainStar", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
-                        <SelectValue placeholder="選擇命宮主星" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#1a1a1a] border-white/10">
-                        {ziWeiStars.map((star) => (
-                          <SelectItem key={star} value={star} className="text-white hover:bg-white/10">
+                    <Label className="text-white/60 text-sm">命宮主星（可選 1-2 顆）</Label>
+                    <div className="grid grid-cols-4 gap-2 mt-2">
+                      {ziWeiStars.map((star) => {
+                        const isSelected = formData.ziWeiMainStars.includes(star);
+                        const isDisabled = !isSelected && formData.ziWeiMainStars.length >= 2;
+                        return (
+                          <button
+                            key={star}
+                            type="button"
+                            disabled={isDisabled}
+                            onClick={() => {
+                              const current = formData.ziWeiMainStars;
+                              if (isSelected) {
+                                updateFormData("ziWeiMainStars", current.filter((s: string) => s !== star) as any);
+                              } else {
+                                updateFormData("ziWeiMainStars", [...current, star] as any);
+                              }
+                            }}
+                            className={`px-2 py-2 rounded-lg text-xs font-medium transition-all min-h-[44px] ${
+                              isSelected
+                                ? 'bg-purple-500/30 border-purple-400/60 text-purple-200 border'
+                                : isDisabled
+                                ? 'bg-white/3 border-white/5 text-white/20 border cursor-not-allowed'
+                                : 'bg-white/5 border-white/10 text-white/70 border hover:bg-white/10 hover:text-white'
+                            }`}
+                          >
                             {star}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {formData.ziWeiMainStars.length > 0 && (
+                      <p className="text-xs text-purple-300/70 mt-1.5">
+                        已選：{formData.ziWeiMainStars.join('、')}
+                      </p>
+                    )}
                   </div>
                   
                   <div>
@@ -711,7 +734,7 @@ const LifeCompassForm = () => {
             >
               <h4 className="text-sm font-bold text-foreground mb-3">您的輸入數據</h4>
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="text-muted-foreground">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStar || '未填'}</span></div>
+                <div className="text-muted-foreground">紫微命宮：<span className="text-purple-300">{formData.ziWeiMainStars.length > 0 ? formData.ziWeiMainStars.join('、') : '未填'}</span></div>
                 <div className="text-muted-foreground">太陽星座：<span className="text-blue-300">{formData.sunSign || '未填'}</span></div>
                 <div className="text-muted-foreground">月亮星座：<span className="text-blue-300">{formData.moonSign || '未填'}</span></div>
                 <div className="text-muted-foreground">人類圖類型：<span className="text-emerald-300">{formData.hdType || '未填'}</span></div>
