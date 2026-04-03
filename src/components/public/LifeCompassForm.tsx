@@ -365,19 +365,42 @@ const LifeCompassForm = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <Label className="text-white/60 text-sm">命宮主星</Label>
-                    <Select value={formData.ziWeiMainStar} onValueChange={(v) => updateFormData("ziWeiMainStar", v)}>
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white mt-1">
-                        <SelectValue placeholder="選擇命宮主星" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#1a1a1a] border-white/10">
-                        {ziWeiStars.map((star) => (
-                          <SelectItem key={star} value={star} className="text-white hover:bg-white/10">
+                    <Label className="text-white/60 text-sm">命宮主星（可選 1-2 顆）</Label>
+                    <div className="grid grid-cols-4 gap-2 mt-2">
+                      {ziWeiStars.map((star) => {
+                        const isSelected = formData.ziWeiMainStars.includes(star);
+                        const isDisabled = !isSelected && formData.ziWeiMainStars.length >= 2;
+                        return (
+                          <button
+                            key={star}
+                            type="button"
+                            disabled={isDisabled}
+                            onClick={() => {
+                              const current = formData.ziWeiMainStars;
+                              if (isSelected) {
+                                updateFormData("ziWeiMainStars", current.filter((s: string) => s !== star) as any);
+                              } else {
+                                updateFormData("ziWeiMainStars", [...current, star] as any);
+                              }
+                            }}
+                            className={`px-2 py-2 rounded-lg text-xs font-medium transition-all min-h-[44px] ${
+                              isSelected
+                                ? 'bg-purple-500/30 border-purple-400/60 text-purple-200 border'
+                                : isDisabled
+                                ? 'bg-white/3 border-white/5 text-white/20 border cursor-not-allowed'
+                                : 'bg-white/5 border-white/10 text-white/70 border hover:bg-white/10 hover:text-white'
+                            }`}
+                          >
                             {star}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {formData.ziWeiMainStars.length > 0 && (
+                      <p className="text-xs text-purple-300/70 mt-1.5">
+                        已選：{formData.ziWeiMainStars.join('、')}
+                      </p>
+                    )}
                   </div>
                   
                   <div>
