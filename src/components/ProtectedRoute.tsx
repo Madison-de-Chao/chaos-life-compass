@@ -1,12 +1,15 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useMember } from "@/modules/member";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
+/**
+ * 後台管理路由保護：要求登入且具備 admin 角色
+ */
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useMember();
 
   if (loading) {
     return (
@@ -17,7 +20,11 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/auth/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/account" replace />;
   }
 
   return <>{children}</>;
