@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/modules/member";
 import {
   Sheet,
   SheetContent,
@@ -79,7 +79,7 @@ const navGroups = [
 
 export function Header() {
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useMember();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openGroups, setOpenGroups] = useState<string[]>([]);
 
