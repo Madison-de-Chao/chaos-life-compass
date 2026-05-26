@@ -5,7 +5,7 @@ import { FileUploadZone } from "@/components/FileUploadZone";
 import { FileText, Sparkles, Lock, Share2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/modules/member";
+import { useMember } from "@/modules/member";
 import { parseDocxFile } from "@/lib/parseDocx";
 
 const Index = () => {

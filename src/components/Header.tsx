@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/modules/member";
+import { useMember } from "@/modules/member";
 import {
   Sheet,
   SheetContent,
