@@ -18,7 +18,6 @@ import DashboardPage from "./pages/DashboardPage";
 import FilesPage from "./pages/FilesPage";
 import ViewPage from "./pages/ViewPage";
 import PrintViewPage from "./pages/PrintViewPage";
-import AuthPage from "./pages/AuthPage";
 import EditDocumentPage from "./pages/EditDocumentPage";
 import CustomersPage from "./pages/CustomersPage";
 import FeedbacksPage from "./pages/FeedbacksPage";
