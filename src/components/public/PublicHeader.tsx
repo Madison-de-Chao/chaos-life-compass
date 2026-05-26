@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MemberAuthHeader } from "@/modules/member";
-import { useMember } from "@/hooks/useMember";
+import { useMember } from "@/modules/member";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
 

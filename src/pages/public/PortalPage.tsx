@@ -2,9 +2,9 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { PageLoadingSkeleton } from "@/components/public/PageLoadingSkeleton";
 import { useSEO } from "@/hooks/useSEO";
-import { useMember } from "@/hooks/useMember";
+import { useMember } from "@/modules/member";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
+import { MemberLoginWidget } from "@/modules/member";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn, Compass } from "lucide-react";
 

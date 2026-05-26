@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useProducts, useMyEntitlements } from "@/hooks/useEntitlements";
-import { useMember } from "@/hooks/useMember";
+import { useMember } from "@/modules/member";
 import { Check, X, Clock, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
