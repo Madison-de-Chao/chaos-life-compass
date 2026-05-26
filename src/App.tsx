@@ -52,16 +52,13 @@ import PendingChangesPage from "./pages/admin/PendingChangesPage";
 import IpBlacklistPage from "./pages/admin/IpBlacklistPage";
 import DocumentationPage from "./pages/admin/DocumentationPage";
 
-// Member Pages (Legacy - 虹靈御所專用)
-import MemberAuthPage from "./pages/member/MemberAuthPage";
-import MemberDashboard from "./pages/member/MemberDashboard";
-import MemberProfilePage from "./pages/member/MemberProfilePage";
-
 // Unified Member Pages (統一會員系統)
-import UnifiedAuthPage from "./pages/member/UnifiedAuthPage";
-import UnifiedDashboard from "./pages/member/UnifiedDashboard";
-import UnifiedProfilePage from "./pages/member/UnifiedProfilePage";
-import OAuthAuthorizePage from "./pages/member/OAuthAuthorizePage";
+import {
+  UnifiedAuthPage,
+  UnifiedDashboard,
+  UnifiedProfilePage,
+  OAuthAuthorizePage,
+} from "@/modules/member";
 
 // Public Layout
 import PublicLayout from "./components/public/PublicLayout";
