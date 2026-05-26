@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getNoteByShareLink, getNoteAttachments, incrementNoteViewCount, Note, NoteAttachment } from "@/hooks/useNotes";
-import { useMember } from "@/hooks/useMember";
+import { useMember } from "@/modules/member";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { Button } from "@/components/ui/button";

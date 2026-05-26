@@ -16,12 +16,12 @@ import {
   VolumeX,
   Compass
 } from "lucide-react";
-import { MemberLoginWidget } from "@/components/auth/MemberLoginWidget";
+import { MemberLoginWidget } from "@/modules/member";
 import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
-import { useMember } from "@/hooks/useMember";
+import { useMember } from "@/modules/member";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import momoPortraitRainbow from "@/assets/momo-portrait-rainbow.jpg";
 import momoPortraitCosmic from "@/assets/momo-portrait-cosmic.jpg";
