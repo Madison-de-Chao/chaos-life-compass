@@ -102,96 +102,94 @@ function ChatBotWrapper() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <MemberProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <PageTransition>
-              <Routes>
-                {/* Public routes - 虹靈御所前台 */}
-                <Route path="/" element={<PortalPage />} />
-                <Route path="/portal" element={<PortalPage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/chaoxuan" element={<ChaoxuanPage />} />
-                <Route path="/reports" element={<ReportPage />} />
-                
-                <Route path="/games" element={<GamesPage />} />
-                <Route path="/notes/:shareLink" element={<NotePage />} />
-                <Route path="/universe" element={<UniversePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/privacy" element={<PrivacyPolicyPage />} />
-                <Route path="/terms" element={<TermsOfServicePage />} />
-                <Route path="/notes-public" element={<ComingSoonPage />} />
-                <Route path="/discover" element={<DiscoverPage />} />
-                
-                {/* AI Portal routes - AI 協作入口 */}
-                <Route path="/ai" element={<AIPortalPage />} />
-                <Route path="/ai/worldview" element={<AIWorldviewPage />} />
-                <Route path="/ai/cip" element={<AICIPPage />} />
-                <Route path="/ai/language" element={<AILanguagePage />} />
-                <Route path="/ai/quickstart" element={<AIQuickstartPage />} />
-                <Route path="/ai/dialogue" element={<AIDialoguePage />} />
-                <Route path="/ai/safety" element={<AISafetyPage />} />
-                <Route path="/ai/integrity" element={<AIIntegrityPage />} />
-                
-                {/* MomoChao System routes - 默默超的元壹體系 */}
-                <Route path="/momochao-system" element={<MomochaoSystemPage />} />
-                <Route path="/momochao-system/philosophy" element={<MomochaoPhilosophyPage />} />
-                <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
-                <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
-                
-                {/* Unified Auth routes - 統一會員系統（共用主站導航） */}
-                <Route path="/auth/login" element={<PublicLayout><UnifiedAuthPage /></PublicLayout>} />
-                <Route path="/oauth/authorize" element={<PublicLayout><OAuthAuthorizePage /></PublicLayout>} />
-                <Route path="/account" element={<MemberProtectedRoute><PublicLayout><UnifiedDashboard /></PublicLayout></MemberProtectedRoute>} />
-                <Route path="/account/profile" element={<MemberProtectedRoute><PublicLayout><UnifiedProfilePage /></PublicLayout></MemberProtectedRoute>} />
-                <Route path="/account/products" element={<MemberProtectedRoute><PublicLayout><ProductsPage /></PublicLayout></MemberProtectedRoute>} />
-                
-                {/* Member routes - 虹靈御所會員中心（共用主站導航） */}
-                <Route path="/member/auth" element={<PublicLayout><MemberAuthPage /></PublicLayout>} />
-                <Route path="/member" element={<MemberProtectedRoute><PublicLayout><MemberDashboard /></PublicLayout></MemberProtectedRoute>} />
-                <Route path="/member/profile" element={<MemberProtectedRoute><PublicLayout><MemberProfilePage /></PublicLayout></MemberProtectedRoute>} />
-                
-                {/* Protected routes - Admin dashboard */}
-                <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-                <Route path="/upload" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-                <Route path="/files" element={<ProtectedRoute><FilesPage /></ProtectedRoute>} />
-                <Route path="/edit" element={<ProtectedRoute><EditDocumentPage /></ProtectedRoute>} />
-                <Route path="/customers" element={<ProtectedRoute><CustomersPage /></ProtectedRoute>} />
-                <Route path="/feedbacks" element={<ProtectedRoute><FeedbacksPage /></ProtectedRoute>} />
-                <Route path="/guide" element={<ProtectedRoute><GuidePage /></ProtectedRoute>} />
-                <Route path="/members" element={<ProtectedRoute><MembersPage /></ProtectedRoute>} />
-                <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
-                <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
-                <Route path="/admin/api-keys" element={<ProtectedRoute><ApiKeysPage /></ProtectedRoute>} />
-                <Route path="/admin/oauth-clients" element={<ProtectedRoute><OAuthClientsPage /></ProtectedRoute>} />
-                <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
-                <Route path="/admin/api-docs" element={<ProtectedRoute><ApiDocsPage /></ProtectedRoute>} />
-                <Route path="/admin/logs" element={<ProtectedRoute><AdminLogsPage /></ProtectedRoute>} />
-                <Route path="/admin/pending-changes" element={<ProtectedRoute><PendingChangesPage /></ProtectedRoute>} />
-                <Route path="/admin/ip-blacklist" element={<ProtectedRoute><IpBlacklistPage /></ProtectedRoute>} />
-                <Route path="/admin/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
-                
-                {/* Auth & Public document routes */}
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/view/:shareLink" element={<ViewPage />} />
-                <Route path="/print/:shareLink" element={<PrintViewPage />} />
-                
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<ComingSoonPage />} />
-              </Routes>
-            </PageTransition>
-            <ChatBotWrapper />
-            <PWAInstallPrompt />
-            <CookieConsentBanner />
-            <GoogleAnalytics />
-          </BrowserRouter>
-        </TooltipProvider>
-      </MemberProvider>
-    </AuthProvider>
+    <MemberProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <PageTransition>
+            <Routes>
+              {/* Public routes - 虹靈御所前台 */}
+              <Route path="/" element={<PortalPage />} />
+              <Route path="/portal" element={<PortalPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/chaoxuan" element={<ChaoxuanPage />} />
+              <Route path="/reports" element={<ReportPage />} />
+              
+              <Route path="/games" element={<GamesPage />} />
+              <Route path="/notes/:shareLink" element={<NotePage />} />
+              <Route path="/universe" element={<UniversePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsOfServicePage />} />
+              <Route path="/notes-public" element={<ComingSoonPage />} />
+              <Route path="/discover" element={<DiscoverPage />} />
+              
+              {/* AI Portal routes - AI 協作入口 */}
+              <Route path="/ai" element={<AIPortalPage />} />
+              <Route path="/ai/worldview" element={<AIWorldviewPage />} />
+              <Route path="/ai/cip" element={<AICIPPage />} />
+              <Route path="/ai/language" element={<AILanguagePage />} />
+              <Route path="/ai/quickstart" element={<AIQuickstartPage />} />
+              <Route path="/ai/dialogue" element={<AIDialoguePage />} />
+              <Route path="/ai/safety" element={<AISafetyPage />} />
+              <Route path="/ai/integrity" element={<AIIntegrityPage />} />
+              
+              {/* MomoChao System routes - 默默超的元壹體系 */}
+              <Route path="/momochao-system" element={<MomochaoSystemPage />} />
+              <Route path="/momochao-system/philosophy" element={<MomochaoPhilosophyPage />} />
+              <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
+              <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
+              
+              {/* Unified Auth routes - 統一會員系統（共用主站導航） */}
+              <Route path="/auth/login" element={<PublicLayout><UnifiedAuthPage /></PublicLayout>} />
+              <Route path="/oauth/authorize" element={<PublicLayout><OAuthAuthorizePage /></PublicLayout>} />
+              <Route path="/account" element={<MemberProtectedRoute><PublicLayout><UnifiedDashboard /></PublicLayout></MemberProtectedRoute>} />
+              <Route path="/account/profile" element={<MemberProtectedRoute><PublicLayout><UnifiedProfilePage /></PublicLayout></MemberProtectedRoute>} />
+              <Route path="/account/products" element={<MemberProtectedRoute><PublicLayout><ProductsPage /></PublicLayout></MemberProtectedRoute>} />
+              
+              {/* Legacy member routes — redirect to unified system */}
+              <Route path="/member/auth" element={<Navigate to="/auth/login" replace />} />
+              <Route path="/member" element={<Navigate to="/account" replace />} />
+              <Route path="/member/profile" element={<Navigate to="/account/profile" replace />} />
+              
+              {/* Protected routes - Admin dashboard */}
+              <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+              <Route path="/upload" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+              <Route path="/files" element={<ProtectedRoute><FilesPage /></ProtectedRoute>} />
+              <Route path="/edit" element={<ProtectedRoute><EditDocumentPage /></ProtectedRoute>} />
+              <Route path="/customers" element={<ProtectedRoute><CustomersPage /></ProtectedRoute>} />
+              <Route path="/feedbacks" element={<ProtectedRoute><FeedbacksPage /></ProtectedRoute>} />
+              <Route path="/guide" element={<ProtectedRoute><GuidePage /></ProtectedRoute>} />
+              <Route path="/members" element={<ProtectedRoute><MembersPage /></ProtectedRoute>} />
+              <Route path="/notes" element={<ProtectedRoute><NotesPage /></ProtectedRoute>} />
+              <Route path="/admin/entitlements" element={<ProtectedRoute><EntitlementsPage /></ProtectedRoute>} />
+              <Route path="/admin/api-keys" element={<ProtectedRoute><ApiKeysPage /></ProtectedRoute>} />
+              <Route path="/admin/oauth-clients" element={<ProtectedRoute><OAuthClientsPage /></ProtectedRoute>} />
+              <Route path="/admin/external-api-test" element={<ProtectedRoute><ExternalApiTestPage /></ProtectedRoute>} />
+              <Route path="/admin/api-docs" element={<ProtectedRoute><ApiDocsPage /></ProtectedRoute>} />
+              <Route path="/admin/logs" element={<ProtectedRoute><AdminLogsPage /></ProtectedRoute>} />
+              <Route path="/admin/pending-changes" element={<ProtectedRoute><PendingChangesPage /></ProtectedRoute>} />
+              <Route path="/admin/ip-blacklist" element={<ProtectedRoute><IpBlacklistPage /></ProtectedRoute>} />
+              <Route path="/admin/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
+              
+              {/* Legacy admin auth route — redirect to unified login */}
+              <Route path="/auth" element={<Navigate to="/auth/login" replace />} />
+              <Route path="/view/:shareLink" element={<ViewPage />} />
+              <Route path="/print/:shareLink" element={<PrintViewPage />} />
+              
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<ComingSoonPage />} />
+            </Routes>
+          </PageTransition>
+          <ChatBotWrapper />
+          <PWAInstallPrompt />
+          <CookieConsentBanner />
+          <GoogleAnalytics />
+        </BrowserRouter>
+      </TooltipProvider>
+    </MemberProvider>
   </QueryClientProvider>
 );
 
