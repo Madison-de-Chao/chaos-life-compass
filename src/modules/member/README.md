@@ -51,7 +51,7 @@ import type {
 
 ```tsx
 // ⚠️ Deprecated - 請改用新路徑
-import { useMember } from '@/hooks/useMember';
+import { useMember } from '@/modules/member';
 import { useEntitlements } from '@/hooks/useEntitlements';
 ```
 
