@@ -23,6 +23,8 @@ import {
   Eye,
   ChevronDown,
   Scale,
+  Tag,
+  ShieldCheck,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
