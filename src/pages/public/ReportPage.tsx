@@ -440,7 +440,7 @@ const ReportPage = () => {
               <div className="pt-4 space-y-4 text-sm text-white/60">
                 <div><span className="text-amber-300 font-medium">做什麼：</span>把結構攤開，你自己決定怎麼用</div>
                 <div><span className="text-amber-300 font-medium">方法：</span>四系統強制交叉驗證</div>
-                <div><span className="text-amber-300 font-medium">當系統打架：</span>矛盾是訊號——偏勝偵測矩陣</div>
+                <div><span className="text-amber-300 font-medium">當系統打架：</span>矛盾是訊號——標出偏勝維度</div>
                 <div><span className="text-amber-300 font-medium">給你什麼：</span>8-13 千字結構化書面報告</div>
                 <div><span className="text-amber-300 font-medium">你的角色：</span>自己對照、驗證、使用</div>
                 <div><span className="text-amber-300 font-medium">建議：</span>每章 1-3 步具體可執行操作＋思維工具箱</div>
