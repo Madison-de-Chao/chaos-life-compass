@@ -377,6 +377,147 @@ const ReportPage = () => {
         </div>
       </section>
 
+      {/* ═══ 六七八一對一課程 ═══ */}
+      <section
+        id="course-678"
+        ref={(el) => (observerRefs.current['course-678'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-amber-950/10 to-[#0a0a0a]" />
+        <div className="container mx-auto max-w-4xl relative z-10">
+          <div className={`text-center mb-10 transition-all duration-1000 ${isVisible['course-678'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">每個方案都含</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              「六七八」<span className="text-amber-400">一對一課程</span>
+            </h2>
+            <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+              報告告訴你「你是誰」。六七八教你「拿到結構之後，下一個決定怎麼做」。
+            </p>
+          </div>
+
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 transition-all duration-1000 delay-200 ${isVisible['course-678'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="bg-white/5 rounded-2xl p-6 border border-amber-500/20">
+              <p className="text-amber-400 font-bold text-lg mb-2">六個想法</p>
+              <p className="text-white/50 text-xs mb-3">往內看：我手上有什麼？</p>
+              <p className="text-white/70 text-sm leading-relaxed">定義、拆詞、切分、測試、比較、驗收</p>
+            </div>
+            <div className="bg-white/5 rounded-2xl p-6 border border-amber-500/20">
+              <p className="text-amber-400 font-bold text-lg mb-2">七個問題</p>
+              <p className="text-white/50 text-xs mb-3">往外找：我漏了什麼？</p>
+              <p className="text-white/70 text-sm leading-relaxed">性質、變數、人員、動機、經驗、反面、價值</p>
+            </div>
+            <div className="bg-white/5 rounded-2xl p-6 border border-amber-500/20">
+              <p className="text-amber-400 font-bold text-lg mb-2">八階循環</p>
+              <p className="text-white/50 text-xs mb-3">往前走</p>
+              <p className="text-white/70 text-sm leading-relaxed">怎麼做完一個完整的決定？</p>
+            </div>
+          </div>
+
+          <div className={`bg-gradient-to-br from-amber-900/15 to-transparent rounded-2xl p-6 md:p-8 border border-amber-500/20 transition-all duration-1000 delay-400 ${isVisible['course-678'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-white/70 text-sm md:text-base leading-relaxed mb-4">
+              舉個例子：報告會告訴你「你容易在壓力下逃避」。六七八是當你下個月真的卡在「要不要離職」時，有一套流程逼你問出——我逃避的是這份工作，還是這份工作背後那件更難面對的事？是制度問題，還是只是心情問題？
+            </p>
+            <div className="border-t border-white/10 pt-4 mt-4">
+              <p className="text-amber-300 font-medium text-sm mb-2">為什麼叫「避險基金」</p>
+              <p className="text-white/60 text-sm leading-relaxed">
+                人生最大的浪費不是做錯事，是花三個月做一件從頭到尾就不該做的事。你每用一次六七八避掉一個「答錯題」的風險，就存了一筆。長期下來，決策品質複利成長。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 方案與費用 ═══ */}
+      <section
+        id="pricing"
+        ref={(el) => (observerRefs.current['pricing'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['pricing'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <Tag className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">方案與費用</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              選一個適合你的<span className="text-amber-400">方案</span>
+            </h2>
+          </div>
+
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-5 transition-all duration-1000 delay-200 ${isVisible['pricing'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* 共振版方案 */}
+            <div className="bg-gradient-to-br from-amber-900/20 to-[#0d0d0d] rounded-3xl p-7 border border-amber-500/30 flex flex-col">
+              <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-2">入門首選</p>
+              <h3 className="font-serif text-2xl font-bold text-white mb-3">共振版方案</h3>
+              <p className="text-white/60 text-sm mb-5 flex-1">共振版報告 ＋ 六七八一對一課程</p>
+              <div className="mb-2">
+                <span className="text-4xl font-bold text-amber-400">NT$1,990</span>
+              </div>
+            </div>
+
+            {/* 雙版完整方案 */}
+            <div className="relative bg-gradient-to-br from-amber-500/20 to-amber-900/30 rounded-3xl p-7 border-2 border-amber-400/60 shadow-[0_0_60px_rgba(251,191,36,0.2)] flex flex-col md:-translate-y-3">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full">
+                <span className="text-black text-xs font-bold">最推薦・現省 100</span>
+              </div>
+              <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-2 mt-2">完整體驗</p>
+              <h3 className="font-serif text-2xl font-bold text-white mb-3">雙版完整方案</h3>
+              <p className="text-white/70 text-sm mb-5 flex-1">共振版 ＋ 偏勝版 ＋ 六七八一對一課程<br /><span className="text-white/50">（一次買齊現省 100）</span></p>
+              <div className="mb-2">
+                <span className="text-4xl font-bold text-amber-300">NT$3,480</span>
+              </div>
+            </div>
+
+            {/* 偏勝版加購 */}
+            <div className="bg-gradient-to-br from-purple-900/20 to-[#0d0d0d] rounded-3xl p-7 border border-purple-500/30 flex flex-col">
+              <p className="text-purple-400 text-xs font-medium uppercase tracking-wider mb-2">已購共振版者</p>
+              <h3 className="font-serif text-2xl font-bold text-white mb-3">偏勝版加購</h3>
+              <p className="text-white/60 text-sm mb-5 flex-1">單獨加購偏勝版報告</p>
+              <div className="mb-2">
+                <span className="text-4xl font-bold text-purple-400">NT$1,590</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={`mt-8 bg-white/5 rounded-2xl p-6 border border-white/10 transition-all duration-1000 delay-400 ${isVisible['pricing'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-amber-300 font-medium text-sm mb-3">購買說明</p>
+            <ul className="space-y-2 text-white/60 text-sm">
+              <li>• 偏勝版採加購制，需先擁有共振版。</li>
+              <li>• 六七八一對一課程隨第一份報告附贈一次；雙版方案同樣含一次課程。</li>
+              <li>• 想一次擁有兩版，選「雙版完整方案」最划算——比先買共振版再加購偏勝版省 100 元。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 只想直接買偏勝版？ ═══ */}
+      <section
+        id="bias-only"
+        ref={(el) => (observerRefs.current['bias-only'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="container mx-auto max-w-3xl relative z-10">
+          <div className={`bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-3xl p-8 md:p-12 border border-purple-500/20 transition-all duration-1000 ${isVisible['bias-only'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
+              只想直接買<span className="text-purple-400">偏勝版</span>？
+            </h2>
+            <p className="text-purple-300/80 text-sm mb-6">可以，但先聽一句。</p>
+            <div className="space-y-4 text-white/70 text-sm md:text-base leading-relaxed">
+              <p>偏勝版整本只做一件事：找出你「以為的自己」跟「結構裡的自己」對不上的地方。它每一句拆解，都是拿你的自我描述去對結構。</p>
+              <p className="text-white/90 font-medium">問題是——你拿什麼當「結構」那一邊？</p>
+              <p>如果你對自己的認識，是這些年自己跟自己講出來的版本，那偏勝版拆的，跟你用來驗證它的，會是同一個東西。你會覺得每一條都能反駁，因為你手上沒有一張獨立的底圖可以對照。</p>
+              <p>共振版就是那張底圖。它先把四系統都同意的部分攤開給你看——那是你的地基，不是你講給自己聽的故事。有了它，當偏勝版說「你以為你是 A，其實你是 B」，你能自己翻回去查，而不是只能選擇信或不信。</p>
+              <p className="text-amber-300">而「我已經很了解自己了」這句話本身，剛好就是偏勝版第一刀要拆的東西。</p>
+              <p className="text-white/90 font-medium">所以不是不賣你偏勝版。是先給你共振版，你那一刀才砍得進去。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* ═══ 區塊 4: 跟一般服務有什麼不同 ═══ */}
       <section
         id="comparison"
