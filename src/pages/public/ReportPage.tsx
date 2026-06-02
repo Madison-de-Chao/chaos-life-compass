@@ -697,7 +697,174 @@ const ReportPage = () => {
             </div>
           </div>
 
-          <p className={`text-center text-white/40 text-sm mt-8 italic transition-all duration-1000 delay-400 ${isVisible['reader-guide'] ? 'opacity-100' : 'opacity-0'}`}>
+          {/* 表格示範 */}
+          <div className={`mt-16 space-y-12 transition-all duration-1000 delay-300 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-center text-white/40 text-xs">
+              下方為「示範」格式，僅呈現報告中每張表的欄位結構，不是任何真人的解讀。
+            </p>
+
+            {/* 表 1 */}
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium">共振版 · 表 1</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-white">四系統基本資料表</h3>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <table className="w-full min-w-[560px] text-sm border border-white/10 rounded-xl overflow-hidden">
+                  <thead className="bg-amber-500/10">
+                    <tr className="text-amber-200">
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">系統</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">核心資料</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">重點摘要</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white/70">
+                    {[
+                      ['紫微斗數', '命宮主星、身宮、四化', '一句話點出這張盤的主調'],
+                      ['八字命理', '四柱、日主、格局、身強弱', '摘要'],
+                      ['西洋占星', '日月升、主要相位', '摘要'],
+                      ['人類圖', '類型、權威、角色、定義', '摘要'],
+                    ].map((row, i) => (
+                      <tr key={i} className="odd:bg-white/[0.02]">
+                        <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row[0]}</td>
+                        <td className="px-3 py-3 border-b border-white/5">{row[1]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">（示範）{row[2]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 表 2 */}
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium">共振版 · 表 2 核心</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-white">人生羅盤</h3>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <table className="w-full min-w-[720px] text-sm border border-white/10 rounded-xl overflow-hidden">
+                  <thead className="bg-amber-500/10">
+                    <tr className="text-amber-200">
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">系統</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">主軸設定</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">優勢亮點</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">盲點＆挑戰</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">建議關鍵</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white/70">
+                    {[
+                      ['紫微斗數', '核心人格結構', '你天生擅長的', '你容易卡住的', '一個具體調整方向'],
+                      ['八字命理', '日主＋格局＋身強弱', '正向特質', '潛在陷阱', '具體建議'],
+                      ['西洋占星', '行星＋星座＋宮位', '正向特質', '潛在陷阱', '具體建議'],
+                      ['人類圖', '類型/權威＋通道', '正向特質', '潛在陷阱', '具體建議'],
+                    ].map((row, i) => (
+                      <tr key={i} className="odd:bg-white/[0.02]">
+                        <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row[0]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{i === 0 ? '（示範）' : ''}{row[1]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[2]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[3]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[4]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/45 text-xs mt-3 leading-relaxed">
+                <span className="text-amber-300 font-medium">怎麼用：</span>直著讀，先把四套各自主軸看完；橫著讀，把四套盲點欄並排——四套不約而同指向同一個盲點，就是你最該處理的。
+              </p>
+            </div>
+
+            {/* 表 3 */}
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="px-2 py-0.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-medium">偏勝版 · 表 3</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-white">四張不同的臉（對照表）</h3>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <table className="w-full min-w-[720px] text-sm border border-white/10 rounded-xl overflow-hidden">
+                  <thead className="bg-purple-500/10">
+                    <tr className="text-purple-200">
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">特質維度</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">紫微說</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">八字說</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">占星說</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">人類圖說</th>
+                      <th className="px-3 py-3 text-center font-medium border-b border-white/10">一致？</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white/70">
+                    {[
+                      { dim: '內在性格', mark: '○', color: 'text-emerald-300' },
+                      { dim: '行動模式', mark: '✗', color: 'text-rose-300' },
+                      { dim: '情感需求', mark: '✗', color: 'text-rose-300' },
+                      { dim: '決策方式', mark: '△', color: 'text-amber-300' },
+                    ].map((row, i) => (
+                      <tr key={i} className="odd:bg-white/[0.02]">
+                        <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row.dim}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{i === 0 ? '（示範）描述' : '描述'}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className={`px-3 py-3 border-b border-white/5 text-center font-bold ${row.color}`}>{row.mark}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/45 text-xs mt-3 leading-relaxed">
+                <span className="text-emerald-300">○ 四系統一致</span>　
+                <span className="text-amber-300">△ 部分歧異</span>　
+                <span className="text-rose-300">✗ 顯著打架</span>　
+                — 先找 ✗ 那幾行，那是你對自己的認知最可能跟結構對不上的地方。
+              </p>
+            </div>
+
+            {/* 表 4 */}
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="px-2 py-0.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-medium">偏勝版 · 表 4 核心</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-white">偏勝地圖</h3>
+              </div>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <table className="w-full min-w-[840px] text-sm border border-white/10 rounded-xl overflow-hidden">
+                  <thead className="bg-purple-500/10">
+                    <tr className="text-purple-200">
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">偏勝維度</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">偏勝類型</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">強度</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">多數系統說</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">偏勝系統說</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">你慣用的版本</th>
+                      <th className="px-3 py-3 text-left font-medium border-b border-white/10">校正方向</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white/70">
+                    {[
+                      { dim: '行動模式', type: '各自為政', stars: '★★★★' },
+                      { dim: '決策方式', type: '二對二', stars: '★★★' },
+                    ].map((row, i) => (
+                      <tr key={i} className="odd:bg-white/[0.02]">
+                        <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row.dim}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{i === 0 ? '（示範）' : ''}{row.type}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-amber-300 whitespace-nowrap">{row.stars}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">校正建議</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-white/45 text-xs mt-3 leading-relaxed">
+                <span className="text-purple-300 font-medium">怎麼用：</span>把「多數系統說／偏勝系統說／你慣用的版本」三格並排看——校正方向不是要你換版本，而是讓你知道：另一個其實也是你。
+              </p>
+            </div>
+          </div>
+
+          <p className={`text-center text-white/40 text-sm mt-12 italic transition-all duration-1000 delay-400 ${isVisible['reader-guide'] ? 'opacity-100' : 'opacity-0'}`}>
             報告不是給你答案的，是給你一張你自己對得了、查得了、用得上的結構地圖。
           </p>
         </div>
