@@ -228,7 +228,7 @@ const LifeCompassForm = () => {
           className="group border-2 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400 rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg min-h-[52px] active:scale-95"
         >
           <Compass className="w-5 h-5 mr-2 group-hover:rotate-45 transition-transform duration-500" />
-          體驗人生羅盤
+          導讀
           <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
         </Button>
       </DialogTrigger>
