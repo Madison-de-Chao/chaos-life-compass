@@ -25,7 +25,12 @@ import {
   Scale,
   Tag,
   ShieldCheck,
+  BookOpen,
+  MessageCircle,
+  Calendar,
+  Send,
 } from "lucide-react";
+import linePoster from "@/assets/guimi-line-poster.jpg";
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -635,6 +640,172 @@ const ReportPage = () => {
         </div>
       </section>
 
+      {/* ═══ 報告導讀（體驗版） ═══ */}
+      <section
+        id="reader-guide"
+        ref={(el) => (observerRefs.current['reader-guide'] = el)}
+        className="py-24 px-4 relative"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#0a0a0a]" />
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <BookOpen className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">報告導讀（體驗版）</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              不是試讀別人的報告，是教你<span className="text-amber-400">怎麼讀你自己的</span>
+            </h2>
+            <p className="text-white/50 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+              四套說同一件事的地方，是你穩定的<span className="text-amber-300">底層結構</span>（共振版在做的）。<br />
+              四套互相矛盾的地方，是你最該注意的<span className="text-purple-300">訊號</span>（偏勝版在做的）。<br />
+              所以你讀報告時，永遠在做兩個動作：看四套「一起說了什麼」、看四套「在哪裡吵架」。
+            </p>
+          </div>
+
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 transition-all duration-1000 delay-200 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="bg-gradient-to-br from-amber-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-amber-500/20">
+              <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-2">共振版 · 表 1</p>
+              <h3 className="font-serif text-xl font-bold text-white mb-3">四系統基本資料表</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                把紫微、八字、占星、人類圖四張命盤的核心資料擺在一起，這是後面所有分析的「原料」。先掃「重點摘要」抓四套主調，後面任何結論都能翻回來查證從哪個系統長出來。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-amber-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-amber-500/20">
+              <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-2">共振版 · 表 2（核心）</p>
+              <h3 className="font-serif text-xl font-bold text-white mb-3">人生羅盤</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                四系統並排，每套回答四個問題：主軸、優勢、盲點、建議。<span className="text-amber-300">直著讀懂每套怎麼看你，再橫著比四套的盲點欄</span>——四套一起指的地方，份量最重。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-purple-500/20">
+              <p className="text-purple-400 text-xs font-medium uppercase tracking-wider mb-2">偏勝版 · 表 3</p>
+              <h3 className="font-serif text-xl font-bold text-white mb-3">四張不同的臉</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                同一個面向，四套各自怎麼描述？○ 是一致、△ 是部分歧異、<span className="text-purple-300">✗ 是顯著打架</span>。先找 ✗ 那幾行——那是你對自己的認知最可能跟結構對不上的地方。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-purple-500/20">
+              <p className="text-purple-400 text-xs font-medium uppercase tracking-wider mb-2">偏勝版 · 表 4（核心）</p>
+              <h3 className="font-serif text-xl font-bold text-white mb-3">偏勝地圖</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                打架的細節＋你慣性選了哪一邊。把「多數系統說／偏勝系統說／你慣用的版本」三格並排看——校正方向不是要你換版本，是讓你知道：你一直只用其中一個，另一個其實也是你。
+              </p>
+            </div>
+          </div>
+
+          <p className={`text-center text-white/40 text-sm mt-8 italic transition-all duration-1000 delay-400 ${isVisible['reader-guide'] ? 'opacity-100' : 'opacity-0'}`}>
+            報告不是給你答案的，是給你一張你自己對得了、查得了、用得上的結構地圖。
+          </p>
+        </div>
+      </section>
+
+      {/* ═══ 訂購與預約方式（LINE） ═══ */}
+      <section
+        id="order-line"
+        ref={(el) => (observerRefs.current['order-line'] = el)}
+        className="py-24 px-4 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-amber-950/10 to-[#0a0a0a]" />
+        <div className="container mx-auto max-w-5xl relative z-10">
+          <div className={`text-center mb-12 transition-all duration-1000 ${isVisible['order-line'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-6">
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <span className="text-emerald-300 text-sm font-medium">訂購與預約方式</span>
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              怎麼<span className="text-amber-400">開始</span>
+            </h2>
+            <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto">
+              加入虹靈御所官方 LINE，傳訊息預約報告。專人回覆確認交件日期與匯款資訊。
+            </p>
+          </div>
+
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-start transition-all duration-1000 delay-200 ${isVisible['order-line'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="space-y-5">
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+                    <Send className="w-4 h-4 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-1">Step 1</p>
+                    <h3 className="font-serif text-lg font-bold text-white mb-1">加入官方 LINE，傳訊預約</h3>
+                    <p className="text-white/60 text-sm leading-relaxed">傳訊息告訴我們你想預約的方案，會有專人回覆確認可交件日期並提供匯款帳號。</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+                    <Calendar className="w-4 h-4 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-1">Step 2</p>
+                    <h3 className="font-serif text-lg font-bold text-white mb-1">日期確認後，提供資料並匯款</h3>
+                    <p className="text-white/60 text-sm leading-relaxed mb-2">日期確認後，再提供：</p>
+                    <ul className="text-white/55 text-sm space-y-1 list-disc list-inside">
+                      <li>姓名・出生年月日・出生時間・出生地點</li>
+                      <li>最近想釐清的人生課題（選填）</li>
+                      <li>匯款證明</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-1">Step 3</p>
+                    <h3 className="font-serif text-lg font-bold text-white mb-1">等待交件</h3>
+                    <p className="text-white/60 text-sm leading-relaxed">正常交件時間約 7–14 個工作天。完成後會收到專屬閱讀網址，可線上閱讀或下載 PDF 長期收藏。</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-white/40 text-xs leading-relaxed px-2">
+                你提供的資料只用於製作你的報告，不外傳、不挪作他用。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-emerald-900/20 via-[#0d0d0d] to-amber-900/15 rounded-3xl p-6 md:p-8 border border-emerald-500/30 shadow-[0_0_60px_rgba(16,185,129,0.15)] text-center lg:sticky lg:top-24">
+              <p className="text-emerald-400 text-xs font-medium uppercase tracking-wider mb-3">官方 LINE</p>
+              <h3 className="font-serif text-2xl font-bold text-white mb-4">虹靈御所 × 歸覓</h3>
+              <div className="rounded-2xl overflow-hidden border border-white/10 mb-5 bg-white">
+                <img
+                  src={linePoster}
+                  alt="虹靈御所官方 LINE QR Code"
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mb-5">
+                <p className="text-white/50 text-xs mb-1">LINE ID</p>
+                <p className="font-mono text-2xl font-bold text-amber-300 tracking-wider">@072vwyhb</p>
+              </div>
+              <a
+                href="https://line.me/R/ti/p/@072vwyhb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold text-base min-h-[52px] active:scale-95 transition-all shadow-lg shadow-emerald-500/30"
+              >
+                <MessageCircle className="w-5 h-5" />
+                加入官方 LINE
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <p className="text-white/40 text-xs mt-4">點擊上方按鈕或掃描 QR Code 加入</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ 區塊 6: FAQ ═══ */}
       <section
         id="faq"
@@ -662,6 +833,14 @@ const ReportPage = () => {
                 </CollapsibleContent>
               </Collapsible>
             ))}
+          </div>
+
+          {/* 免責聲明 */}
+          <div className="mt-16 pt-8 border-t border-white/10">
+            <p className="text-white/35 text-xs leading-relaxed text-center max-w-2xl mx-auto">
+              <span className="text-white/50 font-medium">免責聲明：</span>
+              本報告為命理結構整合分析，不是心理治療、醫療建議或未來預測，內容僅供自我探索參考，不取代任何專業意見。重大人生決策請審慎評估，必要時諮詢相關領域專業人士。
+            </p>
           </div>
         </div>
       </section>
