@@ -25,7 +25,12 @@ import {
   Scale,
   Tag,
   ShieldCheck,
+  BookOpen,
+  MessageCircle,
+  Calendar,
+  Send,
 } from "lucide-react";
+import linePoster from "@/assets/guimi-line-poster.jpg";
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
