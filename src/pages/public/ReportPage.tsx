@@ -835,12 +835,74 @@ const ReportPage = () => {
             ))}
           </div>
 
-          {/* 免責聲明 */}
-          <div className="mt-16 pt-8 border-t border-white/10">
-            <p className="text-white/35 text-xs leading-relaxed text-center max-w-2xl mx-auto">
-              <span className="text-white/50 font-medium">免責聲明：</span>
-              本報告為命理結構整合分析，不是心理治療、醫療建議或未來預測，內容僅供自我探索參考，不取代任何專業意見。重大人生決策請審慎評估，必要時諮詢相關領域專業人士。
-            </p>
+          {/* 聯絡方式 + 免責聲明 */}
+          <div className="mt-16 pt-10 border-t border-white/10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {/* 聯絡方式 */}
+              <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/10">
+                <div className="flex items-center gap-2 mb-4">
+                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <h3 className="font-serif text-base font-bold text-white">聯絡與預約</h3>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">官方 LINE</span>
+                    <a
+                      href="https://line.me/R/ti/p/@072vwyhb"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-amber-300 hover:text-amber-200 break-all min-h-[32px] inline-flex items-center"
+                    >
+                      @072vwyhb
+                    </a>
+                  </li>
+                  <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">品牌</span>
+                    <span className="text-white/70">虹靈御所 × 歸覓</span>
+                  </li>
+                  <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">交件</span>
+                    <span className="text-white/70">約 7–14 個工作天</span>
+                  </li>
+                </ul>
+                <a
+                  href="https://line.me/R/ti/p/@072vwyhb"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-sm font-medium min-h-[44px] active:scale-95 transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  加入官方 LINE 預約
+                </a>
+              </div>
+
+              {/* 隱私與資料使用 */}
+              <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/10">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen className="w-4 h-4 text-amber-400" />
+                  <h3 className="font-serif text-base font-bold text-white">資料使用與隱私</h3>
+                </div>
+                <ul className="space-y-2 text-white/55 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li>提供的出生資料僅用於製作你的個人報告，不外傳、不挪作他用。</li>
+                  <li>報告以專屬連結交付，可下載 PDF 長期保存。</li>
+                  <li>若需刪除留存資料，請於 LINE 私訊告知，我們將協助處理。</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 免責聲明 */}
+            <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.08]">
+              <p className="text-white/50 text-xs font-medium uppercase tracking-wider mb-3 text-center">免責聲明 Disclaimer</p>
+              <ul className="text-white/45 text-xs md:text-sm leading-relaxed space-y-2 max-w-2xl mx-auto list-disc list-outside pl-5">
+                <li>本報告為命理結構整合分析，<span className="text-white/70">不是</span>心理治療、醫療建議、法律建議、財務建議或未來預測。</li>
+                <li>內容僅供自我探索與覺察參考，不取代任何專業意見；重大人生決策請審慎評估，必要時諮詢相關領域專業人士。</li>
+                <li>本服務不提供「保證準確」或「保證結果」的承諾，亦不販售任何宿命論或宗教式預言。</li>
+                <li>未經授權，請勿轉載、改作或公開散布報告內容。</li>
+              </ul>
+              <p className="text-white/30 text-xs text-center mt-5">
+                © {new Date().getFullYear()} 虹靈御所 × 歸覓・人生羅盤定位系統．All Rights Reserved.
+              </p>
+            </div>
           </div>
         </div>
       </section>
