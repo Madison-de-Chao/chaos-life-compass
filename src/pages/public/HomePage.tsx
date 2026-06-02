@@ -405,7 +405,7 @@ const HomePage = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Button asChild className="bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold px-6">
                 <Link to="/reports">
-                  體驗人生羅盤
+                  導讀
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
