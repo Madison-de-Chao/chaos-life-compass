@@ -14,7 +14,8 @@ import {
   ExternalLink,
   Volume2,
   VolumeX,
-  Compass
+  Compass,
+  Palette
 } from "lucide-react";
 import { MemberLoginWidget } from "@/modules/member";
 import { Button } from "@/components/ui/button";
@@ -86,6 +87,16 @@ const sections = [
     href: "/momochao-system",
     color: "from-indigo-500/20 to-violet-500/20",
     iconColor: "text-indigo-400",
+  },
+  {
+    id: 7,
+    title: "AI 繪圖 AI Art Generation",
+    subtitle: "用結構創造畫面",
+    description: "輸入你的想法，讓 AI 幫你把結構變成視覺。探索創意表達的新方式，從文字到圖像的完整體驗。",
+    icon: Palette,
+    href: "https://designs.momo-chao.com/",
+    color: "from-pink-500/20 to-rose-500/20",
+    iconColor: "text-pink-400",
   },
 ];
 
@@ -311,11 +322,25 @@ const HomePage = () => {
                 </>
               );
 
-              return (
+              const isExternal = section.href.startsWith('http');
+              const cardClass = "group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in";
+              
+              return isExternal ? (
+                <a
+                  key={section.id}
+                  href={section.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cardClass}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {cardContent}
+                </a>
+              ) : (
                 <Link
                   key={section.id}
                   to={section.href}
-                  className="group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in"
+                  className={cardClass}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {cardContent}
