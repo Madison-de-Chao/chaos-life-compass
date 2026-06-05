@@ -322,11 +322,25 @@ const HomePage = () => {
                 </>
               );
 
-              return (
+              const isExternal = section.href.startsWith('http');
+              const cardClass = "group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in";
+              
+              return isExternal ? (
+                <a
+                  key={section.id}
+                  href={section.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cardClass}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {cardContent}
+                </a>
+              ) : (
                 <Link
                   key={section.id}
                   to={section.href}
-                  className="group relative bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-all duration-500 border border-white/10 hover:border-amber-500/30 overflow-hidden animate-fade-in"
+                  className={cardClass}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {cardContent}
