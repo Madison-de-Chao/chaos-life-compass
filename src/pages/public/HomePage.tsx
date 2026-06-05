@@ -88,6 +88,16 @@ const sections = [
     color: "from-indigo-500/20 to-violet-500/20",
     iconColor: "text-indigo-400",
   },
+  {
+    id: 7,
+    title: "AI 繪圖 AI Art Generation",
+    subtitle: "用結構創造畫面",
+    description: "輸入你的想法，讓 AI 幫你把結構變成視覺。探索創意表達的新方式，從文字到圖像的完整體驗。",
+    icon: Palette,
+    href: "https://designs.momo-chao.com/",
+    color: "from-pink-500/20 to-rose-500/20",
+    iconColor: "text-pink-400",
+  },
 ];
 
 const HomePage = () => {
