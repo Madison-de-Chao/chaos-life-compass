@@ -22,6 +22,7 @@ import {
   Heart,
   Eye,
   ChevronDown,
+  ChevronRight,
   Scale,
   Tag,
   ShieldCheck,
@@ -34,8 +35,6 @@ import linePoster from "@/assets/guimi-line-poster.jpg";
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
-import ReportPreview from "@/components/public/ReportPreview";
-import LifeCompassForm from "@/components/public/LifeCompassForm";
 import { useSEO } from "@/hooks/useSEO";
 
 // Four systems data
@@ -236,9 +235,19 @@ const ReportPage = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 justify-center animate-slide-up px-2" style={{ animationDelay: '0.9s' }}>
-            <ReportPreview />
-            <LifeCompassForm />
+          <div className="flex justify-center animate-slide-up px-2" style={{ animationDelay: '0.9s' }}>
+            <a
+              href="#reader-guide"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('reader-guide')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-base sm:text-lg shadow-[0_0_40px_rgba(251,191,36,0.3)] active:scale-95 transition-all"
+            >
+              <BookOpen className="h-5 w-5" />
+              體驗羅盤及導讀
+              <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </section>
@@ -932,7 +941,7 @@ const ReportPage = () => {
                   <div>
                     <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-1">Step 3</p>
                     <h3 className="font-serif text-lg font-bold text-white mb-1">等待交件</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">正常交件時間約 7–14 個工作天。完成後會收到專屬閱讀網址，可線上閱讀或下載 PDF 長期收藏。</p>
+                    <p className="text-white/60 text-sm leading-relaxed">正常交件時間約 7–14 個工作天。完成後將以 <span className="text-amber-300 font-medium">PDF 檔</span>交付，方便你長期收藏與離線閱讀。</p>
                   </div>
                 </div>
               </div>
@@ -1051,7 +1060,7 @@ const ReportPage = () => {
                 </div>
                 <ul className="space-y-2 text-white/55 text-sm leading-relaxed list-disc list-outside pl-5">
                   <li>提供的出生資料僅用於製作你的個人報告，不外傳、不挪作他用。</li>
-                  <li>報告以專屬連結交付，可下載 PDF 長期保存。</li>
+                  <li>報告以 PDF 檔交付，方便長期保存與離線閱讀。</li>
                   <li>若需刪除留存資料，請於 LINE 私訊告知，我們將協助處理。</li>
                 </ul>
               </div>
