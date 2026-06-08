@@ -1060,7 +1060,7 @@ const ReportPage = () => {
                 </div>
                 <ul className="space-y-2 text-white/55 text-sm leading-relaxed list-disc list-outside pl-5">
                   <li>提供的出生資料僅用於製作你的個人報告，不外傳、不挪作他用。</li>
-                  <li>報告以專屬連結交付，可下載 PDF 長期保存。</li>
+                  <li>報告以 PDF 檔交付，方便長期保存與離線閱讀。</li>
                   <li>若需刪除留存資料，請於 LINE 私訊告知，我們將協助處理。</li>
                 </ul>
               </div>
