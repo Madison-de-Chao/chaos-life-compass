@@ -665,59 +665,45 @@ const ReportPage = () => {
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
               不是試讀別人的報告，是教你<span className="text-amber-400">怎麼讀你自己的</span>
             </h2>
-            <p className="text-white/50 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-              四套說同一件事的地方，是你穩定的<span className="text-amber-300">底層結構</span>（共振版在做的）。<br />
-              四套互相矛盾的地方，是你最該注意的<span className="text-purple-300">訊號</span>（偏勝版在做的）。<br />
-              所以你讀報告時，永遠在做兩個動作：看四套「一起說了什麼」、看四套「在哪裡吵架」。
+            <p className="text-white/55 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+              下面把報告裡每張表的每一格攤開，告訴你這格寫什麼、為什麼有它、你該怎麼用。<br />
+              表格內的範例文字標示為「示範」，只是讓你看清楚格式長相，<span className="text-amber-300">不是任何真人的解讀</span>。
             </p>
           </div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 transition-all duration-1000 delay-200 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="bg-gradient-to-br from-amber-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-amber-500/20">
-              <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-2">共振版 · 表 1</p>
-              <h3 className="font-serif text-xl font-bold text-white mb-3">四系統基本資料表</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                把紫微、八字、占星、人類圖四張命盤的核心資料擺在一起，這是後面所有分析的「原料」。先掃「重點摘要」抓四套主調，後面任何結論都能翻回來查證從哪個系統長出來。
+          {/* 為什麼是「四系統一起上」 */}
+          <div className={`mb-16 bg-gradient-to-br from-[#141414] to-[#0d0d0d] rounded-3xl p-6 md:p-8 border border-white/10 transition-all duration-1000 delay-100 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-3">先懂一件事</p>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">為什麼是「四系統一起上」</h3>
+            <div className="space-y-3 text-white/65 text-sm md:text-base leading-relaxed">
+              <p>市面上多數命理是一套系統講到底。歸覓的做法不一樣——紫微、八字、占星、人類圖四套同時看同一個你。</p>
+              <p>
+                四套<span className="text-amber-300">說同一件事</span>的地方，就是你穩定的底層結構（<span className="text-amber-300">共振版</span>在做的）。<br />
+                四套<span className="text-purple-300">互相矛盾</span>的地方，就是你最該注意的訊號（<span className="text-purple-300">偏勝版</span>在做的）。
               </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-amber-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-amber-500/20">
-              <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-2">共振版 · 表 2（核心）</p>
-              <h3 className="font-serif text-xl font-bold text-white mb-3">人生羅盤</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                四系統並排，每套回答四個問題：主軸、優勢、盲點、建議。<span className="text-amber-300">直著讀懂每套怎麼看你，再橫著比四套的盲點欄</span>——四套一起指的地方，份量最重。
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-purple-500/20">
-              <p className="text-purple-400 text-xs font-medium uppercase tracking-wider mb-2">偏勝版 · 表 3</p>
-              <h3 className="font-serif text-xl font-bold text-white mb-3">四張不同的臉</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                同一個面向，四套各自怎麼描述？○ 是一致、△ 是部分歧異、<span className="text-purple-300">✗ 是顯著打架</span>。先找 ✗ 那幾行——那是你對自己的認知最可能跟結構對不上的地方。
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-2xl p-6 border border-purple-500/20">
-              <p className="text-purple-400 text-xs font-medium uppercase tracking-wider mb-2">偏勝版 · 表 4（核心）</p>
-              <h3 className="font-serif text-xl font-bold text-white mb-3">偏勝地圖</h3>
-              <p className="text-white/60 text-sm leading-relaxed">
-                打架的細節＋你慣性選了哪一邊。把「多數系統說／偏勝系統說／你慣用的版本」三格並排看——校正方向不是要你換版本，是讓你知道：你一直只用其中一個，另一個其實也是你。
-              </p>
+              <p>所以你讀報告時，永遠在做兩個動作：看四套「一起說了什麼」、看四套「在哪裡吵架」。下面每張表都是為這兩個動作設計的。</p>
             </div>
           </div>
 
-          {/* 表格示範 */}
-          <div className={`mt-16 space-y-12 transition-all duration-1000 delay-300 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="text-center text-white/40 text-xs">
-              下方為「示範」格式，僅呈現報告中每張表的欄位結構，不是任何真人的解讀。
-            </p>
+          {/* ── 共振版怎麼讀 ── */}
+          <div className={`mb-8 transition-all duration-1000 delay-150 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-500/40" />
+              <span className="font-serif text-2xl md:text-3xl font-bold text-amber-300">共振版怎麼讀</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-500/40" />
+            </div>
+          </div>
 
+          <div className={`space-y-12 transition-all duration-1000 delay-200 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* 表 1 */}
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+            <div className="bg-gradient-to-br from-amber-900/10 to-[#0d0d0d] rounded-3xl p-6 md:p-8 border border-amber-500/20">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium">共振版 · 表 1</span>
                 <h3 className="font-serif text-lg md:text-xl font-bold text-white">四系統基本資料表</h3>
               </div>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed mb-5">
+                這是報告開頭的資料總覽。它不解讀，只是把你的四張命盤核心資料擺在一起，讓你知道後面所有分析的「原料」是什麼。
+              </p>
               <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
                 <table className="w-full min-w-[560px] text-sm border border-white/10 rounded-xl overflow-hidden">
                   <thead className="bg-amber-500/10">
@@ -729,28 +715,42 @@ const ReportPage = () => {
                   </thead>
                   <tbody className="text-white/70">
                     {[
-                      ['紫微斗數', '命宮主星、身宮、四化', '一句話點出這張盤的主調'],
+                      ['紫微斗數', '（示範）命宮主星、身宮、四化', '（示範）一句話點出這張盤的主調'],
                       ['八字命理', '四柱、日主、格局、身強弱', '摘要'],
                       ['西洋占星', '日月升、主要相位', '摘要'],
                       ['人類圖', '類型、權威、角色、定義', '摘要'],
                     ].map((row, i) => (
                       <tr key={i} className="odd:bg-white/[0.02]">
                         <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row[0]}</td>
-                        <td className="px-3 py-3 border-b border-white/5">{row[1]}</td>
-                        <td className="px-3 py-3 border-b border-white/5 text-white/55">（示範）{row[2]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/65">{row[1]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[2]}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
+              <div className="mt-5">
+                <p className="text-amber-300 text-sm font-medium mb-2">逐格怎麼看</p>
+                <ul className="space-y-2 text-white/60 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li><span className="text-white/85 font-medium">系統</span>：哪一套命理。四套各佔一列，這就是「四系統一起上桌」的字面意思。</li>
+                  <li><span className="text-white/85 font-medium">核心資料</span>：這套系統對你最關鍵的幾個技術參數。你不需要看懂每個術語，這格的用途是讓你（或任何懂行的人）能回頭查證——後面的解讀都從這裡長出來，不是憑空講的。</li>
+                  <li><span className="text-white/85 font-medium">重點摘要</span>：把那串術語翻成一句人話。讀報告時先掃這一欄，抓到四套各自的主調，再往下讀細節。</li>
+                </ul>
+              </div>
+              <p className="mt-4 text-white/55 text-sm leading-relaxed">
+                <span className="text-amber-300 font-medium">怎麼用：</span>這張表是你的「對照基準」。後面任何一章講到某個結論，你都可以翻回這張表，確認它是從哪個系統的哪個資料來的。
+              </p>
             </div>
 
             {/* 表 2 */}
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-medium">共振版 · 表 2 核心</span>
+            <div className="bg-gradient-to-br from-amber-900/15 to-[#0d0d0d] rounded-3xl p-6 md:p-8 border border-amber-500/30 shadow-[0_0_40px_rgba(251,191,36,0.08)]">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-medium">共振版 · 表 2 核心</span>
                 <h3 className="font-serif text-lg md:text-xl font-bold text-white">人生羅盤</h3>
               </div>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed mb-5">
+                這是共振版最重要的一張表。它把四系統並排，每一套都回答同樣四個問題：你的主軸、你的優勢、你的盲點、給你的建議。
+              </p>
               <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
                 <table className="w-full min-w-[720px] text-sm border border-white/10 rounded-xl overflow-hidden">
                   <thead className="bg-amber-500/10">
@@ -764,14 +764,14 @@ const ReportPage = () => {
                   </thead>
                   <tbody className="text-white/70">
                     {[
-                      ['紫微斗數', '核心人格結構', '你天生擅長的', '你容易卡住的', '一個具體調整方向'],
+                      ['紫微斗數', '（示範）核心人格結構', '（示範）你天生擅長的', '（示範）你容易卡住的', '（示範）一個具體調整方向'],
                       ['八字命理', '日主＋格局＋身強弱', '正向特質', '潛在陷阱', '具體建議'],
                       ['西洋占星', '行星＋星座＋宮位', '正向特質', '潛在陷阱', '具體建議'],
                       ['人類圖', '類型/權威＋通道', '正向特質', '潛在陷阱', '具體建議'],
                     ].map((row, i) => (
                       <tr key={i} className="odd:bg-white/[0.02]">
                         <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row[0]}</td>
-                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{i === 0 ? '（示範）' : ''}{row[1]}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[1]}</td>
                         <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[2]}</td>
                         <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[3]}</td>
                         <td className="px-3 py-3 border-b border-white/5 text-white/55">{row[4]}</td>
@@ -780,17 +780,47 @@ const ReportPage = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/45 text-xs mt-3 leading-relaxed">
-                <span className="text-amber-300 font-medium">怎麼用：</span>直著讀，先把四套各自主軸看完；橫著讀，把四套盲點欄並排——四套不約而同指向同一個盲點，就是你最該處理的。
-              </p>
+              <div className="mt-5">
+                <p className="text-amber-300 text-sm font-medium mb-2">逐格怎麼看</p>
+                <ul className="space-y-2 text-white/60 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li><span className="text-white/85 font-medium">主軸設定</span>：這套系統認為你這個人的核心設定是什麼。四列讀下來，你會發現四套描述的角度不同——這是正常的，它們本來就從不同維度看你。</li>
+                  <li><span className="text-white/85 font-medium">優勢亮點</span>：這套系統看到的你的長處。</li>
+                  <li><span className="text-white/85 font-medium">盲點＆挑戰</span>：這套系統看到的你容易跌倒的地方。優勢和盲點常常是同一個特質的兩面，對照著看最有感。</li>
+                  <li><span className="text-white/85 font-medium">建議關鍵</span>：針對這套系統看到的盲點，給一個具體可做的方向。</li>
+                </ul>
+              </div>
+              <div className="mt-5 bg-amber-500/5 border border-amber-500/20 rounded-2xl p-4">
+                <p className="text-amber-300 text-sm font-medium mb-2">怎麼用（這是這張表的關鍵讀法）：直著讀，再橫著讀。</p>
+                <p className="text-white/65 text-sm leading-relaxed">
+                  <span className="text-white/85">直著讀</span>，先把四套各自的主軸看完，知道每套怎麼看你。<br />
+                  <span className="text-white/85">橫著讀</span>，把四套的「盲點」欄並排——如果四套不約而同指向同一個盲點，那就是你最該處理的；如果只有一套提到，先放著觀察。四套一起指的地方，份量最重。
+                </p>
+                <p className="text-white/50 text-xs leading-relaxed mt-3">
+                  表格下方會有一句「四系統共振指向」，把這張表收成一個結論。那句話是這張表的總結，但自己先讀懂表，再看那句結論，你才有能力判斷它對不對。
+                </p>
+              </div>
             </div>
+          </div>
 
+          {/* ── 偏勝版怎麼讀 ── */}
+          <div className={`mt-16 mb-8 transition-all duration-1000 delay-300 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-purple-500/40" />
+              <span className="font-serif text-2xl md:text-3xl font-bold text-purple-300">偏勝版怎麼讀</span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500/40" />
+            </div>
+          </div>
+
+          <div className={`space-y-12 transition-all duration-1000 delay-300 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {/* 表 3 */}
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-4">
+            <div className="bg-gradient-to-br from-purple-900/10 to-[#0d0d0d] rounded-3xl p-6 md:p-8 border border-purple-500/20">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="px-2 py-0.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-medium">偏勝版 · 表 3</span>
                 <h3 className="font-serif text-lg md:text-xl font-bold text-white">四張不同的臉（對照表）</h3>
               </div>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed mb-5">
+                偏勝版開場就丟給你這張表。它的任務只有一個：讓你親眼看到，四套系統描述的你，<span className="text-purple-300">不是同一個人</span>。
+              </p>
               <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
                 <table className="w-full min-w-[720px] text-sm border border-white/10 rounded-xl overflow-hidden">
                   <thead className="bg-purple-500/10">
@@ -825,17 +855,33 @@ const ReportPage = () => {
               <p className="text-white/45 text-xs mt-3 leading-relaxed">
                 <span className="text-emerald-300">○ 四系統一致</span>　
                 <span className="text-amber-300">△ 部分歧異</span>　
-                <span className="text-rose-300">✗ 顯著打架</span>　
-                — 先找 ✗ 那幾行，那是你對自己的認知最可能跟結構對不上的地方。
+                <span className="text-rose-300">✗ 顯著打架</span>
               </p>
+              <div className="mt-5">
+                <p className="text-purple-300 text-sm font-medium mb-2">逐格怎麼看</p>
+                <ul className="space-y-2 text-white/60 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li><span className="text-white/85 font-medium">特質維度</span>：把「你」拆成幾個面向分開檢查——性格、怎麼行動、要什麼、怎麼決定。一次只比一個面向，才看得出哪裡對不上。</li>
+                  <li><span className="text-white/85 font-medium">中間四欄（紫微說／八字說／占星說／人類圖說）</span>：同一個面向，四套各自怎麼描述。重點不是看懂每一格的術語，是橫著比——這一行四格講的，是同一個人嗎？</li>
+                  <li><span className="text-white/85 font-medium">一致？</span>：這一行四套的判斷有沒有對上。○ 是四套說法相近，△ 是部分對不上，✗ 是明顯打架。</li>
+                </ul>
+              </div>
+              <div className="mt-5 bg-purple-500/5 border border-purple-500/20 rounded-2xl p-4">
+                <p className="text-purple-300 text-sm font-medium mb-2">怎麼用：先找 ✗ 那幾行。</p>
+                <p className="text-white/65 text-sm leading-relaxed">
+                  ○ 那幾行是你穩定的部分，可以放心；<span className="text-rose-300">✗ 那幾行才是偏勝版整本要拆的</span>——四套在這裡吵架，代表你對自己這個面向的認知，很可能跟你的結構對不上。看到 ✗，先別急著反駁，那正是你要往下讀的地方。
+                </p>
+              </div>
             </div>
 
             {/* 表 4 */}
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="px-2 py-0.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-medium">偏勝版 · 表 4 核心</span>
-                <h3 className="font-serif text-lg md:text-xl font-bold text-white">偏勝地圖</h3>
+            <div className="bg-gradient-to-br from-purple-900/15 to-[#0d0d0d] rounded-3xl p-6 md:p-8 border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.08)]">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300 text-xs font-medium">偏勝版 · 表 4 核心</span>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-white">偏勝地圖（欄位最多、最需要導讀）</h3>
               </div>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed mb-5">
+                上一張表告訴你「哪裡打架」，這張表告訴你「打架的細節，以及你慣性選了哪一邊」。欄位多，一格一格看。
+              </p>
               <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
                 <table className="w-full min-w-[840px] text-sm border border-white/10 rounded-xl overflow-hidden">
                   <thead className="bg-purple-500/10">
@@ -851,12 +897,12 @@ const ReportPage = () => {
                   </thead>
                   <tbody className="text-white/70">
                     {[
-                      { dim: '行動模式', type: '各自為政', stars: '★★★★' },
+                      { dim: '行動模式', type: '（示範）各自為政', stars: '★★★★' },
                       { dim: '決策方式', type: '二對二', stars: '★★★' },
                     ].map((row, i) => (
                       <tr key={i} className="odd:bg-white/[0.02]">
                         <td className="px-3 py-3 border-b border-white/5 text-white/85 font-medium whitespace-nowrap">{row.dim}</td>
-                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{i === 0 ? '（示範）' : ''}{row.type}</td>
+                        <td className="px-3 py-3 border-b border-white/5 text-white/55">{row.type}</td>
                         <td className="px-3 py-3 border-b border-white/5 text-amber-300 whitespace-nowrap">{row.stars}</td>
                         <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
                         <td className="px-3 py-3 border-b border-white/5 text-white/55">描述</td>
@@ -867,15 +913,43 @@ const ReportPage = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/45 text-xs mt-3 leading-relaxed">
-                <span className="text-purple-300 font-medium">怎麼用：</span>把「多數系統說／偏勝系統說／你慣用的版本」三格並排看——校正方向不是要你換版本，而是讓你知道：另一個其實也是你。
-              </p>
+              <div className="mt-5">
+                <p className="text-purple-300 text-sm font-medium mb-2">逐格怎麼看</p>
+                <ul className="space-y-2 text-white/60 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li><span className="text-white/85 font-medium">偏勝維度</span>：哪個面向出現了偏勝（接續上一張表標 ✗ 的那些）。</li>
+                  <li><span className="text-white/85 font-medium">偏勝類型</span>：四套怎麼分裂的。「三對一」是三套同調、一套唱反調；「二對二」是兩兩對峙；「各自為政」是四套都不一樣。分裂方式不同，意義不同——三對一通常是那唱反調的系統在提醒你一件被忽略的事，二對二則是你內在有兩股力量在拉扯。</li>
+                  <li><span className="text-white/85 font-medium">強度</span>：這個偏勝有多明顯，星越多越該優先處理。讀報告時間有限的話，先看 ★★★★ 那幾行。</li>
+                  <li><span className="text-white/85 font-medium">多數系統說</span>：人數較多那邊的描述——通常比較接近你「以為的自己」。</li>
+                  <li><span className="text-white/85 font-medium">偏勝系統說</span>：唱反調那邊的描述——通常是你忽略、但其實也在運作的那一面。</li>
+                  <li><span className="text-white/85 font-medium">你慣用的版本</span>：你日常實際活出來的，是上面兩個版本裡的哪一個。<span className="text-purple-300">這格是整張表的核心</span>——它要回答的不是「哪個版本對」，是「你習慣性選了哪個」。</li>
+                  <li><span className="text-white/85 font-medium">校正方向</span>：知道自己慣性偏哪邊之後，可以怎麼調。</li>
+                </ul>
+              </div>
+              <div className="mt-5 bg-purple-500/5 border border-purple-500/20 rounded-2xl p-4">
+                <p className="text-purple-300 text-sm font-medium mb-2">怎麼用：把「多數系統說／偏勝系統說／你慣用的版本」三格並排看。</p>
+                <ul className="space-y-2 text-white/65 text-sm leading-relaxed list-disc list-outside pl-5">
+                  <li>如果你慣用的剛好是<span className="text-white/85">「多數系統」</span>那個版本——代表你跟著大多數結構走，偏勝系統提醒的那面被你長期忽略了。</li>
+                  <li>如果你慣用的是<span className="text-white/85">「偏勝系統」</span>那個少數版本——代表你活在一個只有一套系統支持的自我認知裡，這通常是更深的盲區。</li>
+                </ul>
+                <p className="text-white/65 text-sm leading-relaxed mt-3">
+                  不管哪種，<span className="text-amber-300">「校正方向」都不是要你換成另一個版本</span>，是要你知道：你一直只用其中一個，另一個其實也是你。
+                </p>
+              </div>
             </div>
           </div>
 
-          <p className={`text-center text-white/40 text-sm mt-12 italic transition-all duration-1000 delay-400 ${isVisible['reader-guide'] ? 'opacity-100' : 'opacity-0'}`}>
-            報告不是給你答案的，是給你一張你自己對得了、查得了、用得上的結構地圖。
-          </p>
+          {/* 讀完這份，你已經會的事 */}
+          <div className={`mt-16 bg-gradient-to-br from-amber-900/15 via-[#0d0d0d] to-purple-900/15 rounded-3xl p-6 md:p-8 border border-white/10 transition-all duration-1000 delay-400 ${isVisible['reader-guide'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">讀完這份，你已經會的事</h3>
+            <ul className="space-y-3 text-white/70 text-sm md:text-base leading-relaxed list-disc list-outside pl-5">
+              <li>知道報告為什麼四系統一起看，以及你該在哪裡找<span className="text-amber-300">「共振」</span>、哪裡找<span className="text-purple-300">「打架」</span>。</li>
+              <li>拿到共振版時，會<span className="text-amber-300">直讀也會橫讀</span>人生羅盤，自己找出四套共指的盲點。</li>
+              <li>拿到偏勝版時，會先看 <span className="text-rose-300">✗</span> 和 <span className="text-amber-300">★★★★</span>，知道哪裡最該處理，也看得懂「你慣用的版本」這格在問什麼。</li>
+            </ul>
+            <p className="mt-5 text-white/60 text-sm md:text-base leading-relaxed italic border-t border-white/10 pt-4">
+              報告不是給你答案的，是給你一張你自己<span className="text-amber-300">對得了、查得了、用得上</span>的結構地圖。這份導讀，是先把「怎麼用這張地圖」教給你。
+            </p>
+          </div>
         </div>
       </section>
 
