@@ -369,7 +369,7 @@ const ChaoxuanPage = () => {
                 <div className="group h-full p-10 bg-[#141414] border border-[#c9a962]/10 hover:border-[#c9a962]/50 transition-all duration-500 relative overflow-hidden">
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#c9a962]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
+
                   <div className="relative z-10">
                     <div className="w-16 h-16 border border-[#c9a962]/30 flex items-center justify-center mb-8 group-hover:bg-[#c9a962]/10 group-hover:border-[#c9a962]/50 transition-all duration-500">
                       <service.icon className="h-7 w-7 text-[#c9a962]" />
@@ -383,6 +383,18 @@ const ChaoxuanPage = () => {
                     <p className="text-[#f5f5f0]/45 leading-relaxed">
                       {service.description}
                     </p>
+                    {index === 0 && (
+                      <a
+                        href="https://designs.momo-chao.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 border border-[#c9a962]/30 text-[#c9a962] text-sm hover:bg-[#c9a962]/10 hover:border-[#c9a962]/60 transition-all duration-300"
+                      >
+                        <Palette className="h-4 w-4" />
+                        <span>AI 繪圖</span>
+                        <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </RevealSection>
