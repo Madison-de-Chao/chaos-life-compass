@@ -14,8 +14,8 @@ import {
   ExternalLink,
   Volume2,
   VolumeX,
-  Compass,
-  Palette
+  Compass
+
 } from "lucide-react";
 import { MemberLoginWidget } from "@/modules/member";
 import { Button } from "@/components/ui/button";
