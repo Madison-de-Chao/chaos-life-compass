@@ -941,7 +941,7 @@ const ReportPage = () => {
                   <div>
                     <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-1">Step 3</p>
                     <h3 className="font-serif text-lg font-bold text-white mb-1">等待交件</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">正常交件時間約 7–14 個工作天。完成後會收到專屬閱讀網址，可線上閱讀或下載 PDF 長期收藏。</p>
+                    <p className="text-white/60 text-sm leading-relaxed">正常交件時間約 7–14 個工作天。完成後將以 <span className="text-amber-300 font-medium">PDF 檔</span>交付，方便你長期收藏與離線閱讀。</p>
                   </div>
                 </div>
               </div>
