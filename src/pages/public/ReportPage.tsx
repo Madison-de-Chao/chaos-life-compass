@@ -1039,10 +1039,10 @@ const ReportPage = () => {
               </div>
               <div className="mb-5">
                 <p className="text-white/50 text-xs mb-1">LINE ID</p>
-                <p className="font-mono text-2xl font-bold text-amber-300 tracking-wider">@072vwyhb</p>
+                <p className="font-mono text-2xl font-bold text-amber-300 tracking-wider">@momochao</p>
               </div>
               <a
-                href="https://line.me/R/ti/p/@072vwyhb"
+                href="https://line.me/R/ti/p/@momochao"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold text-base min-h-[52px] active:scale-95 transition-all shadow-lg shadow-emerald-500/30"
@@ -1099,12 +1099,12 @@ const ReportPage = () => {
                   <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                     <span className="text-white/45 text-xs uppercase tracking-wider">官方 LINE</span>
                     <a
-                      href="https://line.me/R/ti/p/@072vwyhb"
+                      href="https://line.me/R/ti/p/@momochao"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-mono text-amber-300 hover:text-amber-200 break-all min-h-[32px] inline-flex items-center"
                     >
-                      @072vwyhb
+                      @momochao
                     </a>
                   </li>
                   <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
@@ -1117,7 +1117,7 @@ const ReportPage = () => {
                   </li>
                 </ul>
                 <a
-                  href="https://line.me/R/ti/p/@072vwyhb"
+                  href="https://line.me/R/ti/p/@momochao"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-5 inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-sm font-medium min-h-[44px] active:scale-95 transition-all"
