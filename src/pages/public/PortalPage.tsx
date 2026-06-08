@@ -71,6 +71,18 @@ const portalItems = [
     particleColor: "bg-blue-300",
     borderColor: "border-blue-400/20",
   },
+  {
+    title: "AI 繪圖｜超烜創意",
+    subtitle: "AI Art Generation",
+    description: "輸入你的想法，讓 AI 把結構變成畫面。超烜創意旗下的視覺實驗室。",
+    cta: "進入 AI 繪圖",
+    logo: null,
+    href: "https://designs.momo-chao.com/",
+    isExternal: true,
+    glowColor: "rgba(236, 72, 153, 0.35)",
+    particleColor: "bg-pink-300",
+    borderColor: "border-pink-400/20",
+  },
 ];
 
 // Gentle ambient music
