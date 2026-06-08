@@ -22,6 +22,7 @@ import {
   Heart,
   Eye,
   ChevronDown,
+  ChevronRight,
   Scale,
   Tag,
   ShieldCheck,
@@ -34,8 +35,6 @@ import linePoster from "@/assets/guimi-line-poster.jpg";
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
-import ReportPreview from "@/components/public/ReportPreview";
-import LifeCompassForm from "@/components/public/LifeCompassForm";
 import { useSEO } from "@/hooks/useSEO";
 
 // Four systems data
