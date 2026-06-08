@@ -5,7 +5,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Shield, Eye, Lock, Server, UserCheck, Mail, ArrowLeft } from "lucide-react";
+import { Shield, Eye, Lock, Server, UserCheck, Mail, ArrowLeft, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -166,6 +166,10 @@ export default function PrivacyPolicyPage() {
               如果您對本隱私政策有任何疑問或需要行使您的資料權利，請透過以下方式聯繫我們：
             </p>
             <div className="space-y-2 text-white/70">
+              <p className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                官方 LINE：<a href="https://line.me/R/ti/p/@momochao" target="_blank" rel="noopener noreferrer" className="font-mono text-amber-400 hover:text-amber-300 transition-colors">@momochao</a>
+              </p>
               <p>電子郵件：<a href="mailto:privacy@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">privacy@momo-chao.com</a></p>
               <p>服務時間：週一至週五 10:00 - 18:00（台灣時間）</p>
             </div>

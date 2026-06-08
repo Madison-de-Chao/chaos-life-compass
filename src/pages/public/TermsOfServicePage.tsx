@@ -13,7 +13,8 @@ import {
   AlertTriangle, 
   RefreshCw,
   ArrowLeft,
-  Mail
+  Mail,
+  MessageCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import PublicHeader from "@/components/public/PublicHeader";
@@ -232,6 +233,10 @@ export default function TermsOfServicePage() {
               如果您對本使用條款有任何疑問，請透過以下方式聯繫我們：
             </p>
             <div className="space-y-2 text-white/70">
+              <p className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                官方 LINE：<a href="https://line.me/R/ti/p/@momochao" target="_blank" rel="noopener noreferrer" className="font-mono text-amber-400 hover:text-amber-300 transition-colors">@momochao</a>
+              </p>
               <p>電子郵件：<a href="mailto:legal@momo-chao.com" className="text-amber-400 hover:text-amber-300 transition-colors">legal@momo-chao.com</a></p>
               <p>服務時間：週一至週五 10:00 - 18:00（台灣時間）</p>
             </div>

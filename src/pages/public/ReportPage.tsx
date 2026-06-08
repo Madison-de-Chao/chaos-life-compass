@@ -1028,7 +1028,7 @@ const ReportPage = () => {
 
             <div className="bg-gradient-to-br from-emerald-900/20 via-[#0d0d0d] to-amber-900/15 rounded-3xl p-6 md:p-8 border border-emerald-500/30 shadow-[0_0_60px_rgba(16,185,129,0.15)] text-center lg:sticky lg:top-24">
               <p className="text-emerald-400 text-xs font-medium uppercase tracking-wider mb-3">官方 LINE</p>
-              <h3 className="font-serif text-2xl font-bold text-white mb-4">虹靈御所 × 歸覓</h3>
+              <h3 className="font-serif text-2xl font-bold text-white mb-4">虹靈御所 × 超烜創意</h3>
               <div className="rounded-2xl overflow-hidden border border-white/10 mb-5 bg-white">
                 <img
                   src={linePoster}
@@ -1109,11 +1109,23 @@ const ReportPage = () => {
                   </li>
                   <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                     <span className="text-white/45 text-xs uppercase tracking-wider">品牌</span>
-                    <span className="text-white/70">虹靈御所 × 歸覓</span>
+                    <span className="text-white/70">虹靈御所 × 超烜創意</span>
                   </li>
                   <li className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                     <span className="text-white/45 text-xs uppercase tracking-wider">交件</span>
                     <span className="text-white/70">約 7–14 個工作天</span>
+                  </li>
+                  <li className="flex flex-col gap-1 pt-2 border-t border-white/10">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">課程洽詢／商業合作</span>
+                    <a href="mailto:contact@momo-chao.com" className="font-mono text-amber-300 hover:text-amber-200 break-all min-h-[32px] inline-flex items-center">contact@momo-chao.com</a>
+                  </li>
+                  <li className="flex flex-col gap-1">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">服務相關／AI 繪圖</span>
+                    <a href="mailto:service@momo-chao.com" className="font-mono text-amber-300 hover:text-amber-200 break-all min-h-[32px] inline-flex items-center">service@momo-chao.com</a>
+                  </li>
+                  <li className="flex flex-col gap-1">
+                    <span className="text-white/45 text-xs uppercase tracking-wider">帳號問題／網站問題回報</span>
+                    <a href="mailto:support@momo-chao.com" className="font-mono text-amber-300 hover:text-amber-200 break-all min-h-[32px] inline-flex items-center">support@momo-chao.com</a>
                   </li>
                 </ul>
                 <a
