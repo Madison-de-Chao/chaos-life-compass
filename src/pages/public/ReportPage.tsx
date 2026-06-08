@@ -1028,7 +1028,7 @@ const ReportPage = () => {
 
             <div className="bg-gradient-to-br from-emerald-900/20 via-[#0d0d0d] to-amber-900/15 rounded-3xl p-6 md:p-8 border border-emerald-500/30 shadow-[0_0_60px_rgba(16,185,129,0.15)] text-center lg:sticky lg:top-24">
               <p className="text-emerald-400 text-xs font-medium uppercase tracking-wider mb-3">官方 LINE</p>
-              <h3 className="font-serif text-2xl font-bold text-white mb-4">虹靈御所 × 歸覓</h3>
+              <h3 className="font-serif text-2xl font-bold text-white mb-4">虹靈御所 × 超烜創意</h3>
               <div className="rounded-2xl overflow-hidden border border-white/10 mb-5 bg-white">
                 <img
                   src={linePoster}
