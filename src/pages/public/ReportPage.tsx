@@ -266,11 +266,12 @@ const ReportPage = () => {
           <div className="relative rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(251,191,36,0.1)]">
             <video
               controls
+              playsInline
               preload="metadata"
               className="w-full aspect-video bg-black"
-              poster=""
             >
               <source src="/videos/guimi-promo.mp4" type="video/mp4" />
+              您的瀏覽器不支援影片播放，請<a href="/videos/guimi-promo.mp4" className="text-amber-400 underline">點此下載</a>。
             </video>
           </div>
         </div>
