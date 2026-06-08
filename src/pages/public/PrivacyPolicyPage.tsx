@@ -5,7 +5,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Shield, Eye, Lock, Server, UserCheck, Mail, ArrowLeft } from "lucide-react";
+import { Shield, Eye, Lock, Server, UserCheck, Mail, ArrowLeft, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
