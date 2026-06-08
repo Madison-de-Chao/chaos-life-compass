@@ -13,7 +13,8 @@ import {
   AlertTriangle, 
   RefreshCw,
   ArrowLeft,
-  Mail
+  Mail,
+  MessageCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import PublicHeader from "@/components/public/PublicHeader";
