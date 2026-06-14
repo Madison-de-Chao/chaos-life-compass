@@ -472,7 +472,7 @@ const ReportPage = () => {
             {/* 雙版完整方案 */}
             <div className="relative bg-gradient-to-br from-amber-500/20 to-amber-900/30 rounded-3xl p-7 border-2 border-amber-400/60 shadow-[0_0_60px_rgba(251,191,36,0.2)] flex flex-col md:-translate-y-3">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full">
-                <span className="text-black text-xs font-bold">最推薦・現省 100</span>
+                <span className="text-black text-xs font-bold">最推薦</span>
               </div>
               <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-2 mt-2">完整體驗</p>
               <h3 className="font-serif text-2xl font-bold text-white mb-3">雙版完整方案</h3>
