@@ -1030,7 +1030,7 @@ export default function PortalPage() {
         
         {/* Intro sections with cross-fade */}
         {isInIntro && (
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div 
               className={`text-center max-w-3xl px-6 transition-all ease-in-out ${
                 isFading 
