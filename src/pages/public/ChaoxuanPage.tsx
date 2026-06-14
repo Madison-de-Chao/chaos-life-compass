@@ -262,7 +262,7 @@ const ChaoxuanPage = () => {
                 transform: `translateY(${scrollY * 0.05}px)`,
               }}
             >
-              實戰經驗，服務過 Samsung、DIOR、晶華酒店等品牌。<br className="hidden md:block" />
+              實戰經驗，服務過 Samsung、DIOR、SEIKO 等品牌。<br className="hidden md:block" />
               不做場面話，只做能落地的品牌策略。
             </p>
 
