@@ -949,7 +949,7 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen h-screen bg-[#050505] flex flex-col items-center justify-center overflow-hidden relative">
+    <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center relative">
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#0a0a0a_0%,#050505_100%)]" />
@@ -1030,7 +1030,7 @@ export default function PortalPage() {
         
         {/* Intro sections with cross-fade */}
         {isInIntro && (
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
             <div 
               className={`text-center max-w-3xl px-6 transition-all ease-in-out ${
                 isFading 
@@ -1059,7 +1059,7 @@ export default function PortalPage() {
         {/* Portal cards */}
         {showPortal && (
           <div 
-            className={`fixed inset-0 flex flex-col items-center justify-center px-4 transition-all ${
+            className={`fixed inset-0 flex flex-col items-center justify-start pt-20 sm:pt-24 pb-8 px-4 overflow-y-auto transition-all ${
               isFading ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
             }`}
             style={{ transitionDuration: '1000ms' }}
