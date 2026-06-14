@@ -137,7 +137,7 @@ const brandValues = [
 ];
 
 const clientLogos = [
-  "Samsung", "LINE", "MediaTek", "SEIKO", "DIOR", "COACH", "肯德基", "高登鐘錶"
+  "Samsung", "LINE", "MediaTek", "SEIKO", "肯德基", "高登鐘錶"
 ];
 
 const ChaoxuanPage = () => {
