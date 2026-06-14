@@ -32,6 +32,7 @@ import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
 
 import NotePage from "./pages/public/NotePage";
+import IntroPage from "./pages/public/IntroPage";
 import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
 import UniversePage from "./pages/public/UniversePage";
@@ -116,6 +117,7 @@ const App = () => (
               <Route path="/home" element={<HomePage />} />
               <Route path="/chaoxuan" element={<ChaoxuanPage />} />
               <Route path="/reports" element={<ReportPage />} />
+              <Route path="/intro" element={<IntroPage />} />
               
               <Route path="/games" element={<GamesPage />} />
               <Route path="/notes/:shareLink" element={<NotePage />} />
