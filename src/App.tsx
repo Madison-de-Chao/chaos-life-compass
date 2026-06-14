@@ -32,6 +32,7 @@ import ChaoxuanPage from "./pages/public/ChaoxuanPage";
 import ReportPage from "./pages/public/ReportPage";
 
 import NotePage from "./pages/public/NotePage";
+import IntroPage from "./pages/public/IntroPage";
 import GamesPage from "./pages/public/GamesPage";
 import ComingSoonPage from "./pages/public/ComingSoonPage";
 import UniversePage from "./pages/public/UniversePage";
