@@ -262,7 +262,7 @@ const ChaoxuanPage = () => {
                 transform: `translateY(${scrollY * 0.05}px)`,
               }}
             >
-              實戰經驗，服務過 Samsung、DIOR、SEIKO 等品牌。<br className="hidden md:block" />
+              實戰經驗，服務過 Samsung、SEIKO 等品牌。<br className="hidden md:block" />
               不做場面話，只做能落地的品牌策略。
             </p>
 
@@ -461,7 +461,7 @@ const ChaoxuanPage = () => {
                   16 年品牌行銷、公關策略與策展實戰，外加命理系統的深度研究與實務應用。不是理論派，是每個案子都親手做過、每份報告都親自寫的人。擅長的事：把模糊的問題翻譯成可操作的選項，然後落地執行。
                 </p>
                 <p>
-                  合作過的品牌包括 Samsung、LINE、MediaTek、SEIKO、DIOR、COACH、肯德基、高登鐘錶等。這些名字放在這裡不是炫耀——是讓你知道我們處理過什麼量級的問題，以及我們對「交付標準」的定義。
+                  合作過的品牌包括 Samsung、LINE、MediaTek、SEIKO、肯德基、高登鐘錶等。這些名字放在這裡不是炫耀——是讓你知道我們處理過什麼量級的問題，以及我們對「交付標準」的定義。
                 </p>
               </div>
             </RevealSection>
