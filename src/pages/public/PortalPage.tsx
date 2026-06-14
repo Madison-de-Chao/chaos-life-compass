@@ -949,7 +949,7 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen h-screen bg-[#050505] flex flex-col items-center justify-center overflow-hidden relative">
+    <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center relative">
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#0a0a0a_0%,#050505_100%)]" />
