@@ -14,7 +14,8 @@ import {
   ExternalLink,
   Volume2,
   VolumeX,
-  Compass
+  Compass,
+  Library
 
 } from "lucide-react";
 import { MemberLoginWidget } from "@/modules/member";
