@@ -14,7 +14,8 @@ import {
   ExternalLink,
   Volume2,
   VolumeX,
-  Compass
+  Compass,
+  Library
 
 } from "lucide-react";
 import { MemberLoginWidget } from "@/modules/member";
@@ -87,6 +88,16 @@ const sections = [
     href: "/momochao-system",
     color: "from-indigo-500/20 to-violet-500/20",
     iconColor: "text-indigo-400",
+  },
+  {
+    id: 7,
+    title: "虹靈御所藏書閣 Library",
+    subtitle: "結構化的知識與閱讀",
+    description: "從命理報告到思維工具，從案例拆解到方法論整理。這裡收錄的不是答案，是幫你看清結構的材料。",
+    icon: Library,
+    href: "https://books.rainbow-sanctuary.com",
+    color: "from-amber-500/20 to-yellow-500/20",
+    iconColor: "text-amber-400",
   },
 ];
 
