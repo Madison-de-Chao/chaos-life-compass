@@ -72,6 +72,18 @@ const portalItems = [
     borderColor: "border-blue-400/20",
   },
   {
+    title: "虹靈御所藏書閣",
+    subtitle: "Library",
+    description: "從命理報告到思維工具，從案例拆解到方法論整理。這裡收錄的不是答案，是幫你看清結構的材料。",
+    cta: "進入藏書閣",
+    logo: null,
+    href: "https://books.rainbow-sanctuary.com",
+    isExternal: true,
+    glowColor: "rgba(245, 158, 11, 0.35)",
+    particleColor: "bg-amber-300",
+    borderColor: "border-amber-400/20",
+  },
+  {
     title: "AI 繪圖｜超烜創意",
     subtitle: "AI Art Generation",
     description: "輸入你的想法，讓 AI 把結構變成畫面。超烜創意旗下的視覺實驗室。",
@@ -822,7 +834,7 @@ export default function PortalPage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false, false]);
+  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false, false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
