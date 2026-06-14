@@ -1073,13 +1073,22 @@ export default function PortalPage() {
                 你好，我是默默超。
               </h2>
               <p className="text-white/50 text-base md:text-lg">想從哪裡開始？</p>
-              <Link 
-                to="/discover" 
-                className="inline-flex items-center gap-2 mt-3 px-5 py-2.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-300 text-sm hover:bg-amber-500/20 hover:border-amber-400/40 transition-all duration-300 touch-manipulation active:scale-[0.97]"
-              >
-                <Compass className="w-4 h-4" />
-                <span>不確定？讓我幫你找方向</span>
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+                <Link
+                  to="/intro"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/15 text-white/80 text-sm hover:bg-white/10 hover:border-amber-400/30 hover:text-amber-200 transition-all duration-300 touch-manipulation active:scale-[0.97]"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>一分鐘認識元壹體系</span>
+                </Link>
+                <Link
+                  to="/discover"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-300 text-sm hover:bg-amber-500/20 hover:border-amber-400/40 transition-all duration-300 touch-manipulation active:scale-[0.97]"
+                >
+                  <Compass className="w-4 h-4" />
+                  <span>不確定？讓我幫你找方向</span>
+                </Link>
+              </div>
             </div>
 
             {/* Cards grid - optimized for mobile touch */}
