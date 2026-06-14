@@ -28,6 +28,7 @@ const footerLinks = {
     { label: "默默超思維訓練系統", href: "https://mmclogic.com/", external: true },
     { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", external: true },
     { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
+    { label: "虹靈御所藏書閣", href: "https://books.rainbow-sanctuary.com/", external: true },
   ],
   about: [
     { label: "關於默默超", href: "/about" },

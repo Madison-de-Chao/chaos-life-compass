@@ -52,6 +52,7 @@ const ecosystemLinks = [
   { label: "默默超思維訓練系統", href: "https://mmclogic.com/", subtitle: "元壹宇宙" },
   { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", subtitle: "元壹宇宙" },
   { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", subtitle: "虹靈御所" },
+  { label: "虹靈御所藏書閣", href: "https://books.rainbow-sanctuary.com/", subtitle: "虹靈御所" },
 ];
 
 const PublicHeader = () => {
