@@ -1059,7 +1059,7 @@ export default function PortalPage() {
         {/* Portal cards */}
         {showPortal && (
           <div 
-            className={`fixed inset-0 flex flex-col items-center justify-center px-4 transition-all ${
+            className={`fixed inset-0 flex flex-col items-center justify-start pt-20 sm:pt-24 pb-8 px-4 overflow-y-auto transition-all ${
               isFading ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
             }`}
             style={{ transitionDuration: '1000ms' }}
