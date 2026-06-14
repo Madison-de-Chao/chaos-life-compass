@@ -74,7 +74,7 @@ const portalItems = [
   {
     title: "虹靈御所藏書閣",
     subtitle: "Library",
-    description: "從命理報告到思維工具，從案例拆解到方法論整理。這裡收錄的不是答案，是幫你看清結構的材料。",
+    description: "三套原創系列的線上閱讀庫——弧度歸零、塔羅冒險、元壹宇宙神話故事集。用故事把命理與思維的結構寫進去，一本一本線上讀。",
     cta: "進入藏書閣",
     logo: null,
     href: "https://books.rainbow-sanctuary.com",

@@ -103,10 +103,6 @@ const faqs = [
     q: "多久可以收到報告？",
     a: "正常交件時間約 7–14 個工作天。每份都是人工逐字寫的，不套模板。",
   },
-  {
-    q: "合盤報告是什麼？需要什麼前提？",
-    a: "兩個人（或三個人）的命盤交叉比對。有感情合盤、商業合盤、親子合盤三種。不是算配不配——是把你們之間的結構攤出來，哪裡共振、哪裡碰撞、怎麼配最省力。前提：主要測算人須先完成個人共振版報告。",
-  },
 ];
 
 // 共振版 chapters
@@ -143,9 +139,9 @@ const ReportPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useSEO({
-    title: "歸覓｜人生羅盤定位系統 | 共振版・偏勝版・感情合盤・商業合盤・親子合盤",
+    title: "歸覓｜人生羅盤定位系統 | 共振版・偏勝版",
     description: "四系統交叉驗證命理報告。共振版幫你看見完整的自己，偏勝版幫你看見認知偏差。100% 客製化，不套模板，不預測命運。",
-    keywords: "歸覓, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 合盤, 感情合盤, 商業合盤, 親子合盤, 默默超, 共振版, 偏勝版, 人生羅盤",
+    keywords: "歸覓, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超, 共振版, 偏勝版, 人生羅盤",
     ogTitle: "歸覓｜人生羅盤定位系統 - 兩種視角，一個你",
   });
 
@@ -476,7 +472,7 @@ const ReportPage = () => {
             {/* 雙版完整方案 */}
             <div className="relative bg-gradient-to-br from-amber-500/20 to-amber-900/30 rounded-3xl p-7 border-2 border-amber-400/60 shadow-[0_0_60px_rgba(251,191,36,0.2)] flex flex-col md:-translate-y-3">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full">
-                <span className="text-black text-xs font-bold">最推薦・現省 100</span>
+                <span className="text-black text-xs font-bold">最推薦</span>
               </div>
               <p className="text-amber-300 text-xs font-medium uppercase tracking-wider mb-2 mt-2">完整體驗</p>
               <h3 className="font-serif text-2xl font-bold text-white mb-3">雙版完整方案</h3>

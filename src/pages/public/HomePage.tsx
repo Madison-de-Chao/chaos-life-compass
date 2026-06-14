@@ -98,8 +98,8 @@ const HomePage = () => {
   
   useSEO({
     title: "虹靈御所 | 翻結構、問問題、給選項的命理平台",
-    description: "虹靈御所提供旗艦版命理報告、感情／商業／親子合盤解讀。四系統交叉驗證，不算命、不給答案，給你做決定的材料。",
-    keywords: "虹靈御所, 命理報告, 合盤解讀, 紫微斗數, 八字, 占星, 人類圖, 默默超, 感情合盤, 商業合盤, 親子合盤",
+    description: "虹靈御所提供旗艦版命理報告。四系統交叉驗證，不算命、不給答案，給你做決定的材料。",
+    keywords: "虹靈御所, 命理報告, 紫微斗數, 八字, 占星, 人類圖, 默默超",
     ogTitle: "虹靈御所 - 翻結構、問問題、給選項",
   });
 
@@ -386,7 +386,7 @@ const HomePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                  <p className="font-serif text-lg font-medium">16 年實戰的結構翻譯者</p>
+                  <p className="font-serif text-lg font-medium">16 年行銷公關實戰的結構翻譯者</p>
                   <p className="text-sm text-white/70">把模糊的困惑翻譯成可操作的選項</p>
                 </div>
               </div>
