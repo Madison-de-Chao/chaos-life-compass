@@ -6,7 +6,7 @@ import { useMember } from "@/modules/member";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MemberLoginWidget } from "@/modules/member";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn, Compass } from "lucide-react";
+import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, UserCircle2, LogIn, Compass, Sparkles } from "lucide-react";
 
 // Brand logos
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
