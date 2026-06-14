@@ -386,7 +386,7 @@ const HomePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                  <p className="font-serif text-lg font-medium">16 年實戰的結構翻譯者</p>
+                  <p className="font-serif text-lg font-medium">16 年行銷公關實戰的結構翻譯者</p>
                   <p className="text-sm text-white/70">把模糊的困惑翻譯成可操作的選項</p>
                 </div>
               </div>
