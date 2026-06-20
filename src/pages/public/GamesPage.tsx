@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter, Swords, Stars, GraduationCap, Recycle, Building2 } from "lucide-react";
+import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter, Swords, Stars, GraduationCap, Recycle, Building2, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -13,8 +13,9 @@ import gameStarImg from "@/assets/game-star.png";
 import gameMmclsImg from "@/assets/game-mmcls.png";
 import gameAtzoImg from "@/assets/game-atzo.png";
 import gameEhfisImg from "@/assets/game-ehfis.png";
+import gameTofuImg from "@/assets/game-tofu.png";
 
-type Category = "all" | "divination" | "training" | "healing" | "enterprise";
+type Category = "all" | "divination" | "training" | "healing" | "enterprise" | "creative";
 
 const categories: { id: Category; label: string; color: string }[] = [
   { id: "all", label: "全部站點", color: "bg-white/10 text-white border-white/20 hover:bg-white/20" },
@@ -22,6 +23,7 @@ const categories: { id: Category; label: string; color: string }[] = [
   { id: "training", label: "思維訓練類", color: "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20" },
   { id: "healing", label: "療癒類", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20" },
   { id: "enterprise", label: "企業應用", color: "bg-slate-500/10 text-slate-400 border-slate-500/30 hover:bg-slate-500/20" },
+  { id: "creative", label: "創意類", color: "bg-pink-500/10 text-pink-400 border-pink-500/30 hover:bg-pink-500/20" },
 ];
 
 const games = [
@@ -121,6 +123,22 @@ const games = [
     categoryLabel: "企業應用",
     previewImage: gameEhfisImg,
   },
+  {
+    id: "tofu",
+    station: 7,
+    title: "逗福 Tofu",
+    subtitle: "日常祝福器",
+    philosophy: "柔軟，但有自己的形狀",
+    description: "輕盈又有滋味的日常祝福。逗福是一塊豆腐的哲學：看似簡單，卻能承接各種滋味，在日常生活裡創造一點小確幸。",
+    href: "https://tofu.maisondechao.com/",
+    icon: Heart,
+    color: "from-pink-500 to-rose-600",
+    bgColor: "bg-pink-500/10",
+    borderColor: "border-pink-500/30",
+    category: "creative" as Category,
+    categoryLabel: "創意類",
+    previewImage: gameTofuImg,
+  },
 ];
 
 const containerVariants = {
@@ -160,6 +178,7 @@ const GamesPage = () => {
       case "training": return "bg-blue-500 text-white border-blue-500";
       case "healing": return "bg-emerald-500 text-white border-emerald-500";
       case "enterprise": return "bg-slate-500 text-white border-slate-500";
+      case "creative": return "bg-pink-500 text-white border-pink-500";
       default: return "";
     }
   };
@@ -185,7 +204,7 @@ const GamesPage = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6">
               <Gamepad2 className="w-4 h-4 text-amber-400" />
-              <span className="text-sm text-amber-400 font-medium">元壹系統生態・旅程六站</span>
+              <span className="text-sm text-amber-400 font-medium">元壹系統生態・旅程七站</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
@@ -283,18 +302,20 @@ const GamesPage = () => {
                       </div>
                       
                       {/* Category Badge on Image */}
-                      <Badge
-                        variant="outline"
-                        className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
-                          game.category === "divination"
-                            ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
-                            : game.category === "training"
-                            ? "bg-blue-500/30 text-blue-200 border-blue-400/50"
-                            : game.category === "healing"
-                            ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
-                            : "bg-slate-500/30 text-slate-200 border-slate-400/50"
-                        }`}
-                      >
+                        <Badge
+                          variant="outline"
+                          className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
+                            game.category === "divination"
+                              ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
+                              : game.category === "training"
+                              ? "bg-blue-500/30 text-blue-200 border-blue-400/50"
+                              : game.category === "healing"
+                              ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
+                              : game.category === "creative"
+                              ? "bg-pink-500/30 text-pink-200 border-pink-400/50"
+                              : "bg-slate-500/30 text-slate-200 border-slate-400/50"
+                          }`}
+                        >
                         {game.categoryLabel}
                       </Badge>
                       
