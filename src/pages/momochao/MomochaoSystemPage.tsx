@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Mail,
   MessageCircle,
+  Music,
 } from "lucide-react";
 import {
   Accordion,
@@ -25,6 +26,8 @@ import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
+import promoVideoAsset from "@/assets/life-risk-fund-promo.mp4.asset.json";
+
 
 const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
 
@@ -222,7 +225,32 @@ const MomochaoSystemPage = () => {
               </picture>
             </motion.div>
 
+            {/* 推廣曲 */}
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="max-w-3xl mx-auto mb-16"
+            >
+              <div className="flex items-center justify-center gap-2 mb-4 text-amber-300">
+                <Music className="w-5 h-5" />
+                <span className="text-sm font-medium tracking-wide">課程推廣曲</span>
+              </div>
+              <div className="rounded-2xl border border-white/10 overflow-hidden shadow-[0_0_40px_-12px_rgba(245,158,11,0.2)] bg-black/40">
+                <video
+                  src={promoVideoAsset.url}
+                  controls
+                  preload="metadata"
+                  playsInline
+                  className="w-full aspect-video"
+                  aria-label="《人生避險基金》AI 時代的人生避險基金課程推廣曲"
+                />
+              </div>
+            </motion.div>
+
             {/* 一分鐘了解：三欄資訊圖 */}
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mt-12 text-left">
               <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center gap-2 text-white/40 text-sm mb-4">
