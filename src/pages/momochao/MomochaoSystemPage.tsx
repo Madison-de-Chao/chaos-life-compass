@@ -194,6 +194,28 @@ const MomochaoSystemPage = () => {
               <p>7 堂一對一，每堂帶走一個能用的東西。</p>
             </div>
 
+            {/* 主視覺 */}
+            <motion.div
+              initial={{ opacity: 0, y: 28, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="max-w-4xl mx-auto mb-12"
+            >
+              <picture>
+                <source media="(min-width: 768px)" srcSet={OG_HORIZONTAL_URL} />
+                <source media="(max-width: 767px)" srcSet={OG_SQUARE_URL} />
+                <img
+                  src={OG_HORIZONTAL_URL}
+                  alt="AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課）"
+                  className="w-full rounded-2xl border border-white/10 shadow-[0_0_60px_-15px_rgba(245,158,11,0.25)]"
+                  loading="eager"
+                  width={1200}
+                  height={630}
+                />
+              </picture>
+            </motion.div>
+
             {/* 一分鐘了解：三欄資訊圖 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mt-12 text-left">
               <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6">
