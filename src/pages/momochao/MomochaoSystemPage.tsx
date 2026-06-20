@@ -495,7 +495,67 @@ const MomochaoSystemPage = () => {
         </div>
       </section>
 
-      {/* ⑧ 底部 CTA */}
+      {/* ⑧ 聯絡資訊 */}
+      <section className="py-20 px-4 border-t border-white/5">
+        <div className="container mx-auto max-w-4xl">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="text-3xl md:text-4xl font-serif font-bold text-center mb-4"
+          >
+            聯絡與報名
+          </motion.h2>
+          <p className="text-center text-white/50 text-sm mb-12 max-w-xl mx-auto">
+            有任何問題歡迎直接聯繫，我會親自回覆。回覆時間通常在一個工作天內。
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a
+              href={LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
+            >
+              <div className="w-12 h-12 rounded-full bg-[#06C755]/10 border border-[#06C755]/20 flex items-center justify-center mb-4 group-hover:bg-[#06C755]/20 transition-colors">
+                <MessageCircle className="w-6 h-6 text-[#06C755]" />
+              </div>
+              <h3 className="text-lg font-serif font-bold text-white mb-1">LINE</h3>
+              <p className="text-amber-400 text-sm font-medium mb-2">@momochao</p>
+              <p className="text-white/50 text-sm">課程報名、預約排課最快的方式</p>
+            </a>
+
+            <a
+              href="mailto:service@momo-chao.com"
+              className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
+            >
+              <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors">
+                <Mail className="w-6 h-6 text-amber-400" />
+              </div>
+              <h3 className="text-lg font-serif font-bold text-white mb-1">Email</h3>
+              <p className="text-amber-400 text-sm font-medium mb-2">service@momo-chao.com</p>
+              <p className="text-white/50 text-sm">課程諮詢、企業合作與其他問題</p>
+            </a>
+
+            <a
+              href="https://www.instagram.com/momo_chao_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
+            >
+              <div className="w-12 h-12 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-4 group-hover:bg-pink-500/20 transition-colors">
+                <Instagram className="w-6 h-6 text-pink-400" />
+              </div>
+              <h3 className="text-lg font-serif font-bold text-white mb-1">Instagram</h3>
+              <p className="text-amber-400 text-sm font-medium mb-2">@momo_chao_</p>
+              <p className="text-white/50 text-sm">日常觀點、課程動態與幕後</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ⑨ 底部 CTA */}
       <section className="py-24 px-4 border-t border-white/10 bg-gradient-to-b from-transparent to-amber-500/[0.04]">
         <div className="container mx-auto text-center max-w-xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
