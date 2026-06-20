@@ -114,6 +114,30 @@ const portalItems = [
   },
 ];
 
+// Unified circular logo badge for portal cards
+interface PortalLogoBadgeProps {
+  logo: string | null;
+  title: string;
+}
+
+function PortalLogoBadge({ logo, title }: PortalLogoBadgeProps) {
+  return (
+    <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white/5 flex-shrink-0 flex items-center justify-center overflow-hidden group-hover:scale-110 group-active:scale-105 transition-transform duration-300">
+      {logo ? (
+        <img
+          src={logo}
+          alt={title}
+          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain"
+          loading="lazy"
+        />
+      ) : (
+        <span className="text-emerald-300 text-xl sm:text-2xl font-display">默</span>
+      )}
+    </div>
+  );
+}
+
+
 // Gentle ambient music
 function useAmbientMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
