@@ -138,25 +138,25 @@ const MomochaoSystemPage = () => {
     canonical: "https://chaos-life-compass.lovable.app/momochao-system",
     ogImages: [
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system.jpg",
+        url: `${SITE_ORIGIN}${OG_HORIZONTAL_URL}`,
         alt: "AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課） — 默默超元壹體系",
         width: 1200,
         height: 630,
         type: "image/jpeg",
       },
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system-square.jpg",
+        url: `${SITE_ORIGIN}${OG_SQUARE_URL}`,
         alt: "默默超元壹體系基礎課方形社群卡｜AI 時代的人生避險基金",
         width: 1080,
         height: 1080,
-        type: "image/jpeg",
+        type: "image/png",
       },
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system-vertical.jpg",
+        url: `${SITE_ORIGIN}${OG_VERTICAL_URL}`,
         alt: "默默超元壹體系基礎課直式手機分享卡｜AI 時代的人生避險基金 NT$ 29,999",
         width: 1080,
         height: 1920,
-        type: "image/jpeg",
+        type: "image/png",
       },
     ],
   });
