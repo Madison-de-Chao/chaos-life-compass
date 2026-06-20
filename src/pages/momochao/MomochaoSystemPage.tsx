@@ -23,11 +23,12 @@ import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
-import ogHorizontal from "/og-momochao-system.jpg.asset.json";
-import ogSquare from "/og-momochao-system-square.jpg.asset.json";
-import ogVertical from "/og-momochao-system-vertical.jpg.asset.json";
 
 const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
+
+const OG_HORIZONTAL_URL = "/__l5e/assets-v1/d39eb0d0-334a-4ea3-8110-8bb148fcb5fa/og-momochao-system.jpg";
+const OG_SQUARE_URL = "/__l5e/assets-v1/2f2ce81f-4fa3-49e5-95c1-15bcf31bda23/og-momochao-system-square.jpg";
+const OG_VERTICAL_URL = "/__l5e/assets-v1/10ec2871-0408-4c47-883d-18dbcec33161/og-momochao-system-vertical.jpg";
 
 const LINE_URL = "https://line.me/R/ti/p/@momochao";
 
