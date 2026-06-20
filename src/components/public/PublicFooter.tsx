@@ -142,32 +142,28 @@ const PublicFooter = () => {
               ))}
             </ul>
 
-            {/* Newsletter Subscription */}
+            {/* LINE 好友 */}
             <div className="mt-6">
               <h4 className="font-serif font-bold text-white/90 mb-3 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                訂閱電子報
+                <MessageCircle className="w-4 h-4" />
+                加入 LINE 好友
               </h4>
               <p className="text-white/40 text-sm mb-3">
-                獲取最新命理洞見與活動資訊
+                一鍵加入，獲取最新動態與一對一諮詢
               </p>
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-amber-400/50 h-12 min-h-[48px] text-base"
-                />
-                <Button 
-                  type="submit" 
-                  size="icon"
-                  disabled={isSubscribing}
-                  className="bg-amber-600 hover:bg-amber-500 active:bg-amber-700 active:scale-95 text-white h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 touch-manipulation"
+              <Button
+                asChild
+                className="w-full bg-[#06C755] hover:bg-[#05a647] active:bg-[#048f3d] text-white h-12 min-h-[48px] text-base font-medium touch-manipulation active:scale-97"
+              >
+                <a
+                  href="https://line.me/R/ti/p/@momochao"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </form>
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  加入好友
+                </a>
+              </Button>
             </div>
           </div>
         </div>
