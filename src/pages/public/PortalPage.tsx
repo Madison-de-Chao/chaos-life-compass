@@ -13,6 +13,10 @@ import logoHongling from "@/assets/logo-hongling-yusuo.png";
 import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
 import logoYuanyi from "@/assets/logo-yuanyi-universe.png";
 import logoTofu from "@/assets/game-tofu.png";
+import iconMomo from "@/assets/portal-icon-momo.png";
+import iconAi from "@/assets/portal-icon-ai.png";
+import iconLibrary from "@/assets/portal-icon-library.png";
+import iconArt from "@/assets/portal-icon-art.png";
 
 const portalItems = [
   {
@@ -53,7 +57,7 @@ const portalItems = [
     subtitle: "Who is MomoChao",
     description: "一個花了四十年把做人的方式變成工具的人。",
     cta: "認識默默超",
-    logo: null,
+    logo: iconMomo,
     href: "/about",
     isExternal: false,
     glowColor: "rgba(52, 211, 153, 0.35)",
@@ -65,7 +69,7 @@ const portalItems = [
     subtitle: "AI Collaboration Portal",
     description: "跟 AI 協作的規則：說真話、標來源、守邊界。讓人機合作有個底線。",
     cta: "進入 AI 協作入口",
-    logo: null,
+    logo: iconAi,
     href: "/ai",
     isExternal: false,
     glowColor: "rgba(59, 130, 246, 0.35)",
@@ -77,7 +81,7 @@ const portalItems = [
     subtitle: "Library",
     description: "三套原創系列的線上閱讀庫——弧度歸零、塔羅冒險、元壹宇宙神話故事集。用故事把命理與思維的結構寫進去，一本一本線上讀。",
     cta: "進入藏書閣",
-    logo: null,
+    logo: iconLibrary,
     href: "https://books.rainbow-sanctuary.com",
     isExternal: true,
     glowColor: "rgba(245, 158, 11, 0.35)",
@@ -89,7 +93,7 @@ const portalItems = [
     subtitle: "AI Art Generation",
     description: "輸入你的想法，讓 AI 把結構變成畫面。超烜創意旗下的視覺實驗室。",
     cta: "進入 AI 繪圖",
-    logo: null,
+    logo: iconArt,
     href: "https://designs.momo-chao.com/",
     isExternal: true,
     glowColor: "rgba(236, 72, 153, 0.35)",
