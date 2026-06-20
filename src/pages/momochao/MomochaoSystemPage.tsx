@@ -210,8 +210,8 @@ const MomochaoSystemPage = () => {
                   alt="AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課）"
                   className="w-full rounded-2xl border border-white/10 shadow-[0_0_60px_-15px_rgba(245,158,11,0.25)]"
                   loading="eager"
-                  width={1200}
-                  height={630}
+                  width={1536}
+                  height={1024}
                 />
               </picture>
             </motion.div>
