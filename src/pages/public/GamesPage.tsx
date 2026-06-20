@@ -162,6 +162,7 @@ const GamesPage = () => {
       case "training": return "bg-blue-500 text-white border-blue-500";
       case "healing": return "bg-emerald-500 text-white border-emerald-500";
       case "enterprise": return "bg-slate-500 text-white border-slate-500";
+      case "creative": return "bg-pink-500 text-white border-pink-500";
       default: return "";
     }
   };
