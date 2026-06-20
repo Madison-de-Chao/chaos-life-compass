@@ -15,7 +15,7 @@ import gameAtzoImg from "@/assets/game-atzo.png";
 import gameEhfisImg from "@/assets/game-ehfis.png";
 import gameTofuImg from "@/assets/game-tofu.png";
 
-type Category = "all" | "divination" | "training" | "healing" | "enterprise";
+type Category = "all" | "divination" | "training" | "healing" | "enterprise" | "creative";
 
 const categories: { id: Category; label: string; color: string }[] = [
   { id: "all", label: "全部站點", color: "bg-white/10 text-white border-white/20 hover:bg-white/20" },
@@ -23,6 +23,7 @@ const categories: { id: Category; label: string; color: string }[] = [
   { id: "training", label: "思維訓練類", color: "bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20" },
   { id: "healing", label: "療癒類", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20" },
   { id: "enterprise", label: "企業應用", color: "bg-slate-500/10 text-slate-400 border-slate-500/30 hover:bg-slate-500/20" },
+  { id: "creative", label: "創意類", color: "bg-pink-500/10 text-pink-400 border-pink-500/30 hover:bg-pink-500/20" },
 ];
 
 const games = [
