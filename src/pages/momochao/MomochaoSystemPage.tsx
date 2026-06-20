@@ -233,7 +233,7 @@ const MomochaoSystemPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="max-w-3xl mx-auto mb-16"
+              className="max-w-md mx-auto mb-16"
             >
               <div className="flex items-center justify-center gap-2 mb-4 text-amber-300">
                 <Music className="w-5 h-5" />
@@ -242,11 +242,10 @@ const MomochaoSystemPage = () => {
               <div className="rounded-2xl border border-white/10 overflow-hidden shadow-[0_0_40px_-12px_rgba(245,158,11,0.2)] bg-black/40">
                 <video
                   src={PROMO_VIDEO_URL}
-
                   controls
                   preload="metadata"
                   playsInline
-                  className="w-full aspect-video"
+                  className="w-full aspect-[9/16]"
                   aria-label="《人生避險基金》AI 時代的人生避險基金課程推廣曲"
                 />
               </div>
