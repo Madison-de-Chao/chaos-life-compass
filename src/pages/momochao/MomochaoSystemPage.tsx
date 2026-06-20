@@ -518,8 +518,8 @@ const MomochaoSystemPage = () => {
               rel="noopener noreferrer"
               className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
             >
-              <div className="w-12 h-12 rounded-full bg-[#06C755]/10 border border-[#06C755]/20 flex items-center justify-center mb-4 group-hover:bg-[#06C755]/20 transition-colors">
-                <MessageCircle className="w-6 h-6 text-[#06C755]" />
+              <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors">
+                <MessageCircle className="w-6 h-6 text-amber-400" />
               </div>
               <h3 className="text-lg font-serif font-bold text-white mb-1">LINE</h3>
               <p className="text-amber-400 text-sm font-medium mb-2">@momochao</p>
@@ -544,8 +544,8 @@ const MomochaoSystemPage = () => {
               rel="noopener noreferrer"
               className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
             >
-              <div className="w-12 h-12 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-4 group-hover:bg-pink-500/20 transition-colors">
-                <Instagram className="w-6 h-6 text-pink-400" />
+              <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors">
+                <Instagram className="w-6 h-6 text-amber-400" />
               </div>
               <h3 className="text-lg font-serif font-bold text-white mb-1">Instagram</h3>
               <p className="text-amber-400 text-sm font-medium mb-2">@momo_chao_</p>
