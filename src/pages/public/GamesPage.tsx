@@ -204,7 +204,7 @@ const GamesPage = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6">
               <Gamepad2 className="w-4 h-4 text-amber-400" />
-              <span className="text-sm text-amber-400 font-medium">元壹系統生態・旅程六站</span>
+              <span className="text-sm text-amber-400 font-medium">元壹系統生態・旅程七站</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
