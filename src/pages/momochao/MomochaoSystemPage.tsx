@@ -28,9 +28,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
 
-const OG_HORIZONTAL_URL = "/__l5e/assets-v1/d39eb0d0-334a-4ea3-8110-8bb148fcb5fa/og-momochao-system.jpg";
-const OG_SQUARE_URL = "/__l5e/assets-v1/2f2ce81f-4fa3-49e5-95c1-15bcf31bda23/og-momochao-system-square.jpg";
-const OG_VERTICAL_URL = "/__l5e/assets-v1/10ec2871-0408-4c47-883d-18dbcec33161/og-momochao-system-vertical.jpg";
+const OG_HORIZONTAL_URL = "/og-momochao-system.jpg";
+const OG_SQUARE_URL = "/og-momochao-system-square.png";
+const OG_VERTICAL_URL = "/og-momochao-system-vertical.png";
 
 const LINE_URL = "https://line.me/R/ti/p/@momochao";
 
