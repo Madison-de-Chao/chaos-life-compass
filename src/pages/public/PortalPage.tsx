@@ -157,10 +157,8 @@ function useAmbientMusic() {
     const reverb = createReverb();
     nodes.push(reverb);
 
+    // Warm pad
 
-
-    const reverb = createReverb();
-    nodes.push(reverb);
 
     // Warm pad
     const createWarmPad = () => {
