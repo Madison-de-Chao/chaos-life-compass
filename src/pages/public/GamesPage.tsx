@@ -286,18 +286,20 @@ const GamesPage = () => {
                       </div>
                       
                       {/* Category Badge on Image */}
-                      <Badge
-                        variant="outline"
-                        className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
-                          game.category === "divination"
-                            ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
-                            : game.category === "training"
-                            ? "bg-blue-500/30 text-blue-200 border-blue-400/50"
-                            : game.category === "healing"
-                            ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
-                            : "bg-slate-500/30 text-slate-200 border-slate-400/50"
-                        }`}
-                      >
+                        <Badge
+                          variant="outline"
+                          className={`absolute top-3 right-3 text-xs backdrop-blur-sm ${
+                            game.category === "divination"
+                              ? "bg-amber-500/30 text-amber-200 border-amber-400/50"
+                              : game.category === "training"
+                              ? "bg-blue-500/30 text-blue-200 border-blue-400/50"
+                              : game.category === "healing"
+                              ? "bg-emerald-500/30 text-emerald-200 border-emerald-400/50"
+                              : game.category === "creative"
+                              ? "bg-pink-500/30 text-pink-200 border-pink-400/50"
+                              : "bg-slate-500/30 text-slate-200 border-slate-400/50"
+                          }`}
+                        >
                         {game.categoryLabel}
                       </Badge>
                       
