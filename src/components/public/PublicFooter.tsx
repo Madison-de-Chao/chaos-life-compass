@@ -35,53 +35,6 @@ const footerLinks = {
 };
 
 const PublicFooter = () => {
-  const [email, setEmail] = useState("");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      toast.error("請輸入電子郵件地址");
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("請輸入有效的電子郵件地址");
-      return;
-    }
-    
-    setIsSubscribing(true);
-    
-    try {
-      const response = await fetch(
-        "https://yrdtgwoxxjksesynrjss.supabase.co/functions/v1/newsletter-subscribe",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.trim(),
-            source: "docshow",
-            metadata: { page: "footer" }
-          })
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "訂閱失敗");
-      }
-
-      toast.success("訂閱成功！感謝您的支持");
-      setEmail("");
-    } catch (error) {
-      console.error("Newsletter subscription error:", error);
-      toast.error(error instanceof Error ? error.message : "訂閱失敗，請稍後再試");
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
 
   return (
     <footer className="border-t border-white/10" style={{ background: "linear-gradient(135deg, rgba(5,5,5,1) 0%, rgba(15,15,15,1) 25%, rgba(8,8,8,1) 50%, rgba(18,18,18,1) 75%, rgba(5,5,5,1) 100%), url(\"data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='marble'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='20' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23080808'/%3E%3Ccircle cx='50' cy='50' r='80' fill='%23151515' opacity='0.3'/%3E%3Ccircle cx='150' cy='150' r='100' fill='%23101010' opacity='0.2'/%3E%3Crect width='100%25' height='100%25' filter='url(%23marble)' opacity='0.1'/%3E%3C/svg%3E\")" }}>
