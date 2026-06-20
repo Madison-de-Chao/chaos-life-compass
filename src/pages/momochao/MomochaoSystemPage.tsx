@@ -12,6 +12,9 @@ import {
   X,
   Package,
   ChevronRight,
+  Mail,
+  Instagram,
+  MessageCircle,
 } from "lucide-react";
 import {
   Accordion,
