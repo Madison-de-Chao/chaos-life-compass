@@ -79,6 +79,7 @@ import {
 // MomoChao System Pages (默默超的元壹體系)
 import {
   MomochaoSystemPage,
+  MomochaoSystemAdvancedPage,
   MomochaoPhilosophyPage,
   MomochaoAboutPage,
   MomochaoEducationPage,
@@ -140,6 +141,7 @@ const App = () => (
               
               {/* MomoChao System routes - 默默超的元壹體系 */}
               <Route path="/momochao-system" element={<MomochaoSystemPage />} />
+              <Route path="/momochao-system-advanced" element={<MomochaoSystemAdvancedPage />} />
               <Route path="/momochao-system/philosophy" element={<MomochaoPhilosophyPage />} />
               <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
               <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
