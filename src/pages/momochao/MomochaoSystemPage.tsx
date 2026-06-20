@@ -24,6 +24,12 @@ import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
 
+const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
+
+const OG_HORIZONTAL_URL = "/__l5e/assets-v1/d39eb0d0-334a-4ea3-8110-8bb148fcb5fa/og-momochao-system.jpg";
+const OG_SQUARE_URL = "/__l5e/assets-v1/2f2ce81f-4fa3-49e5-95c1-15bcf31bda23/og-momochao-system-square.jpg";
+const OG_VERTICAL_URL = "/__l5e/assets-v1/10ec2871-0408-4c47-883d-18dbcec33161/og-momochao-system-vertical.jpg";
+
 const LINE_URL = "https://line.me/R/ti/p/@momochao";
 
 const painPoints = [
@@ -132,25 +138,25 @@ const MomochaoSystemPage = () => {
     canonical: "https://chaos-life-compass.lovable.app/momochao-system",
     ogImages: [
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system.jpg",
+        url: `${SITE_ORIGIN}${OG_HORIZONTAL_URL}`,
         alt: "AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課） — 默默超元壹體系",
-        width: 1200,
-        height: 630,
+        width: 1536,
+        height: 1024,
         type: "image/jpeg",
       },
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system-square.jpg",
+        url: `${SITE_ORIGIN}${OG_SQUARE_URL}`,
         alt: "默默超元壹體系基礎課方形社群卡｜AI 時代的人生避險基金",
-        width: 1080,
-        height: 1080,
-        type: "image/jpeg",
+        width: 1024,
+        height: 1024,
+        type: "image/png",
       },
       {
-        url: "https://chaos-life-compass.lovable.app/og-momochao-system-vertical.jpg",
+        url: `${SITE_ORIGIN}${OG_VERTICAL_URL}`,
         alt: "默默超元壹體系基礎課直式手機分享卡｜AI 時代的人生避險基金 NT$ 29,999",
-        width: 1080,
-        height: 1920,
-        type: "image/jpeg",
+        width: 768,
+        height: 1376,
+        type: "image/png",
       },
     ],
   });
@@ -187,6 +193,28 @@ const MomochaoSystemPage = () => {
               </p>
               <p>7 堂一對一，每堂帶走一個能用的東西。</p>
             </div>
+
+            {/* 主視覺 */}
+            <motion.div
+              initial={{ opacity: 0, y: 28, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="max-w-4xl mx-auto mb-12"
+            >
+              <picture>
+                <source media="(min-width: 768px)" srcSet={OG_HORIZONTAL_URL} />
+                <source media="(max-width: 767px)" srcSet={OG_SQUARE_URL} />
+                <img
+                  src={OG_HORIZONTAL_URL}
+                  alt="AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課）"
+                  className="w-full rounded-2xl border border-white/10 shadow-[0_0_60px_-15px_rgba(245,158,11,0.25)]"
+                  loading="eager"
+                  width={1536}
+                  height={1024}
+                />
+              </picture>
+            </motion.div>
 
             {/* 一分鐘了解：三欄資訊圖 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mt-12 text-left">
