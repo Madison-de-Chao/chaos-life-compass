@@ -12,6 +12,7 @@ import { ExternalLink, SkipForward, RotateCcw, Volume2, VolumeX, FastForward, Us
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
 import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
 import logoYuanyi from "@/assets/logo-yuanyi-universe.png";
+import logoTofu from "@/assets/game-tofu.png";
 
 const portalItems = [
   {
