@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter, Swords, Stars, GraduationCap, Recycle, Building2 } from "lucide-react";
+import { ExternalLink, Gamepad2, Sparkles, Target, Compass, Brain, Filter, Swords, Stars, GraduationCap, Recycle, Building2, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
