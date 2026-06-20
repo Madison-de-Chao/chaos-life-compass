@@ -328,7 +328,7 @@ const GamesPage = () => {
                     {/* Content */}
                     <div className="p-5 lg:p-6 flex-1 flex flex-col">
                       <div className="text-xs text-white/40 mb-1">{game.subtitle}</div>
-                      <h3 className="text-lg lg:text-xl font-serif font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
+                      <h3 className="text-lg lg:text-xl font-serif font-bold text-white mb-2 group-hover:text-amber-300 transition-colors line-clamp-1 min-h-[1.75rem]">
                         {game.title}
                       </h3>
                       
@@ -337,7 +337,7 @@ const GamesPage = () => {
                         <p className="text-amber-400/70 text-xs italic">「{game.philosophy}」</p>
                       </div>
                       
-                      <p className="text-sm text-white/60 leading-relaxed flex-1">
+                      <p className="text-sm text-white/60 leading-relaxed flex-1 line-clamp-2 min-h-[2.85rem]">
                         {game.description}
                       </p>
                       
