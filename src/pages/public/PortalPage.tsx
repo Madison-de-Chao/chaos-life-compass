@@ -945,7 +945,7 @@ export default function PortalPage() {
 
   const replay = useCallback(() => {
     setShowPortal(false);
-    setCardsVisible([false, false, false, false, false]);
+    setCardsVisible(new Array(portalItems.length).fill(false));
     setCurrentSection(0);
     setIsFading(false);
     setSpeedMultiplier(1);
