@@ -123,6 +123,22 @@ const games = [
     categoryLabel: "企業應用",
     previewImage: gameEhfisImg,
   },
+  {
+    id: "tofu",
+    station: 7,
+    title: "逗福 Tofu",
+    subtitle: "日常祝福器",
+    philosophy: "柔軟，但有自己的形狀",
+    description: "輕盈又有滋味的日常祝福。逗福是一塊豆腐的哲學：看似簡單，卻能承接各種滋味，在日常生活裡創造一點小確幸。",
+    href: "https://tofu.maisondechao.com/",
+    icon: Heart,
+    color: "from-pink-500 to-rose-600",
+    bgColor: "bg-pink-500/10",
+    borderColor: "border-pink-500/30",
+    category: "creative" as Category,
+    categoryLabel: "創意類",
+    previewImage: gameTofuImg,
+  },
 ];
 
 const containerVariants = {
