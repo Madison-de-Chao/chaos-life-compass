@@ -514,7 +514,12 @@ const MomochaoSystemPage = () => {
           <div className="mt-10 text-center text-white/55 text-sm leading-relaxed max-w-xl mx-auto">
             <span className="text-amber-300 font-medium">想更深入？</span>
             基礎課教「怎麼用」，進階課（IPO 你的思維系統）教「怎麼想」。
-            <span className="block text-white/35 mt-1">進階課獨立銷售頁敬請期待。</span>
+            <Link
+              to="/momochao-system-advanced"
+              className="block mt-2 text-amber-400 hover:text-amber-300 inline-flex items-center gap-1"
+            >
+              了解進階課 <ChevronRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
