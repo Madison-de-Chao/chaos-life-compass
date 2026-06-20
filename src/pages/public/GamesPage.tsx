@@ -13,6 +13,7 @@ import gameStarImg from "@/assets/game-star.png";
 import gameMmclsImg from "@/assets/game-mmcls.png";
 import gameAtzoImg from "@/assets/game-atzo.png";
 import gameEhfisImg from "@/assets/game-ehfis.png";
+import gameTofuImg from "@/assets/game-tofu.png";
 
 type Category = "all" | "divination" | "training" | "healing" | "enterprise";
 
