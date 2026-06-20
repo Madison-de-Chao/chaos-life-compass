@@ -129,8 +129,30 @@ const MomochaoSystemPage = () => {
     description:
       "市面上的 AI 課教你怎麼下 prompt。這門課教你怎麼不被 AI 帶偏——先搞定自己的判斷，再讓 AI 成為可靠的協作夥伴。7 堂一對一，每堂帶走一個能用的東西。",
     keywords: "默默超, 趙偉辰, AI 課程, 思維方法, 人機協作, 元壹體系, 基礎課",
-    ogImage: "https://chaos-life-compass.lovable.app/og-momochao-system.jpg",
     canonical: "https://chaos-life-compass.lovable.app/momochao-system",
+    ogImages: [
+      {
+        url: "https://chaos-life-compass.lovable.app/og-momochao-system.jpg",
+        alt: "AI 時代的人生避險基金｜搞定自己和 AI 的工具箱（基礎課） — 默默超元壹體系",
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
+      },
+      {
+        url: "https://chaos-life-compass.lovable.app/og-momochao-system-square.jpg",
+        alt: "默默超元壹體系基礎課方形社群卡｜AI 時代的人生避險基金",
+        width: 1080,
+        height: 1080,
+        type: "image/jpeg",
+      },
+      {
+        url: "https://chaos-life-compass.lovable.app/og-momochao-system-vertical.jpg",
+        alt: "默默超元壹體系基礎課直式手機分享卡｜AI 時代的人生避險基金 NT$ 29,999",
+        width: 1080,
+        height: 1920,
+        type: "image/jpeg",
+      },
+    ],
   });
 
   return (
