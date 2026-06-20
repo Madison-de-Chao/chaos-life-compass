@@ -231,8 +231,12 @@ export default function DiscoverPage() {
   };
 
   const result = showResult ? calculateResults(answers) : null;
-  const primaryRec = result ? recommendationMap[result.primary] : null;
-  const secondaryRec = result ? (secondaryRecommendations[result.secondary] || recommendationMap[result.secondary]) : null;
+  const primaryRec = result
+    ? (recommendationMap[result.primary] || secondaryRecommendations[result.primary] || recommendationMap.divination)
+    : null;
+  const secondaryRec = result
+    ? (secondaryRecommendations[result.secondary] || recommendationMap[result.secondary] || null)
+    : null;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
