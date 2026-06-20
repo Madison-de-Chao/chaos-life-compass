@@ -8,6 +8,7 @@ interface SEOProps {
   ogDescription?: string;
   ogType?: string;
   ogImage?: string;
+  canonical?: string;
 }
 
 export function useSEO({
@@ -18,6 +19,7 @@ export function useSEO({
   ogDescription,
   ogType = "website",
   ogImage,
+  canonical,
 }: SEOProps) {
   useEffect(() => {
     // Set document title
@@ -58,8 +60,28 @@ export function useSEO({
     setMetaTag("twitter:title", ogTitle || title);
     setMetaTag("twitter:description", ogDescription || description);
 
+    if (ogImage) {
+      setMetaTag("twitter:image", ogImage);
+    }
+
+    // Canonical link
+    let canonicalLink: HTMLLinkElement | null = null;
+    if (canonical) {
+      canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement("link");
+        canonicalLink.setAttribute("rel", "canonical");
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.setAttribute("href", canonical);
+    }
+
     return () => {
       document.title = "默默超完整性哲學官方入口網站";
+      if (canonicalLink) {
+        canonicalLink.remove();
+      }
     };
-  }, [title, description, keywords, ogTitle, ogDescription, ogType, ogImage]);
+  }, [title, description, keywords, ogTitle, ogDescription, ogType, ogImage, canonical]);
 }
+
