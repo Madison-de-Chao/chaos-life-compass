@@ -26,7 +26,9 @@ import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
-import promoVideoAsset from "@/assets/life-risk-fund-promo.mp4.asset.json";
+
+const PROMO_VIDEO_URL = "/life-risk-fund-promo.mp4";
+
 
 
 const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
