@@ -241,7 +241,8 @@ const MomochaoSystemPage = () => {
               </div>
               <div className="rounded-2xl border border-white/10 overflow-hidden shadow-[0_0_40px_-12px_rgba(245,158,11,0.2)] bg-black/40">
                 <video
-                  src={promoVideoAsset.url}
+                  src={PROMO_VIDEO_URL}
+
                   controls
                   preload="metadata"
                   playsInline
