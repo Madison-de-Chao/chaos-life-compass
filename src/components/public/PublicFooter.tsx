@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Instagram, Youtube, Facebook, Mail, Send, Cookie } from "lucide-react";
+import { Instagram, Youtube, Facebook, MessageCircle, Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
 import { openCookieSettings } from "@/components/CookieConsentBanner";
 import logoMaisonDeChao from "@/assets/logo-maison-de-chao-full.png";
 import logoHongling from "@/assets/logo-hongling-yusuo.png";
