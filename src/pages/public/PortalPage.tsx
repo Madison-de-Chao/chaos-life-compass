@@ -1189,7 +1189,7 @@ export default function PortalPage() {
                           )}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
-                              <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors truncate">{item.title}</h3>
+                              <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors line-clamp-1">{item.title}</h3>
                               <ExternalLink className="w-4 h-4 flex-shrink-0 text-white/30 group-hover:text-white/60 transition-colors" />
                             </div>
                             <p className="text-white/40 text-xs sm:text-sm mb-1 sm:mb-2 truncate">{item.subtitle}</p>
@@ -1226,7 +1226,7 @@ export default function PortalPage() {
                             </div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors mb-0.5 sm:mb-1 truncate">{item.title}</h3>
+                            <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors line-clamp-1 mb-0.5 sm:mb-1">{item.title}</h3>
                             <p className="text-white/40 text-xs sm:text-sm mb-1 sm:mb-2 truncate">{item.subtitle}</p>
                             <p className="text-white/60 text-xs sm:text-sm line-clamp-2 min-h-[2.5rem]">{item.description}</p>
                           </div>
