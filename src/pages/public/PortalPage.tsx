@@ -96,6 +96,18 @@ const portalItems = [
     particleColor: "bg-pink-300",
     borderColor: "border-pink-400/20",
   },
+  {
+    title: "逗福 Tofu",
+    subtitle: "Maison de Chao",
+    description: "輕盈又有滋味的日常祝福。一塊豆腐的哲學：柔軟，但有自己的形狀。",
+    cta: "進入逗福",
+    logo: logoTofu,
+    href: "https://tofu.maisondechao.com/",
+    isExternal: true,
+    glowColor: "rgba(245, 158, 11, 0.35)",
+    particleColor: "bg-amber-300",
+    borderColor: "border-amber-400/20",
+  },
 ];
 
 // Gentle ambient music
