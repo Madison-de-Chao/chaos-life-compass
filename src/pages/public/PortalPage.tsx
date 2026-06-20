@@ -1162,7 +1162,7 @@ export default function PortalPage() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group relative block p-4 sm:p-5 md:p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] active:bg-white/[0.08] overflow-hidden touch-manipulation active:scale-[0.98] min-h-[88px]`}
+                        className={`group relative block h-full p-4 sm:p-5 md:p-6 rounded-2xl border ${item.borderColor} bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.05] active:bg-white/[0.08] overflow-hidden touch-manipulation active:scale-[0.98] min-h-[88px]`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
                         onTouchStart={() => setHoveredCard(index)}
@@ -1173,17 +1173,27 @@ export default function PortalPage() {
                           className={`absolute inset-0 transition-opacity duration-500 rounded-2xl ${isHovered ? 'opacity-100' : 'opacity-0'}`}
                           style={{ boxShadow: `inset 0 0 60px ${item.glowColor}` }}
                         />
-                        <div className="relative flex items-center gap-3 sm:gap-4">
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
-                            <span className="text-emerald-300 text-xl sm:text-2xl font-display">默</span>
-                          </div>
+                        <div className="relative flex items-center gap-3 sm:gap-4 h-full">
+                          {item.logo ? (
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
+                              <img 
+                                src={item.logo} 
+                                alt={item.title} 
+                                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-white/5 flex-shrink-0 flex items-center justify-center group-hover:scale-110 group-active:scale-105 transition-transform duration-300 overflow-hidden">
+                              <span className="text-emerald-300 text-xl sm:text-2xl font-display">默</span>
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
                               <h3 className="font-display text-lg sm:text-xl text-white group-hover:text-[#c9a962] group-active:text-[#c9a962] transition-colors truncate">{item.title}</h3>
                               <ExternalLink className="w-4 h-4 flex-shrink-0 text-white/30 group-hover:text-white/60 transition-colors" />
                             </div>
                             <p className="text-white/40 text-xs sm:text-sm mb-1 sm:mb-2 truncate">{item.subtitle}</p>
-                            <p className="text-white/60 text-xs sm:text-sm line-clamp-2">{item.description}</p>
+                            <p className="text-white/60 text-xs sm:text-sm line-clamp-2 min-h-[2.5rem]">{item.description}</p>
                           </div>
                         </div>
                       </a>
