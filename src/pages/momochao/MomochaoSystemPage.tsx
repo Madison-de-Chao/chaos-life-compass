@@ -13,7 +13,6 @@ import {
   Package,
   ChevronRight,
   Mail,
-  Instagram,
   MessageCircle,
 } from "lucide-react";
 import {
@@ -116,6 +115,10 @@ const faqs = [
   {
     q: "上完可以幹嘛？",
     a: "你會帶走一套自己做的東西：決策分析紀錄、思維病毒清單、信任地板設定、AI 協作守則。這些不是筆記，是你真的可以拿來用的工具。",
+  },
+  {
+    q: "可以跟進階課一起報嗎？",
+    a: "可以。14 堂合售 NT$ 49,999（原價 70,000），省近一萬。加 LINE 報名即可。",
   },
   {
     q: "課程有期限嗎？",
@@ -419,51 +422,100 @@ const MomochaoSystemPage = () => {
 
       {/* ⑥ 定價屏 */}
       <section id="pricing" className="py-20 px-4 border-t border-white/5">
-        <div className="container mx-auto max-w-2xl">
-          <motion.div
+        <div className="container mx-auto max-w-5xl">
+          <motion.h2
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="bg-gradient-to-br from-amber-500/10 via-white/[0.03] to-amber-600/5 border border-amber-500/30 rounded-3xl p-8 md:p-12 text-center"
+            className="text-3xl md:text-4xl font-serif font-bold text-center mb-12"
           >
-            <p className="text-amber-400/80 text-sm mb-2">基礎課</p>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold mb-6">搞定自己和 AI 的工具箱</h2>
-            <p className="text-white/40 text-sm mb-1">講師勞務費</p>
-            <p className="text-white/40 text-base line-through mb-2">原價 NT$ 35,000</p>
-            <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">上市優惠</div>
-            <div className="text-5xl md:text-6xl font-bold text-white mb-2">
-              NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">29,999</span>
-            </div>
-            <p className="text-white/50 text-sm mb-8">🔸 優惠期間：即日起至 2026 年 9 月 19 日止</p>
+            <span className="text-amber-400">選擇</span>你的方案
+          </motion.h2>
 
-            <ul className="text-left max-w-sm mx-auto space-y-3 text-white/75 text-sm mb-10">
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />7 堂一對一課程</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂 60–90 分鐘</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂有講義與交付物</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />一對一排課，按你的時間走</li>
-            </ul>
-
-            <Button
-              asChild
-              size="lg"
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold h-14 text-base"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* 基礎課單售 */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="bg-gradient-to-br from-amber-500/10 via-white/[0.03] to-amber-600/5 border border-amber-500/30 rounded-3xl p-8 md:p-10 text-center flex flex-col"
             >
-              <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-                LINE 報名 → @momochao
-              </a>
-            </Button>
+              <p className="text-amber-400/80 text-sm mb-2">基礎課</p>
+              <h3 className="text-2xl font-serif font-bold mb-6">搞定自己和 AI 的工具箱</h3>
+              <p className="text-white/40 text-sm mb-1">講師勞務費</p>
+              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 35,000</p>
+              <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">上市優惠</div>
+              <div className="text-5xl font-bold text-white mb-2">
+                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">29,999</span>
+              </div>
+              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
 
-            <div className="mt-10 pt-8 border-t border-white/10 text-left">
-              <p className="text-white/60 text-sm leading-relaxed">
-                <span className="text-amber-300 font-medium">想更深入？</span><br />
-                基礎課教「怎麼用」，進階課教「怎麼想」。上完基礎、有興趣，可以繼續進階。
-              </p>
-              <p className="text-white/40 text-sm mt-2">
-                → 進階課：IPO 你的思維系統<span className="text-white/30">（敬請期待）</span>
-              </p>
-            </div>
-          </motion.div>
+              <ul className="text-left max-w-sm mx-auto space-y-3 text-white/75 text-sm mb-10 flex-1">
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />7 堂一對一課程</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂 60–90 分鐘</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂有講義與交付物</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />一對一排課，按你的時間走</li>
+              </ul>
+
+              <Button
+                asChild
+                size="lg"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold h-14 text-base"
+              >
+                <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
+                  LINE 報名 → @momochao
+                </a>
+              </Button>
+            </motion.div>
+
+            {/* 合售方案 */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              transition={{ delay: 0.1 }}
+              className="relative bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-amber-600/10 border-2 border-amber-400/50 rounded-3xl p-8 md:p-10 text-center flex flex-col shadow-[0_0_60px_-15px_rgba(245,158,11,0.4)]"
+            >
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black text-xs font-bold tracking-wider">
+                省近一萬
+              </div>
+              <p className="text-amber-300 text-sm mb-2">基礎 + 進階 合售</p>
+              <h3 className="text-2xl font-serif font-bold mb-6">14 堂一次到位</h3>
+              <p className="text-white/40 text-sm mb-1">講師勞務費</p>
+              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 70,000</p>
+              <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">合售優惠</div>
+              <div className="text-5xl font-bold text-white mb-2">
+                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">49,999</span>
+              </div>
+              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
+
+              <ul className="text-left max-w-sm mx-auto space-y-3 text-white/85 text-sm mb-10 flex-1">
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />基礎 7 堂 ＋ 進階 7 堂，共 14 堂</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂 60–90 分鐘</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />每堂有講義與交付物</li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />一對一排課，按你的時間走</li>
+              </ul>
+
+              <Button
+                asChild
+                size="lg"
+                className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-black font-semibold h-14 text-base"
+              >
+                <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
+                  LINE 報名 → @momochao
+                </a>
+              </Button>
+            </motion.div>
+          </div>
+
+          <div className="mt-10 text-center text-white/55 text-sm leading-relaxed max-w-xl mx-auto">
+            <span className="text-amber-300 font-medium">想更深入？</span>
+            基礎課教「怎麼用」，進階課（IPO 你的思維系統）教「怎麼想」。
+            <span className="block text-white/35 mt-1">進階課獨立銷售頁敬請期待。</span>
+          </div>
         </div>
       </section>
 
@@ -511,7 +563,7 @@ const MomochaoSystemPage = () => {
             有任何問題歡迎直接聯繫，我會親自回覆。回覆時間通常在一個工作天內。
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <a
               href={LINE_URL}
               target="_blank"
@@ -536,20 +588,6 @@ const MomochaoSystemPage = () => {
               <h3 className="text-lg font-serif font-bold text-white mb-1">Email</h3>
               <p className="text-amber-400 text-sm font-medium mb-2">service@momo-chao.com</p>
               <p className="text-white/50 text-sm">課程諮詢、企業合作與其他問題</p>
-            </a>
-
-            <a
-              href="https://www.instagram.com/momo_chao_/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-white/[0.03] border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all active:scale-97"
-            >
-              <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors">
-                <Instagram className="w-6 h-6 text-amber-400" />
-              </div>
-              <h3 className="text-lg font-serif font-bold text-white mb-1">Instagram</h3>
-              <p className="text-amber-400 text-sm font-medium mb-2">@momo_chao_</p>
-              <p className="text-white/50 text-sm">日常觀點、課程動態與幕後</p>
             </a>
           </div>
         </div>
