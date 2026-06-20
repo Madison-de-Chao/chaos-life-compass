@@ -847,7 +847,7 @@ export default function PortalPage() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const [showPortal, setShowPortal] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false, false, false, false]);
+  const [cardsVisible, setCardsVisible] = useState<boolean[]>([false, false, false, false, false, false, false, false]);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
