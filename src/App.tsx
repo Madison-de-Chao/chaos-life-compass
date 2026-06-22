@@ -146,17 +146,15 @@ const App = () => (
               <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
               <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
               
-              {/* Unified Auth routes - 統一會員系統（共用主站導航） */}
-              <Route path="/auth/login" element={<PublicLayout><UnifiedAuthPage /></PublicLayout>} />
+              {/* 會員系統暫時關閉 - 所有會員/登入路徑導回首頁 */}
+              <Route path="/auth/login" element={<Navigate to="/" replace />} />
               <Route path="/oauth/authorize" element={<PublicLayout><OAuthAuthorizePage /></PublicLayout>} />
-              <Route path="/account" element={<MemberProtectedRoute><PublicLayout><UnifiedDashboard /></PublicLayout></MemberProtectedRoute>} />
-              <Route path="/account/profile" element={<MemberProtectedRoute><PublicLayout><UnifiedProfilePage /></PublicLayout></MemberProtectedRoute>} />
-              <Route path="/account/products" element={<MemberProtectedRoute><PublicLayout><ProductsPage /></PublicLayout></MemberProtectedRoute>} />
-              
-              {/* Legacy member routes — redirect to unified system */}
-              <Route path="/member/auth" element={<Navigate to="/auth/login" replace />} />
-              <Route path="/member" element={<Navigate to="/account" replace />} />
-              <Route path="/member/profile" element={<Navigate to="/account/profile" replace />} />
+              <Route path="/account" element={<Navigate to="/" replace />} />
+              <Route path="/account/profile" element={<Navigate to="/" replace />} />
+              <Route path="/account/products" element={<Navigate to="/" replace />} />
+              <Route path="/member/auth" element={<Navigate to="/" replace />} />
+              <Route path="/member" element={<Navigate to="/" replace />} />
+              <Route path="/member/profile" element={<Navigate to="/" replace />} />
               
               {/* Protected routes - Admin dashboard */}
               <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
