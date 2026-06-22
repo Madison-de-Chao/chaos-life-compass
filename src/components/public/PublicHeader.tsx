@@ -142,13 +142,13 @@ const PublicHeader = () => {
             </DropdownMenu>
           </nav>
 
-          {/* Desktop Auth - 使用 MemberAuthHeader 組件 */}
-          <div className="hidden lg:flex items-center">
+          {/* Desktop Auth - 暫時隱藏會員系統 */}
+          {/* <div className="hidden lg:flex items-center">
             <MemberAuthHeader 
               theme={luxuryBlackGoldTheme}
               config={publicHeaderAuthConfig}
             />
-          </div>
+          </div> */}
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
