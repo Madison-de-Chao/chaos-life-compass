@@ -1278,6 +1278,18 @@ export default function PortalPage() {
             <p className="text-white/30 text-xs sm:text-sm mt-6 md:mt-8 px-4 text-center">
               選不選都行，看過就好。
             </p>
+
+            {/* Page view counter */}
+            <div className="mt-4 mb-2 flex items-center justify-center gap-2 text-white/40 text-xs">
+              <Eye className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>
+                累計造訪{" "}
+                <span className="tabular-nums text-[#c9a962]/80">
+                  {viewCount != null ? viewCount.toLocaleString() : "—"}
+                </span>{" "}
+                次
+              </span>
+            </div>
           </div>
         )}
       </div>
