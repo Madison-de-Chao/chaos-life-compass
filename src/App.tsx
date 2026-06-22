@@ -29,6 +29,7 @@ import MembersPage from "./pages/MembersPage";
 import PortalPage from "./pages/public/PortalPage";
 import HomePage from "./pages/public/HomePage";
 import ChaoxuanPage from "./pages/public/ChaoxuanPage";
+import LibraryPage from "./pages/public/LibraryPage";
 import ReportPage from "./pages/public/ReportPage";
 
 import NotePage from "./pages/public/NotePage";
@@ -128,6 +129,7 @@ const App = () => (
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/notes-public" element={<ComingSoonPage />} />
               <Route path="/discover" element={<DiscoverPage />} />
+              <Route path="/library" element={<LibraryPage />} />
               
               {/* AI Portal routes - AI 協作入口 */}
               <Route path="/ai" element={<AIPortalPage />} />
