@@ -12,6 +12,7 @@ interface Series {
   hook: string;
   description: string;
   takeaway: string;
+  read: { label: string; url: string };
   tool: { label: string; url: string };
   credit: string;
   icon: typeof BookOpen;
