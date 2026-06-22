@@ -1271,8 +1271,8 @@ export default function PortalPage() {
               })}
             </div>
 
-            {/* Member Login Section */}
-            <MemberLoginSection />
+            {/* Member Login Section - 暫時隱藏 */}
+            {/* <MemberLoginSection /> */}
 
             {/* Footer */}
             <p className="text-white/30 text-xs sm:text-sm mt-6 md:mt-8 px-4 text-center">
