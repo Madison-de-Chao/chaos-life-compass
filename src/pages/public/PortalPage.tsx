@@ -885,6 +885,31 @@ export default function PortalPage() {
   const { isPlaying, startMusic, toggleMusic } = useAmbientMusic();
   const hasStartedMusic = useRef(false);
   const timeoutRef = useRef<number | null>(null);
+  const [viewCount, setViewCount] = useState<number | null>(null);
+  const hasIncrementedRef = useRef(false);
+
+  // Increment + fetch portal page view counter (once per mount)
+  useEffect(() => {
+    if (hasIncrementedRef.current) return;
+    hasIncrementedRef.current = true;
+    (async () => {
+      try {
+        const { data, error } = await supabase.rpc('increment_page_counter', { p_page_key: 'portal' });
+        if (!error && typeof data === 'number') {
+          setViewCount(data);
+        } else {
+          const { data: row } = await supabase
+            .from('page_counters')
+            .select('view_count')
+            .eq('page_key', 'portal')
+            .maybeSingle();
+          if (row?.view_count != null) setViewCount(Number(row.view_count));
+        }
+      } catch {
+        // silent fail — counter is non-critical
+      }
+    })();
+  }, []);
 
   useSEO({
     title: "默默超元壹體系｜說真話的自我探索工具",
