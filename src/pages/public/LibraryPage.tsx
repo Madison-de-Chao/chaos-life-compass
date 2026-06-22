@@ -12,6 +12,7 @@ interface Series {
   hook: string;
   description: string;
   takeaway: string;
+  read: { label: string; url: string };
   tool: { label: string; url: string };
   credit: string;
   icon: typeof BookOpen;
@@ -29,7 +30,8 @@ const SERIES: Series[] = [
     hook: "你有沒有在跟自己打一場不需要打的仗？",
     description: "這個系列有四部，每一部用不同的角度問同一件事。",
     takeaway: "也許不是一個答案，而是一個停頓。讓你在下次想刪掉什麼「沒用的」自己之前，多停一秒。",
-    tool: { label: "互動式小說版本 atzo.rainbow-sanctuary.com", url: "https://atzo.rainbow-sanctuary.com" },
+    read: { label: "books.rainbow-sanctuary.com", url: "https://books.rainbow-sanctuary.com" },
+    tool: { label: "互動式小說 atzo.rainbow-sanctuary.com", url: "https://atzo.rainbow-sanctuary.com" },
     credit:
       "第一部至第三部由默默超與 Claude（Anthropic）共同創作，第二部加入 Gemini（Google）擔任程序檢視。第四部由默默超與 Claude 在一次連續對話中完成初稿。",
     icon: BookOpen,
@@ -63,6 +65,7 @@ const SERIES: Series[] = [
     description:
       "牌義不是知識，是經驗。你得走過那張牌，身體才會記住。這套故事集讓你以第二人稱走進虹靈御所，穿越七十八張牌。",
     takeaway: "牌義不用背。走過的路，身體會記得。",
+    read: { label: "books.rainbow-sanctuary.com", url: "https://books.rainbow-sanctuary.com" },
     tool: { label: "弧度掌控外掛 tarot.rainbow-sanctuary.com", url: "https://tarot.rainbow-sanctuary.com" },
     credit:
       "由四位 AI 模型與人類作者默默超共同完成：Claude Opus 4.6（聖杯王國＋宮廷牌＋全系列審核）、ChatGPT 5.2 Thinking（權杖王國）、DeepSeek（寶劍王國）、Gemini 3 PRO（錢幣王國）。",
@@ -88,6 +91,7 @@ const SERIES: Series[] = [
     description:
       "重新詮釋二十四位東西方神祇。每一位都有正位與逆位，走過從分裂到整合的完整弧度。再加上五聖獸侍靈——願意跟你並肩走的夥伴。",
     takeaway: "一面鏡子。讓你在神的掙扎裡看見自己——完整不是沒有缺口，是不再害怕缺口。",
+    read: { label: "books.rainbow-sanctuary.com", url: "https://books.rainbow-sanctuary.com" },
     tool: { label: "元壹宇宙神話占星系統 star.rainbow-sanctuary.com", url: "https://star.rainbow-sanctuary.com" },
     credit: "默默超與 Claude（Anthropic）共同創作。",
     icon: Stars,
@@ -188,18 +192,33 @@ export default function LibraryPage() {
                   <p className="text-white/80 leading-relaxed">{s.takeaway}</p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+                <div className="grid sm:grid-cols-2 gap-3 mb-4">
                   <Button
                     asChild
                     className="bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
                   >
-                    <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
-                      開始閱讀 / 使用工具
-                      <ExternalLink className="w-4 h-4 ml-2" />
+                    <a href={s.read.url} target="_blank" rel="noopener noreferrer">
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      開始閱讀
+                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
                     </a>
                   </Button>
-                  <span className="text-white/40 text-xs break-all">{s.tool.label}</span>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-white/20 bg-white/[0.03] text-white hover:bg-white/10 hover:text-white rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
+                  >
+                    <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
+                      使用互動工具
+                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
+                    </a>
+                  </Button>
                 </div>
+                <div className="text-white/35 text-xs space-y-1 mb-4 break-all">
+                  <p>📖 閱讀：{s.read.label}</p>
+                  <p>🛠 工具：{s.tool.label}</p>
+                </div>
+
 
                 <p className="text-white/35 text-xs leading-relaxed border-t border-white/5 pt-4">
                   協作資訊：{s.credit}
