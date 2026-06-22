@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, BookOpen, Sparkles, Stars } from "lucide-react";
+import { ArrowLeft, ExternalLink, BookOpen, Sparkles, Stars, ChevronDown, Gift } from "lucide-react";
 import PublicLayout from "@/components/public/PublicLayout";
 import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useSEO } from "@/hooks/useSEO";
+
 
 interface Series {
   id: string;
@@ -148,85 +150,100 @@ export default function LibraryPage() {
           </div>
         </section>
 
-        {/* Series */}
-        <section className="px-4 pb-20 max-w-5xl mx-auto space-y-10">
-          {SERIES.map((s, idx) => {
-            const Icon = s.icon;
-            return (
-              <article
-                key={s.id}
-                className={`relative rounded-2xl border ${s.border} bg-white/[0.02] backdrop-blur-sm p-6 md:p-10 overflow-hidden`}
-                style={{ boxShadow: `0 0 60px ${s.glow}` }}
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div
-                    className={`flex-shrink-0 w-12 h-12 rounded-full border ${s.border} flex items-center justify-center bg-black/40`}
-                  >
-                    <Icon className={`w-6 h-6 ${s.accent}`} />
-                  </div>
-                  <div>
-                    <p className={`text-xs tracking-[0.25em] uppercase ${s.accent} mb-1`}>
-                      系列 {String(idx + 1).padStart(2, "0")} · {s.subtitle}
-                    </p>
-                    <h2 className="text-2xl md:text-3xl font-light text-white">{s.title}</h2>
-                  </div>
-                </div>
+        {/* 全部免費 強調列 */}
+        <div className="px-4 max-w-5xl mx-auto mb-8">
+          <div className="rounded-full border border-amber-400/30 bg-amber-500/[0.06] px-5 py-3 flex items-center justify-center gap-2 text-amber-200/90 text-sm">
+            <Gift className="w-4 h-4" />
+            <span>三套系列・二十多本書・全部免費</span>
+          </div>
+        </div>
 
-                <p className={`text-lg md:text-xl ${s.accent} font-light mb-4`}>{s.hook}</p>
-                <p className="text-white/70 leading-loose mb-8">{s.description}</p>
-
-                <div className="grid md:grid-cols-2 gap-4 mb-8">
-                  {s.parts.map((p) => (
-                    <div
-                      key={p.title}
-                      className="rounded-xl border border-white/5 bg-black/30 p-5 hover:border-white/15 transition-colors"
-                    >
-                      <h3 className="text-white font-medium mb-2 text-[15px]">{p.title}</h3>
-                      <p className="text-white/55 text-sm leading-relaxed">{p.body}</p>
+        {/* Series Accordion */}
+        <section className="px-4 pb-20 max-w-5xl mx-auto">
+          <Accordion type="multiple" className="space-y-4">
+            {SERIES.map((s, idx) => {
+              const Icon = s.icon;
+              return (
+                <AccordionItem
+                  key={s.id}
+                  value={s.id}
+                  className={`rounded-2xl border ${s.border} bg-white/[0.02] backdrop-blur-sm overflow-hidden`}
+                  style={{ boxShadow: `0 0 40px ${s.glow}` }}
+                >
+                  <AccordionTrigger className="px-5 md:px-8 py-5 hover:no-underline [&>svg]:hidden group">
+                    <div className="flex items-center gap-4 w-full text-left">
+                      <div
+                        className={`flex-shrink-0 w-12 h-12 rounded-full border ${s.border} flex items-center justify-center bg-black/40`}
+                      >
+                        <Icon className={`w-6 h-6 ${s.accent}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-[10px] tracking-[0.25em] uppercase ${s.accent} mb-1`}>
+                          系列 {String(idx + 1).padStart(2, "0")} · {s.subtitle} · 免費
+                        </p>
+                        <h2 className="text-lg md:text-2xl font-light text-white truncate">{s.title}</h2>
+                      </div>
+                      <ChevronDown className="w-5 h-5 text-white/40 transition-transform duration-300 group-data-[state=open]:rotate-180 flex-shrink-0" />
                     </div>
-                  ))}
-                </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 md:px-8 pb-8 pt-2">
+                    <p className={`text-lg md:text-xl ${s.accent} font-light mb-4`}>{s.hook}</p>
+                    <p className="text-white/70 leading-loose mb-8">{s.description}</p>
 
-                <div className="rounded-xl bg-black/40 border border-white/5 p-5 mb-6">
-                  <p className="text-white/50 text-xs tracking-widest uppercase mb-2">你會帶走的東西</p>
-                  <p className="text-white/80 leading-relaxed">{s.takeaway}</p>
-                </div>
+                    <div className="grid md:grid-cols-2 gap-4 mb-8">
+                      {s.parts.map((p) => (
+                        <div
+                          key={p.title}
+                          className="rounded-xl border border-white/5 bg-black/30 p-5 hover:border-white/15 transition-colors"
+                        >
+                          <h3 className="text-white font-medium mb-2 text-[15px]">{p.title}</h3>
+                          <p className="text-white/55 text-sm leading-relaxed">{p.body}</p>
+                        </div>
+                      ))}
+                    </div>
 
-                <div className="grid sm:grid-cols-2 gap-3 mb-4">
-                  <Button
-                    asChild
-                    className="bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
-                  >
-                    <a href={s.read.url} target="_blank" rel="noopener noreferrer">
-                      <BookOpen className="w-4 h-4 mr-2" />
-                      開始閱讀
-                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="border-white/20 bg-white/[0.03] text-white hover:bg-white/10 hover:text-white rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
-                  >
-                    <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
-                      使用互動工具
-                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
-                    </a>
-                  </Button>
-                </div>
-                <div className="text-white/35 text-xs space-y-1 mb-4 break-all">
-                  <p>📖 閱讀：{s.read.label}</p>
-                  <p>🛠 工具：{s.tool.label}</p>
-                </div>
+                    <div className="rounded-xl bg-black/40 border border-white/5 p-5 mb-6">
+                      <p className="text-white/50 text-xs tracking-widest uppercase mb-2">你會帶走的東西</p>
+                      <p className="text-white/80 leading-relaxed">{s.takeaway}</p>
+                    </div>
 
+                    <div className="grid sm:grid-cols-2 gap-3 mb-4">
+                      <Button
+                        asChild
+                        className="bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
+                      >
+                        <a href={s.read.url} target="_blank" rel="noopener noreferrer">
+                          <BookOpen className="w-4 h-4 mr-2" />
+                          開始閱讀
+                          <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
+                        </a>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="border-white/20 bg-white/[0.03] text-white hover:bg-white/10 hover:text-white rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
+                      >
+                        <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
+                          使用互動工具
+                          <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
+                        </a>
+                      </Button>
+                    </div>
+                    <div className="text-white/35 text-xs space-y-1 mb-4 break-all">
+                      <p>📖 閱讀：{s.read.label}</p>
+                      <p>🛠 工具：{s.tool.label}</p>
+                    </div>
 
-                <p className="text-white/35 text-xs leading-relaxed border-t border-white/5 pt-4">
-                  協作資訊：{s.credit}
-                </p>
-              </article>
-            );
-          })}
+                    <p className="text-white/35 text-xs leading-relaxed border-t border-white/5 pt-4">
+                      協作資訊：{s.credit}
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
         </section>
+
 
         {/* Footer */}
         <section className="px-4 pb-24 max-w-3xl mx-auto text-center">
