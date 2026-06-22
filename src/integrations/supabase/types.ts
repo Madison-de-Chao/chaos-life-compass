@@ -873,6 +873,24 @@ export type Database = {
         }
         Relationships: []
       }
+      page_counters: {
+        Row: {
+          page_key: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          page_key: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          page_key?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
       pending_changes: {
         Row: {
           batch_id: string | null
@@ -1217,6 +1235,7 @@ export type Database = {
         Args: { note_share_link: string }
         Returns: undefined
       }
+      increment_page_counter: { Args: { p_page_key: string }; Returns: number }
       increment_view_count: {
         Args: { doc_share_link: string }
         Returns: undefined
