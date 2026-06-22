@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 // Page titles for different routes
 const pageTitles: Record<string, string> = {
   "/universe": "元壹宇宙",
-  "/notes-public": "元壹筆記",
 };
 
 const ComingSoonPage = () => {

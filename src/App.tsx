@@ -94,7 +94,7 @@ const queryClient = new QueryClient();
 // Component to conditionally render chatbot on public pages
 function ChatBotWrapper() {
   const location = useLocation();
-  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/reports", "/games", "/universe", "/notes-public"];
+  const publicRoutes = ["/", "/portal", "/home", "/chaoxuan", "/reports", "/games", "/universe"];
   const isPublicRoute = publicRoutes.some(route => 
     route === "/" ? location.pathname === "/" : location.pathname.startsWith(route)
   );
@@ -127,7 +127,7 @@ const App = () => (
               <Route path="/about" element={<AboutPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
-              <Route path="/notes-public" element={<ComingSoonPage />} />
+              
               <Route path="/discover" element={<DiscoverPage />} />
               <Route path="/library" element={<LibraryPage />} />
               

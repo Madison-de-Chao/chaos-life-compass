@@ -49,16 +49,6 @@ const sections = [
     iconColor: "text-violet-400",
   },
   {
-    id: 3,
-    title: "默默超的元壹筆記 YuanYi Notes",
-    subtitle: "不是雞湯，是觀察紀錄",
-    description: "命盤是一種語言，不是判決。這裡寫的是實際案例的反思、方法論的迭代、以及「為什麼很多命理師不敢講的事」。",
-    icon: BookOpen,
-    href: "/notes",
-    color: "from-emerald-500/20 to-teal-500/20",
-    iconColor: "text-emerald-400",
-  },
-  {
     id: 4,
     title: "元壹宇宙 × 默默超思維 Yuan-Yi Universe",
     subtitle: "完整性導向的思維操作系統",

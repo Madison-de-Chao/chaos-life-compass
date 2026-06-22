@@ -17,7 +17,7 @@ const footerLinks = {
   explore: [
     { label: "命理報告", href: "/reports" },
     { label: "超烜遊戲", href: "/games" },
-    { label: "元壹筆記", href: "/notes-public" },
+    
     { label: "元壹宇宙", href: "/universe" },
   ],
   external: [
