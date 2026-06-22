@@ -192,18 +192,33 @@ export default function LibraryPage() {
                   <p className="text-white/80 leading-relaxed">{s.takeaway}</p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+                <div className="grid sm:grid-cols-2 gap-3 mb-4">
                   <Button
                     asChild
                     className="bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
                   >
-                    <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
-                      開始閱讀 / 使用工具
-                      <ExternalLink className="w-4 h-4 ml-2" />
+                    <a href={s.read.url} target="_blank" rel="noopener noreferrer">
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      開始閱讀
+                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
                     </a>
                   </Button>
-                  <span className="text-white/40 text-xs break-all">{s.tool.label}</span>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-white/20 bg-white/[0.03] text-white hover:bg-white/10 hover:text-white rounded-full px-6 h-12 active:scale-[0.97] transition-transform"
+                  >
+                    <a href={s.tool.url} target="_blank" rel="noopener noreferrer">
+                      使用互動工具
+                      <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
+                    </a>
+                  </Button>
                 </div>
+                <div className="text-white/35 text-xs space-y-1 mb-4 break-all">
+                  <p>📖 閱讀：{s.read.label}</p>
+                  <p>🛠 工具：{s.tool.label}</p>
+                </div>
+
 
                 <p className="text-white/35 text-xs leading-relaxed border-t border-white/5 pt-4">
                   協作資訊：{s.credit}
