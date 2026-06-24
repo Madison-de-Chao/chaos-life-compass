@@ -175,7 +175,7 @@ const TofuLandingPage = () => {
                 <a href={TOFU_URL} target="_blank" rel="noopener noreferrer">閱讀白皮書<ExternalLink className="ml-2 h-4 w-4" /></a>
               </Button>
               <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub 原始碼<ExternalLink className="ml-2 h-4 w-4" /></a>
+                <a href={TOFU_GITHUB} target="_blank" rel="noopener noreferrer">GitHub 原始碼<ExternalLink className="ml-2 h-4 w-4" /></a>
               </Button>
             </div>
           </section>
