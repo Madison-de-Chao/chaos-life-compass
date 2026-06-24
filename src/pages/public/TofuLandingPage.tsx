@@ -130,6 +130,20 @@ const TofuLandingPage = () => {
             </div>
           </section>
 
+          {/* 核心數據 */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-2">核心數據</h2>
+            <p className="text-white/50 mb-6">小模型 + 正確框架 &gt; 旗艦模型。同題 19 題盲測，Haiku + 逗福的補位品質（58%）超過 Opus（53%），費用差距 194 倍。</p>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {stats.map((s) => (
+                <div key={s.label} className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
+                  <div className="text-amber-400 font-bold text-sm mb-1">{s.value}</div>
+                  <div className="text-white/40 text-xs">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* 為什麼可以放心用 */}
           <section className="mb-10">
             <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">為什麼可以放心用</h2>
