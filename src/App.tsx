@@ -41,6 +41,9 @@ import AboutPage from "./pages/public/AboutPage";
 import PrivacyPolicyPage from "./pages/public/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/public/TermsOfServicePage";
 import DiscoverPage from "./pages/public/DiscoverPage";
+import MomochaoLandingPage from "./pages/public/MomochaoLandingPage";
+import TofuLandingPage from "./pages/public/TofuLandingPage";
+import AiArtLandingPage from "./pages/public/AiArtLandingPage";
 
 // Admin Pages (additional)
 import NotesPage from "./pages/NotesPage";
@@ -147,6 +150,9 @@ const App = () => (
               <Route path="/momochao-system/philosophy" element={<MomochaoPhilosophyPage />} />
               <Route path="/momochao-system/about" element={<MomochaoAboutPage />} />
               <Route path="/momochao-system/education" element={<MomochaoEducationPage />} />
+              <Route path="/momochao" element={<MomochaoLandingPage />} />
+              <Route path="/tofu" element={<TofuLandingPage />} />
+              <Route path="/ai-art" element={<AiArtLandingPage />} />
               
               {/* 會員系統暫時關閉 - 所有會員/登入路徑導回首頁 */}
               <Route path="/auth/login" element={<Navigate to="/" replace />} />
