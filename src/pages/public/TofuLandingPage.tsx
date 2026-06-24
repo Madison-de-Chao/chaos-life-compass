@@ -6,27 +6,36 @@ import PublicFooter from "@/components/public/PublicFooter";
 import { useSEO } from "@/hooks/useSEO";
 
 const TOFU_URL = "https://tofu.maisondechao.com/";
+const TOFU_GITHUB = "https://github.com/madison-de-chao/tofu";
 
 const baselines = [
-  { title: "說真話", body: "回答分成事實、推測、立場三層，標清楚。不把猜的當成真的。" },
+  { title: "說真話", body: "回答分成事實、推測、建議三層，標清楚。不把猜的當成真的。" },
   { title: "說人話", body: "先復述、先補洞、再執行。不堆術語，不裝高深。" },
   { title: "守住邊界", body: "問夠了就停，不無限追問。情緒升溫先冷卻。危險就中止。" },
 ];
 
 const modes = [
-  { tag: "直接打字", name: "補位模式", body: "它先確認你真正要什麼，補上你漏掉的，確認後才動手。有一件事要規劃或處理但細節還沒完全想清楚的時候用。" },
-  { tag: "/free", name: "直接給建議", body: "跳過反問，直接給建議。想快速聽看法、不想被一句句反問的時候用。" },
-  { tag: "/risk", name: "風險清單", body: "輸出風險清單，標出每個風險的觸發條件。要做一個有後果的決定、想先看下行風險的時候用。" },
-  { tag: "/propose", name: "完整提案", body: "自問自答五輪，最後給你一份四段式完整提案。需要結構完整、想得比較深的方案的時候用。" },
-  { tag: "/check", name: "可信度查核", body: "丟一段可疑訊息給它，分階段拆解、查核可信度。收到可疑訊息或聽起來太好的說法的時候用。" },
+  { tag: "直接打字", name: "補位模式", body: "預設模式。它先用自己的話復述一遍你的需求，把你可能漏掉的關鍵面向問回來，等你確認了才執行。有一件事要規劃或處理、但細節還沒完全想清楚的時候用。" },
+  { tag: "/free", name: "直接給建議", body: "背後一樣會想清楚，但不反問你，直接給建議。想快速聽看法、不想被一句句反問的時候用。" },
+  { tag: "/risk", name: "風險評估", body: "輸出一份風險清單，並標出每個風險的觸發條件。要做一個有後果的決定、想先知道哪裡可能出問題的時候用。" },
+  { tag: "/propose", name: "完整提案", body: "逗福自問自答五輪，最後給你一份四段式完整提案。需要結構完整、想得比較深的方案時用。" },
+  { tag: "/check", name: "事實查核", body: "把一段內容丟給它，分階段拆解、查核這段說法可不可信。收到來路不明的消息、或聽起來太好的優惠時用。" },
+];
+
+const stats = [
+  { label: "實測互動", value: "244 筆，零錯誤" },
+  { label: "總費用", value: "US$2.57（約 NT$80）" },
+  { label: "每次互動成本", value: "約 US$0.01（約 NT$0.3）" },
+  { label: "測試通過", value: "656 項" },
+  { label: "推薦模型", value: "Claude Haiku（最便宜）" },
 ];
 
 const trust = [
-  { title: "自備 key", body: "用你自己的 AI 金鑰（Gemini 有免費額度），不用付我們錢。" },
-  { title: "對話只存你的裝置", body: "不上傳、不留在我們這邊。" },
-  { title: "金鑰不儲存", body: "用完就清，不落地。" },
-  { title: "開源", body: "原始碼在 GitHub 上，看得到、改得動、可以自己架。" },
-  { title: "公測中", body: "會長、會改、也會有它的不確定。你可以直接試，也可以先讀白皮書再決定。" },
+  { title: "離線也能用", body: "沒設 API key 也能用——逗福會自動進入離線模式，復述確認、補位提問、端點紀錄照常運作，只是不呼叫 AI。" },
+  { title: "記憶留在你本機", body: "儲存在你電腦的 data/ 資料夾，不上傳。換電腦只要複製 data/，換 AI 模型不丟記憶。" },
+  { title: "模型中立", body: "內建 Claude（Anthropic）後端，底層採 BaseLLMClient 抽象介面，能自行串接 OpenAI、DeepSeek 或任何相容後端。" },
+  { title: "開源 Apache 2.0", body: "原始碼與白皮書都在 GitHub。自由使用、修改、散布、商用。" },
+  { title: "公測中（Public Beta）", body: "已知限制公開不隱藏：偏好提取率偏低、長記憶會被壓縮、目前是 CLI／網頁版介面，桌面版製作中。" },
 ];
 
 const TofuLandingPage = () => {
@@ -54,15 +63,16 @@ const TofuLandingPage = () => {
                 逗福 Tofu
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-white/70">先確認、再動手。</p>
+            <p className="text-lg md:text-xl text-white/70">問對問題，才有對的答案。</p>
+            <p className="text-sm md:text-base text-white/40 mt-2">Cognitive Middleware — Ask the right question before getting the right answer.</p>
           </header>
 
           {/* 開場段 */}
           <section className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-10">
             <div className="space-y-4 text-white/70 leading-relaxed">
-              <p>AI 很會講話。問題是，你拿它的答案去做事，常常不能用。</p>
-              <p>它會自己跟自己辯論、會在同一段話裡先承認再否認、會把猜測當成你的指令。你問它「幫我規劃一趟旅行」，它直接丟一份行程給你——沒問你去幾天、跟誰去、預算多少。看起來很完整，用起來全是洞。</p>
-              <p className="text-white/90">逗福就是為這件事而生的：架在你和 AI 之間的一層認知中間層。它不是另一個聊天機器人，它是幫你把話想清楚再送出去的那個人。</p>
+              <p>大多數錯誤的決定，不是因為 AI 的答案差，是因為一開始就解錯了題。</p>
+              <p>你說「我想辦派對」，AI 立刻列出場地清單。逗福先問：「這場派對是辦給誰的？公司形象還是朋友聚會？」——因為這兩種派對從頭到尾做法不一樣。</p>
+              <p className="text-white/90">逗福是一個坐在你和 AI 之間的<span className="text-amber-400 font-bold">認知中間層</span>。它做三件事：用自己的話<span className="text-amber-400">復述確認</span>你的需求、問你一個你沒想到但很重要的<span className="text-amber-400">補位問題</span>、你點頭了才寫進記憶（<span className="text-amber-400">確認後才記</span>）。用越久，逗福越懂你的思考盲區。</p>
             </div>
           </section>
 
@@ -120,6 +130,20 @@ const TofuLandingPage = () => {
             </div>
           </section>
 
+          {/* 核心數據 */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-2">核心數據</h2>
+            <p className="text-white/50 mb-6">小模型 + 正確框架 &gt; 旗艦模型。同題 19 題盲測，Haiku + 逗福的補位品質（58%）超過 Opus（53%），費用差距 194 倍。</p>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {stats.map((s) => (
+                <div key={s.label} className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
+                  <div className="text-amber-400 font-bold text-sm mb-1">{s.value}</div>
+                  <div className="text-white/40 text-xs">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* 為什麼可以放心用 */}
           <section className="mb-10">
             <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-6">為什麼可以放心用</h2>
@@ -151,7 +175,7 @@ const TofuLandingPage = () => {
                 <a href={TOFU_URL} target="_blank" rel="noopener noreferrer">閱讀白皮書<ExternalLink className="ml-2 h-4 w-4" /></a>
               </Button>
               <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub 原始碼<ExternalLink className="ml-2 h-4 w-4" /></a>
+                <a href={TOFU_GITHUB} target="_blank" rel="noopener noreferrer">GitHub 原始碼<ExternalLink className="ml-2 h-4 w-4" /></a>
               </Button>
             </div>
           </section>
