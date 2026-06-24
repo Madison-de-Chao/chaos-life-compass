@@ -63,15 +63,16 @@ const TofuLandingPage = () => {
                 逗福 Tofu
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-white/70">先確認、再動手。</p>
+            <p className="text-lg md:text-xl text-white/70">問對問題，才有對的答案。</p>
+            <p className="text-sm md:text-base text-white/40 mt-2">Cognitive Middleware — Ask the right question before getting the right answer.</p>
           </header>
 
           {/* 開場段 */}
           <section className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-10">
             <div className="space-y-4 text-white/70 leading-relaxed">
-              <p>AI 很會講話。問題是，你拿它的答案去做事，常常不能用。</p>
-              <p>它會自己跟自己辯論、會在同一段話裡先承認再否認、會把猜測當成你的指令。你問它「幫我規劃一趟旅行」，它直接丟一份行程給你——沒問你去幾天、跟誰去、預算多少。看起來很完整，用起來全是洞。</p>
-              <p className="text-white/90">逗福就是為這件事而生的：架在你和 AI 之間的一層認知中間層。它不是另一個聊天機器人，它是幫你把話想清楚再送出去的那個人。</p>
+              <p>大多數錯誤的決定，不是因為 AI 的答案差，是因為一開始就解錯了題。</p>
+              <p>你說「我想辦派對」，AI 立刻列出場地清單。逗福先問：「這場派對是辦給誰的？公司形象還是朋友聚會？」——因為這兩種派對從頭到尾做法不一樣。</p>
+              <p className="text-white/90">逗福是一個坐在你和 AI 之間的<span className="text-amber-400 font-bold">認知中間層</span>。它做三件事：用自己的話<span className="text-amber-400">復述確認</span>你的需求、問你一個你沒想到但很重要的<span className="text-amber-400">補位問題</span>、你點頭了才寫進記憶（<span className="text-amber-400">確認後才記</span>）。用越久，逗福越懂你的思考盲區。</p>
             </div>
           </section>
 
