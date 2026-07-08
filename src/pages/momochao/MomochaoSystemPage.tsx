@@ -123,7 +123,7 @@ const faqs = [
   },
   {
     q: "可以跟進階課一起報嗎？",
-    a: "可以。14 堂合售 NT$ 49,999（原價 70,000），省近一萬。加 LINE 報名即可。",
+    a: "可以。14 堂合售 NT$ 19,999（原價 40,000），合售省一萬。加 LINE 報名即可。",
   },
   {
     q: "課程有期限嗎？",
@@ -164,7 +164,7 @@ const MomochaoSystemPage = () => {
       },
       {
         url: `${SITE_ORIGIN}${OG_VERTICAL_URL}`,
-        alt: "默默超元壹體系基礎課直式手機分享卡｜AI 時代的人生避險基金 NT$ 29,999",
+        alt: "默默超元壹體系基礎課直式手機分享卡｜AI 時代的人生避險基金 NT$ 19,999",
         width: 768,
         height: 1376,
         type: "image/png",
@@ -475,10 +475,10 @@ const MomochaoSystemPage = () => {
               <p className="text-amber-400/80 text-sm mb-2">基礎課</p>
               <h3 className="text-2xl font-serif font-bold mb-6">搞定自己和 AI 的工具箱</h3>
               <p className="text-white/40 text-sm mb-1">講師勞務費</p>
-              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 35,000</p>
+              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 25,000</p>
               <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">上市優惠</div>
               <div className="text-5xl font-bold text-white mb-2">
-                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">29,999</span>
+                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">19,999</span>
               </div>
               <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
 
@@ -510,7 +510,7 @@ const MomochaoSystemPage = () => {
               className="relative bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-amber-600/10 border-2 border-amber-400/50 rounded-3xl p-8 md:p-10 text-center flex flex-col shadow-[0_0_60px_-15px_rgba(245,158,11,0.4)]"
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black text-xs font-bold tracking-wider">
-                省近一萬
+                合售省一萬
               </div>
               <p className="text-amber-300 text-sm mb-2">基礎 + 進階 合售</p>
               <h3 className="text-2xl font-serif font-bold mb-6">14 堂一次到位</h3>
@@ -518,7 +518,7 @@ const MomochaoSystemPage = () => {
               <p className="text-white/40 text-base line-through mb-2">原價 NT$ 70,000</p>
               <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">合售優惠</div>
               <div className="text-5xl font-bold text-white mb-2">
-                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">49,999</span>
+                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">19,999</span>
               </div>
               <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
 
