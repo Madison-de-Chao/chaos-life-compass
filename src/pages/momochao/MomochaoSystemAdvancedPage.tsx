@@ -103,7 +103,7 @@ const faqs = [
   },
   {
     q: "基礎課和進階課可以一起報嗎？",
-    a: "可以。14 堂合售 NT$ 19,999（原價 40,000），合售省一萬。加 LINE 報名即可。",
+    a: "可以。14 堂合售 NT$ 29,999（原價 50,000），兩門合購省一萬。加 LINE 報名即可。",
   },
   {
     q: "課程有期限嗎？",
@@ -380,10 +380,10 @@ const MomochaoSystemAdvancedPage = () => {
               <p className="text-amber-300 text-sm mb-2">基礎 + 進階 合售</p>
               <h3 className="text-2xl font-serif font-bold mb-6">14 堂一次到位</h3>
               <p className="text-white/40 text-sm mb-1">講師勞務費</p>
-              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 70,000</p>
+              <p className="text-white/40 text-base line-through mb-2">原價 NT$ 50,000</p>
               <div className="text-amber-400 text-xs font-medium mb-2 tracking-wider">合售優惠</div>
               <div className="text-5xl font-bold text-white mb-2">
-                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">19,999</span>
+                NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">29,999</span>
               </div>
               <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
 
