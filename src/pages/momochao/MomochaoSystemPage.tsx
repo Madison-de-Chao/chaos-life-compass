@@ -176,6 +176,7 @@ const MomochaoSystemPage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
 
+      <main>
       {/* ① Hero */}
       <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden py-16 sm:py-24">
         <div className="absolute inset-0 pointer-events-none">
@@ -646,6 +647,7 @@ const MomochaoSystemPage = () => {
         </div>
       </section>
 
+      </main>
       <PublicFooter />
     </div>
   );

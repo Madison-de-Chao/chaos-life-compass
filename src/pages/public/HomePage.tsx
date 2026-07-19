@@ -108,6 +108,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
       
+      <main>
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background effects */}
@@ -441,6 +442,7 @@ const HomePage = () => {
         </div>
       </section>
       
+      </main>
       <PublicFooter />
     </div>
   );

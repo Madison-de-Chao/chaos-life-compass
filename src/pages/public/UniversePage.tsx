@@ -267,6 +267,7 @@ const UniversePage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
       
+      <main>
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20">
         {/* Background Video */}
@@ -891,6 +892,7 @@ const UniversePage = () => {
         </div>
       </section>
 
+      </main>
       <PublicFooter />
     </div>
   );
