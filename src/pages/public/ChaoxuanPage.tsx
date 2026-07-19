@@ -160,6 +160,7 @@ const ChaoxuanPage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5f0] overflow-x-hidden">
       <PublicHeader />
 
+      <main>
       {/* Hero Section with Embedded Video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background gradient */}
@@ -580,6 +581,7 @@ const ChaoxuanPage = () => {
         </div>
       </section>
 
+      </main>
       <PublicFooter />
     </div>
   );

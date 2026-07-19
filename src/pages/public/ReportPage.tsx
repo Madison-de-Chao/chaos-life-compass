@@ -178,6 +178,7 @@ const ReportPage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden">
       <PublicHeader />
 
+      <main>
       {/* ═══ Hero Section ═══ */}
       <section className="relative py-32 md:py-40 lg:py-52 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#121212] to-[#0a0a0a]" />
@@ -1166,6 +1167,7 @@ const ReportPage = () => {
         </div>
       </section>
 
+      </main>
       <PublicFooter />
     </div>
   );

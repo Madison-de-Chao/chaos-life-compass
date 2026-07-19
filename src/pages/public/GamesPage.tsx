@@ -187,6 +187,7 @@ const GamesPage = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <PublicHeader />
       
+      <main>
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 overflow-hidden">
         {/* Background Effects */}
@@ -399,6 +400,7 @@ const GamesPage = () => {
         </div>
       </section>
       
+      </main>
       <PublicFooter />
     </div>
   );

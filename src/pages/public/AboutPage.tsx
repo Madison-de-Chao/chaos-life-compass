@@ -64,6 +64,7 @@ const AboutPage = () => {
     <div ref={containerRef} className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
       <PublicHeader />
       
+      <main>
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden py-16 md:py-20">
         {/* Animated Background Orbs with Parallax - Reduced on mobile */}
@@ -558,6 +559,7 @@ const AboutPage = () => {
         </div>
       </section>
 
+      </main>
       <PublicFooter />
     </div>
   );
