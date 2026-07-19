@@ -1290,7 +1290,8 @@ export default function PortalPage() {
                 次
               </span>
             </div>
-          </div>
+          </main>
+
         )}
       </div>
 
