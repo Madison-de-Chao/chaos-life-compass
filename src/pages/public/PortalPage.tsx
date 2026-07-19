@@ -1128,7 +1128,7 @@ export default function PortalPage() {
 
         {/* Portal cards */}
         {showPortal && (
-          <div 
+          <main
             className={`fixed inset-0 flex flex-col items-center justify-start pt-20 sm:pt-24 pb-8 px-4 overflow-y-auto transition-all ${
               isFading ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
             }`}
@@ -1136,12 +1136,12 @@ export default function PortalPage() {
           >
             {/* Greeting */}
             <div className="text-center mb-6 md:mb-8 px-4">
-              <h2 
+              <h1
                 className="font-display text-xl sm:text-2xl md:text-3xl text-white mb-2 md:mb-3"
                 style={{ textShadow: '0 0 40px rgba(201,169,98,0.4)' }}
               >
                 你好，我是默默超。
-              </h2>
+              </h1>
               <p className="text-white/50 text-base md:text-lg">想從哪裡開始？</p>
               <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
                 <Link
