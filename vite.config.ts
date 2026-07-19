@@ -31,6 +31,9 @@ export default defineConfig(({ mode }) => ({
     }),
     VitePWA({
       registerType: "autoUpdate",
+      injectRegister: null,
+      devOptions: { enabled: false },
+      filename: "sw.js",
       includeAssets: ["favicon.ico", "robots.txt"],
       manifest: {
         name: "DocShow - 文件展示平台",
