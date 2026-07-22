@@ -31,7 +31,7 @@ const PROMO_VIDEO_URL = "/life-risk-fund-promo.mp4";
 
 
 
-const SITE_ORIGIN = "https://chaos-life-compass.lovable.app";
+const SITE_ORIGIN = "https://momo-chao.com";
 
 const OG_HORIZONTAL_URL = "/og-momochao-system.jpg";
 const OG_SQUARE_URL = "/og-momochao-system-square.png";
@@ -146,7 +146,7 @@ const MomochaoSystemPage = () => {
     description:
       "市面上的 AI 課教你怎麼下 prompt。這門課教你怎麼不被 AI 帶偏——先搞定自己的判斷，再讓 AI 成為可靠的協作夥伴。7 堂一對一，每堂帶走一個能用的東西。",
     keywords: "默默超, 趙偉辰, AI 課程, 思維方法, 人機協作, 元壹體系, 基礎課",
-    canonical: "https://chaos-life-compass.lovable.app/momochao-system",
+    canonical: "https://momo-chao.com/momochao-system",
     ogImages: [
       {
         url: `${SITE_ORIGIN}${OG_HORIZONTAL_URL}`,

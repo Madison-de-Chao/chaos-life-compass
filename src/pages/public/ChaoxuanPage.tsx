@@ -572,7 +572,7 @@ const ChaoxuanPage = () => {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-[#c9a962]/30 text-[#c9a962] hover:bg-[#c9a962]/10 hover:border-[#c9a962]/50 px-12 h-14 text-base transition-all duration-300">
-                <a href="https://main.momo-chao.com/about" target="_blank" rel="noopener noreferrer">
+                <a href="https://momo-chao.com/about" target="_blank" rel="noopener noreferrer">
                   了解更多
                 </a>
               </Button>

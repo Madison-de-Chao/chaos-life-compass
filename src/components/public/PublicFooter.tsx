@@ -24,8 +24,8 @@ const footerLinks = {
     { label: "元壹宇宙", href: "https://www.yyuniverse.com/", external: true },
     { label: "默默超思維訓練系統", href: "https://mmclogic.com/", external: true },
     { label: "元壹占卜系統", href: "https://mirror.yyuniverse.com/", external: true },
-    { label: "四時八字人生兵法", href: "https://bazi.rainbow-sanctuary.com/", external: true },
-    { label: "虹靈御所藏書閣", href: "https://books.rainbow-sanctuary.com/", external: true },
+    { label: "四時八字人生兵法", href: "https://bazi.momo-chao.com/", external: true },
+    { label: "虹靈御所藏書閣", href: "https://books.momo-chao.com/", external: true },
     { label: "逗福 Tofu", href: "https://tofu.maisondechao.com/", external: true },
   ],
   about: [
