@@ -234,13 +234,19 @@ const AISafetyPage = () => {
 
                 <div className="grid md:grid-cols-3 gap-6">
                   {externalFrameworks.map((framework) => (
-                    <div key={framework.name} className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 transition-colors">
+                    <a
+                      key={framework.name}
+                      href={framework.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/[0.07] transition-colors"
+                    >
                       <div className="flex items-center gap-2 mb-3">
                         <ExternalLink className="w-4 h-4 text-amber-400" />
                         <h3 className="font-semibold text-white">{framework.name}</h3>
                       </div>
                       <p className="text-sm text-white/60">{framework.description}</p>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </motion.div>
