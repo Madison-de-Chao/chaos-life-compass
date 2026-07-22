@@ -423,7 +423,7 @@ const MomochaoSystemPage = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
               <div className="bg-white/[0.03] border border-amber-500/20 rounded-xl p-5 text-center">
-                <div className="text-2xl md:text-3xl font-bold text-amber-400 mb-1">13,156</div>
+                <div className="text-2xl md:text-3xl font-bold text-amber-400 mb-1">13,091</div>
                 <div className="text-white/50 text-xs">人機協作對話 turn</div>
                 <div className="text-white/40 text-xs mt-1">糾偏率 3.26% / 討好率 1.64%</div>
               </div>
@@ -437,6 +437,7 @@ const MomochaoSystemPage = () => {
                 <div className="text-white/50 text-xs">品牌行銷與跨域實戰</div>
               </div>
             </div>
+            <p className="text-white/50 text-xs text-center -mt-4">數據基於 2025 全平台 13,091 則對話訊息，雙系統交叉驗證</p>
 
             <p>一份從 v1 寫到 v3 的人機協作方法論，一套經過多回合哲學攻防仍然站得住的思維框架。</p>
             <p className="text-white/85">
