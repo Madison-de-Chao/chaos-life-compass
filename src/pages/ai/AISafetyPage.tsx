@@ -79,14 +79,17 @@ const AISafetyPage = () => {
     {
       name: "OWASP LLM Top 10",
       description: "提示注入、輸出處理、供應鏈風險、資源阻斷",
+      url: "https://genai.owasp.org/llm-top-10/",
     },
     {
       name: "NIST AI RMF",
       description: "Govern / Map / Measure / Manage 四層治理",
+      url: "https://www.nist.gov/itl/ai-risk-management-framework",
     },
     {
       name: "ISO/IEC 42001",
       description: "AI 管理體系標準，提供 B2B 組織治理對接點",
+      url: "https://www.iso.org/standard/42001",
     },
   ];
 
