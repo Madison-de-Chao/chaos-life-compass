@@ -552,9 +552,9 @@ const AboutPage = () => {
               size="lg"
               className="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-black font-bold px-8 md:px-10 py-6 md:py-7 text-base md:text-lg rounded-full shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-shadow active:scale-95 touch-manipulation"
             >
-              <a href="/reports">
+              <Link to="/reports">
                 探索命理報告
-              </a>
+              </Link>
             </Button>
           </motion.div>
         </div>
