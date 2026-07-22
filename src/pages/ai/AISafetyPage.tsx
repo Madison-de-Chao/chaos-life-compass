@@ -79,14 +79,17 @@ const AISafetyPage = () => {
     {
       name: "OWASP LLM Top 10",
       description: "提示注入、輸出處理、供應鏈風險、資源阻斷",
+      url: "https://genai.owasp.org/llm-top-10/",
     },
     {
       name: "NIST AI RMF",
       description: "Govern / Map / Measure / Manage 四層治理",
+      url: "https://www.nist.gov/itl/ai-risk-management-framework",
     },
     {
       name: "ISO/IEC 42001",
       description: "AI 管理體系標準，提供 B2B 組織治理對接點",
+      url: "https://www.iso.org/standard/42001",
     },
   ];
 
@@ -231,13 +234,19 @@ const AISafetyPage = () => {
 
                 <div className="grid md:grid-cols-3 gap-6">
                   {externalFrameworks.map((framework) => (
-                    <div key={framework.name} className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 transition-colors">
+                    <a
+                      key={framework.name}
+                      href={framework.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 hover:bg-white/[0.07] transition-colors"
+                    >
                       <div className="flex items-center gap-2 mb-3">
                         <ExternalLink className="w-4 h-4 text-amber-400" />
                         <h3 className="font-semibold text-white">{framework.name}</h3>
                       </div>
                       <p className="text-sm text-white/60">{framework.description}</p>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </motion.div>
