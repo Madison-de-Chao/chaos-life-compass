@@ -482,7 +482,7 @@ const MomochaoSystemPage = () => {
               <div className="text-5xl font-bold text-white mb-2">
                 NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">19,999</span>
               </div>
-              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
+              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 12 月 31 日止</p>
 
               <ul className="text-left max-w-sm mx-auto space-y-3 text-white/75 text-sm mb-10 flex-1">
                 <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />7 堂一對一課程</li>
@@ -522,7 +522,7 @@ const MomochaoSystemPage = () => {
               <div className="text-5xl font-bold text-white mb-2">
                 NT$ <span className="bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">29,999</span>
               </div>
-              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 9 月 19 日止</p>
+              <p className="text-white/50 text-sm mb-8">🔸 即日起至 2026 年 12 月 31 日止</p>
 
               <ul className="text-left max-w-sm mx-auto space-y-3 text-white/85 text-sm mb-10 flex-1">
                 <li className="flex items-start gap-2"><Check className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />基礎 7 堂 ＋ 進階 7 堂，共 14 堂</li>
