@@ -222,13 +222,14 @@ const ReportPage = () => {
 
           {/* Description */}
           <p className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-6 animate-fade-in leading-tight" style={{ animationDelay: '0.5s' }}>
-            <span className="text-white/90">看見自己的結構，是所有</span>
-            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">改變的起點。</span>
+            <span className="text-white/90">一般命理告訴你，你的命「是」什麼。</span><br />
+            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">我們告訴你，你「有可能」是什麼樣子。</span>
           </p>
           <p className="text-lg md:text-xl text-white/60 mb-10 animate-slide-up font-light tracking-wide max-w-3xl mx-auto" style={{ animationDelay: '0.7s' }}>
             紫微斗數 × 八字命理 × 西洋占星 × 人類圖<br className="hidden md:block" />
-            四系統同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />
-            你拿到的不是一個答案，是一份可以反覆翻看的<span className="text-amber-400">結構地圖</span>。
+            四套古老智慧同時上桌，交叉驗證。不預測未來，不給標籤。<br className="hidden md:block" />
+            說同一件事的地方，是你<span className="text-amber-400">最有可能的底層結構</span>；互相打架的地方，是你<span className="text-purple-300">最可能跟自己想的不一樣</span>的訊號。<br className="hidden md:block" />
+            你拿到的不是命定的答案，是一份<span className="text-amber-400">「有所本」的結構地圖</span>——而不是停在「我感覺」。
           </p>
 
           {/* CTA Buttons */}
@@ -547,8 +548,8 @@ const ReportPage = () => {
               這不是算命，也不是<span className="text-amber-400">心理諮商</span>
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
-              市面命理告訴你你是誰、你會怎樣。心理諮商陪你找到自己。<br />
-              我們做的是第三件事：把四套結構壓成一張你可以反覆對照、自己驗證、拿去用的生命結構地圖。
+              市面命理告訴你你「是」誰、你「會」怎樣——那是命定的語氣。心理諮商陪你探索自己——那是另一條有價值的路。<br />
+              我們做的是第三件事：把四套古老智慧的交叉結果壓成一張結構地圖，讓你對「我為什麼是這樣」<span className="text-amber-300">有所本</span>——可以反覆對照、自己驗證、拿去用，而不是停在「我感覺」。
             </p>
           </div>
 
@@ -674,11 +675,12 @@ const ReportPage = () => {
             <p className="text-amber-400 text-xs font-medium uppercase tracking-wider mb-3">先懂一件事</p>
             <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-4">為什麼是「四系統一起上」</h3>
             <div className="space-y-3 text-white/65 text-sm md:text-base leading-relaxed">
-              <p>市面上多數命理是一套系統講到底。歸覓的做法不一樣——紫微、八字、占星、人類圖四套同時看同一個你。</p>
+              <p>市面上多數命理是一套系統講到底，然後告訴你「你就是這樣」。歸覓的做法不一樣——紫微、八字、占星、人類圖四套同時看同一個你，然後告訴你「你<span className="text-amber-300">最有可能</span>是這樣」。</p>
               <p>
-                四套<span className="text-amber-300">說同一件事</span>的地方，就是你穩定的底層結構（<span className="text-amber-300">共振版</span>在做的）。<br />
-                四套<span className="text-purple-300">互相矛盾</span>的地方，就是你最該注意的訊號（<span className="text-purple-300">偏勝版</span>在做的）。
+                四套<span className="text-amber-300">說同一件事</span>的地方，就是你最有可能的底層結構（<span className="text-amber-300">共振版</span>在做的）。<br />
+                四套<span className="text-purple-300">互相矛盾</span>的地方，就是你最可能跟自己想的不一樣的訊號（<span className="text-purple-300">偏勝版</span>在做的）。
               </p>
+              <p>一字之差，差很多。「是」是命定，「有可能」是假設——假設可以被你自己<span className="text-amber-300">驗證、推翻、修正</span>。這就是「有所本」的意思：不是我們說了算，是你拿著地圖自己對。</p>
               <p>所以你讀報告時，永遠在做兩個動作：看四套「一起說了什麼」、看四套「在哪裡吵架」。下面每張表都是為這兩個動作設計的。</p>
             </div>
           </div>

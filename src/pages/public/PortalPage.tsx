@@ -767,14 +767,14 @@ const createIntroSections = () => [
     id: 'intro',
     content: (
       <div className="space-y-5 sm:space-y-8 text-white/80 text-base sm:text-xl md:text-2xl leading-relaxed font-light max-w-2xl mx-auto px-6">
-        <p>這裡不告訴你「你是誰」。<br className="hidden sm:block" /><span className="sm:hidden"> </span>這裡幫你看清現狀，然後給你可以做的下一步。</p>
-        <p>確定的事說確定，不確定的標出來。有來源的附來源，沒有的直接說沒有。</p>
+        <p>一般命理告訴你，你的命<span className="text-[#c9a962]">「是」</span>什麼。<br className="hidden sm:block" /><span className="sm:hidden"> </span>我們用古老的智慧告訴你——你<span className="text-[#c9a962]">「有可能」</span>是什麼樣子。</p>
+        <p>四系統交叉：找出你最有可能的樣子，<br className="hidden sm:block" /><span className="sm:hidden"> </span>也找出你最可能跟自己想的不一樣的地方。<br className="hidden sm:block" /><span className="sm:hidden"> </span>不是命定，是讓你對自己<span className="text-[#c9a962]">「有所本」</span>，而不是「我感覺」。</p>
         <p><span className="text-[#c9a962]">不是算命，不是心靈雞湯，不是課程推銷。</span><br />
           是工具。決定怎麼用，是你的事。
         </p>
       </div>
     ),
-    duration: 8000,
+    duration: 10000,
   },
   {
     id: 'philosophy',
