@@ -183,7 +183,7 @@ const HomePage = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="px-8 border-white/20 text-white hover:bg-white/10 hover:border-white/30">
-              <a href="https://main.momo-chao.com/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
+              <a href="https://momo-chao.com/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                 認識虹靈御所
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
