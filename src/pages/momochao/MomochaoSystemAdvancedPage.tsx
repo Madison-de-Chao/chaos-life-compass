@@ -126,7 +126,7 @@ const MomochaoSystemAdvancedPage = () => {
     description:
       "基礎課教你怎麼用，這門課教你怎麼想。7 堂一對一，從規則抽出原則、從工具設計到組裝你自己的認知系統 v0.1 藍圖。",
     keywords: "默默超, 趙偉辰, 進階課, 思維系統, IPO, 元壹體系, 認知系統, 人機協作",
-    canonical: "https://chaos-life-compass.lovable.app/momochao-system-advanced",
+    canonical: "https://momo-chao.com/momochao-system-advanced",
   });
 
   return (
