@@ -14,7 +14,9 @@ import {
   Target,
   TrendingUp,
   Award,
-  Diamond
+  Diamond,
+  Mail,
+  MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoChaoxuan from "@/assets/logo-maison-de-chao-full.png";
