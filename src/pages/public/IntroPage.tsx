@@ -134,7 +134,7 @@ const IntroPage = () => {
               {[
                 { title: "虹靈御所", href: "/home", desc: "四系統交叉比對的命理報告，看見你的結構。" },
                 { title: "元壹宇宙", href: "/universe", desc: "完整性導向的思維操作系統。沒有錯誤，只有未完成的弧度。" },
-                { title: "虹靈御所藏書閣", href: "https://books.momo-chao.com", external: true, desc: "三套原創系列線上閱讀：弧度歸零、塔羅冒險、元壹宇宙神話故事集。" },
+                { title: "虹靈御所藏書閣", href: "https://books.rainbow-sanctuary.com", external: true, desc: "三套原創系列線上閱讀：弧度歸零、塔羅冒險、元壹宇宙神話故事集。" },
               ].map((item) => (
                 <a
                   key={item.title}
