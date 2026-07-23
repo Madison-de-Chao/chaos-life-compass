@@ -579,6 +579,36 @@ const ChaoxuanPage = () => {
                 </a>
               </Button>
             </div>
+
+            {/* Contact Info */}
+            <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              <a
+                href="mailto:contact@momo-chao.com"
+                className="group flex items-center gap-4 p-5 bg-[#141414] border border-[#c9a962]/20 hover:border-[#c9a962]/50 transition-all duration-300"
+              >
+                <div className="w-12 h-12 flex items-center justify-center border border-[#c9a962]/30 group-hover:bg-[#c9a962]/10 transition-colors">
+                  <Mail className="h-5 w-5 text-[#c9a962]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-[#f5f5f0]/40 uppercase tracking-wider mb-1">Email</p>
+                  <p className="text-sm text-[#f5f5f0] font-mono break-all">contact@momo-chao.com</p>
+                </div>
+              </a>
+              <a
+                href="https://line.me/R/ti/p/@momochao"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-5 bg-[#141414] border border-[#c9a962]/20 hover:border-[#c9a962]/50 transition-all duration-300"
+              >
+                <div className="w-12 h-12 flex items-center justify-center border border-[#c9a962]/30 group-hover:bg-[#c9a962]/10 transition-colors">
+                  <MessageCircle className="h-5 w-5 text-[#c9a962]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-[#f5f5f0]/40 uppercase tracking-wider mb-1">官方 LINE</p>
+                  <p className="text-sm text-[#f5f5f0] font-mono">@momochao</p>
+                </div>
+              </a>
+            </div>
           </RevealSection>
         </div>
       </section>
