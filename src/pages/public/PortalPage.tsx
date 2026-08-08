@@ -1173,7 +1173,7 @@ export default function PortalPage() {
                   <div className="flex items-center gap-3">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-[11px] font-semibold tracking-wider uppercase">
                       <Sparkles className="w-3 h-3" />
-                      Highlight｜新上市
+                      籌備中
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -1184,7 +1184,9 @@ export default function PortalPage() {
                       搞定自己和 AI 的工具箱（基礎課）｜7 堂一對一．每堂帶走一個交付物
                     </p>
                     <div className="flex items-center gap-2 text-amber-300 text-sm font-medium">
-                      <span>上市優惠 NT$ 29,999</span>
+                      <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/10 border border-amber-400/30 text-amber-200 text-xs">
+                        即將開放，敬請期待
+                      </span>
                       <span className="text-white/30">·</span>
                       <span className="group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                         看課程介紹 →
