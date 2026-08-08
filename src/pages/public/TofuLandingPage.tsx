@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PublicHeader from "@/components/public/PublicHeader";
 import PublicFooter from "@/components/public/PublicFooter";
@@ -66,6 +66,19 @@ const TofuLandingPage = () => {
             <p className="text-lg md:text-xl text-white/70">問對問題，才有對的答案。</p>
             <p className="text-sm md:text-base text-white/40 mt-2">Cognitive Middleware — Ask the right question before getting the right answer.</p>
           </header>
+
+          {/* 備註：持續優化與開源方向 */}
+          <section className="bg-amber-500/10 rounded-2xl p-5 md:p-6 border border-amber-500/20 mb-10">
+            <div className="flex items-start gap-4">
+              <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-amber-400 font-bold text-sm">備註</p>
+                <p className="text-white/70 text-sm leading-relaxed">
+                  系統正朝著目標持續修改設計中，也已開源給大家。希望與各位共同往 AI 使用更健康、更安全、更透明的方向前進。
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* 開場段 */}
           <section className="bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10 mb-10">
