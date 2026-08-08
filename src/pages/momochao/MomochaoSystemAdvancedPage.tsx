@@ -103,7 +103,7 @@ const faqs = [
   },
   {
     q: "基礎課和進階課可以一起報嗎？",
-    a: "可以。14 堂合售 NT$ 29,999（原價 50,000），兩門合購省一萬。加 LINE 報名即可。",
+    a: "目前課程籌備中，合購方案將於開放報名時公布。歡迎加入 LINE，開放時優先通知。",
   },
   {
     q: "課程有期限嗎？",
@@ -173,7 +173,7 @@ const MomochaoSystemAdvancedPage = () => {
                 size="lg"
                 className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold px-10 h-12 text-base"
               >
-                <a href="#pricing">立即報名</a>
+                <a href="#pricing">即將開放</a>
               </Button>
             </div>
           </motion.div>
@@ -424,7 +424,7 @@ const MomochaoSystemAdvancedPage = () => {
               </div>
               <h3 className="text-lg font-serif font-bold text-white mb-1">LINE</h3>
               <p className="text-amber-400 text-sm font-medium mb-2">@momochao</p>
-              <p className="text-white/50 text-sm">課程報名、預約排課最快的方式</p>
+              <p className="text-white/50 text-sm">課程諮詢、接收最新開課通知</p>
             </a>
 
             <a
@@ -446,14 +446,14 @@ const MomochaoSystemAdvancedPage = () => {
       <section className="py-24 px-4 border-t border-white/10 bg-gradient-to-b from-transparent to-amber-500/[0.04]">
         <div className="container mx-auto text-center max-w-xl">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <p className="text-3xl md:text-4xl font-serif font-bold text-white mb-8">準備好了？</p>
+            <p className="text-3xl md:text-4xl font-serif font-bold text-white mb-8">有興趣？</p>
             <Button
               asChild
               size="lg"
               className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold px-10 h-14 text-base mb-8"
             >
               <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-                加 LINE 報名 → @momochao
+                加入 LINE 接收最新通知 → @momochao
               </a>
             </Button>
             <div>
@@ -461,7 +461,7 @@ const MomochaoSystemAdvancedPage = () => {
                 to="/momochao-system"
                 className="text-white/50 hover:text-amber-300 text-sm inline-flex items-center gap-1"
               >
-                <ArrowLeft className="w-4 h-4" /> 回到基礎課銷售頁
+                <ArrowLeft className="w-4 h-4" /> 回到基礎課介紹
               </Link>
             </div>
           </motion.div>
