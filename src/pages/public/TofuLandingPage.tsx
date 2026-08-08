@@ -64,7 +64,7 @@ const TofuLandingPage = () => {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-white/70">問對問題，才有對的答案。</p>
-          <p className="text-sm md:text-base text-white/40 mt-2">Cognitive Middleware — Ask the right question before getting the right answer.</p>
+            <p className="text-sm md:text-base text-white/40 mt-2">Cognitive Middleware — Ask the right question before getting the right answer.</p>
           </header>
 
           {/* 備註：持續優化與開源方向 */}
